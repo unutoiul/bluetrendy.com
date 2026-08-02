@@ -1,46 +1,40 @@
 import Image from "next/image";
 import Link from "next/link";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import logoIcon from "@/public/brand/icon.png";
+import logoLockup from "@/public/brand/logo.png";
+
+// Intrinsic 698x242 — keep the lockup's aspect ratio when scaling by height.
+const ASPECT = logoLockup.width / logoLockup.height;
+
+/** Standard lockup size, shared by the header and footer so the two stay identical. */
+export const LOGO_HEIGHT = 100;
+
+/** Rendered width for a given height — used to size the header badge. */
+export const logoWidth = (height: number) => Math.round(height * ASPECT);
 
 type LogoProps = {
   height?: number;
   href?: string | null;
 };
 
-export default function Logo({ height = 34, href = "/" }: LogoProps) {
-  const fontSize = Math.round(height * 0.62);
+export default function Logo({ height = LOGO_HEIGHT, href = "/" }: LogoProps) {
+  const width = logoWidth(height);
 
   const mark = (
-    <Box sx={{ display: "inline-flex", alignItems: "center", gap: height * 0.22 + "px" }}>
-      <Image
-        src={logoIcon}
-        alt=""
-        height={height}
-        width={height}
-        priority
-        style={{ height, width: height, display: "block", borderRadius: height * 0.22 }}
-      />
-      <Typography
-        component="span"
-        sx={{
-          fontSize,
-          fontWeight: 700,
-          letterSpacing: "-0.01em",
-          lineHeight: 1,
-          color: "primary.main",
-          whiteSpace: "nowrap",
-        }}
-      >
-        blue<Box component="span" sx={{ color: "secondary.main" }}>trendy</Box>
-      </Typography>
-    </Box>
+    <Image
+      src={logoLockup}
+      alt="BlueTrendy Intelligence"
+      height={height}
+      width={width}
+      priority
+      quality={100}
+      style={{ height, width, display: "block" }}
+    />
   );
 
   if (!href) {
     return (
-      <Box component="span" sx={{ display: "inline-flex", lineHeight: 0 }} aria-label="bluetrendy">
+      <Box component="span" sx={{ display: "inline-flex", lineHeight: 0 }}>
         {mark}
       </Box>
     );
@@ -49,7 +43,7 @@ export default function Logo({ height = 34, href = "/" }: LogoProps) {
   return (
     <Link
       href={href}
-      aria-label="bluetrendy — home"
+      aria-label="BlueTrendy Intelligence — home"
       style={{ display: "inline-flex", lineHeight: 0, textDecoration: "none" }}
     >
       {mark}

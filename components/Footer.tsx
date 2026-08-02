@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
-import Logo from "./Logo";
+import Logo, { LOGO_HEIGHT } from "./Logo";
 import LinkTypography from "./LinkTypography";
 import { footerLinks } from "@/data/nav";
 import { brand } from "@/theme/theme";
@@ -35,7 +35,7 @@ export default function Footer() {
       <Container sx={{ py: 8 }}>
         <Grid container spacing={6}>
           <Grid size={{ xs: 12, md: 4 }}>
-            <Logo height={32} />
+            <Logo height={LOGO_HEIGHT} />
             <Typography variant="body2" color="text.secondary" sx={{ mt: 2, maxWidth: 320 }}>
               An AI-first software consultancy delivering production-grade web, mobile, and mission-critical
               systems for enterprise and government clients.
