@@ -17,6 +17,7 @@ import Divider from "@mui/material/Divider";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import Logo, { LOGO_HEIGHT, logoWidth } from "./Logo";
+import { cloudBadgeMask } from "./motion/cloudBadge";
 import { navLinks } from "@/data/nav";
 import { trackEvent } from "@/lib/analytics";
 
@@ -31,6 +32,13 @@ const BADGE_DROP = { xs: 52, md: 80 };
 const badgeWidth = {
   xs: Math.round(logoWidth(LOGO_H.xs) + BADGE_PAD_X.xs * 2),
   md: Math.round(logoWidth(LOGO_H.md) + BADGE_PAD_X.md * 2),
+};
+
+// Baked once at module load — the mask is pure geometry (width, bar height,
+// drop), so it never needs to change at runtime.
+const badgeMask = {
+  xs: cloudBadgeMask({ width: badgeWidth.xs, barHeight: BAR_H, dropHeight: BADGE_DROP.xs, seed: 4 }),
+  md: cloudBadgeMask({ width: badgeWidth.md, barHeight: BAR_H, dropHeight: BADGE_DROP.md, seed: 9 }),
 };
 
 export default function Header() {
@@ -51,7 +59,8 @@ export default function Header() {
       }}
     >
       <Container sx={{ position: "relative" }}>
-        {/* White badge, flush with the top of the bar, arcing past its bottom edge. */}
+        {/* White badge, flush with the top of the bar, hanging past its bottom
+            edge as a soft cloud puff rather than a geometric curve. */}
         <Box
           aria-hidden
           sx={{
@@ -63,10 +72,12 @@ export default function Header() {
             // Same translucent surface as the bar, and no border, so the badge
             // reads as the bar simply bulging downward rather than a separate shape.
             bgcolor: "rgba(255,255,255)",
-            borderRadius: {
-              xs: `0 0 ${badgeWidth.xs / 2}px ${badgeWidth.xs / 2}px / 0 0 ${BADGE_DROP.xs + 32}px ${BADGE_DROP.xs + 36}px`,
-              md: `0 0 ${badgeWidth.md / 2}px ${badgeWidth.md / 2}px / 0 0 ${BADGE_DROP.md + 16}px ${BADGE_DROP.md + 16}px`,
-            },
+            maskImage: badgeMask,
+            WebkitMaskImage: badgeMask,
+            maskSize: "100% 100%",
+            WebkitMaskSize: "100% 100%",
+            maskRepeat: "no-repeat",
+            WebkitMaskRepeat: "no-repeat",
             pointerEvents: "none",
           }}
         />
