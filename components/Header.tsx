@@ -60,15 +60,18 @@ export default function Header() {
     >
       <Container sx={{ position: "relative" }}>
         {/* White badge, flush with the top of the bar, hanging past its bottom
-            edge as a soft cloud puff rather than a geometric curve. */}
+            edge as a soft cloud puff rather than a geometric curve. Centred
+            on mobile (no nav links to balance against), pinned left on
+            desktop where it sits beside the nav. */}
         <Box
           aria-hidden
           sx={{
             position: "absolute",
-            left: { xs: 12, md: 24 },
+            left: { xs: "50%", md: 24 },
             top: 0,
             width: badgeWidth,
             height: { xs: BAR_H + BADGE_DROP.xs, md: BAR_H + BADGE_DROP.md },
+            transform: { xs: "translateX(-50%)", md: "none" },
             // Same translucent surface as the bar, and no border, so the badge
             // reads as the bar simply bulging downward rather than a separate shape.
             bgcolor: "rgba(255,255,255)",
@@ -82,8 +85,10 @@ export default function Header() {
           }}
         />
 
-        <Toolbar disableGutters sx={{ height: BAR_H, justifyContent: "space-between" }}>
-          {/* Reserves the badge's footprint; the logo itself is centred inside it. */}
+        <Toolbar disableGutters sx={{ height: BAR_H, justifyContent: { xs: "flex-end", md: "space-between" } }}>
+          {/* Reserves the badge's footprint; the logo itself is centred inside it.
+              Taken out of flex flow on mobile so it can sit at the true centre of
+              the bar instead of being pushed off-centre by the hamburger icon. */}
           <Box
             sx={{
               width: badgeWidth,
@@ -91,7 +96,10 @@ export default function Header() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              position: "relative",
+              position: { xs: "absolute", md: "relative" },
+              left: { xs: "50%", md: "auto" },
+              top: { xs: 0, md: "auto" },
+              transform: { xs: "translateX(-50%)", md: "none" },
               zIndex: 1,
               pt: { xs: `${BADGE_DROP.xs * 0.6}px`, md: `${BADGE_DROP.md * 0.6}px` },
             }}
@@ -148,8 +156,7 @@ export default function Header() {
 
       <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
         <Box sx={{ width: 280, pt: 2 }} role="presentation">
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", px: 2, pb: 1 }}>
-            <Logo height={32} href={null} />
+          <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center", px: 2, pb: 1 }}>
             <IconButton aria-label="Close menu" onClick={() => setOpen(false)}>
               <CloseIcon />
             </IconButton>

@@ -17,6 +17,12 @@
  *   through its own diameter, and a diameter is a straight line — so the
  *   outermost bumps are inset from the edges on purpose, letting the canvas
  *   boundary cut a curved chord instead of a straight tangent.
+ * - Depth-derived radii shrink a lot at the shallow edges, and on a narrow
+ *   badge (mobile) a small circle can end up too far from its neighbour's
+ *   centre for the goo filter to actually weld them — the blur fades out
+ *   before the two alpha fields add up past the threshold, so instead of one
+ *   shape you get two, with a gap or a pinched neck between them. Radius is
+ *   floored against the spacing between bump centres so that can't happen.
  */
 
 function seededRandom(seed: number) {
@@ -47,6 +53,11 @@ export function cloudBadgeMask({ width, barHeight, dropHeight, seed = 1 }: Cloud
   // the canvas edges — see the file comment for why both matter.
   const cornerR = clamp(dropHeight * 0.42, 14, 30);
   const margin = cornerR * 0.85;
+  const spacing = (width - 2 * margin) / (bumps - 1);
+  // A same-radius pair spaced `spacing` apart needs r > spacing / 2 just to
+  // touch; the 0.72 factor forces real overlap so the blurred, thresholded
+  // union reads as one continuous puff rather than a string of pinched beads.
+  const minR = spacing * 0.72;
 
   const circles = Array.from({ length: bumps }).map((_, i) => {
     const t = i / (bumps - 1);
@@ -65,7 +76,7 @@ export function cloudBadgeMask({ width, barHeight, dropHeight, seed = 1 }: Cloud
     // regardless of how deep or shallow it hangs, so there is always overlap
     // into the flat strip and never a gap the blur has to bridge alone.
     const rFactor = 1.25 + jitterB * 0.35;
-    const r = dropHeight * depth * 0.5 * rFactor;
+    const r = Math.max(dropHeight * depth * 0.5 * rFactor, minR);
     const cy = bottomY - r;
 
     return `<circle cx="${round(cx)}" cy="${round(cy)}" r="${round(r)}"/>`;
