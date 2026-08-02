@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -8,16 +9,46 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import AnimatedSky from "@/components/motion/AnimatedSky";
 import { brand } from "@/theme/theme";
 import { trackEvent } from "@/lib/analytics";
 
-const headlineWords = "Enterprise software, built at AI speed by senior engineers.".split(" ");
+// The hero cycles through these. Each one makes the same promise in plain
+// words — we deliver any custom build 10x faster — from a different angle.
+const messages = [
+  {
+    headline: "Custom software, delivered 10x faster.",
+    highlight: ["10x", "faster"],
+    subtitle:
+      "Websites, apps, and business systems — built with the newest AI coding models and reviewed line by line by senior engineers.",
+  },
+  {
+    headline: "Your website or app, live in weeks.",
+    highlight: ["live", "in", "weeks"],
+    subtitle:
+      "What used to take a full team months, we ship in days. Same quality, a fraction of the time and cost.",
+  },
+  {
+    headline: "Any idea. Any platform. One senior team.",
+    highlight: ["One", "senior", "team"],
+    subtitle:
+      "Web, mobile, cloud, and AI — from a simple site to trading platforms, medical imaging, and government-grade systems.",
+  },
+  {
+    headline: "Built at AI speed. Built to last.",
+    highlight: ["AI", "speed"],
+    subtitle:
+      "AI gets us there 10x faster. 15+ years of engineering makes sure what you get is secure, scalable, and yours to keep.",
+  },
+];
+
+/** How long each message stays on screen. */
+const ROTATE_MS = 11000;
 
 const wordContainer = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.045, delayChildren: 0.35 } },
+  show: { transition: { staggerChildren: 0.045, delayChildren: 0.2 } },
 };
 
 const wordItem = {
@@ -30,32 +61,85 @@ const wordItem = {
   },
 };
 
-function isHighlighted(word: string) {
-  return ["built", "at", "AI", "speed"].includes(word.replace(/[.,]/g, ""));
+const stripPunctuation = (word: string) => word.replace(/[.,—]/g, "");
+
+type Message = (typeof messages)[number];
+
+const headlineSx = {
+  fontSize: { xs: "2.5rem", sm: "3.25rem", md: "4rem" },
+  display: "flex",
+  flexWrap: "wrap",
+} as const;
+
+const subtitleSx = {
+  mt: 3,
+  color: "rgba(255,255,255,0.8)",
+  fontSize: "1.15rem",
+  maxWidth: 620,
+} as const;
+
+const highlightSx = {
+  backgroundImage: `linear-gradient(90deg, ${brand.blueLight}, #ffffff, ${brand.blueLight})`,
+  backgroundSize: "200% auto",
+  color: "transparent",
+  WebkitBackgroundClip: "text",
+  backgroundClip: "text",
+  animation: "heroGradient 6s ease-in-out infinite",
+};
+
+/**
+ * One message. `sizer` renders the same markup without motion so a hidden copy
+ * of every message can reserve the block's height — the tallest one wins and
+ * the CTAs below never shift when the text rotates.
+ */
+function MessageBody({ message, sizer = false }: { message: Message; sizer?: boolean }) {
+  return (
+    <>
+      <Typography variant="h1" sx={headlineSx}>
+        {message.headline.split(" ").map((word, i) => (
+          <Box
+            key={i}
+            component={sizer ? "span" : motion.span}
+            {...(sizer ? {} : { variants: wordItem })}
+            sx={{
+              display: "inline-block",
+              mr: "0.28em",
+              ...(message.highlight.includes(stripPunctuation(word)) ? highlightSx : {}),
+            }}
+          >
+            {word}
+          </Box>
+        ))}
+      </Typography>
+
+      <Typography
+        variant="body1"
+        sx={subtitleSx}
+        {...(sizer
+          ? { component: "p" }
+          : {
+              component: motion.p,
+              initial: { opacity: 0, y: 12, filter: "blur(4px)" },
+              animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+              transition: { duration: 0.5, delay: 0.55, ease: [0.21, 0.47, 0.32, 0.98] as const },
+            })}
+      >
+        {message.subtitle}
+      </Typography>
+    </>
+  );
 }
 
-const subtitleChunks = [
-  "BlueTrendy Intelligence designs and ships production-grade web, mobile, and mission-critical systems",
-  "trading platforms, geospatial intelligence, medical imaging, identity infrastructure",
-  "combining 15+ years of hands-on engineering with frontier AI models chosen for the job, not the brand.",
-];
-
-const subtitleContainer = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.22, delayChildren: 0.9 } },
-};
-
-const subtitleItem = {
-  hidden: { opacity: 0, y: 12, filter: "blur(4px)" },
-  show: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] as const },
-  },
-};
-
 export default function Hero() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setIndex((i) => (i + 1) % messages.length), ROTATE_MS);
+    return () => clearInterval(id);
+  }, []);
+
+  const message = messages[index];
+
   return (
     <Box
       sx={{
@@ -89,46 +173,35 @@ export default function Hero() {
             />
           </Box>
 
-          <Box component={motion.div} initial="hidden" animate="show" variants={wordContainer}>
-            <Typography
-              variant="h1"
-              sx={{ fontSize: { xs: "2.5rem", sm: "3.25rem", md: "4rem" }, display: "flex", flexWrap: "wrap" }}
+          {/* Rotating pitch. Every message is also rendered invisibly in the same
+              grid cell, so the block is always as tall as the longest one and the
+              CTAs below never jump when the text changes. */}
+          <Box sx={{ display: "grid" }}>
+            <Box
+              aria-hidden
+              sx={{ gridArea: "1 / 1", display: "grid", visibility: "hidden", pointerEvents: "none" }}
             >
-              {headlineWords.map((word, i) => (
-                <Box
-                  key={i}
-                  component={motion.span}
-                  variants={wordItem}
-                  sx={{
-                    display: "inline-block",
-                    mr: "0.28em",
-                    ...(isHighlighted(word)
-                      ? {
-                          backgroundImage: `linear-gradient(90deg, ${brand.blueLight}, #ffffff, ${brand.blueLight})`,
-                          backgroundSize: "200% auto",
-                          color: "transparent",
-                          WebkitBackgroundClip: "text",
-                          backgroundClip: "text",
-                          animation: "heroGradient 6s ease-in-out infinite",
-                        }
-                      : {}),
-                  }}
-                >
-                  {word}
+              {messages.map((m, i) => (
+                <Box key={i} sx={{ gridArea: "1 / 1" }}>
+                  <MessageBody message={m} sizer />
                 </Box>
               ))}
-            </Typography>
-          </Box>
+            </Box>
 
-          <Box component={motion.div} initial="hidden" animate="show" variants={subtitleContainer}>
-            <Typography variant="body1" sx={{ color: "rgba(255,255,255,0.8)", fontSize: "1.15rem", maxWidth: 620 }}>
-              {subtitleChunks.map((chunk, i) => (
-                <Box key={i} component={motion.span} variants={subtitleItem} sx={{ display: "inline" }}>
-                  {chunk}
-                  {i < subtitleChunks.length - 1 ? " — " : ""}
+            <Box sx={{ gridArea: "1 / 1" }}>
+              <AnimatePresence mode="wait">
+                <Box
+                  key={index}
+                  component={motion.div}
+                  initial="hidden"
+                  animate="show"
+                  exit={{ opacity: 0, y: -14, filter: "blur(6px)", transition: { duration: 0.4 } }}
+                  variants={wordContainer}
+                >
+                  <MessageBody message={message} />
                 </Box>
-              ))}
-            </Typography>
+              </AnimatePresence>
+            </Box>
           </Box>
 
           <Box

@@ -34,10 +34,10 @@ export default async function OpengraphImage() {
           <div style={{ fontSize: 34, fontWeight: 600, letterSpacing: -1 }}>bluetrendy</div>
         </div>
         <div style={{ fontSize: 56, fontWeight: 700, lineHeight: 1.15, maxWidth: 900 }}>
-          Enterprise software, built at AI speed by senior engineers.
+          Custom software, delivered 10x faster.
         </div>
         <div style={{ fontSize: 26, color: "rgba(255,255,255,0.75)", marginTop: 28, maxWidth: 820 }}>
-          AI-first custom software consultancy — web, mobile, and mission-critical systems.
+          Websites, apps, and business systems — built with the newest AI coding models, reviewed by senior engineers.
         </div>
       </div>
     ),
