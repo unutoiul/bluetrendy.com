@@ -1,0 +1,26 @@
+"use client";
+
+import type { ReactNode } from "react";
+import Link from "next/link";
+import Button from "@mui/material/Button";
+import type { SxProps, Theme } from "@mui/material/styles";
+
+type LinkButtonProps = {
+  href: string;
+  children: ReactNode;
+  variant?: "text" | "outlined" | "contained";
+  color?: "primary" | "secondary" | "inherit";
+  size?: "small" | "medium" | "large";
+  fullWidth?: boolean;
+  startIcon?: ReactNode;
+  endIcon?: ReactNode;
+  sx?: SxProps<Theme>;
+};
+
+export default function LinkButton({ href, children, ...props }: LinkButtonProps) {
+  return (
+    <Button component={Link} href={href} {...props}>
+      {children}
+    </Button>
+  );
+}

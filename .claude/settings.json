@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e ' *)",
+      "Bash(mkdir -p /c/Users/lucas/AppData/Local/Temp/claude/c--projects-bluetrendy-com-website/f333056b-a5d5-4dc1-923f-1f5c90e456a3/scratchpad)",
+      "Bash(mv logo *)",
+      "WebSearch",
+      "Bash(curl -sL \"https://commons.wikimedia.org/wiki/Special:FilePath/NATO_OTAN_landscape_logo.svg\" -o nato.svg)",
+      "Bash(curl -sL \"https://commons.wikimedia.org/wiki/Special:FilePath/Boston_Consulting_Group_2020_logo.svg\" -o bcg.svg)",
+      "Bash(curl -sL \"https://commons.wikimedia.org/wiki/Special:FilePath/Logo_Bayer.svg\" -o bayer.svg)",
+      "Bash(curl -sL \"https://commons.wikimedia.org/wiki/Special:FilePath/Atlassian-horizontal-blue-rgb.svg\" -o atlassian.svg)",
+      "Bash(curl -sL \"https://commons.wikimedia.org/wiki/Special:FilePath/Alvarez_and_Marsal.png\" -o alvarez-marsal-check.png)",
+      "Bash(curl -sL \"https://commons.wikimedia.org/wiki/Special:FilePath/Alvarez_and_Marsal.png\" -o alvarez-marsal.png)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d['exports'].get\\('./react', d['exports']\\), indent=2\\)\\)\")",
+      "Bash(curl -sL \"https://commons.wikimedia.org/wiki/Special:FilePath/Royal_Mail_logo.svg\" -o royal-mail.svg)",
+      "Bash(curl -sL \"https://commons.wikimedia.org/wiki/Special:FilePath/Royal_Caribbean_logo_\\(2024\\).svg\" -o royal-caribbean.svg)",
+      "Bash(curl -sL \"https://commons.wikimedia.org/wiki/Special:FilePath/Allergan_logo.svg\" -o allergan.svg)",
+      "Bash(cp ../../../../build/static/media/ee.e1803c34.svg ./ee.svg)",
+      "Bash(SCRATCH=\"/c/Users/lucas/AppData/Local/Temp/claude/c--projects-bluetrendy-com-website/f333056b-a5d5-4dc1-923f-1f5c90e456a3/scratchpad\" *)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\lucas\\AppData\\Local\\Temp\\claude\\c--projects-bluetrendy-com-website\\f333056b-a5d5-4dc1-923f-1f5c90e456a3\\scratchpad\\svg-check"
+    ]
+  }
+}

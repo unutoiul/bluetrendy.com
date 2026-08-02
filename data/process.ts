@@ -1,0 +1,74 @@
+export const processSteps = [
+  {
+    step: "01",
+    title: "Discovery call",
+    duration: "30–45 minutes",
+    description:
+      "A senior engineer — the person who would actually build your project — walks through your problem, constraints, timeline, and existing systems. No sales handoff, no discovery questionnaire filtered through a rep.",
+  },
+  {
+    step: "02",
+    title: "Paid discovery sprint",
+    duration: "1–2 weeks",
+    description:
+      "A fixed-price, scoped engagement that produces a concrete architecture plan, a delivery estimate, and a working proof of concept where useful. You get a decision-ready document, not a vague proposal — and you can walk away with it even if we don't continue together.",
+  },
+  {
+    step: "03",
+    title: "Build in the open",
+    duration: "Ongoing, weekly cadence",
+    description:
+      "Weekly demos against a real staging environment, direct Slack or email access to the engineer writing your code, and a shared backlog you can see at any time. Nothing ships that you haven't already watched work.",
+  },
+  {
+    step: "04",
+    title: "Ship & hand over",
+    duration: "At each milestone",
+    description:
+      "Production deployment with CI/CD, monitoring, and documentation written for the team that inherits the system — whether that's your internal engineers or an ongoing partnership with us.",
+  },
+];
+
+export const engagementModels = [
+  {
+    name: "Paid Discovery Sprint",
+    description:
+      "The entry point for most engagements. A fixed-price, time-boxed sprint that ends with an architecture plan, risk assessment, and delivery estimate — before you commit to a full build.",
+    bestFor: "New projects, unclear scope, or validating an approach before funding a full build.",
+  },
+  {
+    name: "Fixed-Scope Project",
+    description:
+      "A defined deliverable, timeline, and price, agreed after discovery. Weekly demos and milestone-based payment keep the engagement accountable end to end.",
+    bestFor: "Well-scoped builds — a platform, a migration, an integration — with a clear definition of done.",
+  },
+  {
+    name: "Embedded Engineering",
+    description:
+      "Ongoing, senior-engineer capacity working inside your team and your existing tools — for teams that need sustained delivery, not a one-off project.",
+    bestFor: "Teams scaling delivery, covering a gap, or wanting AI-fluent senior engineering long-term.",
+  },
+];
+
+export const processFaqs = [
+  {
+    question: "How fast can you actually start?",
+    answer:
+      "Most discovery calls happen within a few business days of first contact, and a paid discovery sprint can typically start the following week once scope is agreed.",
+  },
+  {
+    question: "How does AI actually factor into delivery?",
+    answer:
+      "AI models are used where they measurably speed up delivery — scaffolding, code review, test generation, and in some cases as a feature inside the product itself (document processing, predictive analysis). Every AI-assisted output is reviewed and owned by a senior engineer before it ships; AI accelerates the work, it doesn't replace engineering judgment.",
+  },
+  {
+    question: "What about security, NDAs, and IP ownership?",
+    answer:
+      "NDAs are standard before any confidential discussion. You retain full IP ownership of everything built for you. Engagements involving sensitive or classified data can draw on direct experience holding UK SC (Security Check) clearance for government and defense work.",
+  },
+  {
+    question: "Do you work with in-house teams, or only end-to-end?",
+    answer:
+      "Both. Some engagements are fully end-to-end delivery; others are embedded work alongside an existing engineering team, picking up a specific system or gap in capacity.",
+  },
+];
