@@ -52,7 +52,7 @@ function TileContent({ client }: { client: (typeof clientLogos)[number] }) {
             width: "auto",
             objectFit: "contain",
             filter: "grayscale(1)",
-            opacity: 0.65,
+            opacity: client.mutedOpacity ?? 0.65,
             transition: "opacity 0.2s ease, filter 0.2s ease",
           }}
         />

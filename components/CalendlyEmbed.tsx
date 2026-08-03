@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Script from "next/script";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -6,6 +9,21 @@ import Button from "@mui/material/Button";
 
 export default function CalendlyEmbed() {
   const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
+  const [height, setHeight] = useState(700);
+
+  useEffect(() => {
+    function handleMessage(e: MessageEvent) {
+      if (e.origin !== "https://calendly.com") return;
+      if (e.data?.event === "calendly.page_height") {
+        const parsedHeight = parseFloat(e.data.payload?.height);
+        if (!Number.isNaN(parsedHeight)) {
+          setHeight(parsedHeight);
+        }
+      }
+    }
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   if (!calendlyUrl) {
     return (
@@ -37,7 +55,7 @@ export default function CalendlyEmbed() {
       <Box
         className="calendly-inline-widget"
         data-url={calendlyUrl}
-        sx={{ minWidth: 320, height: { xs: 900, md: 720 } }}
+        sx={{ minWidth: 320, height, transition: "height 0.2s ease" }}
       />
       <Script src="https://assets.calendly.com/assets/external/widget.js" strategy="lazyOnload" />
     </Box>

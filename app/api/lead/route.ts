@@ -1,14 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getMailTransport, isEmailConfigured } from "@/lib/email";
-
-function escapeHtml(value: string) {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
+import { getResendClient, isEmailConfigured } from "@/lib/email";
+import { leadConfirmationEmail, leadNotificationEmail } from "@/lib/emailTemplates";
 
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null);
@@ -18,7 +10,7 @@ export async function POST(request: NextRequest) {
   const company = typeof body?.company === "string" ? body.company.trim().slice(0, 200) : "";
   const projectType = typeof body?.projectType === "string" ? body.projectType.trim().slice(0, 100) : "";
   const budget = typeof body?.budget === "string" ? body.budget.trim().slice(0, 100) : "";
-  const projectTimeline = typeof body?.timeline === "string" ? body.timeline.trim().slice(0, 100) : "";
+  const timeline = typeof body?.timeline === "string" ? body.timeline.trim().slice(0, 100) : "";
   const message = typeof body?.message === "string" ? body.message.trim().slice(0, 4000) : "";
 
   if (!name || !email || !email.includes("@") || !message) {
@@ -28,16 +20,10 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  const lead = { name, email, company, projectType, budget, timeline, message };
+
   if (!isEmailConfigured()) {
-    console.error("Lead received but email delivery is not configured:", {
-      name,
-      email,
-      company,
-      projectType,
-      budget,
-      timeline: projectTimeline,
-      message,
-    });
+    console.error("Lead received but email delivery is not configured:", lead);
     return NextResponse.json(
       {
         error:
@@ -48,22 +34,37 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const transport = getMailTransport();
-    await transport.sendMail({
-      from: process.env.SMTP_USER,
-      to: process.env.LEAD_NOTIFICATION_EMAIL,
-      replyTo: email,
-      subject: `New project brief: ${name}${company ? ` (${company})` : ""}`,
-      html: `
-        <p><b>Name:</b> ${escapeHtml(name)}</p>
-        <p><b>Email:</b> ${escapeHtml(email)}</p>
-        <p><b>Company:</b> ${escapeHtml(company) || "—"}</p>
-        <p><b>Project type:</b> ${escapeHtml(projectType) || "—"}</p>
-        <p><b>Budget:</b> ${escapeHtml(budget) || "—"}</p>
-        <p><b>Timeline:</b> ${escapeHtml(projectTimeline) || "—"}</p>
-        <p><b>Message:</b><br/>${escapeHtml(message).replace(/\n/g, "<br/>")}</p>
-      `,
-    });
+    const resend = getResendClient();
+    const from = process.env.EMAIL_FROM as string;
+
+    const notification = leadNotificationEmail(lead);
+    const confirmation = leadConfirmationEmail(lead);
+
+    // Fire both sends together — a confirmation email failing shouldn't block
+    // the internal notification (or vice versa) from going out.
+    const results = await Promise.allSettled([
+      resend.emails.send({
+        from,
+        to: process.env.LEAD_NOTIFICATION_EMAIL as string,
+        replyTo: email,
+        subject: notification.subject,
+        html: notification.html,
+        text: notification.text,
+      }),
+      resend.emails.send({
+        from,
+        to: email,
+        replyTo: "contact@bluetrendy.com",
+        subject: confirmation.subject,
+        html: confirmation.html,
+        text: confirmation.text,
+      }),
+    ]);
+
+    const [notificationResult] = results;
+    if (notificationResult.status === "rejected") {
+      throw notificationResult.reason;
+    }
 
     return NextResponse.json({ ok: true });
   } catch (error) {
