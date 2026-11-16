@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import CheckIcon from "@mui/icons-material/Check";
 import PageHero from "@/components/PageHero";
-import CalendlyEmbed from "@/components/CalendlyEmbed";
+import BookingEmbed from "@/components/BookingEmbed";
 
 export const metadata: Metadata = {
   title: "Book a Call",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 const expectations = [
-  "30–45 minutes with a senior engineer, not a sales rep",
+  "30 minutes with a senior engineer",
   "We'll ask about your problem, constraints, and existing systems",
   "You'll leave with a clear next step — discovery sprint, project quote, or a straight 'not a fit'",
   "No pressure, no obligation",
@@ -44,7 +44,7 @@ export default function BookACallPage() {
             </Stack>
           </Grid>
           <Grid size={{ xs: 12, md: 8 }}>
-            <CalendlyEmbed />
+            <BookingEmbed />
           </Grid>
         </Grid>
       </Container>

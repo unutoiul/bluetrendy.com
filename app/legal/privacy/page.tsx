@@ -3,6 +3,7 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import PageHero from "@/components/PageHero";
+import { getBookingConfig } from "@/lib/booking";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -10,6 +11,8 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPolicyPage() {
+  const booking = getBookingConfig(process.env.NEXT_PUBLIC_CAL_COM_URL, process.env.NEXT_PUBLIC_CALENDLY_URL);
+  const schedulingProvider = booking?.provider === "calendly" ? "Calendly" : "Cal.com";
   return (
     <>
       <PageHero eyebrow="Legal" title="Privacy Policy" subtitle="Last updated: to be confirmed before launch." />
@@ -29,8 +32,12 @@ export default function PrivacyPolicyPage() {
             <Typography variant="body1" color="text.secondary">
               We collect information you provide directly — through the contact form, the discovery sprint
               checkout, or by booking a call — including your name, email address, company, and project
-              details. If you use our booking calendar, our scheduling provider (Calendly) collects the
+              details. If you use our booking calendar, our scheduling provider ({schedulingProvider}) collects the
               information needed to schedule and manage that appointment under its own privacy policy.
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              Contact form messages and confirmation emails are delivered using Resend. Your contact
+              details and enquiry are processed to deliver these messages and help us respond to you.
             </Typography>
             <Typography variant="body1" color="text.secondary">
               We use privacy-conscious, cookie-free analytics (Vercel Analytics) to understand aggregate site

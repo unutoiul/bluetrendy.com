@@ -10,7 +10,9 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 import { trackEvent } from "@/lib/analytics";
+import { leadFieldLimits } from "@/lib/lead";
 
 const projectTypes = [
   "New product build",
@@ -49,6 +51,8 @@ export default function LeadForm() {
   const [form, setForm] = useState<FormState>(initialState);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [website, setWebsite] = useState("");
+  const [confirmationSent, setConfirmationSent] = useState(false);
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -56,6 +60,7 @@ export default function LeadForm() {
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
+    if (status === "loading") return;
     setStatus("loading");
     setErrorMessage("");
     trackEvent("lead_form_submit", { projectType: form.projectType || "unspecified" });
@@ -64,7 +69,7 @@ export default function LeadForm() {
       const response = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, website }),
       });
 
       const data = await response.json();
@@ -77,6 +82,7 @@ export default function LeadForm() {
       }
 
       setStatus("success");
+      setConfirmationSent(data.confirmationSent === true);
       setForm(initialState);
       trackEvent("lead_form_success");
     } catch {
@@ -93,6 +99,7 @@ export default function LeadForm() {
           Brief received.
         </Typography>
         <Typography variant="body2" sx={{ mt: 0.5 }}>
+          {confirmationSent ? "A confirmation is on its way to your inbox. " : ""}
           We&apos;ll reply within one business day. Want to skip the wait?{" "}
           <Typography component={Link} href="/book-a-call" sx={{ fontWeight: 700, textDecoration: "underline" }}>
             Book a call now →
@@ -103,11 +110,18 @@ export default function LeadForm() {
   }
 
   return (
-    <Stack component="form" onSubmit={handleSubmit} spacing={2.5}>
+    <Stack component="form" onSubmit={handleSubmit} spacing={2.5} aria-busy={status === "loading"}>
+      <Box aria-hidden="true" sx={{ position: "absolute", left: -10000, width: 1, height: 1, overflow: "hidden" }}>
+        <label htmlFor="contact-website">Leave this field empty</label>
+        <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" value={website} onChange={(event) => setWebsite(event.target.value)} />
+      </Box>
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             label="Name"
+            name="name"
+            autoComplete="name"
+            slotProps={{ htmlInput: { maxLength: leadFieldLimits.name } }}
             required
             fullWidth
             value={form.name}
@@ -117,6 +131,9 @@ export default function LeadForm() {
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             label="Work email"
+            name="email"
+            autoComplete="email"
+            slotProps={{ htmlInput: { maxLength: leadFieldLimits.email } }}
             type="email"
             required
             fullWidth
@@ -128,6 +145,9 @@ export default function LeadForm() {
 
       <TextField
         label="Company (optional)"
+        name="company"
+        autoComplete="organization"
+        slotProps={{ htmlInput: { maxLength: leadFieldLimits.company } }}
         fullWidth
         value={form.company}
         onChange={(e) => update("company", e.target.value)}
@@ -183,6 +203,9 @@ export default function LeadForm() {
 
       <TextField
         label="Tell us about the project"
+        name="message"
+        slotProps={{ htmlInput: { maxLength: leadFieldLimits.message } }}
+        helperText={`${form.message.length.toLocaleString()} / 4,000 characters`}
         required
         multiline
         minRows={4}
@@ -211,6 +234,10 @@ export default function LeadForm() {
       >
         {status === "loading" ? "Sending…" : "Send project brief"}
       </Button>
+      <Typography variant="caption" color="text.secondary">
+        We&apos;ll use your details to respond to your enquiry and send a confirmation email.{" "}
+        <Box component={Link} href="/legal/privacy" sx={{ textDecoration: "underline" }}>Privacy policy</Box>
+      </Typography>
     </Stack>
   );
 }
