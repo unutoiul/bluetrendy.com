@@ -14,8 +14,10 @@ const colors = {
   "cal-bg": "#FFFFFF",
   "cal-bg-subtle": "#F5F8FA",
   "cal-border": "#DCE5EB",
+  "cal-border-booker-width": "0px",
   "radius": "10px",
 };
+const embedConfig = { layout: "month_view", theme: "light" } as const;
 
 export default function CalEmbed({ calLink }: { calLink: string }) {
   useEffect(() => {
@@ -24,7 +26,7 @@ export default function CalEmbed({ calLink }: { calLink: string }) {
       if (!active) return;
       cal("ui", {
         theme: "light",
-        hideEventTypeDetails: false,
+        hideEventTypeDetails: true,
         layout: "month_view",
         cssVarsPerTheme: { light: colors, dark: colors },
       });
@@ -38,8 +40,8 @@ export default function CalEmbed({ calLink }: { calLink: string }) {
     <Cal
       namespace={namespace}
       calLink={calLink}
-      style={{ width: "100%", minHeight: 720, overflow: "auto" }}
-      config={{ layout: "month_view", theme: "light" }}
+      style={{ width: "100%", minHeight: 420 }}
+      config={embedConfig}
     />
   );
 }

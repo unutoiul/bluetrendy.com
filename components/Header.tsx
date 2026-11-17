@@ -16,6 +16,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Logo, { LOGO_HEIGHT, logoWidth } from "./Logo";
 import { cloudBadgeMask } from "./motion/cloudBadge";
 import { navLinks } from "@/data/nav";
@@ -44,6 +45,21 @@ const badgeMask = {
 export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  if (pathname === "/book-a-call") {
+    return (
+      <AppBar component="header" position="sticky" elevation={0} color="transparent" sx={{ bgcolor: "background.paper", borderBottom: "1px solid", borderColor: "divider" }}>
+        <Container>
+          <Box component="nav" aria-label="Booking navigation" sx={{ height: 64, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1 }}>
+            <Logo height={44} />
+            <Button component={Link} href="/" startIcon={<ArrowBackIcon sx={{ fontSize: 16 }} />} sx={{ color: "text.secondary", fontSize: 13, px: 1.25, minHeight: 40 }}>
+              Back to site
+            </Button>
+          </Box>
+        </Container>
+      </AppBar>
+    );
+  }
 
   return (
     <AppBar

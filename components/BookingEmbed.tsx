@@ -33,16 +33,16 @@ export default function BookingEmbed() {
   }
 
   return (
-    <Stack spacing={2}>
-      <Box sx={{ border: "1px solid", borderColor: "divider", borderRadius: 3, overflow: "hidden", minWidth: 0 }}>
+    <Box component="section" aria-label="Choose a date and time" sx={{ border: "1px solid", borderColor: "divider", borderRadius: "16px", overflow: "hidden", minWidth: 0, bgcolor: "background.paper", boxShadow: "0 8px 32px rgba(11,31,43,0.04)" }}>
+      <Stack direction="row" sx={{ px: { xs: 1.5, sm: 2.5 }, py: 1, gap: 1, flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid", borderColor: "divider" }}>
+        <Typography variant="caption" color="text.secondary">Times in your timezone</Typography>
+        <Box component="a" href={booking.url} target="_blank" rel="noopener noreferrer" sx={{ display: "inline-flex", alignItems: "center", gap: 0.5, minHeight: 28, color: "primary.main", fontSize: 12, fontWeight: 600, textDecoration: "underline", textUnderlineOffset: 3 }}>
+          Open full calendar <OpenInNew sx={{ fontSize: 13 }} />
+        </Box>
+      </Stack>
+      <Box sx={{ minWidth: 0 }}>
         {booking.provider === "cal" ? <CalEmbed calLink={booking.calLink} /> : <CalendlyEmbed url={booking.url} />}
       </Box>
-      <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center" }}>
-        Times are shown in your timezone. Can&apos;t see the calendar?{" "}
-        <Box component="a" href={booking.url} target="_blank" rel="noopener noreferrer" sx={{ color: "primary.main", textDecoration: "underline", fontWeight: 600 }}>
-          Open the booking page <OpenInNew sx={{ fontSize: 13, verticalAlign: "middle" }} />
-        </Box>
-      </Typography>
-    </Stack>
+    </Box>
   );
 }

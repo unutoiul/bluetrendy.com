@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import CheckIcon from "@mui/icons-material/Check";
-import PageHero from "@/components/PageHero";
+import AccessTimeOutlined from "@mui/icons-material/AccessTimeOutlined";
+import VideocamOutlined from "@mui/icons-material/VideocamOutlined";
 import BookingEmbed from "@/components/BookingEmbed";
 
 export const metadata: Metadata = {
@@ -12,42 +12,36 @@ export const metadata: Metadata = {
   description: "Book a free 30-minute call with a senior engineer to talk through your project.",
 };
 
-const expectations = [
-  "30 minutes with a senior engineer",
-  "We'll ask about your problem, constraints, and existing systems",
-  "You'll leave with a clear next step — discovery sprint, project quote, or a straight 'not a fit'",
-  "No pressure, no obligation",
-];
-
 export default function BookACallPage() {
   return (
-    <>
-      <PageHero
-        eyebrow="Book a Call"
-        title="Talk through your project with a senior engineer"
-        subtitle="Free, no-obligation call. Pick a time below."
-      />
-
-      <Container sx={{ py: { xs: 10, md: 14 } }}>
-        <Grid container spacing={6}>
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Stack spacing={2.5}>
-              <Typography variant="h6">What to expect</Typography>
-              {expectations.map((item) => (
-                <Stack key={item} direction="row" spacing={1.5} sx={{ alignItems: "flex-start" }}>
-                  <CheckIcon sx={{ color: "secondary.main", fontSize: 20, mt: 0.2 }} />
-                  <Typography variant="body2" color="text.secondary">
-                    {item}
-                  </Typography>
-                </Stack>
-              ))}
+    <Box component="section" aria-labelledby="booking-heading" sx={{ pt: { xs: 2.5, md: 3.5 }, pb: 3 }}>
+      <Container sx={{ px: { xs: 2, sm: 3 } }}>
+        <Box sx={{ maxWidth: 1080, mx: "auto" }}>
+          <Stack spacing={1} sx={{ mb: { xs: 2, md: 2.5 } }}>
+            <Typography id="booking-heading" component="h1" sx={{ fontSize: { xs: 27, sm: 34 }, fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.03em", color: "primary.main" }}>
+              Book a discovery call
+            </Typography>
+            <Stack direction="row" spacing={2} sx={{ alignItems: "center", color: "text.secondary", flexWrap: "wrap", rowGap: 0.5 }}>
+              <Stack direction="row" spacing={0.75} sx={{ alignItems: "center" }}>
+                <AccessTimeOutlined sx={{ fontSize: 17 }} />
+                <Typography variant="body2">30 minutes</Typography>
+              </Stack>
+              <Stack direction="row" spacing={0.75} sx={{ alignItems: "center" }}>
+                <VideocamOutlined sx={{ fontSize: 19 }} />
+                <Typography variant="body2">Google Meet</Typography>
+              </Stack>
+              <Typography variant="body2" sx={{ color: "primary.main", fontWeight: 700 }}>Free</Typography>
             </Stack>
-          </Grid>
-          <Grid size={{ xs: 12, md: 8 }}>
-            <BookingEmbed />
-          </Grid>
-        </Grid>
+          </Stack>
+          <BookingEmbed />
+          <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", mt: 2 }}>
+            Need a different time?{" "}
+            <Box component="a" href="mailto:contact@bluetrendy.com?subject=Discovery%20call" sx={{ color: "primary.main", textDecoration: "underline", textUnderlineOffset: 3 }}>
+              Email our team
+            </Box>
+          </Typography>
+        </Box>
       </Container>
-    </>
+    </Box>
   );
 }
