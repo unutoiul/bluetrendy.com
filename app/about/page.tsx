@@ -11,6 +11,23 @@ import CTASection from "@/components/CTASection";
 import { timeline, values } from "@/data/timeline";
 import { brand } from "@/theme/theme";
 import founderPhoto from "@/public/brand/founder.png";
+import SchoolOutlined from "@mui/icons-material/SchoolOutlined";
+import VerifiedUserOutlined from "@mui/icons-material/VerifiedUserOutlined";
+
+const credentials = [
+  {
+    icon: SchoolOutlined,
+    label: "Education",
+    primary: "B.S. Economic Cybernetics, Statistics & Informatics",
+    secondary: "LSE University · London",
+  },
+  {
+    icon: VerifiedUserOutlined,
+    label: "Clearance",
+    primary: "UK SC (Security Check) cleared",
+    secondary: "Based in London, UK",
+  },
+];
 
 export const metadata: Metadata = {
   title: "About",
@@ -55,12 +72,59 @@ export default function AboutPage() {
                   Founder & Lead Engineer, bluetrendy
                 </Typography>
               </Box>
-              <Typography variant="body2" color="text.secondary">
-                B.S. Economic Cybernetics, Statistics & Informatics — ASE University
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                London, UK · UK SC (Security Check) cleared
-              </Typography>
+              <Stack
+                sx={{
+                  width: "100%",
+                  maxWidth: { xs: 360, md: "none" },
+                  bgcolor: brand.mist,
+                  border: "1px solid",
+                  borderColor: "divider",
+                  borderRadius: 3,
+                  textAlign: "left",
+                }}
+              >
+                {credentials.map(({ icon: Icon, label, primary, secondary }, index) => (
+                  <Stack
+                    key={label}
+                    direction="row"
+                    spacing={1.75}
+                    sx={{
+                      p: 2.25,
+                      alignItems: "flex-start",
+                      borderTop: index === 0 ? "none" : "1px solid",
+                      borderColor: "divider",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "grid",
+                        placeItems: "center",
+                        width: 36,
+                        height: 36,
+                        flexShrink: 0,
+                        borderRadius: 2,
+                        bgcolor: "background.paper",
+                        border: "1px solid",
+                        borderColor: "divider",
+                        color: "secondary.main",
+                      }}
+                    >
+                      <Icon sx={{ fontSize: 20 }} />
+                    </Box>
+                    <Box sx={{ minWidth: 0 }}>
+                      <Typography variant="overline" color="text.secondary" sx={{ display: "block", lineHeight: 1.6, fontSize: "0.68rem" }}>
+                        {label}
+                      </Typography>
+                      <Typography variant="body2" sx={{ fontWeight: 600, color: "text.primary", lineHeight: 1.45 }}>
+                        {primary}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" sx={{ mt: 0.25 }}>
+                        {secondary}
+                      </Typography>
+                    </Box>
+                  </Stack>
+                ))}
+              </Stack>
             </Stack>
           </Grid>
 

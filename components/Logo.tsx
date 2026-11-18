@@ -1,119 +1,70 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useEffectEvent, useRef } from "react";
 import Link from "next/link";
 import Box from "@mui/material/Box";
-import logoLockup from "@/public/brand/logo.png";
+import { animate, useReducedMotion } from "motion/react";
+import wordmark from "@/public/brand/logo.png";
+import inverseWordmark from "@/public/brand/logo-inverse.png";
 
-// Intrinsic 698x242 — keep the lockup's aspect ratio when scaling by height.
-const ASPECT = logoLockup.width / logoLockup.height;
-
-/** Standard lockup size, shared by the header and footer so the two stay identical. */
-export const LOGO_HEIGHT = 100;
-
-/** Rendered width for a given height — used to size the header badge. */
-export const logoWidth = (height: number) => Math.round(height * ASPECT);
-
-// Idle shimmer: one pass roughly every 9s. The sweep lives in the back half of
-// the cycle so that restarting the animation (which happens when the hover
-// sweep hands back) leaves a long quiet gap instead of a second flash.
-const IDLE_CYCLE = "9s";
-const HOVER_SWEEP = "900ms";
-
-// Parked positions sit outside the clipped box, so the band is only ever
-// visible while it is crossing.
-const OFF_LEFT = "translateX(-160%) skewX(-14deg)";
-const OFF_RIGHT = "translateX(340%) skewX(-14deg)";
+// In both lockup images the ribbon mark ends at x=389 and the wordmark starts at x=427 (of 1320).
+const markShare = 408 / 1320;
+let arrivalSpun = false;
 
 type LogoProps = {
   height?: number;
-  href?: string | null;
+  inverse?: boolean;
+  /** Spin the mark once when the site first loads (after the entrance film, if it is open). */
+  spinOnArrival?: boolean;
 };
 
-export default function Logo({ height = LOGO_HEIGHT, href = "/" }: LogoProps) {
-  const width = logoWidth(height);
+export default function Logo({ height = 45, inverse = false, spinOnArrival = false }: LogoProps) {
+  const image = inverse ? inverseWordmark : wordmark;
+  const width = Math.round(height * image.width / image.height);
+  const mark = useRef<HTMLSpanElement>(null);
+  const spinning = useRef(false);
+  const reduced = useReducedMotion();
 
-  const mark = (
-    <Box
-      sx={{
-        position: "relative",
-        display: "inline-flex",
-        lineHeight: 0,
-        transition: "transform 350ms cubic-bezier(0.2, 0.7, 0.3, 1)",
-        "@keyframes btLogoIdleSheen": {
-          "0%, 62%": { transform: OFF_LEFT },
-          "76%, 100%": { transform: OFF_RIGHT },
-        },
-        "@keyframes btLogoHoverSheen": {
-          "0%": { transform: OFF_LEFT },
-          "100%": { transform: OFF_RIGHT },
-        },
-        "&:hover": { transform: "scale(1.03)" },
-        "&:hover .bt-logo-sheen::after": {
-          animation: `btLogoHoverSheen ${HOVER_SWEEP} cubic-bezier(0.35, 0, 0.25, 1)`,
-        },
-        "@media (prefers-reduced-motion: reduce)": {
-          transition: "none",
-          "&:hover": { transform: "none" },
-          "& .bt-logo-sheen::after, &:hover .bt-logo-sheen::after": { animation: "none" },
-        },
-      }}
-    >
-      <Image
-        src={logoLockup}
-        alt="BlueTrendy Intelligence"
-        height={height}
-        width={width}
-        priority
-        quality={100}
-        style={{ height, width, display: "block" }}
-      />
-
-      {/* Light band, clipped to the lockup's own pixels so it rides the mark and
-          wordmark rather than sweeping a rectangle across the transparent gaps. */}
-      <Box
-        aria-hidden
-        className="bt-logo-sheen"
-        sx={{
-          position: "absolute",
-          inset: 0,
-          overflow: "hidden",
-          pointerEvents: "none",
-          maskImage: `url(${logoLockup.src})`,
-          WebkitMaskImage: `url(${logoLockup.src})`,
-          maskSize: "100% 100%",
-          WebkitMaskSize: "100% 100%",
-          maskRepeat: "no-repeat",
-          WebkitMaskRepeat: "no-repeat",
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            top: "-25%",
-            bottom: "-25%",
-            width: "38%",
-            background:
-              "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%)",
-            transform: OFF_LEFT,
-            animation: `btLogoIdleSheen ${IDLE_CYCLE} linear infinite`,
-          },
-        }}
-      />
-    </Box>
-  );
-
-  if (!href) {
-    return (
-      <Box component="span" sx={{ display: "inline-flex", lineHeight: 0 }}>
-        {mark}
-      </Box>
-    );
+  // The same turntable turn as the sculpture in the hero, on a flat mark.
+  function spin() {
+    const element = mark.current;
+    if (!element || spinning.current || reduced) return;
+    spinning.current = true;
+    animate(element, { rotateY: [0, 360] }, { duration: 1.2, ease: [0.65, 0, 0.35, 1] })
+      .then(() => { spinning.current = false; });
   }
+  const spinOnce = useEffectEvent(spin);
+
+  useEffect(() => {
+    if (!spinOnArrival || arrivalSpun) return;
+    let timer = 0;
+    const start = () => {
+      timer = window.setTimeout(() => {
+        arrivalSpun = true;
+        spinOnce();
+      }, 450);
+    };
+    const gate = document.querySelector<HTMLDialogElement>("dialog[data-website-entrance]");
+    if (gate?.open) gate.addEventListener("close", start, { once: true });
+    else start();
+    return () => {
+      window.clearTimeout(timer);
+      gate?.removeEventListener("close", start);
+    };
+  }, [spinOnArrival]);
 
   return (
-    <Link
-      href={href}
-      aria-label="BlueTrendy Intelligence — home"
-      style={{ display: "inline-flex", lineHeight: 0, textDecoration: "none" }}
-    >
-      {mark}
+    <Link href="/" aria-label="BlueTrendy Intelligence home" onPointerEnter={spin}
+      style={{ display: "inline-flex", flexShrink: 0 }}>
+      <Box sx={{ position: "relative", width, height, perspective: `${height * 12}px` }}>
+        <Box component="span" ref={mark}
+          sx={{ position: "absolute", inset: 0, right: "auto", width: `${markShare * 100}%`, overflow: "hidden", display: "block" }}>
+          <Box component="img" src={image.src} alt="" width={width} height={height}
+            sx={{ display: "block", width, height, maxWidth: "none" }} />
+        </Box>
+        <Box component="img" src={image.src} alt="" width={width} height={height}
+          sx={{ position: "absolute", inset: 0, display: "block", width: "100%", height: "100%", clipPath: `inset(0 0 0 ${markShare * 100}%)` }} />
+      </Box>
     </Link>
   );
 }

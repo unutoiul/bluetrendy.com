@@ -9,6 +9,7 @@ type LinkTypographyProps = {
   href: string;
   children: ReactNode;
   variant?: "body1" | "body2" | "subtitle1" | "subtitle2" | "caption" | "overline";
+  className?: string;
   sx?: SxProps<Theme>;
 };
 

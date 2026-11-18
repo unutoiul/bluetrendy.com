@@ -1,117 +1,45 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { motion } from "motion/react";
-import { clientLogos } from "@/data/clients";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import { motion, useReducedMotion } from "motion/react";
+import { clientLogos, type ClientLogo } from "@/data/clients";
 
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.06 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 16, scale: 0.96 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.45, ease: [0.21, 0.47, 0.32, 0.98] as const } },
-};
-
-function TileContent({ client }: { client: (typeof clientLogos)[number] }) {
+function ClientMark({ client }: { client: ClientLogo }) {
   return (
-    <Box
-      component={motion.div}
-      variants={item}
-      whileHover={{ y: -3 }}
-      sx={{
-        height: { xs: 84, sm: 96 },
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        border: "1px solid",
-        borderColor: "divider",
-        borderRadius: 3,
-        bgcolor: "background.paper",
-        px: 2,
-        transition: "border-color 0.2s ease, box-shadow 0.2s ease",
-        "&:hover": {
-          borderColor: "secondary.main",
-          boxShadow: "0 8px 20px rgba(11,69,99,0.08)",
-        },
-        "&:hover img": { opacity: 1, filter: "grayscale(0)" },
-      }}
-    >
-      {client.file ? (
-        <Box
-          component="img"
-          src={`/brand/clients/${client.file}`}
-          alt={client.name}
-          sx={{
-            maxHeight: { xs: 32, sm: 40 },
-            maxWidth: "80%",
-            width: "auto",
-            objectFit: "contain",
-            filter: "grayscale(1)",
-            opacity: client.mutedOpacity ?? 0.65,
-            transition: "opacity 0.2s ease, filter 0.2s ease",
-          }}
-        />
-      ) : (
-        <Typography
-          sx={{
-            fontWeight: 700,
-            fontSize: "1rem",
-            color: "text.secondary",
-            opacity: 0.75,
-            textAlign: "center",
-          }}
-        >
-          {client.name}
-        </Typography>
-      )}
+    <Box component={client.external ? "a" : Link} href={client.href}
+      target={client.external ? "_blank" : undefined} rel={client.external ? "noopener noreferrer" : undefined}
+      aria-label={client.name + (client.external ? " (opens in a new tab)" : " case study")}
+      sx={{ display: "grid", placeItems: "center", minHeight: 65, px: 1.5, borderRadius: 1,
+        "& img": { opacity: client.mutedOpacity ?? 0.79, filter: "grayscale(1)", maxWidth: "100%", objectFit: "contain" },
+        "&:hover img, &:focus-visible img": { opacity: 1, filter: "none" } }}>
+      {client.file ? <Box component="img" src={`/brand/clients/${client.file}`} alt="" width={107} height={35} loading="lazy" /> : client.name}
     </Box>
   );
 }
 
 export default function TrustStrip() {
+  const [expanded, setExpanded] = useState(false);
+  const reduced = useReducedMotion();
+  const layout = { display: "grid", alignItems: "center", gridTemplateColumns: { xs: "repeat(3,minmax(0,1fr))", sm: "repeat(5,minmax(0,1fr))" } };
   return (
-    <Box>
-      <Typography
-        variant="overline"
-        sx={{ color: "text.secondary", display: "block", textAlign: "center", mb: 4 }}
-      >
-        Engineering delivered inside
-      </Typography>
-      <Grid
-        container
-        component={motion.div}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-60px" }}
-        variants={container}
-        spacing={2}
-      >
-        {clientLogos.map((client) => (
-          <Grid key={client.name} size={{ xs: 6, sm: 4, md: 2.4 }}>
-            {client.external ? (
-              <Box
-                component="a"
-                href={client.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${client.name} (opens in a new tab)`}
-                sx={{ display: "block" }}
-              >
-                <TileContent client={client} />
-              </Box>
-            ) : (
-              <Box component={Link} href={client.href} aria-label={client.name} className="tile-link" sx={{ display: "block" }}>
-                <TileContent client={client} />
-              </Box>
-            )}
-          </Grid>
-        ))}
-      </Grid>
+    <Box component="section" aria-labelledby="clients-heading">
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1, borderBottom: "1px solid", borderColor: "divider", pb: 1 }}>
+        <Typography id="clients-heading" component="h2" sx={{ fontSize: { xs: 15, sm: 17 }, fontWeight: 650 }}>Teams we’ve built software with</Typography>
+        <Button size="small" aria-expanded={expanded} aria-controls="more-clients" onClick={() => setExpanded(!expanded)}
+          endIcon={<ExpandMore sx={{ transform: expanded ? "rotate(180deg)" : undefined }} />} sx={{ px: 1, flexShrink: 0 }}>
+          {expanded ? "Show fewer" : "View all " + clientLogos.length}
+        </Button>
+      </Box>
+      <Box sx={{ ...layout, pt: 1.5 }}>{clientLogos.slice(0, 5).map(client => <ClientMark key={client.name} client={client} />)}</Box>
+      <Box id="more-clients" hidden={!expanded}>
+        {expanded && <Box component={motion.div} initial={reduced ? false : { opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }} sx={layout}>{clientLogos.slice(5).map(client => <ClientMark key={client.name} client={client} />)}</Box>}
+      </Box>
     </Box>
   );
 }

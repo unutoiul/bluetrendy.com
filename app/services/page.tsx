@@ -20,8 +20,8 @@ export default function ServicesPage() {
     <>
       <PageHero
         eyebrow="AI Services"
-        title="Five service lines. One engineering standard."
-        subtitle="Every engagement — from a trading platform to a predictive maintenance dashboard — gets the same discipline: production-grade code, real test coverage, and AI used where it earns its place."
+        title="Web, mobile, and AI engineering"
+        subtitle="Choose the work closest to your brief. Each service covers what we build, how we test it, and the technology behind it."
       />
 
       <Container sx={{ py: { xs: 10, md: 14 } }}>

@@ -1,0 +1,42 @@
+.entrance {
+  position: fixed;
+  inset: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background: #000628;
+  color: #eaf3ff;
+  color-scheme: dark;
+  font-family: var(--font-sans), "Segoe UI", sans-serif;
+}
+.entrance::backdrop { background: #000628; }
+:global(html):has(.entrance[open]) { overflow: hidden; }
+
+.layout { height: 100%; display: grid; grid-template-rows: minmax(0, 1fr) auto; }
+.controls {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  gap: 14px;
+  width: min(340px, calc(100% - 32px));
+  padding: 0 0 max(8px, env(safe-area-inset-bottom));
+}
+.controls button {
+  min-width: 66px; min-height: 44px;
+  border: 0; background: transparent; color: #bdd3e4;
+  font: inherit; font-size: 12px; cursor: pointer;
+}
+.controls button:hover { color: white; }
+.controls input { flex: 1; min-width: 0; height: 20px; accent-color: #8edfff; cursor: pointer; }
+.controls :focus-visible { outline: 2px solid #84dfff; outline-offset: 2px; }
+.notice { margin: 8px auto; color: #bdd3e4; font-size: 13px; }
+@media (max-height: 360px) {
+  .controls { padding-bottom: 0; }
+}

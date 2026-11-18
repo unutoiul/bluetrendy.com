@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
 import ThemeRegistry from "@/theme/ThemeRegistry";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ClickSpark from "@/components/motion/ClickSpark";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+const geist = localFont({
+  src: "../public/fonts/geist-latin.woff2",
+  variable: "--font-sans",
+  weight: "100 900",
+  style: "normal",
   display: "swap",
 });
 
@@ -64,12 +68,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${geist.variable} ${jetbrainsMono.variable}`}>
       <body>
         <ThemeRegistry>
+          <a className="skip-to-content" href="#main-content">Skip to content</a>
           <Header />
-          <main>{children}</main>
+          <main id="main-content" tabIndex={-1}>{children}</main>
           <Footer />
+          <ClickSpark />
         </ThemeRegistry>
         <Analytics />
       </body>

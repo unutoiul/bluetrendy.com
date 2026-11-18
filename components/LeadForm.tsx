@@ -11,6 +11,9 @@ import Alert from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import SendRounded from "@mui/icons-material/SendRounded";
+import { motion } from "motion/react";
+import FieldCheck from "./motion/FieldCheck";
 import { trackEvent } from "@/lib/analytics";
 import { leadFieldLimits } from "@/lib/lead";
 
@@ -26,6 +29,8 @@ const projectTypes = [
 const budgets = ["Under $25k", "$25k – $75k", "$75k – $150k", "$150k+", "Not sure yet"];
 
 const timelines = ["ASAP", "1–3 months", "3–6 months", "6+ months", "Flexible"];
+
+const looksLikeEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.trim());
 
 type FormState = {
   name: string;
@@ -94,18 +99,21 @@ export default function LeadForm() {
 
   if (status === "success") {
     return (
-      <Alert severity="success" sx={{ borderRadius: 2 }}>
-        <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-          Brief received.
-        </Typography>
-        <Typography variant="body2" sx={{ mt: 0.5 }}>
-          {confirmationSent ? "A confirmation is on its way to your inbox. " : ""}
-          We&apos;ll reply within one business day. Want to skip the wait?{" "}
-          <Typography component={Link} href="/book-a-call" sx={{ fontWeight: 700, textDecoration: "underline" }}>
-            Book a call now →
+      <motion.div initial={{ opacity: 0, y: 14, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ type: "spring", stiffness: 260, damping: 22 }}>
+        <Alert severity="success" sx={{ borderRadius: 2 }}>
+          <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+            Brief received.
           </Typography>
-        </Typography>
-      </Alert>
+          <Typography variant="body2" sx={{ mt: 0.5 }}>
+            {confirmationSent ? "A confirmation is on its way to your inbox. " : ""}
+            We&apos;ll reply within one business day. Want to skip the wait?{" "}
+            <Typography component={Link} href="/book-a-call" sx={{ fontWeight: 700, textDecoration: "underline" }}>
+              Book a call now →
+            </Typography>
+          </Typography>
+        </Alert>
+      </motion.div>
     );
   }
 
@@ -121,7 +129,8 @@ export default function LeadForm() {
             label="Name"
             name="name"
             autoComplete="name"
-            slotProps={{ htmlInput: { maxLength: leadFieldLimits.name } }}
+            slotProps={{ htmlInput: { maxLength: leadFieldLimits.name },
+              input: { endAdornment: <FieldCheck show={form.name.trim().length > 1} /> } }}
             required
             fullWidth
             value={form.name}
@@ -133,7 +142,8 @@ export default function LeadForm() {
             label="Work email"
             name="email"
             autoComplete="email"
-            slotProps={{ htmlInput: { maxLength: leadFieldLimits.email } }}
+            slotProps={{ htmlInput: { maxLength: leadFieldLimits.email },
+              input: { endAdornment: <FieldCheck show={looksLikeEmail(form.email)} /> } }}
             type="email"
             required
             fullWidth
@@ -147,7 +157,8 @@ export default function LeadForm() {
         label="Company (optional)"
         name="company"
         autoComplete="organization"
-        slotProps={{ htmlInput: { maxLength: leadFieldLimits.company } }}
+        slotProps={{ htmlInput: { maxLength: leadFieldLimits.company },
+          input: { endAdornment: <FieldCheck show={form.company.trim().length > 1} /> } }}
         fullWidth
         value={form.company}
         onChange={(e) => update("company", e.target.value)}
@@ -230,7 +241,8 @@ export default function LeadForm() {
         size="large"
         disabled={status === "loading"}
         startIcon={status === "loading" ? <CircularProgress size={16} color="inherit" /> : null}
-        sx={{ alignSelf: "flex-start" }}
+        endIcon={status === "loading" ? null : <SendRounded />}
+        sx={{ alignSelf: "flex-start", "&:hover .MuiButton-endIcon": { transform: "translate(4px, -3px) rotate(-14deg)" } }}
       >
         {status === "loading" ? "Sending…" : "Send project brief"}
       </Button>

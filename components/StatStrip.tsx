@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { animate, motion, useInView } from "motion/react";
+import { animate, motion, useInView, useReducedMotion } from "motion/react";
 import { proofStats } from "@/data/stats";
 
 const container = {
@@ -23,10 +23,11 @@ function StatNumber({ value }: { value: string }) {
   const match = useMemo(() => value.match(/^(\d+)(.*)$/), [value]);
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
+  const reduced = useReducedMotion();
   const [display, setDisplay] = useState(match ? "0" : value);
 
   useEffect(() => {
-    if (!match || !inView) return;
+    if (!match || !inView || reduced) return;
     const target = parseInt(match[1], 10);
     const controls = animate(0, target, {
       duration: 1.2,
@@ -34,12 +35,11 @@ function StatNumber({ value }: { value: string }) {
       onUpdate: (v) => setDisplay(String(Math.round(v))),
     });
     return () => controls.stop();
-  }, [inView, match]);
+  }, [inView, match, reduced]);
 
   return (
-    <span ref={ref}>
-      {display}
-      {match ? match[2] : ""}
+    <span ref={ref} aria-label={value}>
+      <span aria-hidden>{reduced || !inView ? value : display + (match?.[2] ?? "")}</span>
     </span>
   );
 }

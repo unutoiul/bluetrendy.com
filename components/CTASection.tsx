@@ -8,6 +8,8 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { motion } from "motion/react";
+import Magnetic from "./motion/Magnetic";
+import PointerGlow from "./motion/PointerGlow";
 import { brand } from "@/theme/theme";
 import { trackEvent } from "@/lib/analytics";
 
@@ -23,10 +25,10 @@ type CTASectionProps = {
 };
 
 export default function CTASection({
-  eyebrow = "Let's build",
-  title = "Ready to see what AI-first delivery looks like on your roadmap?",
-  subtitle = "Book a call and walk through your project with a senior engineer — not a sales rep.",
-  primaryLabel = "Book a Call",
+  eyebrow,
+  title = "What would you like to launch first?",
+  subtitle = "Spend 30 minutes with a senior engineer. Bring your idea, your users, and the deadline you have in mind.",
+  primaryLabel = "Book a call",
   primaryHref = "/book-a-call",
   secondaryLabel = "Send us a brief",
   secondaryHref = "/contact",
@@ -46,13 +48,17 @@ export default function CTASection({
         my: { xs: 8, md: 12 },
         borderRadius: { xs: 0, md: 4 },
         mx: { xs: 0, md: 3 },
+        position: "relative",
+        overflow: "hidden",
+        isolation: "isolate",
       }}
     >
-      <Container>
+      <PointerGlow color="rgba(139,214,255,0.16)" size={560} />
+      <Container sx={{ position: "relative", zIndex: 1 }}>
         <Stack spacing={3} sx={{ alignItems: "center", textAlign: "center", maxWidth: 640, mx: "auto" }}>
-          <Typography variant="overline" sx={{ color: "secondary.light" }}>
+          {eyebrow && <Typography variant="overline" sx={{ color: "secondary.light" }}>
             {eyebrow}
-          </Typography>
+          </Typography>}
           <Typography variant="h3" component="h2">
             {title}
           </Typography>
@@ -60,17 +66,21 @@ export default function CTASection({
             {subtitle}
           </Typography>
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ pt: 1 }}>
-            <Button
-              component={Link}
-              href={primaryHref}
-              variant="contained"
-              color="secondary"
-              size="large"
-              endIcon={<ArrowForwardIcon />}
-              onClick={() => trackEvent("cta_book_call_click", { location })}
-            >
-              {primaryLabel}
-            </Button>
+            <Magnetic>
+              <Button
+                component={Link}
+                href={primaryHref}
+                variant="contained"
+                color="secondary"
+                size="large"
+                fullWidth
+                endIcon={<ArrowForwardIcon />}
+                onClick={() => trackEvent("cta_book_call_click", { location })}
+                sx={{ "&:hover": { boxShadow: "0 0 0 6px rgba(139,214,255,0.12), 0 18px 40px -16px rgba(80,170,255,0.8)" } }}
+              >
+                {primaryLabel}
+              </Button>
+            </Magnetic>
             <Button
               component={Link}
               href={secondaryHref}
@@ -79,7 +89,7 @@ export default function CTASection({
               sx={{
                 color: "#fff",
                 borderColor: "rgba(255,255,255,0.4)",
-                "&:hover": { borderColor: "#fff", bgcolor: "rgba(255,255,255,0.08)" },
+                "&:hover": { borderColor: "#fff" },
               }}
             >
               {secondaryLabel}

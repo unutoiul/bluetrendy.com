@@ -5,6 +5,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Hero from "@/components/Hero";
+import WebsiteEntrance from "@/components/WebsiteEntrance";
 import HomeAboutSection from "@/components/HomeAboutSection";
 import SectionHeading from "@/components/SectionHeading";
 import TrustStrip from "@/components/TrustStrip";
@@ -22,7 +23,7 @@ const processSteps = [
   {
     step: "01",
     title: "Discovery call",
-    description: "A senior engineer — not a salesperson — walks through your problem, constraints, and goals.",
+    description: "Talk through the people who will use the product, the problem it solves, and your timeline.",
   },
   {
     step: "02",
@@ -44,37 +45,32 @@ const processSteps = [
 export default function HomePage() {
   return (
     <>
+      <WebsiteEntrance />
       <Hero />
 
-      <Container sx={{ py: { xs: 8, md: 10 } }}>
+      <Container sx={{ py: { xs: 3, md: 4 } }}>
         <TrustStrip />
       </Container>
-
-      <HomeAboutSection />
 
       <Box sx={{ bgcolor: brand.mist, py: { xs: 10, md: 14 } }}>
         <Container>
           <Reveal>
             <SectionHeading
-              eyebrow="What we build"
-              title="Five ways we put AI to work on real engineering problems"
-              subtitle="Every engagement is production software first — AI is how we deliver it faster and cheaper, not a demo bolted on top."
+              title="What can we build for you?"
+              subtitle="Start with a customer-facing product, a workflow your team repeats, or a system you need to modernize."
+              align="left"
             />
           </Reveal>
           <RevealGroup>
-            <Grid container spacing={3} sx={{ mt: 6 }}>
+            <Box sx={{ mt: 4, borderTop: "1px solid", borderColor: "divider" }}>
               {services.map((service) => (
-                <Grid key={service.slug} size={{ xs: 12, sm: 6, md: 4 }}>
-                  <RevealItem>
-                    <ServiceCard service={service} />
-                  </RevealItem>
-                </Grid>
+                <RevealItem key={service.slug}><ServiceCard service={service} /></RevealItem>
               ))}
-            </Grid>
+            </Box>
           </RevealGroup>
           <Stack sx={{ alignItems: "center", mt: 6 }}>
             <LinkButton href="/services" variant="text" color="primary" endIcon={<ArrowForwardIcon />}>
-              See the full services breakdown
+              Explore all services
             </LinkButton>
           </Stack>
         </Container>
@@ -83,9 +79,9 @@ export default function HomePage() {
       <Container sx={{ py: { xs: 10, md: 14 } }}>
         <Reveal>
           <SectionHeading
-            eyebrow="Proof, not promises"
-            title="Six engagements. Six different domains that don't tolerate bugs."
-            subtitle="Trading platforms, medical imaging, NATO geospatial intelligence, predictive maintenance, and identity infrastructure serving 10M+ accounts."
+            title="Inside the work"
+            subtitle="See how a trading desk prices complex products, how radiologists review scans together, and how analysts work with geographic data."
+            align="left"
           />
         </Reveal>
         <RevealGroup>
@@ -106,13 +102,13 @@ export default function HomePage() {
         </Stack>
       </Container>
 
-      <Box sx={{ bgcolor: brand.mist, py: { xs: 10, md: 14 } }}>
+      <Box sx={{ bgcolor: brand.mist, py: { xs: 8, md: 11 } }}>
         <Container>
           <Reveal>
             <SectionHeading
-              eyebrow="How we work"
-              title="A process built for accountability, not billable hours"
-              subtitle="You get a fixed-scope discovery sprint before any long-term commitment, weekly visibility, and direct access to the person writing the code."
+              title="From the first call to launch"
+              subtitle="Agree on scope and cost, try the software as we build it, then take ownership of the code."
+              align="left"
             />
           </Reveal>
           <RevealGroup>
@@ -149,24 +145,23 @@ export default function HomePage() {
         </Container>
       </Box>
 
-      <Container sx={{ py: { xs: 10, md: 14 } }}>
+      <HomeAboutSection />
+      <Container sx={{ pt: { xs: 2, md: 4 }, pb: { xs: 5, md: 7 } }}>
         <Reveal>
           <Grid container spacing={6} sx={{ alignItems: "center" }}>
             <Grid size={{ xs: 12, md: 6 }}>
               <Typography variant="overline" sx={{ color: "secondary.main" }}>
-                Vendor-neutral by design
+                Applied AI
               </Typography>
               <Typography variant="h3" component="h2" sx={{ mt: 1.5 }}>
-                We choose the AI model that fits the task — not the one we&apos;re locked into.
+                The right model for your workflow.
               </Typography>
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
               <Typography variant="body1" color="text.secondary">
-                Claude, GPT, and other frontier models each have different strengths in cost, latency,
-                context handling, and compliance posture. We evaluate the task — document processing,
-                financial analysis, diagnostic support, predictive maintenance — and select the model that
-                fits, with the flexibility to swap providers as the landscape moves. Your architecture
-                shouldn&apos;t be hostage to one vendor&apos;s roadmap.
+                A document review tool and a live trading desk have different budgets, response times, and
+                privacy requirements. We compare models on your actual task and design the integration
+                so you can change providers as your needs evolve.
               </Typography>
             </Grid>
           </Grid>

@@ -17,8 +17,8 @@ export default function CaseStudiesPage() {
     <>
       <PageHero
         eyebrow="Case Studies"
-        title="Production systems, not portfolio pieces"
-        subtitle="Six engagements across financial services, healthcare, defense, industrial, and enterprise SaaS — each one shipped to real users under real constraints."
+        title="Software at work in six industries"
+        subtitle="Explore the problem, the engineering decisions, and the result behind each engagement."
       />
 
       <Container sx={{ py: { xs: 10, md: 14 } }}>

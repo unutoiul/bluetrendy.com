@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="580 169 500 402">
+  <title>BlueTrendy ribbon emblem</title>
+  <defs>
+    <path id="upper" d="M725 207C784 207 842 201 889 202C959 200 1010 222 1022 266C1039 323 996 374 937 398C879 422 815 433 748 457C686 480 641 504 609 526C623 474 656 418 706 387C748 362 806 354 857 341C903 329 940 323 940 314C934 297 892 294 840 294C773 294 708 299 644 302Z"/>
+    <path id="lower" d="M1005 353C1033 369 1058 400 1049 437C1039 484 989 515 928 526C877 535 805 533 731 540C759 494 790 461 838 441C888 420 955 410 987 385C1001 374 1008 364 1005 353Z"/>
+    <clipPath id="topClip"><use href="#upper"/></clipPath>
+    <clipPath id="bottomClip"><use href="#lower"/></clipPath>
+    <linearGradient id="cobalt" x1="0" y1=".16" x2=".97" y2=".83" gradientUnits="objectBoundingBox">
+      <stop stop-color="#76eaff"/><stop offset=".13" stop-color="#0666e7"/><stop offset=".3" stop-color="#022baf"/>
+      <stop offset=".52" stop-color="#064ce3"/><stop offset=".71" stop-color="#062d97"/><stop offset=".89" stop-color="#168ff3"/><stop offset="1" stop-color="#46d7ff"/>
+    </linearGradient>
+    <linearGradient id="cyan" x1="0" y1=".05" x2="1" y2=".81">
+      <stop stop-color="#104eaf"/><stop offset=".26" stop-color="#008ddf"/><stop offset=".48" stop-color="#04b7f8"/><stop offset=".75" stop-color="#1a9de9"/><stop offset="1" stop-color="#80eaff"/>
+    </linearGradient>
+    <linearGradient id="edge"><stop stop-color="#2e89de"/><stop offset=".08" stop-color="#081c60"/><stop offset=".32" stop-color="#020d34"/><stop offset=".64" stop-color="#094293"/><stop offset=".87" stop-color="#052052"/><stop offset="1" stop-color="#0d509d"/></linearGradient>
+    <radialGradient id="light"><stop stop-color="#c6ffff" stop-opacity=".95"/><stop offset=".35" stop-color="#6ae6ff" stop-opacity=".8"/><stop offset=".75" stop-color="#26b9ff" stop-opacity=".3"/><stop offset="1" stop-color="#219afa" stop-opacity="0"/></radialGradient>
+    <radialGradient id="shade"><stop stop-color="#021754" stop-opacity=".84"/><stop offset="1" stop-color="#02134a" stop-opacity="0"/></radialGradient>
+    <linearGradient id="rim"><stop stop-color="#52baff" stop-opacity=".3"/><stop offset=".34" stop-color="#c1fcff"/><stop offset=".65" stop-color="#74ecff"/><stop offset="1" stop-color="#0c83e4" stop-opacity=".12"/></linearGradient>
+  </defs>
+  <path fill="url(#edge)" d="M1004 355C1042 373 1062 406 1047 451C1037 487 1012 511 975 525C930 545 837 545 732 545L731 539C810 518 870 501 937 475C1003 449 1037 408 1004 355Z"/>
+  <use href="#lower" fill="url(#cyan)"/>
+  <g clip-path="url(#bottomClip)">
+    <ellipse cx="957" cy="469" rx="89" ry="41" transform="rotate(-39 957 469)" fill="url(#light)"/>
+    <ellipse cx="766" cy="494" rx="64" ry="16" transform="rotate(-48 766 494)" fill="url(#light)"/>
+    <ellipse cx="946" cy="392" rx="84" ry="56" fill="url(#shade)"/>
+  </g>
+  <path d="M733 539C758 499 792 463 839 442C897 416 955 410 987 386" fill="none" stroke="url(#rim)" stroke-width="1.65"/>
+  <path fill="url(#edge)" d="M644 297C748 283 841 279 903 289C932 293 948 303 951 315C954 336 924 347 905 347C923 336 939 327 938 320C928 304 850 310 790 311C735 311 689 314 646 313Z"/>
+  <path fill="url(#edge)" d="M611 509C687 450 795 416 888 386C965 361 1008 330 1025 282C1029 329 1002 366 970 391C926 424 844 438 774 458C703 481 646 506 609 528Z"/>
+  <use href="#upper" fill="url(#cobalt)"/>
+  <g clip-path="url(#topClip)">
+    <ellipse cx="684" cy="258" rx="85" ry="25" transform="rotate(-52 684 258)" fill="url(#light)"/>
+    <ellipse cx="939" cy="255" rx="135" ry="48" transform="rotate(17 939 255)" fill="url(#shade)"/>
+    <ellipse cx="987" cy="311" rx="102" ry="25" transform="rotate(-57 987 311)" fill="url(#light)"/>
+    <ellipse cx="725" cy="406" rx="104" ry="40" transform="rotate(-47 725 406)" fill="url(#light)"/>
+    <ellipse cx="937" cy="203" rx="72" ry="9" transform="rotate(4 937 203)" fill="url(#light)"/>
+  </g>
+  <path d="M646 300L725 207C786 207 842 201 889 202C940 201 969 211 989 223M610 522C636 453 669 409 707 387C755 360 828 349 870 338" fill="none" stroke="url(#rim)" stroke-width="1.8"/>
+</svg>

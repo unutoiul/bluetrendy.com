@@ -1,0 +1,39 @@
+@font-face {
+  font-family: Geist;
+  src: url("../../fonts/geist-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+* { box-sizing: border-box; }
+:root { color-scheme: dark; background: #000628; font: 14px/1.35 Geist, "Segoe UI", sans-serif; }
+body { margin: 0; color: #eaf3ff; }
+main { min-height: 100vh; height: 100svh; display: grid; grid-template-rows: minmax(0, 1fr) auto; }
+[hidden] { display: none !important; }
+.transport {
+  width: min(350px, calc(100% - 28px)); margin: 0 auto;
+  display: flex; gap: 15px; align-items: center; justify-content: center;
+  padding: 6px 0 max(12px, env(safe-area-inset-bottom));
+}
+button, input { font: inherit; }
+button {
+  min-width: 65px; min-height: 36px; padding: 0 3px; border: 0;
+  color: #bfd7ed; background: transparent; cursor: pointer; font-size: 12px;
+}
+button:hover { color: #fff; }
+button:focus-visible, input:focus-visible { outline: 2px solid #84dfff; outline-offset: 2px; }
+#seek {
+  --progress: 0%; appearance: none; background: transparent; margin: 0; height: 34px;
+  flex: 1 1 110px; min-width: 48px; cursor: pointer;
+}
+#seek::-webkit-slider-runnable-track {
+  height: 2px; border-radius: 1px;
+  background: linear-gradient(to right, #94dfff var(--progress), #304967 var(--progress));
+}
+#seek::-moz-range-track { height: 2px; background: #304967; }
+#seek::-moz-range-progress { height: 2px; background: #94dfff; }
+#seek::-webkit-slider-thumb {
+  appearance: none; width: 8px; height: 8px; border-radius: 50%; margin-top: -3px; background: #c6edff;
+}
+#seek::-moz-range-thumb { width: 8px; height: 8px; border: none; border-radius: 50%; background: #c6edff; }
+#status { position: absolute; bottom: 42px; width: 100%; text-align: center; font-size: 12px; }
+@media (max-height: 520px) { .transport { padding: 0; gap: 8px; } }

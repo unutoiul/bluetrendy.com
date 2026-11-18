@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#000628">
+  <title>The Shadow Arrives First · BlueTrendy Intelligence</title>
+  <link rel="stylesheet" href="brand/shadow-intro/entrance-layout.css">
+  <link rel="stylesheet" href="brand/shadow-intro/player.css">
+  <link rel="stylesheet" href="brand/shadow-intro/power-me.css">
+  <script defer src="brand/shadow-intro/tagline-motion.min.js"></script>
+  <script defer src="brand/shadow-intro/player.js"></script>
+</head>
+<body>
+  <main aria-label="The Shadow Arrives First, a BlueTrendy Intelligence intro">
+    <div class="intro-stage">
+      <div class="intro-stack">
+        <div class="intro-picture" aria-hidden="true" data-lockup="true">
+          <video id="picture" preload="metadata" playsinline disablepictureinpicture
+            poster="brand/shadow-intro/entrance-poster.jpg" src="brand/shadow-intro/entrance.mp4"></video>
+        </div>
+        <p id="tagline" class="intro-tagline"><span>Your Business, powered by</span> <strong>AI</strong></p>
+        <a class="power-me enter-site" href="/#home-content" target="_top"><span aria-hidden="true">⏻</span> POWER ME</a>
+      </div>
+    </div>
+    <div class="transport" aria-label="Intro playback" role="group" hidden>
+      <button type="button" id="play">Play</button>
+      <input type="range" id="seek" min="0" max="8" step=".01" value="0" aria-label="Seek intro" aria-valuetext="0 of 8 seconds">
+      <button type="button" id="sound">Sound off</button>
+    </div>
+    <p id="status" role="status" hidden></p>
+  </main>
+</body></html>

@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
+import FieldCheck from "./motion/FieldCheck";
 import { trackEvent } from "@/lib/analytics";
 
 export default function DiscoveryCheckoutForm() {
@@ -53,6 +54,7 @@ export default function DiscoveryCheckoutForm() {
         type="email"
         required
         size="small"
+        slotProps={{ input: { endAdornment: <FieldCheck show={/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())} /> } }}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         fullWidth
