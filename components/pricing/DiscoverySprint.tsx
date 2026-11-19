@@ -60,7 +60,7 @@ export default function DiscoverySprint() {
       background: neural.blueFlow("header", "agents"),
     }}>
       <LivingBackground effect="streaks" quiet="top" seed={23} />
-      <Box sx={{ position: "relative", zIndex: 1, width: "min(100% - 48px, 1152px)", mx: "auto", py: { xs: 7, md: 11 } }}>
+      <Box sx={{ position: "relative", zIndex: 1, width: "var(--page-width)", mx: "auto", py: { xs: 7, md: 11 } }}>
 
         <Box sx={{ display: "grid", gap: { xs: 3, md: 6 }, gridTemplateColumns: { md: "minmax(0, 1.25fr) minmax(0, 1fr)" }, alignItems: "end" }}>
           <div>

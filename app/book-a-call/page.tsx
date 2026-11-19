@@ -21,7 +21,7 @@ export default function BookACallPage() {
       <JsonLd data={breadcrumbs([{ name: "Book a call", path: "/book-a-call" }])} />
       {/* A lattice of dots on springs that gives way under the mouse, in the light page's colours. */}
       <LivingBackground effect="springGrid" light quiet="none" seed={113} />
-      <Container sx={{ position: "relative", zIndex: 1, px: { xs: 2, sm: 3 } }}>
+      <Container sx={{ position: "relative", zIndex: 1 }}>
         <Box sx={{ maxWidth: 1180, mx: "auto" }}>
           <BookingSteps />
           <Typography variant="body2" color="text.secondary" sx={{ mt: 4 }}>

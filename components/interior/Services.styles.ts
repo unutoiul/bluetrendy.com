@@ -32,7 +32,7 @@ export const servicesSheet: CSSObject[] = [
   { ".Services__layout": {
       position: "relative",
       zIndex: "1",
-      width: "min(100% - 48px, 1152px)",
+      width: "var(--page-width)",
       margin: "auto",
       display: "grid",
       gridTemplateColumns: "240px minmax(0,1fr)",
@@ -232,7 +232,7 @@ export const servicesSheet: CSSObject[] = [
   { ".Services__stackHero a:hover,.Services__stackHero a:focus-visible": { transform: "rotateY(0) rotateZ(-1deg) translateX(6px)" } },
   { "@media (max-width: 860px)": {
       ".Services__catalogue": { padding: "0 0 42px" },
-      ".Services__layout": { display: "block", width: "min(100% - 32px,690px)" },
+      ".Services__layout": { display: "block", width: "min(var(--page-width), 690px)" },
       ".Services__desktopIndex": { display: "none" },
       ".Services__index": { top: "65px", marginInline: "-2px", background: palette.white, paddingBlock: "8px" },
       ".Services__mobileIndex": { display: "block", position: "relative", fontSize: ".88rem" },

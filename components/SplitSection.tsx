@@ -47,7 +47,7 @@ export default function SplitSection({ id, title, text, link, tone = "light", bl
       background: background ?? (tone === "dark" ? `radial-gradient(ellipse at 90% 40%, ${withAlpha(palette.navy[600], 0.5)}, transparent 55%), linear-gradient(180deg, ${palette.navy[800]} 0%, ${palette.navy[750]} 50%, ${palette.navy[800]} 100%)` : colors.field),
       color: colors.heading, containerType: "inline-size" }}>
       {effect && <LivingBackground effect={effect} seed={seed} light={tone === "light"} />}
-      <Box sx={{ position: "relative", zIndex: 1, width: "min(100% - 48px, 1200px)", mx: "auto", display: "grid",
+      <Box sx={{ position: "relative", zIndex: 1, width: "var(--page-width)", mx: "auto", display: "grid",
         gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "minmax(0, 3fr) minmax(0, 7fr)" }, columnGap: "clamp(48px, 7vw, 112px)" }}>
         <Box sx={{ position: "relative", isolation: "isolate", display: "flex", flexDirection: "column", alignItems: "flex-start",
           justifyContent: pinned ? "flex-start" : "center", py: { xs: 4, md: "clamp(48px, 6vw, 88px)" } }}>

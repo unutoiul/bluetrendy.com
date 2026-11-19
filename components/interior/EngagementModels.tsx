@@ -17,7 +17,7 @@ export default function EngagementModels({ id }: { id: string }) {
   return (
     <Box component="section" id={id} aria-labelledby={`${id}-heading`} sx={{ ...neural.sectionTone("header", "services"), scrollMarginTop: 80 }}>
       <LivingBackground effect="streaks" quiet="top" seed={73} />
-      <Box sx={{ position: "relative", zIndex: 1, width: "min(100% - 48px, 1152px)", mx: "auto", py: { xs: 7, md: 11 } }}>
+      <Box sx={{ position: "relative", zIndex: 1, width: "var(--page-width)", mx: "auto", py: { xs: 7, md: 11 } }}>
         <Box component="p" sx={neural.label}>Engagement models</Box>
         <HeadingMotion id={`${id}-heading`} text="Three ways to" accent="work together"
           sx={{ m: 0, fontSize: "clamp(2.1rem, 4.4vw, 3.9rem)", fontWeight: 630, letterSpacing: "-0.047em", lineHeight: 1.06 }} />

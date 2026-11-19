@@ -43,7 +43,7 @@ export const experienceSheet: CSSObject[] = [
   { ".Experience__header, .Experience__experience": {
       "--edge": palette.blue[550],
       "--ice": palette.sky[150],
-      "--shell-width": "min(calc(100% - clamp(36px, 8vw, 144px)), 1280px)",
+      "--shell-width": "var(--page-width)",
       color: palette.grey[25],
       fontFamily: "var(--font-sans), Arial, sans-serif",
     } },

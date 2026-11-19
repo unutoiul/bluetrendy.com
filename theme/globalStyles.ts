@@ -22,6 +22,13 @@ export const siteGlobalStyles: CSSObject[] = [
   { a: { color: "inherit" } },
   // ---------- Motion ----------
   { ":root": { "--ease-out": "cubic-bezier(0.22, 1, 0.36, 1)" } },
+  // ---------- Page width ----------
+  // One content width for the whole site: the header, every section and the footer line up.
+  // MUI's Container uses it (theme.ts), and so do the hand-built sections.
+  { ":root": {
+      "--page-gutter": "clamp(18px, 4vw, 72px)",
+      "--page-width": "min(100% - 2 * var(--page-gutter), 1280px)",
+    } },
   { "@keyframes rise-in": { from: { opacity: "0", transform: "translateY(var(--rise, 18px))" }, to: { opacity: "1", transform: "none" } } },
   { "@keyframes line-up": { from: { transform: "translateY(110%)" }, to: { transform: "none" } } },
   { "@keyframes fade-in": { from: { opacity: "0" }, to: { opacity: "1" } } },

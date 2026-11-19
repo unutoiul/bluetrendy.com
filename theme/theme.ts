@@ -84,11 +84,16 @@ const theme = createTheme({
     },
     MuiContainer: {
       defaultProps: { maxWidth: "lg" },
+      // The site-wide page width (--page-width in globalStyles) already includes the side gutters,
+      // so Containers line up with every other section instead of using MUI's own 1200px box.
       styleOverrides: {
         root: {
-          paddingLeft: 24,
-          paddingRight: 24,
+          width: "var(--page-width)",
+          paddingLeft: 0,
+          paddingRight: 0,
+          "@media (min-width:600px)": { paddingLeft: 0, paddingRight: 0 },
         },
+        maxWidthLg: { "@media (min-width:1200px)": { maxWidth: "none" } },
       },
     },
     MuiButton: {

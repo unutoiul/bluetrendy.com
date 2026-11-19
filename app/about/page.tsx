@@ -119,7 +119,7 @@ export default function AboutPage() {
 
       <Box component="section" aria-labelledby="principles-heading" sx={{ ...neural.sectionTone("header", "services"), py: { xs: 7, md: 10 } }}>
         <LivingBackground effect="dotWave" quiet="top" seed={97} />
-        <Box sx={{ position: "relative", zIndex: 1, width: "min(100% - 48px, 1200px)", mx: "auto" }}>
+        <Box sx={{ position: "relative", zIndex: 1, width: "var(--page-width)", mx: "auto" }}>
           <HeadingMotion id="principles-heading" text="What we" accent="optimize for"
             sx={{ m: 0, maxWidth: "18ch", fontSize: "clamp(2.2rem, 4.2vw, 3.6rem)", fontWeight: 650, letterSpacing: "-0.05em", lineHeight: 1.05 }} />
           <Box data-panel-group sx={{ mt: { xs: 4, md: 5 }, display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3, minmax(0, 1fr))" }, gap: 2.5 }}>

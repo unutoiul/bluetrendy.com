@@ -29,7 +29,7 @@ export const editorialSheet: CSSObject[] = [
       color: palette.grey[25],
       background: palette.navy[800],
     } },
-  { ".Editorial__heroGrid, .Editorial__width": { width: "min(100% - 48px, 1152px)", marginInline: "auto" } },
+  { ".Editorial__heroGrid, .Editorial__width": { width: "var(--page-width)", marginInline: "auto" } },
   { ".Editorial__heroGrid": { display: "grid", gap: "clamp(24px, 5vw, 76px)", alignItems: "center", paddingBlock: "clamp(38px, 5vw, 76px)" } },
   // The second column holds the 3D logo film, which is large enough to need nearly half the banner.
   { ".Editorial__heroSplit": { gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", minHeight: "clamp(460px, 42vw, 640px)" } },
@@ -134,7 +134,6 @@ export const editorialSheet: CSSObject[] = [
   { "@keyframes Editorial__mark": { from: { transform: "scale(1.2)" } } },
   { "@keyframes Editorial__stamp": { from: { transform: "scale(.72) rotate(-18deg)" }, to: { transform: "none" } } },
   { "@media (max-width: 760px)": {
-      ".Editorial__heroGrid,.Editorial__width": { width: "min(100% - 36px, 1152px)" },
       ".Editorial__heroSplit": { gridTemplateColumns: "minmax(0,1fr)", minHeight: "0" },
       ".Editorial__heroAside": { justifyItems: "center" },
       ".Editorial__heroAside:has(.Editorial__portrait)": { justifySelf: "start", width: "min(100%, 200px)" },

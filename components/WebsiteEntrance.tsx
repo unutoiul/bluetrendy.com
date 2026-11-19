@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import GlobalStyles from "@mui/material/GlobalStyles";
@@ -8,6 +8,7 @@ import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 import { keyframes, type SxProps, type Theme } from "@mui/material/styles";
 import PowerSettingsNewRounded from "@mui/icons-material/PowerSettingsNewRounded";
+import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded";
 import { bindIntroTagline } from "@/lib/introTagline";
 import SplitWords, { countWords } from "@/components/motion/SplitWords";
 import { palette, withAlpha } from "@/theme/palette";
@@ -64,6 +65,8 @@ export default function WebsiteEntrance() {
   const [playing, setPlaying] = useState(false);
   const [ended, setEnded] = useState(false);
   const [muted, setMuted] = useState(false);
+  // The browser refused to start the film with sound, so it is playing silently for now.
+  const [soundBlocked, setSoundBlocked] = useState(false);
   const [failed, setFailed] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [time, setTime] = useState(0);
@@ -86,46 +89,17 @@ export default function WebsiteEntrance() {
     shell?.removeAttribute("data-entry-pending");
     const unbindTagline = tagline.current ? bindIntroTagline(video, tagline.current) : null;
 
-    // The intro plays with sound. Browsers only allow that once the visitor has interacted with
-    // the page, so when the film has to start muted, their first click, tap or key press turns
-    // the sound on. The sound button and POWER ME handle their own presses.
-    const gestures = ["pointerdown", "pointerup", "keydown"];
-    function waitForGesture() {
-      for (const type of gestures) document.addEventListener(type, unmuteOnGesture, true);
-    }
-    function stopWaitingForGesture() {
-      for (const type of gestures) document.removeEventListener(type, unmuteOnGesture, true);
-    }
-    function unmuteOnGesture(event: Event) {
-      const target = event.target instanceof Element ? event.target : null;
-      if (!video!.muted || target?.closest("[data-sound-toggle], [data-enter]")) {
-        stopWaitingForGesture();
-        return;
-      }
-      // Not every event counts as a gesture (a lone Escape key, say); wait for one that does.
-      const activation = (navigator as Navigator & { userActivation?: { isActive: boolean } }).userActivation;
-      if (activation && !activation.isActive) return;
-      stopWaitingForGesture();
-      const wasPlaying = !video!.paused;
-      video!.muted = false;
-      if (wasPlaying && video!.paused) {
-        // The browser refused sound after all: stay muted and try again on the next press.
-        void video!.play().catch(() => {
-          video!.muted = true;
-          void video!.play().catch(() => { /* The play control remains available. */ });
-          waitForGesture();
-        });
-      }
-    }
 
     if (video.error) setFailed(true);
     else if (!reduced.matches && !savesData() && !document.hidden) {
       prepareFilm(video);
       void video.play().catch((error: DOMException) => {
         if (!active || !gate.open || document.hidden || reduced.matches || error.name !== "NotAllowedError") return;
+        // Browsers only allow sound once the visitor has pressed something on the page. Until then
+        // the film plays silently, and their first tap starts it again from the top with sound.
         video.muted = true;
-        void video.play().catch(() => { /* The play control remains available. */ });
-        waitForGesture();
+        setSoundBlocked(true);
+        void video.play().catch(() => { /* Even silent autoplay is off; the first tap starts it. */ });
       });
     }
     function pauseIfNeeded() {
@@ -135,7 +109,6 @@ export default function WebsiteEntrance() {
     document.addEventListener("visibilitychange", pauseIfNeeded);
     return () => {
       active = false;
-      stopWaitingForGesture();
       unbindTagline?.();
       reduced.removeEventListener("change", pauseIfNeeded);
       document.removeEventListener("visibilitychange", pauseIfNeeded);
@@ -143,6 +116,41 @@ export default function WebsiteEntrance() {
       gate.close();
     };
   }, []);
+
+  // While the film is silent, the visitor's first click, tap or key press anywhere starts it
+  // again with sound. POWER ME and the sound buttons handle their own presses.
+  useEffect(() => {
+    if (!soundBlocked) return;
+    const gestures = ["pointerdown", "pointerup", "keydown"];
+    function onGesture(event: Event) {
+      const target = event.target instanceof Element ? event.target : null;
+      if (target?.closest("[data-sound-toggle], [data-enter]")) return;
+      // Not every event counts as a gesture (a lone Escape key, say); wait for one that does.
+      const activation = (navigator as Navigator & { userActivation?: { isActive: boolean } }).userActivation;
+      if (activation && !activation.isActive) return;
+      playWithSound();
+    }
+    for (const type of gestures) document.addEventListener(type, onGesture, true);
+    return () => { for (const type of gestures) document.removeEventListener(type, onGesture, true); };
+  }, [soundBlocked]);
+
+  /** Plays the intro from the beginning with sound, so nobody hears only its second half. */
+  function playWithSound() {
+    const video = player.current;
+    if (!video) return;
+    setSoundBlocked(false);
+    video.muted = false;
+    // A finished film stays on its last frame; the Replay button plays it again, now with sound.
+    if (video.ended) return;
+    prepareFilm(video);
+    video.currentTime = 0;
+    void video.play().catch(() => {
+      // The browser still refused sound: keep the film going silently and wait for the next press.
+      video.muted = true;
+      setSoundBlocked(true);
+      void video.play().catch(() => { /* The play control remains available. */ });
+    });
+  }
 
   function enter() {
     rememberEntry();
@@ -213,6 +221,11 @@ export default function WebsiteEntrance() {
           <strong style={{ "--split-delay": `${countWords(taglineLead) * 70 + 170}ms` } as CSSProperties}>AI</strong>
         </Typography>
         <script dangerouslySetInnerHTML={{ __html: prepareEntrance }} />
+        {soundBlocked && (
+          <Button data-sound-toggle onClick={playWithSound} startIcon={<VolumeUpRounded />} sx={sx.soundPrompt}>
+            Tap for sound
+          </Button>
+        )}
       </Box>
       {failed ? <Typography role="status" sx={sx.notice}>The intro could not play.</Typography> : (
         <Box role="group" aria-label="Intro playback" sx={sx.controls}>
@@ -224,7 +237,10 @@ export default function WebsiteEntrance() {
             sx={{ color: palette.sky[175] }}
           />
           <Button data-sound-toggle aria-label={muted ? "Enable intro sound" : "Mute intro sound"} aria-pressed={!muted}
-            onClick={() => { if (player.current) player.current.muted = !player.current.muted; }}>
+            onClick={() => {
+              if (soundBlocked) playWithSound();
+              else if (player.current) player.current.muted = !player.current.muted;
+            }}>
             {muted ? "Sound off" : "Sound on"}
           </Button>
         </Box>
@@ -234,6 +250,11 @@ export default function WebsiteEntrance() {
 }
 
 const shortStage = "@container (height < 320px)";
+// A slow glow that draws the eye to "Tap for sound" without flashing.
+const soundPulse = keyframes`
+  0%, 100% { box-shadow: 0 0 0 0 ${withAlpha(palette.sky[175], 0)}; }
+  50% { box-shadow: 0 0 0 6px ${withAlpha(palette.sky[175], 0.18)}; }
+`;
 const taglineLead = "Your Business, powered by";
 // The home page's accent-write, with room around the small "AI" so the beam's glow fades out
 // softly instead of being cut into a box.
@@ -265,6 +286,7 @@ const sx = {
     "&::backdrop": { background: palette.navy[900] },
   },
   stage: {
+    position: "relative",
     containerType: "size",
     minHeight: 0,
     overflow: "hidden",
@@ -375,4 +397,24 @@ const sx = {
     "@media (max-height: 360px)": { pb: 0 },
   },
   notice: { my: 1, mx: "auto", color: palette.slate[125], fontSize: 13 },
+  // Shown while the browser keeps the film silent; any tap on the page does the same.
+  soundPrompt: {
+    position: "absolute",
+    bottom: "clamp(8px, 2.4cqh, 22px)",
+    left: "50%",
+    translate: "-50% 0",
+    minHeight: 40,
+    px: "16px",
+    border: `1px solid ${withAlpha(palette.sky[175], 0.55)}`,
+    borderRadius: 999,
+    bgcolor: withAlpha(palette.navy[800], 0.72),
+    backdropFilter: "blur(8px)",
+    color: palette.slate[50],
+    fontSize: 13,
+    fontWeight: 600,
+    whiteSpace: "nowrap",
+    "&:hover": { bgcolor: withAlpha(palette.navy[700], 0.85), borderColor: palette.sky[175] },
+    "& .MuiButton-startIcon svg": { color: palette.sky[175] },
+    "@media (prefers-reduced-motion: no-preference)": { animation: `${soundPulse} 2.4s ease-in-out infinite` },
+  },
 } satisfies Record<string, SxProps<Theme>>;
