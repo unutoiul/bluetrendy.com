@@ -1,6 +1,8 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { palette, withAlpha } from "@/theme/palette";
+import HeadingMotion from "./motion/HeadingMotion";
+import { splitHeadline } from "@/lib/headline";
 
 type SectionHeadingProps = {
   eyebrow?: string;
@@ -19,6 +21,7 @@ export default function SectionHeading({
   light = false,
   maxWidth = 640,
 }: SectionHeadingProps) {
+  const heading = splitHeadline(title);
   return (
     <Box
       sx={{
@@ -35,9 +38,8 @@ export default function SectionHeading({
           {eyebrow}
         </Typography>
       ) : null}
-      <Typography variant="h3" component="h2" sx={{ color: light ? palette.white : "text.primary" }}>
-        {title}
-      </Typography>
+      <HeadingMotion text={heading.lead} accent={heading.accent}
+        tone={light ? "dark" : "light"} sx={{ typography: "h3", m: 0 }} />
       {subtitle ? (
         <Typography
           variant="body1"

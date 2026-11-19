@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import LinkButton from "./LinkButton";
+import HeadingMotion from "./motion/HeadingMotion";
+import { splitHeadline } from "@/lib/headline";
 import { trackEvent } from "@/lib/analytics";import { palette, withAlpha } from "@/theme/palette";
 
 
@@ -30,6 +32,7 @@ export default function CTASection({
   secondaryHref = "/contact",
   location = "cta_section",
 }: CTASectionProps) {
+  const heading = splitHeadline(title);
   return (
     <Box
       component="section"
@@ -47,9 +50,7 @@ export default function CTASection({
           {eyebrow && <Typography variant="overline" sx={{ color: "secondary.light" }}>
             {eyebrow}
           </Typography>}
-          <Typography variant="h3" component="h2">
-            {title}
-          </Typography>
+          <HeadingMotion text={heading.lead} accent={heading.accent} sx={{ typography: "h3", m: 0 }} />
           <Typography variant="body1" sx={{ color: withAlpha(palette.white, 0.78) }}>
             {subtitle}
           </Typography>

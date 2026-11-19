@@ -6,6 +6,7 @@ import FlagOutlined from "@mui/icons-material/FlagOutlined";
 import GroupAddOutlined from "@mui/icons-material/GroupAddOutlined";
 import LivingBackground from "@/components/backgrounds/LivingBackground";
 import { neural } from "@/components/experience/neuralStyle";
+import HeadingMotion from "@/components/motion/HeadingMotion";
 import { engagementModels } from "@/data/process";
 import { palette, withAlpha } from "@/theme/palette";
 
@@ -18,9 +19,8 @@ export default function EngagementModels({ id }: { id: string }) {
       <LivingBackground effect="streaks" quiet="top" seed={73} />
       <Box sx={{ position: "relative", zIndex: 1, width: "min(100% - 48px, 1152px)", mx: "auto", py: { xs: 7, md: 11 } }}>
         <Box component="p" sx={neural.label}>Engagement models</Box>
-        <Box component="h2" id={`${id}-heading`} sx={{ m: 0, fontSize: "clamp(2.1rem, 4.4vw, 3.9rem)", fontWeight: 630, letterSpacing: "-0.047em", lineHeight: 1.06 }}>
-          Three ways to <Box component="span" sx={neural.accentText}>work together</Box>
-        </Box>
+        <HeadingMotion id={`${id}-heading`} text="Three ways to" accent="work together"
+          sx={{ m: 0, fontSize: "clamp(2.1rem, 4.4vw, 3.9rem)", fontWeight: 630, letterSpacing: "-0.047em", lineHeight: 1.06 }} />
         <Box component="p" sx={{ m: "18px 0 0", maxWidth: "56ch", color: palette.slate[125], fontSize: "clamp(1rem, 1.25vw, 1.12rem)", lineHeight: 1.6 }}>
           Every engagement starts with discovery. From there, the model depends on how well defined your scope is and how long you need us.
         </Box>

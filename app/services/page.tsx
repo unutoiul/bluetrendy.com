@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import ArrowOutwardRounded from "@mui/icons-material/ArrowOutwardRounded";
 import LinkButton from "@/components/LinkButton";
 import PageHero from "@/components/PageHero";
+import HeadingMotion from "@/components/motion/HeadingMotion";
+import { splitHeadline } from "@/lib/headline";
 import LivingBackground from "@/components/backgrounds/LivingBackground";
 import ServiceIndex from "@/components/interior/ServiceIndex";
 import ServiceScene from "@/components/interior/ServiceScene";
@@ -51,7 +53,8 @@ export default function ServicesPage() {
           {services.map(service => <section className={styles.chapter} key={service.slug}
             aria-labelledby={service.slug + "-heading"} id={service.slug} data-service={service.slug} tabIndex={-1}>
             <div className={styles.cover}>
-              <h2 id={service.slug + "-heading"}>{service.name}</h2>
+              <HeadingMotion id={service.slug + "-heading"} text={splitHeadline(service.name).lead}
+                accent={splitHeadline(service.name).accent} tone="light" />
               <p>{service.shortDescription}</p>
             </div>
             <ServiceScene slug={service.slug} />

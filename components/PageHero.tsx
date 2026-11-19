@@ -5,6 +5,7 @@ import RibbonFilm from "./interior/RibbonFilm";
 import PageBackdrop from "./interior/PageBackdrop";
 import styles from "./interior/Editorial.styles";
 import { palette } from "@/theme/palette";
+import { splitHeadline } from "@/lib/headline";
 
 type PageHeroProps = {
   eyebrow?: string;
@@ -13,24 +14,6 @@ type PageHeroProps = {
   aside?: ReactNode;
   children?: ReactNode;
 };
-
-// Words a headline's second line can start with, so it breaks at a natural pause.
-const breakBefore = new Set(["to", "for", "in", "on", "of", "at", "and", "with", "behind", "before", "you’re", "you're", "your"]);
-
-/** Splits a headline into its lead and the closing words, like the two lines of the home page headline. */
-function splitHeadline(title: string) {
-  const words = title.trim().split(/\s+/);
-  if (words.length < 2) return { lead: title, accent: "" };
-  const middle = words.length / 2;
-  let best = 0;
-  words.forEach((word, index) => {
-    if (index === 0) return;
-    const natural = breakBefore.has(word.toLowerCase()) || /^[—–-]$/.test(words[index - 1]);
-    if (natural && (!best || Math.abs(index - middle) < Math.abs(best - middle))) best = index;
-  });
-  const at = best || Math.ceil(middle);
-  return { lead: words.slice(0, at).join(" "), accent: words.slice(at).join(" ") };
-}
 
 /**
  * The banner at the top of every inner page. Its headline arrives the way the home page

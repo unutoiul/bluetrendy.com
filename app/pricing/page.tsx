@@ -7,6 +7,7 @@ import GroupAddOutlined from "@mui/icons-material/GroupAddOutlined";
 import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
 import PageHero from "@/components/PageHero";
 import SectionHeading from "@/components/SectionHeading";
+import HeadingMotion from "@/components/motion/HeadingMotion";
 import FAQAccordion from "@/components/FAQAccordion";
 import LinkButton from "@/components/LinkButton";
 import DiscoverySprint from "@/components/pricing/DiscoverySprint";
@@ -83,10 +84,8 @@ export default function PricingPage() {
               <Box component="p" sx={{ ...neural.label, color: brand.blue, "&::after": { content: '""', width: 34, height: "1px", background: `linear-gradient(90deg, ${brand.blue}, transparent)` } }}>
                 After discovery
               </Box>
-              <Box component="h2" id="ongoing-heading" sx={{ m: 0, color: brand.ink, fontSize: "clamp(2rem, 3.6vw, 3.1rem)", fontWeight: 650,
-                letterSpacing: "-0.05em", lineHeight: 1.05 }}>
-                Then choose how we build it
-              </Box>
+              <HeadingMotion id="ongoing-heading" text="Then choose" accent="how we build it" tone="light"
+                sx={{ m: 0, fontSize: "clamp(2rem, 3.6vw, 3.1rem)", fontWeight: 650, letterSpacing: "-0.05em", lineHeight: 1.05 }} />
               <Box component="p" sx={{ m: "18px 0 0", color: brand.slate, lineHeight: 1.6, maxWidth: "38ch" }}>
                 Your plan is yours either way. If you build with us within 60 days, the sprint fee comes off the price.
               </Box>

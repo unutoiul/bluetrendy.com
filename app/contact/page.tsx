@@ -9,6 +9,7 @@ import PhoneIcon from "@mui/icons-material/PhoneOutlined";
 import PlaceIcon from "@mui/icons-material/PlaceOutlined";
 import PageHero from "@/components/PageHero";
 import LeadForm from "@/components/LeadForm";
+import HeadingMotion from "@/components/motion/HeadingMotion";
 import LinkButton from "@/components/LinkButton";
 import LivingBackground from "@/components/backgrounds/LivingBackground";
 import { services } from "@/data/services";
@@ -43,7 +44,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
         <Grid container spacing={{ xs: 4, md: 7 }}>
           <Grid size={{ xs: 12, md: 8 }}>
             <section className={styles.brief + " " + styles.anchor} id="project-brief" aria-labelledby="brief-heading">
-              <h2 id="brief-heading">Your project brief</h2>
+              <HeadingMotion id="brief-heading" text="Your" accent="project brief" tone="light" />
               <LeadForm key={selected} projectTypes={[...services.map(item => item.name), "Other"]} initialProjectType={selected} />
             </section>
           </Grid>

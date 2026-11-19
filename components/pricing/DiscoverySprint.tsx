@@ -7,6 +7,7 @@ import CheckRounded from "@mui/icons-material/CheckRounded";
 import LivingBackground from "@/components/backgrounds/LivingBackground";
 import DiscoveryCheckoutForm from "@/components/DiscoveryCheckoutForm";
 import { neural } from "@/components/experience/neuralStyle";
+import HeadingMotion from "@/components/motion/HeadingMotion";
 import PlayCard from "./PlayCard";
 import {
   defaultDiscoveryPackage, discoveryEssentials, discoveryPackages, findDiscoveryPackage, formatPounds,
@@ -64,10 +65,8 @@ export default function DiscoverySprint() {
         <Box sx={{ display: "grid", gap: { xs: 3, md: 6 }, gridTemplateColumns: { md: "minmax(0, 1.25fr) minmax(0, 1fr)" }, alignItems: "end" }}>
           <div>
             <Box component="p" sx={neural.label}>Discovery sprint</Box>
-            <Box component="h2" id="discovery-heading" sx={{ m: 0, fontSize: "clamp(2.1rem, 4.4vw, 3.9rem)", fontWeight: 630,
-              letterSpacing: "-0.047em", lineHeight: 1.06 }}>
-              A plan priced for <Box component="span" sx={neural.accentText}>your size</Box>
-            </Box>
+            <HeadingMotion id="discovery-heading" text="A plan priced for" accent="your size"
+              sx={{ m: 0, fontSize: "clamp(2.1rem, 4.4vw, 3.9rem)", fontWeight: 630, letterSpacing: "-0.047em", lineHeight: 1.06 }} />
             <Box component="p" sx={{ m: "18px 0 0", maxWidth: "52ch", color: palette.slate[125], fontSize: "clamp(1rem, 1.25vw, 1.12rem)", lineHeight: 1.6 }}>
               Smaller companies have fewer systems and people to plan around, so their sprint costs less.
               Every sprint ends with a written plan, a build estimate and a fixed price.
