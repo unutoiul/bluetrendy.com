@@ -16,6 +16,9 @@ export const contact = {
   country: "GB",
 };
 
+/** The business's profiles elsewhere, so search engines know they are the same company. */
+export const profiles = ["https://www.linkedin.com/company/bluetrendy"];
+
 /** Stable ids, so every page's structured data points at the same organisation and website. */
 export const ids = {
   organization: `${siteUrl}/#organization`,

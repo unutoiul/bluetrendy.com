@@ -8,7 +8,7 @@ import SiteFooter from "@/components/SiteFooter";
 import Panel3D from "@/components/motion/Panel3D";
 import ConsentAnalytics from "@/components/analytics/ConsentAnalytics";
 import JsonLd from "@/components/JsonLd";
-import { absoluteUrl, contact, homeTitle, ids, siteDescription, siteName, siteUrl, tagline } from "@/lib/seo";
+import { absoluteUrl, contact, homeTitle, ids, profiles, siteDescription, siteName, siteUrl, tagline } from "@/lib/seo";
 
 const geist = localFont({
   src: "../public/fonts/geist-latin.woff2",
@@ -92,6 +92,7 @@ const organization = {
       image: absoluteUrl("/brand/logo.png"),
       description: siteDescription,
       slogan: tagline,
+      sameAs: profiles,
       email: contact.email,
       telephone: contact.telephone,
       address: { "@type": "PostalAddress", addressLocality: contact.locality, addressCountry: contact.country },
