@@ -1,4 +1,8 @@
 ﻿import { createTheme } from "@mui/material/styles";
+import {
+  listCheck, listOption, listOptionActive, listOptionFocus, listOptionSelected,
+  listOptionSelectedActive, listPadding, listSeparator, listSurface,
+} from "./menuStyle";
 
 export const brand = {
   navy: "#0C2B45",
@@ -159,26 +163,35 @@ const theme = createTheme({
         root: { "&.Mui-focused": { color: brand.blue } },
       },
     },
+    MuiSelect: {
+      styleOverrides: {
+        icon: { color: brand.slate, transition: `transform 0.3s ${easeOut}` },
+      },
+    },
     MuiMenu: {
       // Locking scroll hides the sticky header, because html and body clip horizontal overflow.
       defaultProps: { disableScrollLock: true },
       styleOverrides: {
-        paper: {
-          marginTop: 6,
-          borderRadius: 12,
-          border: 0,
-          boxShadow: "0 24px 48px -22px rgba(12,43,69,0.45)",
-        },
-        list: { padding: 6 },
+        paper: { ...listSurface, marginTop: 6 },
+        list: { padding: listPadding },
       },
     },
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          borderRadius: 8,
-          transition: `background-color 0.2s ease, color 0.2s ease, padding-left 0.3s ${easeOut}`,
-          "&:hover": { backgroundColor: brand.mist, paddingLeft: 22 },
-          "&.Mui-selected, &.Mui-selected:hover": { backgroundColor: "rgba(22,95,204,0.09)", color: brand.blue, fontWeight: 600 },
+          ...listOption,
+          "& + &": { marginTop: 2 },
+          "@media (min-width:600px)": { minHeight: listOption.minHeight },
+          "&:hover, &.Mui-focusVisible": listOptionActive,
+          "&.MuiMenuItem-root.Mui-focusVisible": listOptionFocus,
+          "&.Mui-selected, &.Mui-selected.Mui-focusVisible": listOptionSelected,
+          "&.Mui-selected:hover": listOptionSelectedActive,
+          "&.Mui-selected::after": listCheck,
+        },
+        divider: {
+          borderBottom: 0,
+          marginBottom: 9,
+          "&::before": listSeparator,
         },
       },
     },

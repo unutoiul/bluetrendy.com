@@ -22,17 +22,19 @@ export default function ServicesPage() {
           {services.map(service => <section className={styles.chapter} key={service.slug}
             aria-labelledby={service.slug + "-heading"} id={service.slug} data-service={service.slug} tabIndex={-1}>
             <div className={styles.cover}>
-              <div className={styles.coverCopy}><h2 id={service.slug + "-heading"}>{service.name}</h2><p>{service.shortDescription}</p></div>
-              <ServiceScene slug={service.slug} />
+              <h2 id={service.slug + "-heading"}>{service.name}</h2>
+              <p>{service.shortDescription}</p>
             </div>
+            <ServiceScene slug={service.slug} />
             <div className={styles.body}>
-              <p>{service.description}</p>
-              <h3>What we deliver</h3>
-              <ul className={styles.deliverables}>{service.bullets.map(bullet => <li key={bullet}>{bullet}</li>)}</ul>
-              <div className={styles.meta}>
-                <details><summary>Tools we use</summary>
-                  <ul aria-label="Tools and technologies" className={styles.stack}>{service.stack.map(tech => <li key={tech}>{tech}</li>)}</ul>
-                </details>
+              <div className={styles.summary}>
+                <p>{service.description}</p>
+                <h3 id={service.slug + "-tools"}>Tools we use</h3>
+                <ul aria-labelledby={service.slug + "-tools"} className={styles.stack}>{service.stack.map(tech => <li key={tech}>{tech}</li>)}</ul>
+              </div>
+              <div>
+                <h3>What we deliver</h3>
+                <ul className={styles.deliverables}>{service.bullets.map(bullet => <li key={bullet}>{bullet}</li>)}</ul>
                 <Link className={styles.briefLink} href="/book-a-call" aria-label={"Book a call about " + service.name}>
                   Book a call about this service <span aria-hidden="true">↗</span>
                 </Link>

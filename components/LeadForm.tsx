@@ -5,7 +5,6 @@ import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
@@ -14,6 +13,7 @@ import Box from "@mui/material/Box";
 import SendRounded from "@mui/icons-material/SendRounded";
 import { motion } from "motion/react";
 import FieldCheck from "./motion/FieldCheck";
+import Dropdown from "./Dropdown";
 import { trackEvent } from "@/lib/analytics";
 import { leadFieldLimits } from "@/lib/lead";
 
@@ -158,52 +158,34 @@ export default function LeadForm({ projectTypes, initialProjectType }: { project
 
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, sm: 4 }}>
-          <TextField
-            select
+          <Dropdown
             label="Project type"
             name="projectType"
             fullWidth
+            options={projectTypes}
             value={form.projectType}
-            onChange={(e) => update("projectType", e.target.value)}
-          >
-            {projectTypes.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </TextField>
+            onChange={(value) => update("projectType", value)}
+          />
         </Grid>
         <Grid size={{ xs: 12, sm: 4 }}>
-          <TextField
-            select
+          <Dropdown
             label="Budget"
             name="budget"
             fullWidth
+            options={budgets}
             value={form.budget}
-            onChange={(e) => update("budget", e.target.value)}
-          >
-            {budgets.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </TextField>
+            onChange={(value) => update("budget", value)}
+          />
         </Grid>
         <Grid size={{ xs: 12, sm: 4 }}>
-          <TextField
-            select
+          <Dropdown
             label="Timeline"
             name="timeline"
             fullWidth
+            options={timelines}
             value={form.timeline}
-            onChange={(e) => update("timeline", e.target.value)}
-          >
-            {timelines.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </TextField>
+            onChange={(value) => update("timeline", value)}
+          />
         </Grid>
       </Grid>
 

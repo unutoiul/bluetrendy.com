@@ -5,12 +5,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
-import KeyboardArrowDownRounded from "@mui/icons-material/KeyboardArrowDownRounded";
 import { clientLogos, industries, type ClientLogo, type Industry } from "@/data/clients";
+import Dropdown, { type DropdownOption } from "./Dropdown";
 import HeadingMotion from "./motion/HeadingMotion";
 import styles from "./TrustStrip.styles";
 
 const industryOptions = Object.entries(industries).sort(([, a], [, b]) => a.localeCompare(b));
+const filterOptions: DropdownOption[] = [
+  { value: "", label: "All industries", hint: clientLogos.length, separated: true },
+  ...industryOptions.map(([value, label]) => ({
+    value, label, hint: clientLogos.filter(client => client.industry === value).length,
+  })),
+];
 
 function ClientMark({ client }: { client: ClientLogo }) {
   const mark = <>
@@ -43,13 +49,8 @@ function ClientDirectory({ industry = "", onChange }: {
       <div className={styles.gallery}>
         <div className={styles.toolbar}>
           <span role="status" aria-atomic="true">{clients.length} {clients.length === 1 ? "client" : "clients"}</span>
-          <label className={styles.filter}>
-            <select aria-label="Filter clients by industry" value={industry} disabled={!onChange} onChange={event => onChange?.(event.target.value)}>
-              <option value="">All industries</option>
-              {industryOptions.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-            </select>
-            <KeyboardArrowDownRounded aria-hidden="true" fontSize="small" />
-          </label>
+          <Dropdown aria-label="Filter clients by industry" align="end" options={filterOptions} value={industry}
+            disabled={!onChange} onChange={value => onChange?.(value)} />
         </div>
         <ul key={industry} className={styles.wall} aria-label={industry ? `Clients in ${industries[industry]}` : "Client logos"}>
           {clients.map(client => <li key={client.name}><ClientMark client={client} /></li>)}

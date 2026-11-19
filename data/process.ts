@@ -1,3 +1,5 @@
+import { discoveryPackages, formatPounds } from "./pricing";
+
 export const processSteps = [
   {
     step: "01",
@@ -29,24 +31,56 @@ export const processSteps = [
   },
 ];
 
-export const engagementModels = [
+export type EngagementModel = {
+  id: "discovery" | "fixed" | "embedded";
+  name: string;
+  /** Where the model sits in the journey, shown as a tag on its card. */
+  tag: string;
+  description: string;
+  facts: { term: string; value: string }[];
+  bestFor: string;
+  action: { label: string; href: string };
+};
+
+export const engagementModels: EngagementModel[] = [
   {
+    id: "discovery",
     name: "Paid Discovery Sprint",
+    tag: "Start here",
     description:
       "The entry point for most engagements. A fixed-price, time-boxed sprint that ends with an architecture plan, risk assessment, and delivery estimate — before you commit to a full build.",
+    facts: [
+      { term: "How you pay", value: `Fixed price, from ${formatPounds(Math.min(...discoveryPackages.map(item => item.price)))}` },
+      { term: "How long", value: "1–2 weeks" },
+    ],
     bestFor: "New projects, unclear scope, or validating an approach before funding a full build.",
+    action: { label: "See sprint prices", href: "/pricing#discovery-sprint" },
   },
   {
+    id: "fixed",
     name: "Fixed-Scope Project",
+    tag: "Then: a set build",
     description:
       "A defined deliverable, timeline, and price, agreed after discovery. Weekly demos and milestone-based payment keep the engagement accountable end to end.",
+    facts: [
+      { term: "How you pay", value: "By milestone" },
+      { term: "How long", value: "Set in your discovery plan" },
+    ],
     bestFor: "Well-scoped builds — a platform, a migration, an integration — with a clear definition of done.",
+    action: { label: "Get a quote", href: "/contact" },
   },
   {
+    id: "embedded",
     name: "Embedded Engineering",
+    tag: "Or: ongoing work",
     description:
       "Ongoing, senior-engineer capacity working inside your team and your existing tools — for teams that need sustained delivery, not a one-off project.",
+    facts: [
+      { term: "How you pay", value: "Monthly" },
+      { term: "How long", value: "No fixed minimum term" },
+    ],
     bestFor: "Teams scaling delivery, covering a gap, or wanting AI-fluent senior engineering long-term.",
+    action: { label: "Discuss capacity", href: "/contact" },
   },
 ];
 

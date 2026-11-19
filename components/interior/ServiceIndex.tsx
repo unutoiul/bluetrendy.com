@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import KeyboardArrowDownRounded from "@mui/icons-material/KeyboardArrowDownRounded";
 import styles from "./Services.styles";
 
 type Item = { slug: string; name: string };
@@ -55,7 +56,7 @@ export default function ServiceIndex({ items }: { items: Item[] }) {
         menu.current.querySelector("summary")?.focus();
       }
     }}>
-      <summary><span>Services</span><b>{items.find(item => item.slug === current)?.name}</b><i aria-hidden="true">⌄</i></summary>
+      <summary><span>Services</span><b>{items.find(item => item.slug === current)?.name}</b><KeyboardArrowDownRounded /></summary>
       <div>{links}</div>
     </details>
   </nav>;
