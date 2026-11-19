@@ -4,6 +4,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
+import SiteStyles from "./SiteStyles";
 import { MotionConfig } from "motion/react";
 
 export default function ThemeRegistry({ children }: { children: React.ReactNode }) {
@@ -11,6 +12,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
     <AppRouterCacheProvider options={{ key: "mui" }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <SiteStyles />
         <MotionConfig reducedMotion="user">{children}</MotionConfig>
       </ThemeProvider>
     </AppRouterCacheProvider>

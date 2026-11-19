@@ -4,7 +4,6 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Chip from "@mui/material/Chip";
 import CheckIcon from "@mui/icons-material/Check";
 import PageHero from "@/components/PageHero";
 import SectionHeading from "@/components/SectionHeading";
@@ -13,6 +12,8 @@ import DiscoveryCheckoutForm from "@/components/DiscoveryCheckoutForm";
 import LinkButton from "@/components/LinkButton";
 import LinkTypography from "@/components/LinkTypography";
 import { pricingFaqs } from "@/data/pricing";
+import JumpLinks from "@/components/interior/JumpLinks";
+import styles from "@/components/interior/Editorial.styles";
 
 export const metadata: Metadata = {
   title: "Engagement & Pricing",
@@ -35,29 +36,27 @@ export default function PricingPage() {
       <PageHero
         eyebrow="Engagement & Pricing"
         title="Start with a fixed-price discovery sprint"
+        aside={<JumpLinks label="Explore engagement options" links={[
+          { text: "Discovery sprint & price", href: "#discovery-sprint" },
+          { text: "Project & embedded work", href: "#ongoing-work" },
+          { text: "Pricing questions", href: "#pricing-questions" },
+        ]} />}
         subtitle="No open-ended estimates. You get a concrete architecture plan and delivery price before committing to a full build."
       />
 
-      <Container sx={{ py: { xs: 10, md: 14 } }}>
+      <Container sx={{ py: { xs: 5, md: 8 } }}>
         <Grid container spacing={4}>
-          <Grid size={{ xs: 12, md: 5 }}>
+          <Grid size={{ xs: 12, md: 5 }} className={styles.anchor} id="discovery-sprint">
             <Stack
               spacing={3}
               sx={{
-                bgcolor: "background.paper",
-                border: "2px solid",
-                borderColor: "secondary.main",
+                bgcolor: "#eff6fa",
+                border: "1px solid #b3d0df",
                 borderRadius: 3,
                 p: { xs: 3, md: 4 },
                 position: "relative",
               }}
             >
-              <Chip
-                label="Recommended starting point"
-                size="small"
-                color="secondary"
-                sx={{ alignSelf: "flex-start", fontWeight: 700 }}
-              />
               <Box>
                 <Typography variant="h5" component="h2">
                   Paid Discovery Sprint
@@ -84,8 +83,9 @@ export default function PricingPage() {
             </Stack>
           </Grid>
 
-          <Grid size={{ xs: 12, md: 7 }}>
+          <Grid size={{ xs: 12, md: 7 }} className={styles.anchor} id="ongoing-work">
             <Stack spacing={3}>
+              <Typography variant="h5" component="h2">After discovery</Typography>
               <Stack
                 direction={{ xs: "column", sm: "row" }}
                 spacing={2}
@@ -160,7 +160,7 @@ export default function PricingPage() {
         </Grid>
       </Container>
 
-      <Container sx={{ pb: { xs: 10, md: 14 } }}>
+      <Container className={styles.anchor} id="pricing-questions" sx={{ pb: { xs: 6, md: 9 } }}>
         <Grid container spacing={8}>
           <Grid size={{ xs: 12, md: 4 }}>
             <SectionHeading eyebrow="FAQ" title="Pricing questions" align="left" maxWidth={400} />

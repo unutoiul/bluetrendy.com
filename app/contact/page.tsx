@@ -10,77 +10,53 @@ import PlaceIcon from "@mui/icons-material/PlaceOutlined";
 import PageHero from "@/components/PageHero";
 import LeadForm from "@/components/LeadForm";
 import LinkButton from "@/components/LinkButton";
+import { services } from "@/data/services";
+import styles from "@/components/interior/Editorial.styles";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Tell us about your project — new build, modernization, or AI automation — and hear back within one business day.",
+  description: "Tell us about your project and hear back within one business day.",
 };
 
-const contactDetails = [
+const details = [
   { icon: EmailIcon, label: "contact@bluetrendy.com", href: "mailto:contact@bluetrendy.com" },
   { icon: PhoneIcon, label: "+44 (0) 7815 627 527", href: "tel:+447815627527" },
   { icon: PlaceIcon, label: "London, UK", href: null },
 ];
 
-export default function ContactPage() {
-  return (
-    <>
-      <PageHero
-        eyebrow="Contact"
-        title="Tell us what you're building"
-        subtitle="Share a few details about your project and we'll reply within one business day — or skip straight to a call if you'd rather talk it through."
-      />
-
-      <Container sx={{ py: { xs: 10, md: 14 } }}>
-        <Grid container spacing={8}>
+export default async function ContactPage({ searchParams }: { searchParams: Promise<{ service?: string | string[] }> }) {
+  const { service } = await searchParams;
+  const selected = services.find(item => item.slug === service)?.name ?? "";
+  return <>
+    <PageHero eyebrow="Contact" title="Tell us what you’re building"
+      subtitle="Send a project brief and an engineer will reply within one business day." />
+    <Box sx={{ bgcolor: "#f3f7fa" }}>
+      <Container sx={{ py: { xs: 4, md: 7 } }}>
+        <Grid container spacing={{ xs: 4, md: 7 }}>
+          <Grid size={{ xs: 12, md: 8 }}>
+            <section className={styles.brief + " " + styles.anchor} id="project-brief" aria-labelledby="brief-heading">
+              <h2 id="brief-heading">Your project brief</h2>
+              <LeadForm key={selected} projectTypes={[...services.map(item => item.name), "Other"]} initialProjectType={selected} />
+            </section>
+          </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
-            <Stack spacing={4}>
-              <Stack spacing={2}>
-                {contactDetails.map((detail) => {
-                  const Icon = detail.icon;
-                  const content = (
-                    <Stack direction="row" spacing={1.5} sx={{ alignItems: "center" }}>
-                      <Icon sx={{ color: "secondary.main" }} />
-                      <Typography variant="body1">{detail.label}</Typography>
-                    </Stack>
-                  );
-                  return detail.href ? (
-                    <Box key={detail.label} component="a" href={detail.href} sx={{ "&:hover": { color: "secondary.main" } }}>
-                      {content}
-                    </Box>
-                  ) : (
-                    <Box key={detail.label}>{content}</Box>
-                  );
+            <Stack spacing={2.5} sx={{ position: { md: "sticky" }, top: 106 }}>
+              <Typography variant="h5" component="h2">Talk to our team</Typography>
+              <Stack>
+                {details.map(({ icon: Icon, label, href }) => {
+                  const content = <><Icon fontSize="small" /><span>{label}</span></>;
+                  const sx = { display: "flex", alignItems: "center", gap: 1.5, minHeight: 44, color: "primary.main", textUnderlineOffset: 4 };
+                  return href ? <Box key={label} component="a" href={href} sx={sx}>{content}</Box> : <Box key={label} sx={sx}>{content}</Box>;
                 })}
               </Stack>
-
-              <Box
-                sx={{
-                  bgcolor: "background.paper",
-                  border: "1px solid",
-                  borderColor: "divider",
-                  borderRadius: 3,
-                  p: 3,
-                }}
-              >
-                <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                  Prefer to talk first?
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mt: 1, mb: 2 }}>
-                  Skip the form and grab a slot directly on the calendar.
-                </Typography>
-                <LinkButton href="/book-a-call" variant="contained" color="primary" fullWidth>
-                  Book a Call
-                </LinkButton>
+              <Box sx={{ borderTop: "1px solid", borderColor: "divider", pt: 2.5 }}>
+                <Typography variant="body1" sx={{ mb: 1.5 }}>Prefer to talk it through? Book a free 30-minute discovery call.</Typography>
+                <LinkButton href="/book-a-call" variant="outlined">Book a call</LinkButton>
               </Box>
             </Stack>
           </Grid>
-
-          <Grid size={{ xs: 12, md: 8 }}>
-            <LeadForm />
-          </Grid>
         </Grid>
       </Container>
-    </>
-  );
+    </Box>
+  </>;
 }

@@ -1,46 +1,36 @@
+/* eslint-disable @next/next/no-img-element -- ImageResponse rasterizes these elements into a static PNG. */
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
-export const alt = "bluetrendy — AI-first custom software consultancy";
+export const alt = "BlueTrendy Intelligence. Custom software, delivered 10x faster.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function OpengraphImage() {
+  const brandDir = join(process.cwd(), "public", "brand");
+  const [logo, network] = await Promise.all([
+    readFile(join(brandDir, "logo-inverse.svg"), "base64"),
+    readFile(join(brandDir, "neural-strands.svg"), "base64"),
+  ]);
+
   return new ImageResponse(
-    (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          padding: "80px",
-          background: "linear-gradient(160deg, #071E2C 0%, #0B4563 55%, #123A52 100%)",
-          color: "#fff",
-          fontFamily: "sans-serif",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 40 }}>
-          <div
-            style={{
-              width: 56,
-              height: 56,
-              borderRadius: 14,
-              background: "#2787BE",
-              display: "flex",
-            }}
-          />
-          <div style={{ fontSize: 34, fontWeight: 600, letterSpacing: -1 }}>bluetrendy</div>
-        </div>
-        <div style={{ fontSize: 56, fontWeight: 700, lineHeight: 1.15, maxWidth: 900 }}>
-          Custom software, delivered 10x faster.
-        </div>
-        <div style={{ fontSize: 26, color: "rgba(255,255,255,0.75)", marginTop: 28, maxWidth: 820 }}>
-          Websites, apps, and business systems — built with the newest AI coding models, reviewed by senior engineers.
-        </div>
+    <div style={{
+      width: "100%", height: "100%", display: "flex", flexDirection: "column",
+      justifyContent: "space-between", padding: "62px 70px", position: "relative",
+      background: "linear-gradient(115deg, #061423 2%, #09273e 100%)", color: "#f5fbff",
+    }}>
+      <img alt="" src={`data:image/svg+xml;base64,${network}`} width={800} height={480}
+        style={{ position: "absolute", right: -185, bottom: -44, opacity: 0.55, objectFit: "contain" }} />
+      <img alt="BlueTrendy Intelligence" src={`data:image/svg+xml;base64,${logo}`} width={320} height={78} />
+      <div style={{ display: "flex", flexDirection: "column", fontSize: 78, fontWeight: 700, letterSpacing: -4, lineHeight: 1.12 }}>
+        <span>Custom software,</span>
+        <span style={{ color: "#88e9ff" }}>delivered 10x faster.</span>
       </div>
-    ),
-    { ...size },
+      <div style={{ display: "flex", fontSize: 26, color: "#c6daea", maxWidth: 780 }}>
+        IT services, systems integration and digital production.
+      </div>
+    </div>,
+    size,
   );
 }

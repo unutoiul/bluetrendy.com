@@ -16,7 +16,9 @@ import Menu from "@mui/icons-material/Menu";
 import Close from "@mui/icons-material/Close";
 import { motion, useMotionValueEvent, useScroll, useSpring } from "motion/react";
 import Logo from "./Logo";
+import ExperienceHeader from "./experience/ExperienceHeader";
 import Magnetic from "./motion/Magnetic";
+import RollText from "./motion/RollText";
 import { navLinks } from "@/data/nav";
 import { trackEvent } from "@/lib/analytics";
 import { brand, easeOut } from "@/theme/theme";
@@ -25,6 +27,10 @@ const streak = `linear-gradient(90deg, ${brand.blue}, ${brand.blueLight})`;
 
 export default function Header() {
   const path = usePathname();
+  return path === "/" ? <ExperienceHeader /> : <DetailHeader path={path} />;
+}
+
+function DetailHeader({ path }: { path: string }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
@@ -82,7 +88,7 @@ export default function Header() {
                 <Magnetic>
                   <Button component={Link} href="/book-a-call" variant="contained" endIcon={<ArrowOutward />}
                     onClick={() => trackEvent("cta_book_call_click", { location: "header" })}>
-                    Book a call
+                    <RollText>Book a call</RollText>
                   </Button>
                 </Magnetic>
               </Box>

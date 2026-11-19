@@ -12,12 +12,20 @@
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
   let frame = 0;
   let playAttempt = 0;
+  let pendingSeek = null;
+  const savesData = () => navigator.connection?.saveData === true;
+  function prepareFilm() {
+    if (video.hasAttribute("src")) return;
+    const compact = savesData() || matchMedia("(max-width: 899px), (pointer: coarse) and (max-height: 560px)").matches;
+    video.poster = "brand/shadow-intro/entrance-poster.jpg";
+    video.src = "brand/shadow-intro/" + (compact ? "entrance-mobile.mp4" : "entrance.mp4");
+  }
 
   window.IntroTagline.bindIntroTagline(video, document.querySelector("#tagline"));
 
   function update() {
-    const t = video.currentTime;
-    picture.dataset.lockup = String(Boolean(video.error) || video.ended || (video.paused && t === 0));
+    const t = pendingSeek ?? video.currentTime;
+    picture.dataset.lockup = String(Boolean(video.error) || video.ended || (video.paused && (video.readyState < 2 || t === 0)));
     seek.value = t;
     seek.style.setProperty("--progress", (100 * t / Number(seek.max)) + "%");
     seek.setAttribute("aria-valuetext", t.toFixed(1) + " of 8 seconds");
@@ -34,6 +42,7 @@
   async function start(autoplay = false) {
     const attempt = ++playAttempt;
     try {
+      prepareFilm();
       if (video.ended) video.currentTime = 0;
       await video.play();
     } catch (error) {
@@ -53,6 +62,12 @@
     cancelAnimationFrame(frame);
     tick();
   });
+  video.addEventListener("loadedmetadata", () => {
+    if (pendingSeek !== null) {
+      video.currentTime = pendingSeek;
+      pendingSeek = null;
+    }
+  });
   for (const event of ["pause", "ended", "seeking", "seeked", "timeupdate", "volumechange"]) {
     video.addEventListener(event, update);
   }
@@ -69,7 +84,8 @@
     }
   });
   seek.addEventListener("input", () => {
-    video.currentTime = Number(seek.value);
+    if (video.readyState >= 1) video.currentTime = Number(seek.value);
+    else pendingSeek = Number(seek.value);
     update();
   });
   function interrupt() {
@@ -91,5 +107,5 @@
   video.controls = false;
   bar.hidden = false;
   update();
-  if (!document.hidden && !reduced.matches) void start(true);
+  if (!document.hidden && !reduced.matches && !savesData()) void start(true);
 })();

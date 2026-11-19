@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import AccessTimeOutlined from "@mui/icons-material/AccessTimeOutlined";
 import VideocamOutlined from "@mui/icons-material/VideocamOutlined";
 import BookingEmbed from "@/components/BookingEmbed";
+import styles from "@/components/interior/Editorial.styles";
 
 export const metadata: Metadata = {
   title: "Book a Call",
@@ -14,13 +15,14 @@ export const metadata: Metadata = {
 
 export default function BookACallPage() {
   return (
-    <Box component="section" aria-labelledby="booking-heading" sx={{ pt: { xs: 2.5, md: 3.5 }, pb: 3 }}>
+    <Box component="section" aria-labelledby="booking-heading" sx={{ bgcolor: "#f1f6fa", pt: { xs: 3, md: 4 }, pb: 5 }}>
       <Container sx={{ px: { xs: 2, sm: 3 } }}>
         <Box sx={{ maxWidth: 1080, mx: "auto" }}>
-          <Stack spacing={1} sx={{ mb: { xs: 2, md: 2.5 } }}>
+          <Stack className={styles.arrival} spacing={1.25} sx={{ mb: { xs: 2, md: 3 } }}>
             <Typography id="booking-heading" component="h1" sx={{ fontSize: { xs: 27, sm: 34 }, fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.03em", color: "primary.main" }}>
               Book a discovery call
             </Typography>
+            <Typography variant="body1" color="text.secondary">Choose a time to discuss your project with a senior engineer.</Typography>
             <Stack direction="row" spacing={2} sx={{ alignItems: "center", color: "text.secondary", flexWrap: "wrap", rowGap: 0.5 }}>
               <Stack direction="row" spacing={0.75} sx={{ alignItems: "center" }}>
                 <AccessTimeOutlined sx={{ fontSize: 17 }} />

@@ -10,6 +10,8 @@ import FAQAccordion from "@/components/FAQAccordion";
 import CTASection from "@/components/CTASection";
 import { processSteps, engagementModels, processFaqs } from "@/data/process";
 import { brand } from "@/theme/theme";
+import JumpLinks from "@/components/interior/JumpLinks";
+import styles from "@/components/interior/Editorial.styles";
 
 export const metadata: Metadata = {
   title: "Process",
@@ -22,43 +24,28 @@ export default function ProcessPage() {
     <>
       <PageHero
         eyebrow="Process"
-        title="A process built for accountability, not billable hours"
+        title="From the first call to handover"
+        aside={<JumpLinks label="Explore the delivery process" links={[
+          { text: "Delivery milestones", href: "#delivery" },
+          { text: "Ways to work together", href: "#engagement-models" },
+          { text: "Common questions", href: "#process-questions" },
+        ]} />}
         subtitle="Every engagement starts with a fixed-scope discovery sprint, runs on a weekly demo cadence, and gives you direct access to the engineer writing your code."
       />
 
-      <Container sx={{ py: { xs: 10, md: 14 } }}>
-        <Stack spacing={7}>
+      <Container className={styles.anchor} id="delivery" sx={{ py: { xs: 5, md: 9 } }}>
+        <ol className={styles.roadmap} aria-label="Delivery milestones">
           {processSteps.map((step) => (
-            <Grid container spacing={4} key={step.step} sx={{ alignItems: "flex-start" }}>
-              <Grid size={{ xs: 12, sm: 3 }}>
-                <Typography
-                  sx={{
-                    fontFamily: "var(--font-mono)",
-                    color: "secondary.main",
-                    fontWeight: 600,
-                    fontSize: "2rem",
-                  }}
-                >
-                  {step.step}
-                </Typography>
-                <Typography variant="overline" sx={{ color: "text.secondary" }}>
-                  {step.duration}
-                </Typography>
-              </Grid>
-              <Grid size={{ xs: 12, sm: 9 }}>
-                <Typography variant="h5" component="h2">
-                  {step.title}
-                </Typography>
-                <Typography variant="body1" color="text.secondary" sx={{ mt: 1.5, maxWidth: 640 }}>
-                  {step.description}
-                </Typography>
-              </Grid>
-            </Grid>
+            <li key={step.step}>
+              <span aria-hidden="true" className={styles.milestone}>{step.step}</span>
+              <div><h2>{step.title}</h2><small>{step.duration}</small></div>
+              <p>{step.description}</p>
+            </li>
           ))}
-        </Stack>
+        </ol>
       </Container>
 
-      <Box sx={{ bgcolor: brand.mist, py: { xs: 10, md: 14 } }}>
+      <Box className={styles.anchor} id="engagement-models" sx={{ bgcolor: brand.mist, py: { xs: 6, md: 9 } }}>
         <Container>
           <SectionHeading
             eyebrow="Engagement models"
@@ -100,7 +87,7 @@ export default function ProcessPage() {
         </Container>
       </Box>
 
-      <Container sx={{ py: { xs: 10, md: 14 } }}>
+      <Container className={styles.anchor} id="process-questions" sx={{ py: { xs: 6, md: 9 } }}>
         <Grid container spacing={8}>
           <Grid size={{ xs: 12, md: 4 }}>
             <SectionHeading eyebrow="FAQ" title="Common questions" align="left" maxWidth={400} />
@@ -111,7 +98,7 @@ export default function ProcessPage() {
         </Grid>
       </Container>
 
-      <CTASection location="process_page" />
+      <CTASection location="process_page" title="Talk through your first milestone" subtitle="Bring a workflow, a deadline or a system you need to replace. We’ll use the call to work out what belongs in discovery." />
     </>
   );
 }

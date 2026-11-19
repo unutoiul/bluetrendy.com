@@ -45,8 +45,8 @@ export function bindIntroTagline(video: HTMLVideoElement, line: HTMLElement) {
       animations = [
         animate(line, { opacity: [0.82, 1], transform: ["translateY(3px)", "translateY(0)"] },
           { duration: 0.48, ease: "easeOut" }),
-        animate(accent, { backgroundPosition: ["100% 50%", "0% 50%", "0% 50%"] },
-          { duration: 4.25, times: [0, 0.39, 1], ease: "easeInOut", repeat: Infinity }),
+        animate(accent, { backgroundPosition: ["100% 50%", "0% 50%"] },
+          { duration: 1.1, ease: "easeInOut" }),
       ];
     }
   }

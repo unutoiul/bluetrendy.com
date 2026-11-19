@@ -1,45 +1,66 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import { motion, useReducedMotion } from "motion/react";
-import { clientLogos, type ClientLogo } from "@/data/clients";
+import { useSearchParams } from "next/navigation";
+import ArrowOutwardRounded from "@mui/icons-material/ArrowOutwardRounded";
+import { clientLogos, industries, type ClientLogo, type Industry } from "@/data/clients";
+import styles from "./TrustStrip.styles";
 
 function ClientMark({ client }: { client: ClientLogo }) {
+  const mark = client.file
+    ? <span className={styles.mark}><Image src={`/brand/clients/${client.file}`} alt="" fill
+        sizes="(max-width: 380px) 42vw, (max-width: 600px) 27vw, 146px" unoptimized /></span>
+    : client.name;
+
+  return client.external
+    ? <a href={client.href} target="_blank" rel="noopener noreferrer" aria-label={`${client.name} (opens in a new tab)`} title={client.name}>{mark}</a>
+    : <Link href={client.href} prefetch={false} aria-label={`${client.name} case study`} title={client.name}>{mark}</Link>;
+}
+
+function ClientDirectory({ industry = "", onChange }: {
+  industry?: Industry | ""; onChange?: (industry: string) => void;
+}) {
+  const clients = industry ? clientLogos.filter(client => client.industry === industry) : clientLogos;
   return (
-    <Box component={client.external ? "a" : Link} href={client.href}
-      target={client.external ? "_blank" : undefined} rel={client.external ? "noopener noreferrer" : undefined}
-      aria-label={client.name + (client.external ? " (opens in a new tab)" : " case study")}
-      sx={{ display: "grid", placeItems: "center", minHeight: 65, px: 1.5, borderRadius: 1,
-        "& img": { opacity: client.mutedOpacity ?? 0.79, filter: "grayscale(1)", maxWidth: "100%", objectFit: "contain" },
-        "&:hover img, &:focus-visible img": { opacity: 1, filter: "none" } }}>
-      {client.file ? <Box component="img" src={`/brand/clients/${client.file}`} alt="" width={107} height={35} loading="lazy" /> : client.name}
-    </Box>
+    <>
+      <div className={styles.heading}>
+        <h2 id="clients-heading">Our clients</h2>
+        <label className={styles.filter}>Industry
+          <select value={industry} disabled={!onChange} onChange={event => onChange?.(event.target.value)}>
+            <option value="">All industries</option>
+            {Object.entries(industries).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+          </select>
+        </label>
+      </div>
+      <ul className={styles.wall} aria-label="Client logos">
+        {clients.map(client => <li key={client.name}><ClientMark client={client} /></li>)}
+      </ul>
+      <div className={styles.foot}>
+        <span role="status">{clients.length} {clients.length === 1 ? "client" : "clients"}{industry ? ` in ${industries[industry]}` : ` across ${Object.keys(industries).length} industries`}</span>
+        <Link href="/case-studies" prefetch={false}>Read case studies <ArrowOutwardRounded /></Link>
+      </div>
+    </>
   );
 }
 
+function FilteredClients() {
+  const params = useSearchParams();
+  const requested = params.get("industry") ?? "";
+  const industry = Object.hasOwn(industries, requested) ? requested as Industry : "";
+
+  function choose(value: string) {
+    const url = new URL(window.location.href);
+    if (value) url.searchParams.set("industry", value);
+    else url.searchParams.delete("industry");
+    url.hash = "clients";
+    window.history.pushState(null, "", url);
+  }
+
+  return <ClientDirectory industry={industry} onChange={choose} />;
+}
+
 export default function TrustStrip() {
-  const [expanded, setExpanded] = useState(false);
-  const reduced = useReducedMotion();
-  const layout = { display: "grid", alignItems: "center", gridTemplateColumns: { xs: "repeat(3,minmax(0,1fr))", sm: "repeat(5,minmax(0,1fr))" } };
-  return (
-    <Box component="section" aria-labelledby="clients-heading">
-      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1, borderBottom: "1px solid", borderColor: "divider", pb: 1 }}>
-        <Typography id="clients-heading" component="h2" sx={{ fontSize: { xs: 15, sm: 17 }, fontWeight: 650 }}>Teams we’ve built software with</Typography>
-        <Button size="small" aria-expanded={expanded} aria-controls="more-clients" onClick={() => setExpanded(!expanded)}
-          endIcon={<ExpandMore sx={{ transform: expanded ? "rotate(180deg)" : undefined }} />} sx={{ px: 1, flexShrink: 0 }}>
-          {expanded ? "Show fewer" : "View all " + clientLogos.length}
-        </Button>
-      </Box>
-      <Box sx={{ ...layout, pt: 1.5 }}>{clientLogos.slice(0, 5).map(client => <ClientMark key={client.name} client={client} />)}</Box>
-      <Box id="more-clients" hidden={!expanded}>
-        {expanded && <Box component={motion.div} initial={reduced ? false : { opacity: 0 }} animate={{ opacity: 1 }}
-          transition={{ duration: 0.2 }} sx={layout}>{clientLogos.slice(5).map(client => <ClientMark key={client.name} client={client} />)}</Box>}
-      </Box>
-    </Box>
-  );
+  return <Suspense fallback={<ClientDirectory />}><FilteredClients /></Suspense>;
 }

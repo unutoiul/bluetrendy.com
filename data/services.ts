@@ -5,16 +5,31 @@ export type Service = {
   description: string;
   bullets: string[];
   stack: string[];
+  preview?: {
+    icon: "cube" | "web" | "phone" | "integration" | "spark" | "film";
+    heading: string;
+    steps: [string, string][];
+    related?: { slug: string; label: string };
+  };
 };
 
 export const services: Service[] = [
   {
     slug: "ai-native-web-apps",
-    name: "AI-Native Web Applications",
+    name: "Custom software",
     shortDescription:
-      "Production web platforms with AI and automation built in from day one, not bolted on after launch.",
+      "Portals, dashboards and internal tools built around the way your team works.",
     description:
-      "We design and build web applications on modern, typed foundations — React, Next.js, GraphQL, and event-driven backends — with AI capability treated as a core requirement, not a feature flag. That means real-time data pipelines, AI-assisted internal tooling, and automation woven into the architecture from the first sprint.",
+      "When a spreadsheet can no longer run the operation, we turn it into shared software. Your team gets a workspace with live data, permissions and a record of each decision.",
+    preview: {
+      icon: "cube", heading: "Give your team one place to work",
+      steps: [
+        ["Map the workflow", "We sit with the people doing the work and trace one real task from start to finish."],
+        ["Build a first release", "Your team tries the core workflow with representative data while changes are still inexpensive."],
+        ["Roll it out", "We test permissions, connect live data and release the tool to its first users."],
+      ],
+      related: { slug: "complex-mission-critical-systems", label: "Mission-critical systems" },
+    },
     bullets: [
       "Real-time data pipelines and WebSocket streaming for live pricing, monitoring, and analytics",
       "AI copilots and automation embedded in internal tools and customer-facing UX",
@@ -24,18 +39,67 @@ export const services: Service[] = [
     stack: ["React", "Next.js", "TypeScript", "GraphQL", "Node.js", "AWS", "Azure"],
   },
   {
+    slug: "websites-and-ecommerce",
+    name: "Websites & e-commerce",
+    shortDescription: "Company websites, booking flows and online shops your team can update.",
+    description: "We design the route from a first visit to an enquiry, booking or purchase. You get a fast, accessible site and an editor your team can use for product updates and campaigns.",
+    bullets: [
+      "Page design, content structure and responsive layouts for desktop and mobile",
+      "Product catalogues, checkout, booking calendars and enquiry forms",
+      "Editable content, search metadata and measurement of key customer journeys",
+    ],
+    stack: ["Next.js", "CMS", "Payments", "Analytics"],
+    preview: {
+      icon: "web", heading: "Make the next step clear for visitors",
+      steps: [
+        ["Plan the journey", "We map the pages a visitor needs to compare options and decide what to do next."],
+        ["Build the site", "We connect content, products, payments or bookings to the systems your team uses."],
+        ["Launch & measure", "We test the journey on phones and desktops and set up measurement for completed actions."],
+      ],
+    },
+  },
+  {
     slug: "mobile-cross-platform",
-    name: "Mobile & Cross-Platform Apps",
+    name: "Mobile apps",
     shortDescription:
-      "React Native mobile experiences that share logic with your web platform, shipped without sacrificing native feel.",
+      "iOS and Android apps for customers, field teams and work on the move.",
     description:
-      "When a product needs to live on a phone as well as a browser, we build it once with shared business logic and platform-native polish — so mobile isn't a second, slower project trailing behind the web release.",
+      "We design for the moments when a phone is the best tool for the job, from checking a booking to recording a site visit offline. We connect the app to your platform and prepare both store submissions.",
+    preview: {
+      icon: "phone", heading: "Put the workflow in someone’s hand",
+      steps: [
+        ["Try a prototype", "Test the main task on a phone before committing to development."],
+        ["Connect the app", "We add sign-in, notifications and offline data where the task calls for them."],
+        ["Release to stores", "We test on real devices and prepare the iOS and Android releases."],
+      ],
+    },
     bullets: [
       "React Native apps sharing core logic and data layer with the web platform",
       "Native-feeling UI and performance on iOS and Android from a single codebase",
       "Push, offline, and device-integration patterns handled from the architecture stage, not retrofitted",
     ],
     stack: ["React Native", "TypeScript", "GraphQL", "Redux"],
+  },
+  {
+    slug: "it-implementation-and-integration",
+    name: "IT implementation & integration",
+    shortDescription: "System setup, data migration and integrations between the tools you rely on.",
+    description: "We help teams put a new platform into daily use. That can mean connecting a CRM to finance, moving records from a legacy database, or setting up cloud deployment and access for a new application.",
+    bullets: [
+      "Map current systems, owners and data flows before choosing the integration approach",
+      "Configure roles, connect APIs and reconcile a trial migration against source records",
+      "Rehearse cutover, train the people who run the system and hand over recovery instructions",
+    ],
+    stack: ["APIs", "Webhooks", "SQL", "Cloud infrastructure"],
+    preview: {
+      icon: "integration", heading: "Make new systems work with the old ones",
+      steps: [
+        ["Map the systems", "We identify the source of truth for each record and the people who need access."],
+        ["Connect & migrate", "We configure tools and reconcile migrated data before switching live traffic."],
+        ["Train & hand over", "Your team rehearses the rollout and takes ownership with a tested recovery plan."],
+      ],
+      related: { slug: "legacy-modernization", label: "Legacy modernization" },
+    },
   },
   {
     slug: "complex-mission-critical-systems",
@@ -68,11 +132,19 @@ export const services: Service[] = [
   },
   {
     slug: "ai-automation-applied-ml",
-    name: "AI Automation & Applied ML",
+    name: "AI & automation",
     shortDescription:
-      "Embedding frontier AI models and applied ML into real business workflows — chosen for fit, not brand loyalty.",
+      "Document processing, internal assistants and approval flows with human review.",
     description:
-      "We integrate large language models and applied machine learning where they actually move a business metric — document processing, financial analysis, predictive maintenance, diagnostic support — selecting the model (Claude, GPT, or another frontier model) that fits the task, cost, and compliance requirements rather than defaulting to one vendor.",
+      "We automate a repeatable task using your documents and business rules. Staff can see the source behind a result, correct a mistake and review uncertain cases before any action is taken.",
+    preview: {
+      icon: "spark", heading: "Take repetitive work out of the queue",
+      steps: [
+        ["Choose the task", "We pick a high-volume task and agree how to measure the time saved and the error rate."],
+        ["Test real examples", "We evaluate the workflow against representative documents and known exceptions."],
+        ["Add review", "Staff approve uncertain results and can trace each decision to its source."],
+      ],
+    },
     bullets: [
       "LLM integration for document processing, financial analysis, and internal automation",
       "Applied ML and predictive models (Amazon SageMaker and equivalents) for maintenance, forecasting, and pattern recognition",
@@ -80,6 +152,26 @@ export const services: Service[] = [
       "Vendor-neutral model selection based on task fit, latency, cost, and compliance — not a single-provider lock-in",
     ],
     stack: ["Claude", "GPT", "Python", "SageMaker", "LangChain-style orchestration", "Vector search"],
+  },
+  {
+    slug: "marketing-video-production",
+    name: "Marketing video production",
+    shortDescription: "Product demos, launch films and captioned edits for web and social.",
+    description: "We turn a product workflow or campaign brief into a film that shows buyers what they can do. We handle the script, storyboard, screen capture, motion graphics and final edit.",
+    bullets: [
+      "An audience brief, script and storyboard for approval before production",
+      "Product footage, motion graphics, narration and captions matched to the campaign",
+      "Website-ready exports and vertical or square edits for social channels",
+    ],
+    stack: ["Storyboarding", "Screen capture", "Motion graphics", "Editing & captions"],
+    preview: {
+      icon: "film", heading: "Show the product doing its job",
+      steps: [
+        ["Write the story", "We choose one buyer question and storyboard the product moments that answer it."],
+        ["Produce the film", "We capture the workflow and edit footage, graphics, narration and captions together."],
+        ["Adapt the cuts", "You receive the main film plus edits sized and paced for the channels in your brief."],
+      ],
+    },
   },
 ];
 

@@ -4,9 +4,8 @@ import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
 import ThemeRegistry from "@/theme/ThemeRegistry";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import SiteFooter from "@/components/SiteFooter";
 import ClickSpark from "@/components/motion/ClickSpark";
-import "./globals.css";
 
 const geist = localFont({
   src: "../public/fonts/geist-latin.woff2",
@@ -18,21 +17,23 @@ const geist = localFont({
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
+  preload: false,
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   display: "swap",
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.bluetrendy.com";
+const siteTitle = "BlueTrendy Intelligence — IT services & digital production";
+const siteDescription = "BlueTrendy builds custom software, websites and mobile apps, implements and integrates IT systems, automates workflows with AI and produces marketing videos.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "BlueTrendy Intelligence — AI-first custom software consultancy",
+    default: siteTitle,
     template: "%s — BlueTrendy Intelligence",
   },
-  description:
-    "BlueTrendy Intelligence designs and ships production-grade web, mobile, and mission-critical software for enterprise and government clients — combining senior engineering with frontier AI to deliver faster, at lower cost.",
+  description: siteDescription,
   keywords: [
     "AI software consultancy",
     "custom software development",
@@ -45,16 +46,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "BlueTrendy Intelligence",
-    title: "BlueTrendy Intelligence — AI-first custom software consultancy",
-    description:
-      "Production-grade web, mobile, and mission-critical software for enterprise and government clients — delivered faster with senior engineering and frontier AI.",
+    title: siteTitle,
+    description: siteDescription,
     url: siteUrl,
   },
   twitter: {
     card: "summary_large_image",
-    title: "BlueTrendy Intelligence — AI-first custom software consultancy",
-    description:
-      "Production-grade web, mobile, and mission-critical software for enterprise and government clients — delivered faster with senior engineering and frontier AI.",
+    title: siteTitle,
+    description: siteDescription,
   },
   robots: {
     index: true,
@@ -74,7 +73,7 @@ export default function RootLayout({
           <a className="skip-to-content" href="#main-content">Skip to content</a>
           <Header />
           <main id="main-content" tabIndex={-1}>{children}</main>
-          <Footer />
+          <SiteFooter />
           <ClickSpark />
         </ThemeRegistry>
         <Analytics />

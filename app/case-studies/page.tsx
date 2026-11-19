@@ -1,37 +1,22 @@
 import type { Metadata } from "next";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import PageHero from "@/components/PageHero";
 import CaseStudyCard from "@/components/CaseStudyCard";
-import CTASection from "@/components/CTASection";
+import JumpLinks from "@/components/interior/JumpLinks";
 import { caseStudies } from "@/data/caseStudies";
+import editorial from "@/components/interior/Editorial.styles";
+import styles from "@/components/interior/Work.styles";
 
 export const metadata: Metadata = {
   title: "Case Studies",
-  description:
-    "Six production engagements across financial services, healthcare, defense, industrial, and enterprise SaaS — trading platforms, medical imaging, geospatial intelligence, and identity infrastructure.",
+  description: "Six production engagements spanning financial services, healthcare, defence, travel, manufacturing and enterprise software.",
 };
 
 export default function CaseStudiesPage() {
-  return (
-    <>
-      <PageHero
-        eyebrow="Case Studies"
-        title="Software at work in six industries"
-        subtitle="Explore the problem, the engineering decisions, and the result behind each engagement."
-      />
-
-      <Container sx={{ py: { xs: 10, md: 14 } }}>
-        <Grid container spacing={3}>
-          {caseStudies.map((cs) => (
-            <Grid key={cs.slug} size={{ xs: 12, md: 6 }}>
-              <CaseStudyCard caseStudy={cs} />
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-
-      <CTASection location="case_studies_page" />
-    </>
-  );
+  return <>
+    <PageHero eyebrow="Case studies" title="Software at work in six industries"
+      subtitle="Inside the trading desks, reading rooms and production lines where teams use our software. Explore the engineering decisions and outcomes for each client."
+      aside={<JumpLinks label="Jump to a project by industry" columns={2}
+        links={caseStudies.map(study => ({ text: study.sector, href: "#" + study.slug }))} />} />
+    <div className={editorial.width + " " + styles.directory}>{caseStudies.map(study => <CaseStudyCard key={study.slug} caseStudy={study} />)}</div>
+  </>;
 }

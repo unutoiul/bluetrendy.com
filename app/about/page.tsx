@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
+import styles from "@/components/interior/Editorial.styles";
+import { caseStudies } from "@/data/caseStudies";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
@@ -40,11 +43,15 @@ export default function AboutPage() {
     <>
       <PageHero
         eyebrow="About"
-        title="Senior engineering, not a resourcing pool"
-        subtitle="bluetrendy is led by a hands-on lead engineer who has spent 15+ years shipping production software inside banks, defense agencies, healthcare platforms, and enterprise SaaS companies."
+        title="Meet the engineer behind BlueTrendy"
+        subtitle="Lucas Franco has spent 15+ years building production software for banks, government agencies, healthcare teams and enterprise software companies. He leads each engagement from the first conversation through handover."
+        aside={<figure className={styles.portrait}>
+          <Image src={founderPhoto} alt="Lucas Franco" width={254} height={254} sizes="(max-width: 760px) 200px, 254px" />
+          <figcaption><strong>Lucas Franco</strong><span>Founder & lead engineer</span></figcaption>
+        </figure>}
       />
 
-      <Container sx={{ py: { xs: 10, md: 14 } }}>
+      <Container sx={{ py: { xs: 5, md: 8 } }}>
         <Grid container spacing={6} sx={{ alignItems: "flex-start" }}>
           <Grid size={{ xs: 12, md: 4 }}>
             <Stack
@@ -54,24 +61,6 @@ export default function AboutPage() {
                 textAlign: { xs: "center", md: "left" },
               }}
             >
-              <Box
-                sx={{
-                  width: 128,
-                  height: 128,
-                  borderRadius: "50%",
-                  overflow: "hidden",
-                  border: "3px solid",
-                  borderColor: "secondary.main",
-                }}
-              >
-                <Image src={founderPhoto} alt="Lucas Franco, founder of bluetrendy" width={128} height={128} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
-              </Box>
-              <Box>
-                <Typography variant="h6">Lucas Franco</Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Founder & Lead Engineer, bluetrendy
-                </Typography>
-              </Box>
               <Stack
                 sx={{
                   width: "100%",
@@ -130,12 +119,11 @@ export default function AboutPage() {
 
           <Grid size={{ xs: 12, md: 8 }}>
             <Stack spacing={3}>
+              <Typography variant="h4" component="h2">How we work</Typography>
               <Typography variant="body1" color="text.secondary">
-                bluetrendy exists because most software agencies sell you a sales call, then hand your project
-                to whoever&apos;s available. That&apos;s not how this works. Every engagement is led end-to-end
-                by a senior engineer with direct experience delivering inside regulated, security-sensitive,
-                and mission-critical environments — NATO, HSBC, Credit Suisse, Atlassian, Boston Consulting
-                Group, and more.
+                The engineer you meet on the first call works on your system. Our experience includes
+                regulated and security-sensitive projects for NATO, HSBC, Credit Suisse, Atlassian
+                and Boston Consulting Group.
               </Typography>
               <Typography variant="body1" color="text.secondary">
                 That background shapes how we work: TDD/BDD discipline where correctness matters, cloud-native
@@ -149,7 +137,7 @@ export default function AboutPage() {
         </Grid>
       </Container>
 
-      <Box sx={{ bgcolor: brand.mist, py: { xs: 10, md: 14 } }}>
+      <Box sx={{ bgcolor: brand.mist, py: { xs: 6, md: 9 } }}>
         <Container>
           <SectionHeading eyebrow="Principles" title="What we optimize for" />
           <Grid container spacing={4} sx={{ mt: 6 }}>
@@ -179,10 +167,12 @@ export default function AboutPage() {
         </Container>
       </Box>
 
-      <Container sx={{ py: { xs: 10, md: 14 } }}>
-        <SectionHeading eyebrow="Career at a glance" title="19 enterprise & government engagements since 2011" align="left" />
+      <Container sx={{ py: { xs: 6, md: 9 } }}>
+        <SectionHeading title="Selected engineering engagements" align="left" />
         <Stack spacing={0} sx={{ mt: 6 }}>
-          {timeline.map((item, index) => (
+          {timeline.map((item, index) => {
+            const study = caseStudies.find(entry => entry.client === item.org);
+            return (
             <Stack
               key={item.org + item.period}
               direction={{ xs: "column", sm: "row" }}
@@ -202,18 +192,18 @@ export default function AboutPage() {
               </Typography>
               <Box>
                 <Typography variant="subtitle1" component="span" sx={{ fontWeight: 700 }}>
-                  {item.org}
+                  {study ? <Link href={"/case-studies/" + study.slug} style={{ textUnderlineOffset: 4 }}>{item.org}</Link> : item.org}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   {item.role}
                 </Typography>
               </Box>
             </Stack>
-          ))}
+          );})}
         </Stack>
       </Container>
 
-      <CTASection location="about_page" />
+      <CTASection location="about_page" title="Talk to the engineer who will build it" subtitle="Bring the problem you’re working on. We’ll look at the technical constraints and the first release together." />
     </>
   );
 }

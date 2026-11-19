@@ -40,7 +40,7 @@ export default async function CheckoutSuccessPage({ searchParams }: CheckoutSucc
             : "Next, pick a time for your kickoff call."
         }
       />
-      <Container sx={{ py: { xs: 10, md: 14 } }}>
+      <Container sx={{ py: { xs: 4, md: 7 } }}>
         <Stack spacing={3} sx={{ maxWidth: 560 }}>
           <Typography variant="body1" color="text.secondary">
             We&apos;ll follow up by email within one business day if you haven&apos;t already scheduled a time.

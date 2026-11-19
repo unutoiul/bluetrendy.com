@@ -37,11 +37,8 @@
 }
 .intro-picture video[hidden] { display: none; }
 .intro-picture[data-lockup="true"] {
-  width: min(77cqw, 480px, 138cqh);
-  aspect-ratio: 1320 / 322;
-  margin-bottom: clamp(8px, 1.8cqh, 18px);
   mask-image: none;
-  background: url("../logo-inverse.png") center / contain no-repeat;
+  background: url("../logo-inverse.svg") center / min(100%, 77cqw, 480px, 138cqh) auto no-repeat;
 }
 .intro-picture[data-lockup="true"] video { visibility: hidden; }
 .intro-tagline {

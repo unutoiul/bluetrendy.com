@@ -1,97 +1,49 @@
 import type { Metadata } from "next";
-import Container from "@mui/material/Container";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import Chip from "@mui/material/Chip";
+import Link from "next/link";
 import PageHero from "@/components/PageHero";
-import CTASection from "@/components/CTASection";
+import ServiceIndex from "@/components/interior/ServiceIndex";
+import ServiceScene from "@/components/interior/ServiceScene";
+import styles from "@/components/interior/Services.styles";
 import { services } from "@/data/services";
 
 export const metadata: Metadata = {
-  title: "AI Services",
-  description:
-    "AI-native web apps, mobile, mission-critical systems, legacy modernization, and applied AI automation — delivered by senior engineers.",
+  title: "IT Services & Digital Production",
+  description: "Custom software, websites, mobile apps, IT implementation, systems integration, AI automation and marketing video production from BlueTrendy.",
 };
 
 export default function ServicesPage() {
-  return (
-    <>
-      <PageHero
-        eyebrow="AI Services"
-        title="Web, mobile, and AI engineering"
-        subtitle="Choose the work closest to your brief. Each service covers what we build, how we test it, and the technology behind it."
-      />
-
-      <Container sx={{ py: { xs: 10, md: 14 } }}>
-        <Stack spacing={10}>
-          {services.map((service, index) => (
-            <Box
-              key={service.slug}
-              id={service.slug}
-              sx={{ scrollMarginTop: 100 }}
-            >
-              <Grid container spacing={{ xs: 4, md: 8 }} direction={index % 2 === 1 ? "row-reverse" : "row"}>
-                <Grid size={{ xs: 12, md: 5 }}>
-                  <Typography
-                    sx={{
-                      fontFamily: "var(--font-mono)",
-                      color: "secondary.main",
-                      fontWeight: 600,
-                    }}
-                  >
-                    {String(index + 1).padStart(2, "0")}
-                  </Typography>
-                  <Typography variant="h4" component="h2" sx={{ mt: 1.5 }}>
-                    {service.name}
-                  </Typography>
-                  <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
-                    {service.description}
-                  </Typography>
-                  <Stack direction="row" sx={{ flexWrap: "wrap", gap: 1, mt: 3 }}>
-                    {service.stack.map((tech) => (
-                      <Chip key={tech} label={tech} size="small" variant="outlined" />
-                    ))}
-                  </Stack>
-                </Grid>
-                <Grid size={{ xs: 12, md: 7 }}>
-                  <Stack
-                    spacing={2}
-                    sx={{
-                      bgcolor: "background.paper",
-                      border: "1px solid",
-                      borderColor: "divider",
-                      borderRadius: 3,
-                      p: { xs: 3, md: 4 },
-                    }}
-                  >
-                    {service.bullets.map((bullet) => (
-                      <Stack key={bullet} direction="row" spacing={1.5} sx={{ alignItems: "flex-start" }}>
-                        <Box
-                          sx={{
-                            mt: 1,
-                            width: 6,
-                            height: 6,
-                            borderRadius: "50%",
-                            bgcolor: "secondary.main",
-                            flexShrink: 0,
-                          }}
-                        />
-                        <Typography variant="body1" color="text.secondary">
-                          {bullet}
-                        </Typography>
-                      </Stack>
-                    ))}
-                  </Stack>
-                </Grid>
-              </Grid>
-            </Box>
-          ))}
-        </Stack>
-      </Container>
-
-      <CTASection location="services_page" />
-    </>
-  );
+  return <>
+    <PageHero eyebrow="IT services" title="Software, systems & digital production"
+      subtitle="We build the software your business runs on, connect the tools behind it and create the websites, apps and videos your customers see."
+      aside={<nav aria-label="Browse by project goal" className={styles.stackHero}>
+        <a href="#ai-native-web-apps">Build a digital product <span aria-hidden="true">↘</span></a>
+        <a href="#it-implementation-and-integration">Connect your systems <span aria-hidden="true">↘</span></a>
+        <a href="#marketing-video-production">Produce a campaign <span aria-hidden="true">↘</span></a>
+      </nav>} />
+    <div className={styles.catalogue}>
+      <div className={styles.layout}>
+        <ServiceIndex items={services.map(({ slug, name }) => ({ slug, name }))} />
+        <div className={styles.chapters}>
+          {services.map(service => <section className={styles.chapter} key={service.slug}
+            aria-labelledby={service.slug + "-heading"} id={service.slug} data-service={service.slug} tabIndex={-1}>
+            <div className={styles.cover}>
+              <div className={styles.coverCopy}><h2 id={service.slug + "-heading"}>{service.name}</h2><p>{service.shortDescription}</p></div>
+              <ServiceScene slug={service.slug} />
+            </div>
+            <div className={styles.body}>
+              <p>{service.description}</p>
+              <h3>What we deliver</h3>
+              <ul className={styles.deliverables}>{service.bullets.map(bullet => <li key={bullet}>{bullet}</li>)}</ul>
+              <div className={styles.meta}>
+                <ul aria-label="Tools and technologies" className={styles.stack}>{service.stack.map(tech => <li key={tech}>{tech}</li>)}</ul>
+                <Link className={styles.briefLink} href={"/contact?service=" + service.slug + "#project-brief"} aria-label={"Start a project brief for " + service.name}>
+                  Start a project brief <span aria-hidden="true">↗</span>
+                </Link>
+              </div>
+            </div>
+          </section>)}
+        </div>
+      </div>
+    </div>
+  </>;
 }

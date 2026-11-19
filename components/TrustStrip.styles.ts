@@ -1,0 +1,98 @@
+import type { CSSObject } from "@mui/material/styles";
+
+// Class names used in the markup. Each is prefixed so it stays unique across the site.
+const styles = {
+  filter: "TrustStrip__filter",
+  foot: "TrustStrip__foot",
+  heading: "TrustStrip__heading",
+  mark: "TrustStrip__mark",
+  wall: "TrustStrip__wall",
+} as const;
+
+export default styles;
+
+export const trustStripSheet: CSSObject[] = [
+  { ".TrustStrip__heading, .TrustStrip__foot": { display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px 24px" } },
+  { ".TrustStrip__heading": { marginBottom: "clamp(22px, 3vw, 38px)" } },
+  { ".TrustStrip__heading h2": {
+      margin: "0",
+      color: "#10253f",
+      fontSize: "clamp(2.1rem, 4.5vw, 4.25rem)",
+      lineHeight: "1.05",
+      letterSpacing: "-.055em",
+      fontWeight: "670",
+    } },
+  { ".TrustStrip__filter": {
+      display: "flex",
+      alignItems: "center",
+      flexWrap: "wrap",
+      gap: "10px",
+      color: "#3e5670",
+      fontSize: ".88rem",
+      fontWeight: "550",
+    } },
+  { ".TrustStrip__filter select": {
+      minHeight: "42px",
+      maxWidth: "100%",
+      padding: "8px 12px",
+      background: "#fff",
+      color: "#143451",
+      border: "1px solid #adc2d4",
+      borderRadius: "6px",
+      font: "inherit",
+    } },
+  { ".TrustStrip__wall": {
+      display: "grid",
+      gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
+      listStyle: "none",
+      margin: "0",
+      padding: "0",
+      gap: "2px",
+      borderRadius: "8px",
+      overflow: "clip",
+    } },
+  { ".TrustStrip__wall li": { background: "#fff", minWidth: "0" } },
+  { ".TrustStrip__wall a": {
+      width: "100%",
+      minHeight: "clamp(88px, 8vw, 124px)",
+      height: "100%",
+      display: "grid",
+      placeItems: "center",
+      padding: "12px",
+      boxSizing: "border-box",
+      color: "#192d4b",
+      textDecoration: "none",
+      transition: "background .2s",
+    } },
+  { ".TrustStrip__mark": {
+      position: "relative",
+      display: "block",
+      width: "min(78%, 146px)",
+      height: "clamp(36px, 4vw, 58px)",
+      transition: "transform .25s ease",
+    } },
+  { ".TrustStrip__mark img": { objectFit: "contain" } },
+  { ".TrustStrip__wall a:is(:hover, :focus-visible)": { background: "#f0f8ff" } },
+  { ".TrustStrip__wall a:hover .TrustStrip__mark": { transform: "translateY(-2px)" } },
+  { ".TrustStrip__wall a:focus-visible, .TrustStrip__filter select:focus-visible, .TrustStrip__foot a:focus-visible": { outline: "2px solid #0065b2 !important", outlineOffset: "-3px !important" } },
+  { ".TrustStrip__foot": { color: "#45617b", marginTop: "12px", fontSize: ".87rem" } },
+  { ".TrustStrip__foot a": {
+      display: "inline-flex",
+      alignItems: "center",
+      gap: "5px",
+      minHeight: "40px",
+      fontWeight: "600",
+      textDecoration: "none",
+      color: "#153e67",
+    } },
+  { ".TrustStrip__foot svg": { width: "15px", height: "15px" } },
+  { ".TrustStrip__foot a:hover": { textDecoration: "underline", textUnderlineOffset: "3px" } },
+  { "@media (max-width: 850px)": { ".TrustStrip__wall": { gridTemplateColumns: "repeat(4, minmax(0, 1fr))" } } },
+  { "@media (max-width: 600px)": {
+      ".TrustStrip__wall": { gridTemplateColumns: "repeat(3, minmax(0, 1fr))" },
+      ".TrustStrip__wall a": { minHeight: "72px", padding: "7px" },
+      ".TrustStrip__mark": { width: "90%" },
+    } },
+  { "@media (max-width: 380px)": { ".TrustStrip__wall": { gridTemplateColumns: "repeat(2, minmax(0, 1fr))" } } },
+  { "@media (prefers-reduced-motion: reduce)": { ".TrustStrip__wall a:hover .TrustStrip__mark": { transform: "none" } } },
+];

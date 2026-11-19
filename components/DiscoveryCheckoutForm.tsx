@@ -51,6 +51,9 @@ export default function DiscoveryCheckoutForm() {
     <Stack component="form" onSubmit={handleSubmit} spacing={2}>
       <TextField
         label="Work email"
+        name="email"
+        autoComplete="email"
+        spellCheck={false}
         type="email"
         required
         size="small"
@@ -61,6 +64,7 @@ export default function DiscoveryCheckoutForm() {
       />
       <TextField
         label="What are you looking to build? (optional)"
+        name="brief"
         multiline
         minRows={2}
         size="small"

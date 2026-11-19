@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import type { SxProps, Theme } from "@mui/material/styles";
+import RollText from "./motion/RollText";
 
 type LinkButtonProps = {
   href: string;
@@ -20,7 +21,7 @@ type LinkButtonProps = {
 export default function LinkButton({ href, children, ...props }: LinkButtonProps) {
   return (
     <Button component={Link} href={href} {...props}>
-      {children}
+      {typeof children === "string" ? <RollText>{children}</RollText> : children}
     </Button>
   );
 }

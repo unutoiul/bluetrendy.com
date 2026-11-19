@@ -17,15 +17,6 @@ import FieldCheck from "./motion/FieldCheck";
 import { trackEvent } from "@/lib/analytics";
 import { leadFieldLimits } from "@/lib/lead";
 
-const projectTypes = [
-  "New product build",
-  "Legacy modernization",
-  "AI automation",
-  "Mobile app",
-  "Mission-critical / regulated system",
-  "Other",
-];
-
 const budgets = ["Under $25k", "$25k – $75k", "$75k – $150k", "$150k+", "Not sure yet"];
 
 const timelines = ["ASAP", "1–3 months", "3–6 months", "6+ months", "Flexible"];
@@ -52,8 +43,8 @@ const initialState: FormState = {
   message: "",
 };
 
-export default function LeadForm() {
-  const [form, setForm] = useState<FormState>(initialState);
+export default function LeadForm({ projectTypes, initialProjectType }: { projectTypes: string[]; initialProjectType: string }) {
+  const [form, setForm] = useState<FormState>({ ...initialState, projectType: initialProjectType });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [website, setWebsite] = useState("");
@@ -141,6 +132,7 @@ export default function LeadForm() {
           <TextField
             label="Work email"
             name="email"
+            spellCheck={false}
             autoComplete="email"
             slotProps={{ htmlInput: { maxLength: leadFieldLimits.email },
               input: { endAdornment: <FieldCheck show={looksLikeEmail(form.email)} /> } }}
@@ -169,6 +161,7 @@ export default function LeadForm() {
           <TextField
             select
             label="Project type"
+            name="projectType"
             fullWidth
             value={form.projectType}
             onChange={(e) => update("projectType", e.target.value)}
@@ -184,6 +177,7 @@ export default function LeadForm() {
           <TextField
             select
             label="Budget"
+            name="budget"
             fullWidth
             value={form.budget}
             onChange={(e) => update("budget", e.target.value)}
@@ -199,6 +193,7 @@ export default function LeadForm() {
           <TextField
             select
             label="Timeline"
+            name="timeline"
             fullWidth
             value={form.timeline}
             onChange={(e) => update("timeline", e.target.value)}
