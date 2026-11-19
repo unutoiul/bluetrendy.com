@@ -202,12 +202,13 @@ export default function WebsiteEntrance() {
             onError={() => setFailed(true)}
           />
         </Box>
-        <Typography ref={tagline} component="p" sx={sx.tagline}>
-          <span>Your Business, powered by</span>{" "}<strong>AI</strong>
-        </Typography>
         <Button data-enter onClick={enter} startIcon={<PowerSettingsNewRounded />} sx={sx.powerMe}>
           POWER ME
         </Button>
+        {/* Revealed under the button as the film finishes; it keeps its space so nothing moves. */}
+        <Typography ref={tagline} component="p" sx={sx.tagline}>
+          <span>Your Business, powered by</span>{" "}<strong>AI</strong>
+        </Typography>
         <script dangerouslySetInnerHTML={{ __html: prepareEntrance }} />
       </Box>
       {failed ? <Typography role="status" sx={sx.notice}>The intro could not play.</Typography> : (
@@ -282,7 +283,7 @@ const sx = {
     "& video": { display: "none" },
   },
   tagline: {
-    mt: "clamp(6px, 1.2cqh, 12px)",
+    mt: "clamp(12px, 2.2cqh, 20px)",
     color: "#d4e2f3",
     fontSize: "clamp(16px, 2.5cqw, 22px)",
     fontWeight: 440,
@@ -299,7 +300,7 @@ const sx = {
       WebkitTextFillColor: "transparent",
     },
     "& ::selection": { color: "#fff", background: "#215d8d", WebkitTextFillColor: "white" },
-    [shortStage]: { mt: "2px", fontSize: 15 },
+    [shortStage]: { mt: "6px", fontSize: 15 },
     "@media (forced-colors: active)": { "& strong": { WebkitTextFillColor: "currentColor" } },
   },
   powerMe: {

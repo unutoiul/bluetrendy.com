@@ -3,6 +3,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import FavoriteRounded from "@mui/icons-material/FavoriteRounded";
 import MailOutlineRounded from "@mui/icons-material/MailOutlineRounded";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import Logo from "./Logo";
 import PaymentMarks from "./PaymentMarks";
 import LinkTypography from "./LinkTypography";
@@ -10,9 +11,14 @@ import { footerLinks } from "@/data/nav";
 import CookieSettingsButton from "./analytics/CookieSettingsButton";
 import { consentRequired } from "@/lib/analyticsConfig";
 import { brand } from "@/theme/theme";
+import { linkedIn } from "@/lib/seo";
 
 const email = "contact@bluetrendy.com";
 const rule = "1px solid #284763";
+const contactLink = {
+  display: "inline-flex", alignItems: "center", gap: 1, minHeight: 44,
+  color: "secondary.light", fontWeight: 600, fontSize: 15, textDecoration: "none", "&:hover": { color: "#fff" },
+} as const;
 
 function LinkColumn({ title, links }: { title: string; links: { href: string; label: string }[] }) {
   const id = `footer-${title.toLowerCase()}`;
@@ -54,12 +60,14 @@ export default function Footer() {
             <Typography variant="body2" sx={{ mt: 2, maxWidth: 340, color: "#c5d8e8", fontSize: { xs: 15, md: 14 }, lineHeight: 1.6 }}>
               A senior software and AI team building web platforms, mobile apps and AI workflows for businesses and public institutions.
             </Typography>
-            <Box component="a" href={`mailto:${email}`} className="link-draw"
-              sx={{
-                display: "inline-flex", alignItems: "center", gap: 1, minHeight: 44, mt: 1.5,
-                color: "secondary.light", fontWeight: 600, fontSize: 15, textDecoration: "none", "&:hover": { color: "#fff" },
-              }}>
-              <MailOutlineRounded aria-hidden="true" sx={{ fontSize: 19 }} />{email}
+            <Box sx={{ display: "flex", flexWrap: "wrap", columnGap: 3, mt: 1.5 }}>
+              <Box component="a" href={`mailto:${email}`} className="link-draw" sx={contactLink}>
+                <MailOutlineRounded aria-hidden="true" sx={{ fontSize: 19 }} />{email}
+              </Box>
+              <Box component="a" href={linkedIn} target="_blank" rel="noopener noreferrer" className="link-draw" sx={contactLink}
+                aria-label="BlueTrendy on LinkedIn (opens in a new tab)">
+                <LinkedInIcon aria-hidden="true" sx={{ fontSize: 20 }} />LinkedIn
+              </Box>
             </Box>
           </div>
 

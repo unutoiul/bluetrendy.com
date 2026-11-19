@@ -17,7 +17,8 @@ export const contact = {
 };
 
 /** The business's profiles elsewhere, so search engines know they are the same company. */
-export const profiles = ["https://www.linkedin.com/company/bluetrendy"];
+export const linkedIn = "https://www.linkedin.com/company/bluetrendy";
+export const profiles = [linkedIn];
 
 /** Stable ids, so every page's structured data points at the same organisation and website. */
 export const ids = {

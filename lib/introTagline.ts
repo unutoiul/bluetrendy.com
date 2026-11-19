@@ -1,7 +1,7 @@
 import { animate } from "motion/mini";
 
-// The HyperFrames title lands just after the ribbons lock together.
-const revealStart = 5.13;
+// The line lands under POWER ME as the 8 second film finishes.
+const revealStart = 7.2;
 const revealDuration = 0.58;
 
 export function bindIntroTagline(video: HTMLVideoElement, line: HTMLElement) {
