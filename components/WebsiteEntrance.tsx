@@ -243,7 +243,8 @@ const glint = keyframes`from { background-position: 100% 50%; } to { background-
 
 const sx = {
   // A full-screen modal. Before hydration, the home page marks its shell [data-entry-pending]
-  // so the closed dialog already covers the page on first paint.
+  // so the closed dialog already covers the page on first paint. Its background is the film's
+  // own, so the film's edges disappear into it instead of showing as a box.
   entrance: {
     position: "fixed",
     inset: 0,
@@ -256,12 +257,12 @@ const sx = {
     border: 0,
     overflow: "hidden",
     gridTemplateRows: "minmax(0, 1fr) auto",
-    bgcolor: palette.navy[850],
+    bgcolor: palette.navy[900],
     color: palette.slate[50],
     colorScheme: "dark",
     "&[open]": { display: "grid" },
     "[data-entry-pending] > &": { display: "grid", zIndex: 1400 },
-    "&::backdrop": { background: palette.navy[850] },
+    "&::backdrop": { background: palette.navy[900] },
   },
   stage: {
     containerType: "size",

@@ -18,6 +18,8 @@ export const palette = {
     775: "#081e35",
     800: "#091b2d",
     850: "#030d1f",
+    // The background the entrance film is painted on. Anything shown around the film must match it.
+    900: "#000628",
   },
   blue: {
     200: "#8fc2ee",
@@ -119,7 +121,7 @@ export const brand = {
   border: palette.slate[125],
 } as const;
 
-/** A colour with transparency: `withAlpha(palette.navy[900], 0.5)` → "rgba(12, 43, 69, 0.5)". */
+/** A colour with transparency: `withAlpha(palette.navy[725], 0.5)` → "rgba(12, 43, 69, 0.5)". */
 export function withAlpha(hex: string, opacity: number) {
   const value = parseInt(hex.slice(1), 16);
   return `rgba(${(value >> 16) & 255}, ${(value >> 8) & 255}, ${value & 255}, ${opacity})`;
