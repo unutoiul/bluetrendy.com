@@ -1,8 +1,9 @@
 import { createHash } from "node:crypto";
 import type { CreateEmailOptions } from "resend";
 import type { LeadDetails } from "@/lib/lead";
+import { emailTemplates } from "@/lib/emailTemplates";
 
-function escapeHtml(value: string) {
+export function escapeHtml(value: string) {
   return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
@@ -26,7 +27,19 @@ function notificationVariables(lead: LeadDetails) {
   return variables;
 }
 
-type EmailSender = (
+/** Template values for the team's enquiry notification and the visitor's confirmation. */
+export function contactVariables(lead: LeadDetails) {
+  return {
+    notification: notificationVariables(lead),
+    confirmation: {
+      CONTACT_NAME: lead.name,
+      CONTACT_NAME_HTML: escapeHtml(lead.name),
+      BOOKING_URL: new URL("/book-a-call", process.env.NEXT_PUBLIC_SITE_URL || "https://www.bluetrendy.com").href,
+    },
+  };
+}
+
+export type EmailSender = (
   email: CreateEmailOptions,
   options: { idempotencyKey: string },
 ) => Promise<{
@@ -41,7 +54,7 @@ export class EmailDeliveryError extends Error {
   }
 }
 
-async function sendWithRetry(send: EmailSender, payload: CreateEmailOptions, key: string) {
+export async function sendWithRetry(send: EmailSender, payload: CreateEmailOptions, key: string) {
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const { data, error } = await send(payload, { idempotencyKey: key });
@@ -69,8 +82,8 @@ export async function deliverLead(
     to: options.notificationEmail,
     replyTo: lead.email,
     template: {
-      id: "bluetrendy-contact-notification",
-      variables: notificationVariables(lead),
+      id: emailTemplates.contactNotification,
+      variables: contactVariables(lead).notification,
     },
     tags: [{ name: "type", value: "contact-notification" }],
   }, `lead/hosted-v1/${submission}/notification`);
@@ -82,12 +95,8 @@ export async function deliverLead(
       to: lead.email,
       replyTo: options.notificationEmail,
       template: {
-        id: "bluetrendy-contact-confirmation",
-        variables: {
-          CONTACT_NAME: lead.name,
-          CONTACT_NAME_HTML: escapeHtml(lead.name),
-          BOOKING_URL: new URL("/book-a-call", process.env.NEXT_PUBLIC_SITE_URL || "https://www.bluetrendy.com").href,
-        },
+        id: emailTemplates.contactConfirmation,
+        variables: contactVariables(lead).confirmation,
       },
       tags: [{ name: "type", value: "contact-confirmation" }],
     }, `lead/hosted-v1/${submission}/confirmation`);

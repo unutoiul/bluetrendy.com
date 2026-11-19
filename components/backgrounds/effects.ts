@@ -610,77 +610,84 @@ export const dotWave: Effect = () => {
  * lattice like a hand through water and the dots settle back with a little overshoot; a
  * click sends a shock wave out across it. Stretched neighbours draw a faint thread.
  */
-export const springGrid: Effect = () => {
-  const spacing = 30, stiffness = 34, damping = 6.5, reach = 150, push = 6800;
-  const layout = onResize((width, height) => {
-    const columns = Math.ceil(width / spacing) + 1, rows = Math.ceil(height / spacing) + 1;
-    const dots = [];
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < columns; c++) {
-        const x = c * spacing + (r % 2 ? spacing / 2 : 0), y = r * spacing;
-        dots.push({ restX: x, restY: y, x, y, vx: 0, vy: 0 });
-      }
-    }
-    return { dots, columns, rows };
-  });
-  return frame => {
-    const { context, time } = frame;
-    const { dots, columns } = layout(frame);
-    const step = Math.min(frame.delta, 0.05);
-    for (const dot of dots) {
-      // A slow swell moves the rest positions so the lattice is never quite still.
-      const restY = dot.restY + Math.sin(dot.restX * 0.012 + time * 0.9) * 2.2;
-      let ax = (dot.restX - dot.x) * stiffness - dot.vx * damping;
-      let ay = (restY - dot.y) * stiffness - dot.vy * damping;
-      if (frame.pointer) {
-        const dx = dot.x - frame.pointer.x, dy = dot.y - frame.pointer.y, distance = Math.hypot(dx, dy) || 1;
-        if (distance < reach) {
-          const force = push * (1 - distance / reach) ** 2;
-          ax += (dx / distance) * force;
-          ay += (dy / distance) * force;
+function springLattice({ spacing = 30, reach = 150, push = 6800, shock = 11000, swell = 2.2, ink = 1 } = {}): Effect {
+  const stiffness = 34, damping = 6.5;
+  return () => {
+    const layout = onResize((width, height) => {
+      const columns = Math.ceil(width / spacing) + 1, rows = Math.ceil(height / spacing) + 1;
+      const dots = [];
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < columns; c++) {
+          const x = c * spacing + (r % 2 ? spacing / 2 : 0), y = r * spacing;
+          dots.push({ restX: x, restY: y, x, y, vx: 0, vy: 0 });
         }
       }
-      for (const burst of frame.bursts) {
-        const dx = dot.x - burst.x, dy = dot.y - burst.y, distance = Math.hypot(dx, dy) || 1;
-        const front = Math.abs(distance - burst.age * 560);
-        if (front < 46) {
-          const force = 11000 * (1 - front / 46) * Math.max(0, 1 - burst.age * 0.9);
-          ax += (dx / distance) * force;
-          ay += (dy / distance) * force;
-        }
-      }
-      dot.vx += ax * step;
-      dot.vy += ay * step;
-      dot.x += dot.vx * step;
-      dot.y += dot.vy * step;
-    }
-    // Threads between neighbours appear only while the lattice is stretched.
-    context.lineWidth = 1;
-    dots.forEach((dot, i) => {
-      const right = (i + 1) % columns ? dots[i + 1] : undefined;
-      const below = dots[i + columns];
-      for (const other of [right, below]) {
-        if (!other) continue;
-        const rest = Math.hypot(other.restX - dot.restX, other.restY - dot.restY);
-        const stretch = Math.abs(Math.hypot(other.x - dot.x, other.y - dot.y) - rest);
-        if (stretch < 3) continue;
-        context.strokeStyle = blue(frame, Math.min(0.35, stretch / 40));
-        context.beginPath();
-        context.moveTo(dot.x, dot.y);
-        context.lineTo(other.x, other.y);
-        context.stroke();
-      }
+      return { dots, columns, rows };
     });
-    for (const dot of dots) {
-      const moving = Math.min(1, Math.hypot(dot.vx, dot.vy) / 220);
-      const size = 1.6 + moving * 1.8;
-      context.fillStyle = moving > 0.15 ? ice(frame, 0.45 + moving * 0.4) : blue(frame, 0.22);
-      context.fillRect(dot.x - size / 2, dot.y - size / 2, size, size);
-    }
+    return frame => {
+      const { context, time } = frame;
+      const { dots, columns } = layout(frame);
+      const step = Math.min(frame.delta, 0.05);
+      for (const dot of dots) {
+        // A slow swell moves the rest positions so the lattice is never quite still.
+        const restY = dot.restY + Math.sin(dot.restX * 0.012 + time * 0.9) * swell;
+        let ax = (dot.restX - dot.x) * stiffness - dot.vx * damping;
+        let ay = (restY - dot.y) * stiffness - dot.vy * damping;
+        if (frame.pointer) {
+          const dx = dot.x - frame.pointer.x, dy = dot.y - frame.pointer.y, distance = Math.hypot(dx, dy) || 1;
+          if (distance < reach) {
+            const force = push * (1 - distance / reach) ** 2;
+            ax += (dx / distance) * force;
+            ay += (dy / distance) * force;
+          }
+        }
+        for (const burst of frame.bursts) {
+          const dx = dot.x - burst.x, dy = dot.y - burst.y, distance = Math.hypot(dx, dy) || 1;
+          const front = Math.abs(distance - burst.age * 560);
+          if (front < 46) {
+            const force = shock * (1 - front / 46) * Math.max(0, 1 - burst.age * 0.9);
+            ax += (dx / distance) * force;
+            ay += (dy / distance) * force;
+          }
+        }
+        dot.vx += ax * step;
+        dot.vy += ay * step;
+        dot.x += dot.vx * step;
+        dot.y += dot.vy * step;
+      }
+      // Threads between neighbours appear only while the lattice is stretched.
+      context.lineWidth = 1;
+      dots.forEach((dot, i) => {
+        const right = (i + 1) % columns ? dots[i + 1] : undefined;
+        const below = dots[i + columns];
+        for (const other of [right, below]) {
+          if (!other) continue;
+          const rest = Math.hypot(other.restX - dot.restX, other.restY - dot.restY);
+          const stretch = Math.abs(Math.hypot(other.x - dot.x, other.y - dot.y) - rest);
+          if (stretch < 3) continue;
+          context.strokeStyle = blue(frame, Math.min(0.35, stretch / 40) * ink);
+          context.beginPath();
+          context.moveTo(dot.x, dot.y);
+          context.lineTo(other.x, other.y);
+          context.stroke();
+        }
+      });
+      for (const dot of dots) {
+        const moving = Math.min(1, Math.hypot(dot.vx, dot.vy) / 220);
+        const size = 1.6 + moving * 1.8;
+        context.fillStyle = moving > 0.15 ? ice(frame, (0.45 + moving * 0.4) * ink) : blue(frame, 0.22 * ink);
+        context.fillRect(dot.x - size / 2, dot.y - size / 2, size, size);
+      }
+    };
   };
-};
+}
+
+export const springGrid = springLattice();
+
+/** The same lattice, quieter: wider spacing, fainter dots and a softer touch, for long pages people read. */
+export const softGrid = springLattice({ spacing: 34, reach: 130, push: 3600, shock: 6000, swell: 1.4, ink: 0.6 });
 
 export const effects = {
-  constellation, synapses, ribbons, dotField, ripples, packetMesh, streaks, circuit, globe, flow, horizonGrid, orbit, dotWave, springGrid,
+  constellation, synapses, ribbons, dotField, ripples, packetMesh, streaks, circuit, globe, flow, horizonGrid, orbit, dotWave, springGrid, softGrid,
 };
 export type EffectName = keyof typeof effects;

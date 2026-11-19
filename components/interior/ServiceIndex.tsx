@@ -15,7 +15,10 @@ export default function ServiceIndex({ items }: { items: Item[] }) {
     let frame = 0;
     function update() {
       frame = 0;
-      const inset = window.matchMedia("(max-width: 860px)").matches ? 146 : 112;
+      // A chapter counts as current once its top passes the upper third of the screen, so the
+      // menu follows the heading being read rather than waiting for it to reach the very top.
+      const header = window.matchMedia("(max-width: 860px)").matches ? 146 : 112;
+      const inset = Math.max(header, window.innerHeight * 0.34);
       let selected = items[0].slug;
       for (const section of sections) {
         if (!section || section.getBoundingClientRect().top > inset) break;
@@ -43,13 +46,15 @@ export default function ServiceIndex({ items }: { items: Item[] }) {
     };
   }, [items]);
 
+  // Each label carries a hidden bold copy in the same grid cell, so a row keeps its size
+  // (and its line breaks) when it becomes the current one and turns bold.
   const links = items.map(item => <a key={item.slug} href={"#" + item.slug}
     aria-current={current === item.slug ? "location" : undefined}
     onClick={() => {menu.current?.removeAttribute("open");}}>
-    {item.name}<span aria-hidden="true">↘</span>
+    <span className={styles.indexLabel}><span>{item.name}</span><span aria-hidden="true">{item.name}</span></span>
   </a>);
   return <nav aria-label="Service directory" className={styles.index}>
-    <div className={styles.desktopIndex}><strong>Service directory</strong>{links}</div>
+    <div className={styles.desktopIndex}><strong>Service directory</strong><div className={styles.indexList}>{links}</div></div>
     <details ref={menu} className={styles.mobileIndex} onKeyDown={event => {
       if (event.key === "Escape" && menu.current?.open) {
         menu.current.open = false;

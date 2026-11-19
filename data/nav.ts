@@ -1,5 +1,5 @@
 export const navLinks = [
-  { href: "/services", label: "IT Services" },
+  { href: "/services", label: "Services" },
   { href: "/case-studies", label: "Case Studies" },
   { href: "/process", label: "Process" },
   { href: "/pricing", label: "Engagement" },
@@ -15,7 +15,7 @@ export const footerLinks = {
     { href: "/contact", label: "Contact" },
   ],
   work: [
-    { href: "/services", label: "IT Services" },
+    { href: "/services", label: "Services" },
     { href: "/case-studies", label: "Case Studies" },
     { href: "/book-a-call", label: "Book a Call" },
   ],

@@ -44,7 +44,7 @@ export default function ServicesChapter() {
   return <>
     <ChapterIntro id="services-heading" label="Our services" title="What we" accent="do"
       subtitle="Software, systems and media built around how your business works, from the first release to everyday use."
-      action={{ href: "/services", label: "All IT services" }} />
+      action={{ href: "/services", label: "All services" }} />
     <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))", lg: "repeat(3, minmax(0, 1fr))" },
       gap: { xs: 2, md: 2.5 } }}>
       {featuredServices.map(service => {

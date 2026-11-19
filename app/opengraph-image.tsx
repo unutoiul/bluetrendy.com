@@ -28,7 +28,7 @@ export default async function OpengraphImage() {
         <span style={{ color: "#88e9ff" }}>delivered 10x faster.</span>
       </div>
       <div style={{ display: "flex", fontSize: 26, color: "#c6daea", maxWidth: 780 }}>
-        IT services, systems integration and digital production.
+        Services, systems integration and digital production.
       </div>
     </div>,
     size,

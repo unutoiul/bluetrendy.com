@@ -24,7 +24,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.bluetrendy.com";
-const siteTitle = "BlueTrendy Intelligence — IT services & digital production";
+const siteTitle = "BlueTrendy Intelligence — Services & digital production";
 const siteDescription = "BlueTrendy builds custom software, websites and mobile apps, implements and integrates IT systems, automates workflows with AI and produces marketing videos.";
 
 export const metadata: Metadata = {

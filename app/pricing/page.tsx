@@ -12,7 +12,6 @@ import LinkButton from "@/components/LinkButton";
 import DiscoverySprint from "@/components/pricing/DiscoverySprint";
 import { discoveryPackages, formatPounds, pricingFaqs } from "@/data/pricing";
 import { neural } from "@/components/experience/neuralStyle";
-import JumpLinks from "@/components/interior/JumpLinks";
 import { brand } from "@/theme/theme";
 import styles from "@/components/interior/Editorial.styles";
 
@@ -49,11 +48,6 @@ export default function PricingPage() {
       <PageHero
         eyebrow="Engagement & Pricing"
         title="Plan your project before you build"
-        aside={<JumpLinks label="Explore engagement options" links={[
-          { text: "Discovery sprint packages", href: "#discovery-sprint" },
-          { text: "After discovery", href: "#ongoing-work" },
-          { text: "Pricing questions", href: "#pricing-questions" },
-        ]} />}
         subtitle={`Start with a fixed-price planning sprint from ${lowest}, priced by the size of your company. You’ll get a technical plan, an estimate and a price for the build.`}
       />
 

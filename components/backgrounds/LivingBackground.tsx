@@ -14,6 +14,11 @@ type LivingBackgroundProps = {
   quiet?: "left" | "right" | "top" | "none";
   /** Drawing on a white section. */
   light?: boolean;
+  /**
+   * For sections much taller than the screen: the canvas covers only the visible part and
+   * stays pinned while the section scrolls past, instead of painting the whole height.
+   */
+  pinned?: boolean;
   seed?: number;
   sx?: SxProps<Theme>;
 };
@@ -40,14 +45,17 @@ function random(seed: number) {
  * the mouse and to clicks, animates only while on screen and while the tab is visible,
  * and draws one still frame for people who prefer reduced motion.
  */
-export default function LivingBackground({ effect, quiet = "left", light = false, seed = 7, sx }: LivingBackgroundProps) {
+export default function LivingBackground({ effect, quiet = "left", light = false, pinned = false, seed = 7, sx }: LivingBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const section = canvas?.parentElement;
+    // The area the canvas fills. Pinned, that is a screen-sized box inside a wrapper that
+    // spans the section; the section itself still takes the pointer and decides visibility.
+    const area = canvas?.parentElement;
+    const section = pinned ? area?.parentElement?.parentElement : area;
     const context = canvas?.getContext("2d");
-    if (!canvas || !section || !context) return;
+    if (!canvas || !area || !section || !context) return;
     const draw = effects[effect](random(seed));
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     let width = 0, height = 0, frame = 0, last = 0, start = 0, previous = 0, visible = false;
@@ -94,8 +102,8 @@ export default function LivingBackground({ effect, quiet = "left", light = false
       // Layout size, not the on-screen box: a section that is mid-turn or mid-scale in 3D
       // would otherwise get a squashed canvas that stays wrong once it settles.
       const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
-      width = section!.clientWidth;
-      height = section!.clientHeight;
+      width = area!.clientWidth;
+      height = area!.clientHeight;
       canvas!.width = Math.round(width * ratio);
       canvas!.height = Math.round(height * ratio);
       context!.setTransform(ratio, 0, 0, ratio, 0, 0);
@@ -118,19 +126,19 @@ export default function LivingBackground({ effect, quiet = "left", light = false
 
     function follow(event: PointerEvent) {
       if (event.pointerType !== "mouse" || reduced.matches) return;
-      const box = section!.getBoundingClientRect();
+      const box = area!.getBoundingClientRect();
       pointer = { x: event.clientX - box.left, y: event.clientY - box.top };
     }
     function release() { pointer = null; }
     function press(event: PointerEvent) {
       if (reduced.matches) return;
-      const box = section!.getBoundingClientRect();
+      const box = area!.getBoundingClientRect();
       clicks.push({ x: event.clientX - box.left, y: event.clientY - box.top, at: performance.now() });
     }
 
     start = performance.now();
     const sizeWatcher = new ResizeObserver(resize);
-    sizeWatcher.observe(section);
+    sizeWatcher.observe(area);
     const viewWatcher = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; update(); });
     viewWatcher.observe(section);
     section.addEventListener("pointermove", follow);
@@ -148,11 +156,16 @@ export default function LivingBackground({ effect, quiet = "left", light = false
       document.removeEventListener("visibilitychange", update);
       reduced.removeEventListener("change", update);
     };
-  }, [effect, quiet, light, seed]);
+  }, [effect, quiet, light, pinned, seed]);
 
+  const fill = { position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 0, pointerEvents: "none" } as const;
+  const extra = Array.isArray(sx) ? sx : sx ? [sx] : [];
+  if (!pinned) return <Box component="canvas" ref={canvasRef} aria-hidden="true" sx={[fill, ...extra]} />;
   return (
-    <Box component="canvas" ref={canvasRef} aria-hidden="true"
-      sx={[{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 0, pointerEvents: "none" },
-        ...(Array.isArray(sx) ? sx : sx ? [sx] : [])]} />
+    <Box aria-hidden="true" sx={[fill, ...extra]}>
+      <Box sx={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
+        <Box component="canvas" ref={canvasRef} sx={fill} />
+      </Box>
+    </Box>
   );
 }
