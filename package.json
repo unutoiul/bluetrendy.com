@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "tsx --test tests/*.test.ts",
-    "emails": "tsx scripts/emails.ts"
+    "emails": "tsx scripts/emails.ts",
+    "indexnow": "tsx scripts/indexnow.ts"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
