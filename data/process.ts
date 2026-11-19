@@ -4,7 +4,7 @@ export const processSteps = [
     title: "Discovery call",
     duration: "30–45 minutes",
     description:
-      "Tell the engineer what you need, who will use it and when you need it. Together you decide whether a planning sprint makes sense.",
+      "Tell us what you need, who will use it and when you need it. Together you decide whether a planning sprint makes sense.",
   },
   {
     step: "02",
@@ -18,7 +18,7 @@ export const processSteps = [
     title: "Build in the open",
     duration: "Ongoing, weekly cadence",
     description:
-      "Try a working version each week. You can see the list of upcoming changes and speak directly with your engineer by Slack or email.",
+      "Try a working version each week. You can see the list of upcoming changes and speak directly with the people building it by Slack or email.",
   },
   {
     step: "04",
@@ -59,7 +59,7 @@ export const processFaqs = [
   {
     question: "How does AI actually factor into delivery?",
     answer:
-      "AI models are used where they measurably speed up delivery — scaffolding, code review, test generation, and in some cases as a feature inside the product itself (document processing, predictive analysis). Every AI-assisted output is reviewed and owned by a senior engineer before it ships; AI accelerates the work, it doesn't replace engineering judgment.",
+      "AI models are used where they measurably speed up delivery — scaffolding, code review, test generation, and in some cases as a feature inside the product itself (document processing, predictive analysis). Every AI-assisted output is reviewed and owned by a senior engineer on our team before it ships; AI accelerates the work, it doesn't replace engineering judgment.",
   },
   {
     question: "What about security, NDAs, and IP ownership?",

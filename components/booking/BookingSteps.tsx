@@ -42,7 +42,7 @@ const needs = [
 const promises = [
   "A clear plan for your website, app or AI agent",
   "Straight answers on scope, timeline and cost",
-  "Advice from the senior engineer who would build it",
+  "Advice from the team that would build it",
   "No obligation. If we're not the right fit, we'll say so.",
 ];
 const noteLimit = 600;
@@ -133,7 +133,7 @@ export default function BookingSteps() {
             {step === 0 && (
               <Box component="form" noValidate onSubmit={submitDetails}>
                 <StepIntro headingRef={headingRef} title="Who should we expect?"
-                  text="A free 30-minute video call with the engineer who would build it." />
+                  text="A free 30-minute video call with the team that would build it." />
                 <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" } }}>
                   <TextField label="First name" required autoComplete="given-name" inputRef={firstRef} value={details.first}
                     onChange={(event) => { setDetails({ ...details, first: event.target.value }); setErrors({ ...errors, first: undefined }); }}
@@ -361,8 +361,8 @@ function CallPanel() {
           <Image src={founderPhoto} alt="" fill sizes="56px" style={{ objectFit: "cover" }} />
         </Box>
         <Box>
-          <Typography sx={{ fontWeight: 700, color: "#fff" }}>You&apos;ll speak with Lucas Franco</Typography>
-          <Typography variant="body2" sx={{ color: "#9fbbd6" }}>Founder and lead engineer</Typography>
+          <Typography sx={{ fontWeight: 700, color: "#fff" }}>You&apos;ll meet our team</Typography>
+          <Typography variant="body2" sx={{ color: "#9fbbd6" }}>Usually Lucas Franco, founder and lead engineer</Typography>
         </Box>
       </Box>
     </Box>

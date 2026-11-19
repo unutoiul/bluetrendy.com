@@ -30,7 +30,7 @@ export default function ProcessPage() {
           { text: "Ways to work together", href: "#engagement-models" },
           { text: "Common questions", href: "#process-questions" },
         ]} />}
-        subtitle="Meet your engineer, agree on a plan and try the work as we build it. Each stage gives you a chance to ask questions and decide what comes next."
+        subtitle="Meet the team, agree on a plan and try the work as we build it. Each stage gives you a chance to ask questions and decide what comes next."
       />
 
       <Container className={styles.anchor} id="delivery" sx={{ py: { xs: 5, md: 9 } }}>

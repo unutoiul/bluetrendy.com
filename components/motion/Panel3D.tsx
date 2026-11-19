@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 // Panels across the site: anything marked data-panel, plus the existing card styles.
-const panels = "[data-panel], .Work__card, .TrustStrip__wall li";
+const panels = "[data-panel], .TrustStrip__wall li";
 const ease = "cubic-bezier(0.16, 1, 0.3, 1)";
 const tiltLimit = 7;
 

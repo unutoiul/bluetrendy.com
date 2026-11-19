@@ -3,8 +3,9 @@ import Stripe from "stripe";
 
 let stripeClient: Stripe | null = null;
 
+// Discovery sprint prices live in data/pricing.ts and are sent with each checkout, so only the key is needed.
 export function isStripeConfigured(): boolean {
-  return Boolean(process.env.STRIPE_SECRET_KEY && process.env.STRIPE_DISCOVERY_PRICE_ID);
+  return Boolean(process.env.STRIPE_SECRET_KEY);
 }
 
 export function getStripeClient(): Stripe {

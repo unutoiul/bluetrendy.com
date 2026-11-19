@@ -7,7 +7,7 @@ import LivingBackground from "@/components/backgrounds/LivingBackground";
 
 export const metadata: Metadata = {
   title: "Book a Call",
-  description: "Book a free 30-minute call with a senior engineer to talk through your project.",
+  description: "Book a free 30-minute call with our team to talk through your project.",
 };
 
 export default function BookACallPage() {

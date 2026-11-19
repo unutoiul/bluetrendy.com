@@ -108,9 +108,9 @@ export const neural = {
     `linear-gradient(180deg, ${homeBlues[from]}, ${homeBlues[to]})`,
   ].join(", "),
 
-  /** Section backgrounds: deep navy with pools of blue light. */
-  sectionTone: (glowAt: string) => ({
+  /** A dark section on the running blue gradient, from one stop of the blues to another. */
+  sectionTone: (from: HomeBlue, to: HomeBlue) => ({
     position: "relative", overflow: "hidden", isolation: "isolate", color: "#eef6ff",
-    background: `radial-gradient(ellipse at ${glowAt}, rgba(13, 64, 140, 0.6) 0%, transparent 52%), radial-gradient(ellipse 60% 40% at 0% 70%, rgba(7, 42, 85, 0.55) 0%, transparent 70%), linear-gradient(180deg, #091b2d 0%, #0a2340 50%, #091b2d 100%)`,
+    background: neural.blueFlow(from, to),
   }) satisfies Style,
 };

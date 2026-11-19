@@ -11,7 +11,7 @@ import styles from "../Hero.styles";
 const messages = [
   {
     topic: "Custom software", lead: "Custom software,", accent: "delivered 10x faster.",
-    body: "We’re an IT company that builds software around your business. AI speeds up coding and testing. A senior engineer takes your project from brief to launch.",
+    body: "We’re an IT company that builds software around your business. AI speeds up coding and testing. Our senior team takes your project from brief to launch.",
   },
   {
     topic: "Websites", lead: "Your next website,", accent: "ready for business.",

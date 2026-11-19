@@ -55,8 +55,12 @@ export default function LivingBackground({ effect, quiet = "left", light = false
     const clicks: { x: number; y: number; at: number }[] = [];
 
     function render(now: number) {
+      // A hidden section (display: none) has no size; effects would divide by zero.
+      if (!width || !height) return;
       const time = ((now - start) / 1000) * pace;
-      const delta = (previous ? Math.min(0.1, (now - previous) / 1000) : frameGap / 1000) * pace;
+      // A resize draws with performance.now(), and the next frame's timestamp can be a touch
+      // earlier. Never step backwards: a negative step feeds energy into the springs.
+      const delta = (previous ? Math.max(0, Math.min(0.1, (now - previous) / 1000)) : frameGap / 1000) * pace;
       previous = now;
       context!.clearRect(0, 0, width, height);
       context!.globalCompositeOperation = light ? "source-over" : "lighter";
@@ -87,10 +91,11 @@ export default function LivingBackground({ effect, quiet = "left", light = false
     }
 
     function resize() {
-      const box = section!.getBoundingClientRect();
+      // Layout size, not the on-screen box: a section that is mid-turn or mid-scale in 3D
+      // would otherwise get a squashed canvas that stays wrong once it settles.
       const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
-      width = box.width;
-      height = box.height;
+      width = section!.clientWidth;
+      height = section!.clientHeight;
       canvas!.width = Math.round(width * ratio);
       canvas!.height = Math.round(height * ratio);
       context!.setTransform(ratio, 0, 0, ratio, 0, 0);

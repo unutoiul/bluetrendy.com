@@ -150,7 +150,7 @@ function EstimateBoard({ scope, sample, brief, draft, onRestore }: {
       </div>
       <div className={styles.boardFoot}>
         <RocketLaunchOutlined className={styles.rocket} />
-        <div><b>Ready to build your first release?</b><p>Discuss this outline with a senior engineer.</p></div>
+        <div><b>Ready to build your first release?</b><p>Discuss this outline with our team.</p></div>
         <Button component={Link} href="/book-a-call" prefetch={false} endIcon={<ArrowForwardRounded />}><RollText>Book a discovery call</RollText></Button>
       </div>
     </section>

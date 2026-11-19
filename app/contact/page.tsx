@@ -30,7 +30,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
   const selected = services.find(item => item.slug === service)?.name ?? "";
   return <>
     <PageHero eyebrow="Contact" title="Tell us what you’re building"
-      subtitle="Send a project brief and an engineer will reply within one business day." />
+      subtitle="Send a project brief and our team will reply within one business day." />
     <Box sx={{ position: "relative", isolation: "isolate", overflow: "clip", bgcolor: "#f3f7fa" }}>
       {/* The same lattice of dots on springs as the booking page, giving way under the mouse. */}
       <LivingBackground effect="springGrid" light quiet="none" seed={113} />

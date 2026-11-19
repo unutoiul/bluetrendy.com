@@ -21,7 +21,7 @@ import founderPhoto from "@/public/brand/founder.png";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "bluetrendy is led by a hands-on senior engineer with 15+ years across banking, defense, healthcare, and enterprise SaaS — UK SC cleared, still writing production code.",
+    "BlueTrendy is a London software and AI team led by a hands-on founder with 15+ years across banking, defence, healthcare and enterprise SaaS. UK SC cleared, still writing production code.",
 };
 
 const credentials = [
@@ -37,7 +37,7 @@ const engagements = timeline.map(item => {
 });
 const firstYear = timeline.at(-1)?.period.match(/\d{4}/)?.[0];
 
-// Lucas's portrait on the blade, ringed in the brand's light, with his credentials below.
+// The team on the blade: each member's portrait ringed in the brand's light, with their role and credentials.
 const portrait = (
   <Box sx={{ mt: 3.5, width: "100%" }}>
     <Box sx={{ position: "relative", width: 150, aspectRatio: "1", borderRadius: "50%", p: "4px",
@@ -46,6 +46,8 @@ const portrait = (
       <Image src={founderPhoto} alt="Lucas Franco" width={150} height={150} sizes="150px"
         style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%", display: "block" }} />
     </Box>
+    <Box component="h3" sx={{ m: "20px 0 0", fontSize: "1.3rem", fontWeight: 700, color: "#102c47", letterSpacing: "-0.02em" }}>Lucas Franco</Box>
+    <Box component="p" sx={{ m: "4px 0 0", color: "#165fcc", fontWeight: 600, fontSize: ".95rem" }}>Founder and lead engineer</Box>
     <Box component="ul" sx={{ listStyle: "none", m: "24px 0 0", p: 0, display: "grid", gap: 1.5 }}>
       {credentials.map(({ Icon, title, detail }) => (
         <Box component="li" key={title} sx={{ display: "flex", gap: 1.5, alignItems: "flex-start" }}>
@@ -68,15 +70,15 @@ export default function AboutPage() {
     <>
       <PageHero
         eyebrow="About"
-        title="Meet the engineer behind BlueTrendy"
-        subtitle="Lucas Franco has spent 15+ years building production software for banks, government agencies, healthcare teams and enterprise software companies. He leads each engagement from the first conversation through handover."
+        title="Meet the team behind BlueTrendy"
+        subtitle="We’re a London software and AI team building production software for banks, government agencies, healthcare teams and enterprise software companies. The people who plan your project are the people who build it."
       />
 
-      <SplitSection id="engineer-heading" title="Lucas Franco" effect="dotField" seed={131}
-        text="Founder and lead engineer. He writes the code on every engagement, from the first call to handover." blade={portrait}>
+      <SplitSection id="team-heading" title="Our team" effect="dotField" seed={131}
+        text="Small and senior by design. Everyone on the team writes code, from the first call to handover." blade={portrait}>
         <Box sx={{ display: "grid", gap: 2.5 }}>
           <Box component="p" sx={paragraph}>
-            The engineer you meet on the first call works on your system. Our experience includes regulated and
+            The people you meet on the first call work on your system. Our experience includes regulated and
             security-sensitive projects for NATO, HSBC, Credit Suisse, Atlassian and Boston Consulting Group.
           </Box>
           <Box component="p" sx={paragraph}>
@@ -99,7 +101,7 @@ export default function AboutPage() {
         </Box>
       </SplitSection>
 
-      <Box component="section" aria-labelledby="principles-heading" sx={{ ...neural.sectionTone("12% 0%"), py: { xs: 7, md: 10 } }}>
+      <Box component="section" aria-labelledby="principles-heading" sx={{ ...neural.sectionTone("header", "services"), py: { xs: 7, md: 10 } }}>
         <LivingBackground effect="dotWave" quiet="top" seed={97} />
         <Box sx={{ position: "relative", zIndex: 1, width: "min(100% - 48px, 1200px)", mx: "auto" }}>
           <HeadingMotion id="principles-heading" text="What we" accent="optimize for"
@@ -124,11 +126,11 @@ export default function AboutPage() {
       <SplitSection id="career-heading" tone="dark" pinned title={`Selected engagements since ${firstYear}`}
         text="Banks, defence agencies, healthcare platforms and software companies. Each engagement shipped to production."
         link={{ href: "/case-studies", label: "Read the case studies" }}
-        effect="constellation" seed={101}>
+        effect="constellation" seed={101} background={neural.blueFlow("services", "header")}>
         <SignalTimeline entries={engagements} />
       </SplitSection>
 
-      <CTASection location="about_page" title="Talk to the engineer who will build it" subtitle="Bring the problem you’re working on. We’ll look at the technical constraints and the first release together." />
+      <CTASection location="about_page" title="Talk to the people who will build it" subtitle="Bring the problem you’re working on. We’ll look at the technical constraints and the first release together." />
     </>
   );
 }

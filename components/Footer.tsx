@@ -4,7 +4,9 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
+import FavoriteRounded from "@mui/icons-material/FavoriteRounded";
 import Logo from "./Logo";
+import PaymentMarks from "./PaymentMarks";
 import LinkTypography from "./LinkTypography";
 import { footerLinks } from "@/data/nav";
 import { brand } from "@/theme/theme";
@@ -38,7 +40,7 @@ export default function Footer() {
           <Grid size={{ xs: 12, md: 4 }}>
             <Logo inverse height={45} />
             <Typography variant="body2" sx={{ mt: 2, maxWidth: 320, color: "#c5d8e8" }}>
-              Senior engineers building web platforms, mobile apps, and AI workflows for businesses and public institutions.
+              A senior software and AI team building web platforms, mobile apps and AI workflows for businesses and public institutions.
             </Typography>
             <Typography
               component="a"
@@ -65,15 +67,19 @@ export default function Footer() {
         <Divider sx={{ my: 5, borderColor: "#355069" }} />
 
         <Stack
-          direction={{ xs: "column", sm: "row" }}
-          spacing={1.5}
-          sx={{ justifyContent: "space-between", alignItems: { xs: "flex-start", sm: "center" } }}
+          direction={{ xs: "column", md: "row" }}
+          spacing={2}
+          useFlexGap
+          sx={{ justifyContent: "space-between", alignItems: { xs: "flex-start", md: "center" }, flexWrap: "wrap" }}
         >
           <Typography variant="body2" sx={{ color: "#bdd2e3" }}>
             © {new Date().getFullYear()} BlueTrendy Intelligence. All rights reserved.
           </Typography>
+          <PaymentMarks />
           <Typography variant="body2" sx={{ color: "#bdd2e3" }}>
-            London, UK
+            Designed with{" "}
+            <FavoriteRounded titleAccess="love" sx={{ fontSize: "1.05em", color: "#ff6b8a", verticalAlign: "-0.15em" }} />
+            {" "}in London, UK
           </Typography>
         </Stack>
       </Container>

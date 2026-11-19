@@ -17,7 +17,7 @@ export default function HomeAboutSection() {
               <Image src={founderPhoto} alt="" width={56} height={56} style={{ objectFit: "cover", borderRadius: "50%" }} />
               <Box><Typography sx={{ fontWeight: 700 }}>Lucas Franco</Typography><Typography variant="body2" color="text.secondary">Founder &amp; lead engineer</Typography></Box>
             </Box>
-            <Typography variant="h3" component="h2">Work directly with the engineer building your product.</Typography>
+            <Typography variant="h3" component="h2">Work directly with the team building your product.</Typography>
             <Typography color="text.secondary" sx={{ mt: 2 }}>Our team has shipped software inside banks, hospitals, and government agencies. You work with us from the first architecture decision through deployment and handover.</Typography>
             <LinkButton href="/about" variant="text" sx={{ mt: 2, ml: "-1.3rem" }}>Meet BlueTrendy</LinkButton>
           </Reveal>

@@ -23,7 +23,7 @@ type CTASectionProps = {
 export default function CTASection({
   eyebrow,
   title = "What would you like to launch first?",
-  subtitle = "Spend 30 minutes with a senior engineer. Bring your idea, your users, and the deadline you have in mind.",
+  subtitle = "Spend 30 minutes with our team. Bring your idea, your users, and the deadline you have in mind.",
   primaryLabel = "Book a call",
   primaryHref = "/book-a-call",
   secondaryLabel = "Send us a brief",
