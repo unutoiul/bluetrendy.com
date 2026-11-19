@@ -1,14 +1,15 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
-import type { SxProps, Theme } from "@mui/material/styles";
+import { keyframes, type SxProps, type Theme } from "@mui/material/styles";
 import PowerSettingsNewRounded from "@mui/icons-material/PowerSettingsNewRounded";
 import { bindIntroTagline } from "@/lib/introTagline";
+import SplitWords, { countWords } from "@/components/motion/SplitWords";
 
 const compactMedia = "(max-width: 899px), (pointer: coarse) and (max-height: 560px)";
 const compactFilm = "/brand/shadow-intro/entrance-mobile.mp4";
@@ -206,8 +207,9 @@ export default function WebsiteEntrance() {
           POWER ME
         </Button>
         {/* Revealed under the button as the film finishes; it keeps its space so nothing moves. */}
-        <Typography ref={tagline} component="p" sx={sx.tagline}>
-          <span>Your Business, powered by</span>{" "}<strong>AI</strong>
+        <Typography ref={tagline} component="p" data-state="wait" sx={sx.tagline}>
+          <SplitWords text={taglineLead} />{" "}
+          <strong style={{ "--split-delay": `${countWords(taglineLead) * 70 + 170}ms` } as CSSProperties}>AI</strong>
         </Typography>
         <script dangerouslySetInnerHTML={{ __html: prepareEntrance }} />
       </Box>
@@ -231,6 +233,9 @@ export default function WebsiteEntrance() {
 }
 
 const shortStage = "@container (height < 320px)";
+const taglineLead = "Your Business, powered by";
+// A glint of light crossing "AI" once the beam has written it.
+const glint = keyframes`from { background-position: 100% 50%; } to { background-position: 0% 50%; }`;
 
 const sx = {
   // A full-screen modal. Before hydration, the home page marks its shell [data-entry-pending]
@@ -291,8 +296,11 @@ const sx = {
     letterSpacing: "-.03em",
     textAlign: "center",
     whiteSpace: "nowrap",
-    "& span, & strong": { display: "inline-block" },
+    perspective: "900px",
+    "& .w, & strong": { display: "inline-block" },
+    "& .w": { transformOrigin: "50% 100%", backfaceVisibility: "hidden" },
     "& strong": {
+      position: "relative",
       color: "#8fddff",
       fontWeight: 750,
       background: "linear-gradient(108deg, #8fddff 30%, #f5fdff 50%, #8fddff 70%) 100% 50% / 320% 100%",
@@ -300,6 +308,34 @@ const sx = {
       WebkitTextFillColor: "transparent",
     },
     "& ::selection": { color: "#fff", background: "#215d8d", WebkitTextFillColor: "white" },
+    // Arrives like the home page headlines (word-in, accent-write and accent-beam live in
+    // globalStyles): the words flip up out of a blur, then a beam of light writes "AI".
+    "&[data-state='wait'] :is(.w, strong)": { opacity: 0 },
+    "&[data-state='in'] .w": {
+      animation: "word-in .85s var(--ease-out) both",
+      animationDelay: "calc(var(--i) * 70ms + 60ms)",
+    },
+    "&[data-state='in'] strong": {
+      animation: `accent-write .95s cubic-bezier(.65, 0, .35, 1) var(--split-delay) backwards, ${glint} 1.3s ease-in-out calc(var(--split-delay) + .8s) both`,
+    },
+    "&[data-state='in'] strong::after": {
+      content: '""',
+      position: "absolute",
+      top: "10%",
+      bottom: "14%",
+      width: "3px",
+      ml: "-3px",
+      borderRadius: "3px",
+      background: "#e6fbff",
+      boxShadow: "0 0 10px 2px #5fd8ff, 0 0 28px 6px #1f8bff",
+      opacity: 0,
+      pointerEvents: "none",
+      animation: "accent-beam .95s cubic-bezier(.65, 0, .35, 1) var(--split-delay) both",
+    },
+    "@media (prefers-reduced-motion: reduce)": {
+      "& .w, & strong": { animation: "none !important", opacity: "1 !important" },
+      "& strong::after": { display: "none" },
+    },
     [shortStage]: { mt: "6px", fontSize: 15 },
     "@media (forced-colors: active)": { "& strong": { WebkitTextFillColor: "currentColor" } },
   },
