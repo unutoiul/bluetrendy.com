@@ -44,7 +44,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         <section id="challenge"><h2>The challenge</h2><p>{study.challenge}</p></section>
         <section id="approach"><h2>The approach</h2><ul>{study.approach.map(point => <li key={point}>{point}</li>)}</ul></section>
         <section id="impact" className={styles.impact}><h2>The impact</h2><ul>{study.impact.map(point => <li key={point}>{point}</li>)}</ul></section>
-        <section id="technology"><h2>Technology</h2><Stack direction="row" sx={{ flexWrap: "wrap", gap: 1 }}>{study.stack.map(tech => <Chip key={tech} label={tech} size="small" variant="outlined" />)}</Stack></section>
+        <section id="technology"><h2>Technology</h2><Stack direction="row" sx={{ flexWrap: "wrap", gap: 1 }}>{study.stack.map(tech => <Chip key={tech} label={tech} size="small" sx={{ bgcolor: "#edf3f7", color: "#3c5768" }} />)}</Stack></section>
         <nav aria-label="Next case study" className={editorial.nextProject}>
           <small>Next case study</small><Link href={"/case-studies/" + next.slug}>{next.client} <span aria-hidden="true">↗</span></Link>
         </nav>

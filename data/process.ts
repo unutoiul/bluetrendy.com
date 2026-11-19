@@ -4,28 +4,28 @@ export const processSteps = [
     title: "Discovery call",
     duration: "30–45 minutes",
     description:
-      "A senior engineer — the person who would actually build your project — walks through your problem, constraints, timeline, and existing systems. No sales handoff, no discovery questionnaire filtered through a rep.",
+      "Tell the engineer what you need, who will use it and when you need it. Together you decide whether a planning sprint makes sense.",
   },
   {
     step: "02",
     title: "Paid discovery sprint",
     duration: "1–2 weeks",
     description:
-      "A fixed-price, scoped engagement that produces a concrete architecture plan, a delivery estimate, and a working proof of concept where useful. You get a decision-ready document, not a vague proposal — and you can walk away with it even if we don't continue together.",
+      "For a fixed price, we map out how the system will work, estimate the build and test the riskiest idea if needed. The written plan is yours to keep.",
   },
   {
     step: "03",
     title: "Build in the open",
     duration: "Ongoing, weekly cadence",
     description:
-      "Weekly demos against a real staging environment, direct Slack or email access to the engineer writing your code, and a shared backlog you can see at any time. Nothing ships that you haven't already watched work.",
+      "Try a working version each week. You can see the list of upcoming changes and speak directly with your engineer by Slack or email.",
   },
   {
     step: "04",
     title: "Ship & hand over",
     duration: "At each milestone",
     description:
-      "Production deployment with CI/CD, monitoring, and documentation written for the team that inherits the system — whether that's your internal engineers or an ongoing partnership with us.",
+      "We launch the release, set up monitoring and give the people running it a guide to everyday tasks and recovery.",
   },
 ];
 

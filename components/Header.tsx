@@ -14,7 +14,7 @@ import ArrowBack from "@mui/icons-material/ArrowBack";
 import ArrowOutward from "@mui/icons-material/ArrowOutward";
 import Menu from "@mui/icons-material/Menu";
 import Close from "@mui/icons-material/Close";
-import { motion, useMotionValueEvent, useScroll, useSpring } from "motion/react";
+import { motion, useMotionValueEvent, useScroll } from "motion/react";
 import Logo from "./Logo";
 import ExperienceHeader from "./experience/ExperienceHeader";
 import Magnetic from "./motion/Magnetic";
@@ -22,8 +22,6 @@ import RollText from "./motion/RollText";
 import { navLinks } from "@/data/nav";
 import { trackEvent } from "@/lib/analytics";
 import { brand, easeOut } from "@/theme/theme";
-
-const streak = `linear-gradient(90deg, ${brand.blue}, ${brand.blueLight})`;
 
 export default function Header() {
   const path = usePathname();
@@ -34,8 +32,7 @@ function DetailHeader({ path }: { path: string }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
-  const { scrollY, scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 240, damping: 34, restDelta: 0.001 });
+  const { scrollY } = useScroll();
   useMotionValueEvent(scrollY, "change", y => setScrolled(y > 12));
   const booking = path === "/book-a-call";
   const current = (href: string) => path === href || path.startsWith(href + "/");
@@ -45,9 +42,7 @@ function DetailHeader({ path }: { path: string }) {
       sx={{
         bgcolor: scrolled ? "rgba(255,255,255,0.82)" : "background.paper",
         backdropFilter: scrolled ? "saturate(170%) blur(16px)" : "none",
-        borderBottom: "1px solid", borderColor: "divider",
-        boxShadow: scrolled ? "0 14px 34px -26px rgba(12,43,69,0.55)" : "none",
-        transition: "background-color 0.35s ease, box-shadow 0.35s ease",
+        transition: "background-color 0.35s ease",
       }}>
       <Container>
         <Stack direction="row" sx={{ height: { xs: 65, md: 78 }, alignItems: "center", justifyContent: "space-between", gap: 1 }}>
@@ -78,7 +73,7 @@ function DetailHeader({ path }: { path: string }) {
                       {active && (
                         <Box component={motion.span} layoutId="active-nav" aria-hidden="true"
                           transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                          sx={{ position: "absolute", left: 12, right: 12, bottom: 3, height: 2.5, borderRadius: 2, background: streak }} />
+                          sx={{ position: "absolute", left: 12, right: 12, bottom: 3, height: 2, borderRadius: 2, bgcolor: "secondary.main" }} />
                       )}
                     </Button>
                   );
@@ -98,10 +93,6 @@ function DetailHeader({ path }: { path: string }) {
           )}
         </Stack>
       </Container>
-      {/* Reading progress, drawn as the same blue streak. */}
-      <Box component={motion.div} aria-hidden="true" style={{ scaleX: progress }}
-        sx={{ position: "absolute", left: 0, right: 0, bottom: -1, height: 2, transformOrigin: "0 50%", background: streak,
-          opacity: scrolled ? 1 : 0, transition: "opacity 0.3s ease", pointerEvents: "none" }} />
       <Drawer anchor="right" open={open} onClose={() => setOpen(false)} slotProps={{ paper: { "aria-label": "Site menu" } }}>
         <Stack id="mobile-nav" component="nav" aria-label="Mobile navigation" spacing={1}
           sx={{ width: "min(86vw, 340px)", p: 3, height: "100%", overscrollBehavior: "contain" }}>

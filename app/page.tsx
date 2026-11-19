@@ -1,23 +1,10 @@
-import WebsiteEntrance from "@/components/WebsiteEntrance";
 import Experience from "@/components/experience/Experience";
 import HomeStyles from "@/components/experience/HomeStyles";
 
-// Choose the intro before the first paint on a fresh visit.
-const prepareHome = `{
-  const shell = document.currentScript.parentElement;
-  if (!location.hash) {
-    let entered = false;
-    try { entered = sessionStorage.getItem("bluetrendy:entered") === "1"; } catch {}
-    if (!entered) shell.dataset.entryPending = "";
-  }
-}`;
-
 export default function HomePage() {
   return (
-    <div data-studio-home suppressHydrationWarning>
-      <script dangerouslySetInnerHTML={{ __html: prepareHome }} />
+    <div data-studio-home>
       <HomeStyles />
-      <WebsiteEntrance />
       <Experience />
     </div>
   );

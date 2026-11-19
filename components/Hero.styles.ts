@@ -56,10 +56,7 @@ export const heroSheet: CSSObject[] = [
     } },
   { ".Hero__title .Hero__accent": {
       display: "block",
-      background: "linear-gradient(95deg, #d0f7ff, #70dfff 45%, #3d9aff)",
-      backgroundClip: "text",
-      WebkitTextFillColor: "transparent",
-      filter: "drop-shadow(0 0 25px #35b6ff38)",
+      color: "#9ac9f4",
     } },
   { ".Hero__copy .Hero__body": {
       display: "grid",
@@ -104,7 +101,7 @@ export const heroSheet: CSSObject[] = [
       background: "#38516b",
       transition: "background .2s, box-shadow .2s, width .35s cubic-bezier(.22,1,.36,1), transform .25s ease",
     } },
-  { ".Hero__messageDot[aria-pressed=\"true\"] span": { width: "22px", background: "#7deaff", boxShadow: "0 0 7px #20b5ff8c" } },
+  { ".Hero__messageDot[aria-pressed=\"true\"] span": { width: "22px", background: "#9ac9f4" } },
   { ".Hero__messageDot:hover span": { background: "#a5dcec", transform: "scaleY(1.7)" } },
   // While the headlines rotate, the current dot fills up as a countdown.
   { ".Hero__messageControls[data-playing=\"true\"] .Hero__messageDot[aria-pressed=\"true\"] span": { background: "#2a4560" } },
@@ -181,9 +178,9 @@ export const heroSheet: CSSObject[] = [
       top: "6px",
       right: "2px",
       width: "42px",
-      border: "1px solid #3b658b",
+      border: "0",
       borderRadius: "50%",
-      background: "#06162bcf",
+      background: "#1a354d",
     } },
   { ".Hero__playback svg": { width: "19px", height: "19px" } },
   { ".Hero__mediaControls": {
@@ -202,7 +199,7 @@ export const heroSheet: CSSObject[] = [
     } },
   { ".Hero__filmSwitch[aria-pressed=\"true\"]": { borderTopColor: "#73dfff", color: "#dffaff" } },
   { ".Hero__filmSwitch svg": { width: "15px", height: "15px" } },
-  { ".Hero__playback:hover": { borderColor: "#83dfff", boxShadow: "0 0 14px #0086da65" } },
+  { ".Hero__playback:hover": { background: "#294a64" } },
   { ".Hero__filmSwitch:hover": { color: "#fff" } },
   { ".Hero__benefits": {
       gridArea: "2 / 1",

@@ -1,73 +1,43 @@
+﻿import Box from "@mui/material/Box";
 import Link from "next/link";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Hero, { StudioProof } from "@/components/Hero";
-import ServicesChapter from "./ServicesChapter";
-import ProductionChapter from "./ProductionChapter";
+import Hero from "@/components/Hero";
 import TrustStrip from "@/components/TrustStrip";
-import IdeaLab from "./IdeaLab";
+import ServicesChapter from "./ServicesChapter";
 import { HomeArrivals } from "./PanelMotion";
-import SplitWords from "../motion/SplitWords";
 import styles from "./Experience.styles";
 
+const steps = [
+  ["Tell us what you need", "We talk through the problem, who will use the solution and what to build first."],
+  ["Try a working version", "You see the work as it takes shape and give feedback before launch."],
+  ["Launch with support", "We test the release, help your team get started and hand over the tools to run it."],
+];
+
 export default function Experience() {
-  return (
-    <Box id="home-content" data-experience tabIndex={-1} className={styles.experience}>
-      <HomeArrivals />
-      <Box className={styles.opening}>
-        <Box component="section" id="discover" aria-labelledby="hero-heading" className={styles.frontScene}>
-          <Hero />
+  return <Box id="home-content" data-experience tabIndex={-1} className={styles.experience}>
+    <HomeArrivals />
+    <Box className={styles.opening}>
+      <Box component="section" id="discover" aria-labelledby="hero-heading" className={styles.frontScene}><Hero /></Box>
+    </Box>
+    <Box component="section" id="services" aria-labelledby="services-heading" className={styles.servicesScene}>
+      <Box className={styles.scene}><ServicesChapter /></Box>
+    </Box>
+    <Box component="section" id="clients" aria-labelledby="clients-heading" className={styles.clients}>
+      <Box id="work" className={styles.scene}><TrustStrip /></Box>
+    </Box>
+    <Box component="section" id="production" aria-labelledby="production-heading" className={styles.production}>
+      <Box className={styles.scene}>
+        <Box className={styles.chapterHeading}><h2 id="production-heading">How we work</h2></Box>
+        <Box component="ol" sx={{ listStyle: "decimal-leading-zero", m: 0, pl: 3.5, display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3,1fr)" }, gap: { xs: 3, md: 6 } }}>
+          {steps.map(([title, text], index) => <Box component="li" key={title} data-arrive={index}
+            sx={{ pl: 0.5, "&::marker": { color: "#8bc8e8", fontSize: ".85rem" } }}>
+            <Box component="h3" sx={{ m: 0, fontSize: "1.25rem", color: "#eef5ff", fontWeight: 600 }}>{title}</Box>
+            <Box component="p" sx={{ mt: 1, mb: 0, color: "#b4c7d7", lineHeight: 1.65 }}>{text}</Box>
+          </Box>)}
         </Box>
-        <Box component="section" id="services" aria-labelledby="services-heading" className={styles.servicesScene}>
-          <ServicesChapter />
-          <StudioProof />
-        </Box>
-      </Box>
-      <Box component="section" id="production" aria-labelledby="production-heading" className={styles.production}>
-        <Box className={styles.scene}>
-          <Box data-arrive="0" className={styles.chapterHeading}>
-            <Typography component="h2" id="production-heading" className="split split-on-arrive">
-              <SplitWords text="From Prompt to" /> <SplitWords text="Production" offset={3} wordClassName={styles.accentWord} />
-            </Typography>
-            <Typography component="p">Build faster with AI and engineering discipline. Turn ideas into reliable software that’s ready for production.</Typography>
-          </Box>
-          <ProductionChapter />
-        </Box>
-      </Box>
-      <Box component="section" id="clients" aria-labelledby="clients-heading" className={styles.clients}>
-        <Box id="work" className={styles.scene}>
-          <TrustStrip />
-        </Box>
-      </Box>
-      <Box component="section" id="ai-lab" aria-labelledby="lab-heading" className={styles.lab}>
-        <Box className={styles.scene}>
-          <Box data-arrive="0" className={`${styles.chapterHeading} ${styles.labHeading}`}>
-            <Typography component="h2" id="lab-heading" className="split split-on-arrive">
-              <SplitWords text="AI Idea Lab" />{" "}
-              <span className={styles.accentLine}><SplitWords text="Intelligent Project Estimator" offset={3} wordClassName={styles.accentWord} /></span>
-            </Typography>
-            <Typography component="p">Turn an idea into a plan with a recommended stack, a proposed architecture, and an indicative estimate.</Typography>
-          </Box>
-          <IdeaLab />
-        </Box>
-      </Box>
-      <Box component="footer" className={styles.end}>
-        <Box className={styles.endInner} data-arrive="0">
-          <a href="#discover" className={styles.backToTop}>Back to top ↑</a>
-          <nav aria-label="Footer navigation">
-            <a href="#services">Services</a>
-            <a href="#production">Production</a>
-            <Link href="/#clients">Clients</Link>
-            <a href="#ai-lab">AI Idea Lab</a>
-            <Link href="/about" prefetch={false}>About</Link>
-            <Link href="/contact" prefetch={false}>Contact</Link>
-          </nav>
-          <nav aria-label="Legal">
-            <Link href="/legal/privacy" prefetch={false}>Privacy</Link>
-            <Link href="/legal/terms" prefetch={false}>Terms</Link>
-          </nav>
+        <Box sx={{ mt: 4, "& a": { color: "#a6d8f4", textUnderlineOffset: 4 } }}>
+          <Link href="/process">See our delivery process</Link>
         </Box>
       </Box>
     </Box>
-  );
+  </Box>;
 }

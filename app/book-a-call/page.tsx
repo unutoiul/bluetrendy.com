@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import AccessTimeOutlined from "@mui/icons-material/AccessTimeOutlined";
 import VideocamOutlined from "@mui/icons-material/VideocamOutlined";
 import BookingEmbed from "@/components/BookingEmbed";
+import RibbonFilm from "@/components/interior/RibbonFilm";
 import styles from "@/components/interior/Editorial.styles";
 
 export const metadata: Metadata = {
@@ -18,7 +19,8 @@ export default function BookACallPage() {
     <Box component="section" aria-labelledby="booking-heading" sx={{ bgcolor: "#f1f6fa", pt: { xs: 3, md: 4 }, pb: 5 }}>
       <Container sx={{ px: { xs: 2, sm: 3 } }}>
         <Box sx={{ maxWidth: 1080, mx: "auto" }}>
-          <Stack className={styles.arrival} spacing={1.25} sx={{ mb: { xs: 2, md: 3 } }}>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2, mb: { xs: 2, md: 3 } }}>
+          <Stack className={styles.arrival} spacing={1.25}>
             <Typography id="booking-heading" component="h1" sx={{ fontSize: { xs: 27, sm: 34 }, fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.03em", color: "primary.main" }}>
               Book a discovery call
             </Typography>
@@ -35,6 +37,8 @@ export default function BookACallPage() {
               <Typography variant="body2" sx={{ color: "primary.main", fontWeight: 700 }}>Free</Typography>
             </Stack>
           </Stack>
+          <RibbonFilm compact />
+          </Box>
           <BookingEmbed />
           <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", mt: 2 }}>
             Need a different time?{" "}

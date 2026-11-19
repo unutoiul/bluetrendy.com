@@ -17,7 +17,7 @@ export default function BookingEmbed() {
 
   if (!booking) {
     return (
-      <Stack spacing={2.5} sx={{ alignItems: "center", textAlign: "center", bgcolor: "background.paper", border: "1px solid", borderColor: "divider", borderRadius: 3, px: { xs: 3, sm: 6 }, py: 7 }}>
+      <Stack spacing={2.5} sx={{ alignItems: "center", textAlign: "center", bgcolor: "background.paper", borderRadius: 3, px: { xs: 3, sm: 6 }, py: 7 }}>
         <CalendarMonthOutlined sx={{ fontSize: 40, color: "secondary.main" }} />
         <Typography variant="h5">Let&apos;s find a time to talk</Typography>
         <Typography color="text.secondary" sx={{ maxWidth: 420 }}>
@@ -33,8 +33,8 @@ export default function BookingEmbed() {
   }
 
   return (
-    <Box component="section" aria-label="Choose a date and time" sx={{ border: "1px solid", borderColor: "divider", borderRadius: "16px", overflow: "hidden", minWidth: 0, bgcolor: "background.paper", boxShadow: "0 8px 32px rgba(11,31,43,0.04)" }}>
-      <Stack direction="row" sx={{ px: { xs: 1.5, sm: 2.5 }, py: 1, gap: 1, flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid", borderColor: "divider" }}>
+    <Box component="section" aria-label="Choose a date and time" sx={{ borderRadius: "12px", overflow: "hidden", minWidth: 0, bgcolor: "background.paper" }}>
+      <Stack direction="row" sx={{ px: { xs: 1.5, sm: 2.5 }, py: 1, gap: 1, flexWrap: "wrap", justifyContent: "space-between", alignItems: "center" }}>
         <Typography variant="caption" color="text.secondary">Times in your timezone</Typography>
         <Box component="a" href={booking.url} target="_blank" rel="noopener noreferrer" sx={{ display: "inline-flex", alignItems: "center", gap: 0.5, minHeight: 28, color: "primary.main", fontSize: 12, fontWeight: 600, textDecoration: "underline", textUnderlineOffset: 3 }}>
           Open full calendar <OpenInNew sx={{ fontSize: 13 }} />

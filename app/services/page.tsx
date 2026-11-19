@@ -13,13 +13,8 @@ export const metadata: Metadata = {
 
 export default function ServicesPage() {
   return <>
-    <PageHero eyebrow="IT services" title="Software, systems & digital production"
-      subtitle="We build the software your business runs on, connect the tools behind it and create the websites, apps and videos your customers see."
-      aside={<nav aria-label="Browse by project goal" className={styles.stackHero}>
-        <a href="#ai-native-web-apps">Build a digital product <span aria-hidden="true">↘</span></a>
-        <a href="#it-implementation-and-integration">Connect your systems <span aria-hidden="true">↘</span></a>
-        <a href="#marketing-video-production">Produce a campaign <span aria-hidden="true">↘</span></a>
-      </nav>} />
+    <PageHero eyebrow="IT services" title="What can we build for you?"
+      subtitle="Choose a service to see what you’ll get. We build websites, apps and business software, connect IT systems and produce marketing videos." />
     <div className={styles.catalogue}>
       <div className={styles.layout}>
         <ServiceIndex items={services.map(({ slug, name }) => ({ slug, name }))} />
@@ -35,7 +30,9 @@ export default function ServicesPage() {
               <h3>What we deliver</h3>
               <ul className={styles.deliverables}>{service.bullets.map(bullet => <li key={bullet}>{bullet}</li>)}</ul>
               <div className={styles.meta}>
-                <ul aria-label="Tools and technologies" className={styles.stack}>{service.stack.map(tech => <li key={tech}>{tech}</li>)}</ul>
+                <details><summary>Tools we use</summary>
+                  <ul aria-label="Tools and technologies" className={styles.stack}>{service.stack.map(tech => <li key={tech}>{tech}</li>)}</ul>
+                </details>
                 <Link className={styles.briefLink} href={"/contact?service=" + service.slug + "#project-brief"} aria-label={"Start a project brief for " + service.name}>
                   Start a project brief <span aria-hidden="true">↗</span>
                 </Link>

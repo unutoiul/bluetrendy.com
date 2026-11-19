@@ -30,11 +30,8 @@ const industryStudies: Record<string, string | undefined> = {
 
 const menus = {
   Services: [
-    { label: "Explore IT services", href: "#services" },
-    { label: "IT implementation & integration", href: "/services#it-implementation-and-integration" },
-    { label: "Full service catalogue", href: "/services" },
-    { label: "From Prompt to Production", href: "#production" },
-    { label: "AI Idea Lab", href: "#ai-lab" },
+    { label: "All IT services", href: "/services" },
+    { label: "How we work", href: "#production" },
   ],
   Industries: Object.entries(industries).map(([id, label]) => ({
     label,
@@ -76,7 +73,6 @@ export default function ExperienceHeader() {
               onClick={event => openMenu(event, name)}>{name}</Button>
           ))}
           <Link href="/#clients" aria-current={active === "clients" ? "location" : undefined}>Clients</Link>
-          <a href="#ai-lab" aria-current={active === "ai-lab" ? "location" : undefined}>AI Idea Lab</a>
           <Link href="/about" prefetch={false}>About</Link>
         </Box>
         <Box className={styles.headerActions}>

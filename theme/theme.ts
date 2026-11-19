@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+﻿import { createTheme } from "@mui/material/styles";
 
 export const brand = {
   navy: "#0C2B45",
@@ -14,7 +14,6 @@ export const brand = {
 
 // One easing curve for every interaction: a quick start that settles softly.
 export const easeOut = "cubic-bezier(0.22, 1, 0.36, 1)";
-const streak = `linear-gradient(90deg, ${brand.blue}, ${brand.blueLight})`;
 
 const theme = createTheme({
   palette: {
@@ -111,41 +110,14 @@ const theme = createTheme({
           paddingBlock: "0.9rem",
           fontSize: "1rem",
         },
-        // A streak of light crosses the button, like the one under the ribbon sculpture.
         contained: {
-          overflow: "hidden",
-          isolation: "isolate",
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            inset: 0,
-            zIndex: -1,
-            pointerEvents: "none",
-            background: "linear-gradient(110deg, transparent 22%, rgba(255,255,255,0.5) 44%, transparent 62%)",
-            transform: "translateX(-115%)",
-          },
-          "&:hover": { transform: "translateY(-2px)", boxShadow: "0 14px 30px -14px rgba(22,95,204,0.75)" },
-          "&:hover::after": { transform: "translateX(115%)", transition: `transform 0.85s ${easeOut}` },
-          "&:active": { transform: "translateY(0) scale(0.96)", boxShadow: "0 6px 16px -10px rgba(22,95,204,0.7)" },
+          "&:hover": { transform: "translateY(-1px)", boxShadow: "none" },
+          "&:active": { transform: "scale(0.98)", boxShadow: "none" },
         },
-        // Outlined buttons fill from the left with their own colour.
         outlined: {
-          overflow: "hidden",
-          isolation: "isolate",
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            inset: 0,
-            zIndex: -1,
-            pointerEvents: "none",
-            backgroundColor: "currentColor",
-            opacity: 0.09,
-            transform: "scaleX(0)",
-            transformOrigin: "right",
-            transition: `transform 0.5s ${easeOut}`,
-          },
-          "&:hover": { backgroundColor: "transparent" },
-          "&:hover::after": { transform: "scaleX(1)", transformOrigin: "left" },
+          border: 0,
+          backgroundColor: brand.mist,
+          "&:hover": { border: 0, backgroundColor: "#E3EDF5" },
         },
         // Text buttons draw an underline instead of filling.
         text: {
@@ -186,25 +158,10 @@ const theme = createTheme({
           "&:hover:not(.Mui-focused, .Mui-disabled, .Mui-error) .MuiOutlinedInput-notchedOutline": { borderColor: "#8FA9C0" },
           "&.Mui-focused": {
             backgroundColor: "#fff",
-            boxShadow: "0 0 0 4px rgba(22,95,204,0.12), 0 16px 32px -22px rgba(22,95,204,0.6)",
+            boxShadow: "0 0 0 3px rgba(22,95,204,0.1)",
           },
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: brand.blue, borderWidth: 1.5 },
-          // A light streak runs along the bottom edge of the field in focus.
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            left: 14,
-            right: 14,
-            bottom: -1,
-            height: 2,
-            borderRadius: 2,
-            background: streak,
-            pointerEvents: "none",
-            transform: "scaleX(0)",
-            transition: `transform 0.55s ${easeOut}`,
-          },
-          "&.Mui-focused::after": { transform: "scaleX(1)" },
-          "&.Mui-error::after": { background: "#d32f2f" },
+
         },
       },
     },
@@ -220,7 +177,7 @@ const theme = createTheme({
         paper: {
           marginTop: 6,
           borderRadius: 12,
-          border: `1px solid ${brand.border}`,
+          border: 0,
           boxShadow: "0 24px 48px -22px rgba(12,43,69,0.45)",
         },
         list: { padding: 6 },
@@ -239,8 +196,8 @@ const theme = createTheme({
     MuiAccordion: {
       styleOverrides: {
         root: {
-          transition: `border-color 0.3s ease, box-shadow 0.45s ${easeOut}`,
-          "&.Mui-expanded": { borderColor: brand.blue, boxShadow: "0 18px 40px -28px rgba(22,95,204,0.6)" },
+          transition: "background-color 0.2s ease",
+          "&.Mui-expanded": { backgroundColor: "#edf3f7", boxShadow: "none" },
         },
       },
     },

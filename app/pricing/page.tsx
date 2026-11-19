@@ -35,13 +35,13 @@ export default function PricingPage() {
     <>
       <PageHero
         eyebrow="Engagement & Pricing"
-        title="Start with a fixed-price discovery sprint"
+        title="Plan your project before you build"
         aside={<JumpLinks label="Explore engagement options" links={[
           { text: "Discovery sprint & price", href: "#discovery-sprint" },
           { text: "Project & embedded work", href: "#ongoing-work" },
           { text: "Pricing questions", href: "#pricing-questions" },
         ]} />}
-        subtitle="No open-ended estimates. You get a concrete architecture plan and delivery price before committing to a full build."
+        subtitle="Start with a paid planning sprint. You’ll get a technical plan, an estimate and a price for the build."
       />
 
       <Container sx={{ py: { xs: 5, md: 8 } }}>
@@ -51,7 +51,6 @@ export default function PricingPage() {
               spacing={3}
               sx={{
                 bgcolor: "#eff6fa",
-                border: "1px solid #b3d0df",
                 borderRadius: 3,
                 p: { xs: 3, md: 4 },
                 position: "relative",
@@ -59,7 +58,7 @@ export default function PricingPage() {
             >
               <Box>
                 <Typography variant="h5" component="h2">
-                  Paid Discovery Sprint
+                    Paid discovery sprint
                 </Typography>
                 <Typography
                   sx={{ mt: 1, fontFamily: "var(--font-mono)", color: "primary.main", fontWeight: 600 }}
@@ -77,7 +76,7 @@ export default function PricingPage() {
                   </Stack>
                 ))}
               </Stack>
-              <Box sx={{ pt: 1, borderTop: "1px solid", borderColor: "divider" }}>
+              <Box sx={{ pt: 1 }}>
                 <DiscoveryCheckoutForm />
               </Box>
             </Stack>
@@ -92,10 +91,7 @@ export default function PricingPage() {
                 sx={{
                   alignItems: { sm: "center" },
                   justifyContent: "space-between",
-                  border: "1px solid",
-                  borderColor: "divider",
-                  borderRadius: 3,
-                  p: { xs: 3, md: 4 },
+                  py: 2,
                 }}
               >
                 <Box>
@@ -118,15 +114,12 @@ export default function PricingPage() {
                 sx={{
                   alignItems: { sm: "center" },
                   justifyContent: "space-between",
-                  border: "1px solid",
-                  borderColor: "divider",
-                  borderRadius: 3,
-                  p: { xs: 3, md: 4 },
+                  py: 2,
                 }}
               >
                 <Box>
                   <Typography variant="h6" component="h3">
-                    Embedded Engineering
+                    An engineer on your team
                   </Typography>
                   <Typography variant="body2" color="text.secondary" sx={{ mt: 1, maxWidth: 420 }}>
                     Ongoing senior-engineer capacity working inside your team, billed monthly. For sustained
@@ -141,10 +134,7 @@ export default function PricingPage() {
               <Box
                 sx={{
                   bgcolor: "background.paper",
-                  border: "1px solid",
-                  borderColor: "divider",
-                  borderRadius: 3,
-                  p: { xs: 3, md: 4 },
+                  py: 2,
                 }}
               >
                 <Typography variant="body2" color="text.secondary">

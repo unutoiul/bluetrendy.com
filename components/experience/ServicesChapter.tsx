@@ -1,57 +1,44 @@
-"use client";
-
-import { Fragment, useState } from "react";
-import Link from "next/link";
+﻿import Link from "next/link";
 import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
-import CloseRounded from "@mui/icons-material/CloseRounded";
+import ArrowOutwardRounded from "@mui/icons-material/ArrowOutwardRounded";
+import CodeRounded from "@mui/icons-material/CodeRounded";
+import WebOutlined from "@mui/icons-material/WebOutlined";
+import SmartphoneOutlined from "@mui/icons-material/SmartphoneOutlined";
+import HubOutlined from "@mui/icons-material/HubOutlined";
+import AutoAwesomeOutlined from "@mui/icons-material/AutoAwesomeOutlined";
+import MovieOutlined from "@mui/icons-material/MovieOutlined";
 import { services } from "@/data/services";
-import { ShowcaseGlyph } from "./ShowcaseGlyph";
-import { ArchitectureFlow, DetailSurface, ShowcaseChoice } from "./ShowcaseInteraction";
-import styles from "./Showcase.styles";
+import styles from "./ServicesChapter.styles";
 
-const featured = services.flatMap(service => service.preview ? [{ ...service, preview: service.preview }] : []);
+const icons = {
+  cube: CodeRounded,
+  web: WebOutlined,
+  phone: SmartphoneOutlined,
+  integration: HubOutlined,
+  spark: AutoAwesomeOutlined,
+  film: MovieOutlined,
+};
+
+const featuredServices = services.flatMap(service =>
+  service.preview ? [{ ...service, preview: service.preview }] : []
+);
 
 export default function ServicesChapter() {
-  const [selected, setSelected] = useState<number | null>(null);
-  function close(index: number) {
-    setSelected(null);
-    document.getElementById("service-choice-" + index)?.focus({ preventScroll: true });
-  }
-  return (
-    <>
-    <div className={`${styles.sectionTools} ${styles.serviceHeading}`}>
-      <h2 id="services-heading">IT services</h2>
-      <Link href="/services" prefetch={false}>View all services<ArrowForwardRounded /></Link>
+  return <div className={styles.layout}>
+    <div className={styles.heading}>
+      <h2 id="services-heading">What we do</h2>
+      <Link href="/services">All IT services <ArrowForwardRounded /></Link>
     </div>
-    <div className={styles.serviceGrid} role="group" aria-label="Choose a service">
-      {featured.map((service, index) => {
-        const open = selected === index;
-        const { preview } = service;
-        return (
-          <Fragment key={service.slug}>
-            <ShowcaseChoice id={"service-choice-" + index} index={index} className={styles.serviceCard}
-              featured={index === 0 && selected === null} expanded={open} controls="service-detail"
-              onChoose={() => setSelected(open ? null : index)}>
-              <span className={styles.cardTop}><ShowcaseGlyph kind={preview.icon} /><ArrowForwardRounded className={styles.arrow} /></span>
-              <strong>{service.name}</strong><span className={styles.description}>{service.shortDescription}</span>
-            </ShowcaseChoice>
-            {open && <DetailSurface id="service-detail" label={service.name}>
-              <button type="button" className={styles.close} onClick={() => close(index)} aria-label="Close service details"><CloseRounded /></button>
-              <div className={styles.detailCopy}><h3>{preview.heading}</h3><p>{service.description}</p>
-                <div className={styles.links}>
-                  <Link href={"/services#" + service.slug} prefetch={false}>Service details<ArrowForwardRounded /></Link>
-                  {preview.related && <Link href={"/services#" + preview.related.slug} prefetch={false}>{preview.related.label}<ArrowForwardRounded /></Link>}
-                  {preview.icon === "film"
-                    ? <Link href="/contact" prefetch={false}>Discuss a video brief<ArrowForwardRounded /></Link>
-                    : <a href="#ai-lab">Estimate a project<ArrowForwardRounded /></a>}
-                </div>
-              </div>
-              <ArchitectureFlow nodes={preview.steps.map(([step]) => step)} notes={preview.steps.map(([, note]) => note)} label={`${service.name} delivery steps`} />
-            </DetailSurface>}
-          </Fragment>
-        );
+    <div className={styles.grid}>
+      {featuredServices.map((service, index) => {
+        const Icon = icons[service.preview.icon];
+        return <Link key={service.slug} href={"/services#" + service.slug} className={styles.service}
+          data-arrive={index % 3}>
+          <Icon className={styles.icon} aria-hidden="true" />
+          <div className={styles.title}><h3>{service.name}</h3><ArrowOutwardRounded aria-hidden="true" /></div>
+          <p>{service.shortDescription}</p>
+        </Link>;
       })}
     </div>
-    </>
-  );
+  </div>;
 }

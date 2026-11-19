@@ -25,10 +25,8 @@ export const workSheet: CSSObject[] = [
       gap: "clamp(18px,3vw,48px)",
       alignItems: "center",
       padding: "clamp(18px,2.4vw,32px) 2px",
-      borderBottom: "1px solid #c7d7e1",
       textDecoration: "none",
     } },
-  { ".Work__directory article:first-child .Work__card": { borderTop: "1px solid #c7d7e1" } },
   { ".Work__mark": {
       background: "#eef4f8",
       aspectRatio: "1.65",
@@ -50,7 +48,6 @@ export const workSheet: CSSObject[] = [
     } },
   { ".Work__card p:last-child": { color: "#3f6074", margin: "0", fontSize: ".9rem" } },
   { ".Work__arrow": {
-      border: "1px solid #aec8d8",
       borderRadius: "50%",
       width: "38px",
       height: "38px",
@@ -65,7 +62,6 @@ export const workSheet: CSSObject[] = [
       margin: "0",
       display: "grid",
       gridTemplateColumns: "1fr 1fr",
-      borderTop: "1px solid #587589",
       gap: "14px 18px",
       paddingTop: "14px",
     } },
@@ -87,7 +83,7 @@ export const workSheet: CSSObject[] = [
       marginBottom: "18px",
       textUnderlineOffset: ".2em",
     } },
-  { ".Work__readGrid nav": { display: "grid", gap: "2px", borderLeft: "2px solid #bdd3e0", paddingLeft: "12px" } },
+  { ".Work__readGrid nav": { display: "grid", gap: "2px" } },
   { ".Work__readGrid nav a": { textDecoration: "none", fontWeight: "580", padding: "5px 0" } },
   { ".Work__readGrid nav a:hover": { textDecoration: "underline" } },
   { ".Work__story": { minWidth: "0" } },
@@ -101,8 +97,7 @@ export const workSheet: CSSObject[] = [
   { ".Work__impact": {
       padding: "clamp(18px,3vw,30px)",
       background: "#e7f3f2",
-      borderLeft: "3px solid #488982",
-      borderRadius: "0 10px 10px 0",
+      borderRadius: "10px",
     } },
   { "@media (max-width: 650px)": {
       ".Work__card": { gridTemplateColumns: "68px minmax(0,1fr) 25px", gap: "12px" },

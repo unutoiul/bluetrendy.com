@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
@@ -10,19 +10,6 @@ import styles from "../Hero.styles";
 
 const brainPoster = "/brand/synaptic-brain.webp";
 const brainDescription = "A rotating brain made of blue nerve fibres, with pulses of light travelling along branching connections";
-const films = {
-  ribbon: {
-    label: "Ribbon film", description: "BlueTrendy’s rotating glass and titanium ribbon",
-    src: "/brand/blue-ribbon-turntable.mp4", poster: "/brand/blue-ribbon-studio.webp", width: 1080, height: 720,
-  },
-  reveal: {
-    label: "Logo reveal", description: "Particles assemble into the BlueTrendy Intelligence logo",
-    src: "/brand/magnetic-assembly/magnetic-assembly-web.mp4", poster: "/brand/magnetic-assembly/magnetic-assembly-poster.png", width: 960, height: 864,
-  },
-} as const;
-type Film = keyof typeof films;
-const views = ["brain", "ribbon", "reveal"] as const;
-
 function playBrain(video: HTMLVideoElement) {
   if (!video.hasAttribute("src")) {
     const extension = video.canPlayType('video/webm; codecs="vp9"') ? "webm" : "mp4";
@@ -88,47 +75,9 @@ function BrainLoop() {
   );
 }
 
-function LogoFilm({ film }: { film: Film }) {
-  const player = useRef<HTMLVideoElement>(null);
-  const visible = useInView(player, { initial: true });
-  const [failed, setFailed] = useState(false);
-  const { description, width, height, poster, src } = films[film];
-
-  useEffect(() => {
-    const video = player.current;
-    function pauseWhenHidden() { if (document.hidden) video?.pause(); }
-    document.addEventListener("visibilitychange", pauseWhenHidden);
-    return () => document.removeEventListener("visibilitychange", pauseWhenHidden);
-  }, []);
-
-  useEffect(() => {
-    if (!visible) player.current?.pause();
-  }, [visible]);
-
-  return (
-    <>
-      <video ref={player} className={styles.logoFilm} aria-label={description}
-        width={width} height={height} controls autoPlay muted playsInline preload="none"
-        poster={poster} src={src} onError={() => setFailed(true)} />
-      {failed && <span role="status" className={styles.filmError}>Logo film unavailable.</span>}
-    </>
-  );
-}
-
 export default function HeroVisual() {
-  const [view, setView] = useState<typeof views[number]>("brain");
   const tilt = usePanelTilt(3);
-  return (
-    <div className={styles.art} data-arrive="1" data-view={view}>
-      <motion.div {...(view === "brain" ? tilt : {})} className={styles.screen} id="hero-screen">
-        {view === "brain" ? <BrainLoop /> : <LogoFilm key={view} film={view} />}
-      </motion.div>
-      <div className={styles.mediaControls} role="group" aria-label="Choose a studio animation">
-        {views.map(item => <button key={item} type="button" aria-controls="hero-screen" aria-pressed={view === item}
-          className={styles.filmSwitch} onClick={() => setView(item)}>
-          {item !== "brain" && <PlayArrowRounded />}{item === "brain" ? "Neural network" : films[item].label}
-        </button>)}
-      </div>
-    </div>
-  );
+  return <div className={styles.art} data-arrive="1" data-view="brain">
+    <motion.div {...tilt} className={styles.screen}><BrainLoop /></motion.div>
+  </div>;
 }

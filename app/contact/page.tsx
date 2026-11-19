@@ -49,7 +49,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
                   return href ? <Box key={label} component="a" href={href} sx={sx}>{content}</Box> : <Box key={label} sx={sx}>{content}</Box>;
                 })}
               </Stack>
-              <Box sx={{ borderTop: "1px solid", borderColor: "divider", pt: 2.5 }}>
+              <Box sx={{ pt: 2.5 }}>
                 <Typography variant="body1" sx={{ mb: 1.5 }}>Prefer to talk it through? Book a free 30-minute discovery call.</Typography>
                 <LinkButton href="/book-a-call" variant="outlined">Book a call</LinkButton>
               </Box>

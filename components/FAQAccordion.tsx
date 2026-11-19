@@ -15,10 +15,10 @@ export default function FAQAccordion({ items }: { items: FAQItem[] }) {
           disableGutters
           elevation={0}
           sx={{
-            border: "1px solid",
-            borderColor: "divider",
-            borderRadius: "12px !important",
-            mb: 2,
+            border: 0,
+            bgcolor: "#f2f6f9",
+            borderRadius: "8px !important",
+            mb: 1.5,
             "&:before": { display: "none" },
             overflow: "hidden",
           }}

@@ -20,7 +20,7 @@ export const caseStudies: CaseStudy[] = [
     sector: "Wealth & Asset Management",
     timeframe: "Dec 2025 – Mar 2026",
     location: "London, UK",
-    title: "A structured products trading platform built for private-banking speed",
+    title: "A faster way to price and trade structured products",
     summary:
       "Private clients can now discover, price, and execute complex structured instruments in real time — a workflow that used to depend on manual issuer round-trips.",
     challenge:
@@ -45,7 +45,7 @@ export const caseStudies: CaseStudy[] = [
     sector: "Healthcare & Life Sciences",
     timeframe: "Jun 2024 – Sept 2025",
     location: "London, UK",
-    title: "A secure DICOM imaging platform connecting radiologists worldwide",
+    title: "A secure way for radiologists to review scans together",
     summary:
       "A collaborative medical imaging platform where radiologists across the world securely share, discuss, and get AI-assisted analysis on complex diagnostic cases.",
     challenge:
@@ -70,7 +70,7 @@ export const caseStudies: CaseStudy[] = [
     sector: "Defense & Government",
     timeframe: "Jun 2024 – May 2025",
     location: "The Hague, Netherlands",
-    title: "A geospatial strategy platform for NATO-scale decision-making",
+    title: "A shared map for NATO planning teams",
     summary:
       "A layered geospatial visualization platform for NATO strategic data — engineered to stay fast and accurate at a scale where latency has real consequences.",
     challenge:
@@ -97,7 +97,7 @@ export const caseStudies: CaseStudy[] = [
     sector: "Consulting × Travel & Leisure",
     timeframe: "Apr 2024 – Jul 2024",
     location: "London, UK",
-    title: "AI-assisted financial analysis for two of the world's largest cruise lines",
+    title: "AI-assisted financial analysis for two major cruise lines",
     summary:
       "An automated, auditable pipeline that turned manual financial report review for Royal Caribbean and Carnival Cruise into a repeatable process the consulting team could run on demand.",
     challenge:
@@ -121,7 +121,7 @@ export const caseStudies: CaseStudy[] = [
     sector: "Industrial & Manufacturing",
     timeframe: "Jan 2023 – Oct 2023",
     location: "London, UK",
-    title: "Real-time predictive maintenance for industrial production lines",
+    title: "Spotting maintenance issues on the production line",
     summary:
       "A React and AWS application that watches bottle-manufacturing production lines in real time and predicts maintenance needs before a line goes down.",
     challenge:
@@ -144,7 +144,7 @@ export const caseStudies: CaseStudy[] = [
     sector: "Enterprise Software (B2B SaaS)",
     timeframe: "Dec 2018 – Sept 2019",
     location: "Sydney, Australia",
-    title: "A unified identity platform for 10M+ Atlassian accounts",
+    title: "One sign-in system for 10M+ Atlassian accounts",
     summary:
       "A single application to manage identity across Jira, Confluence, Slack, and Bitbucket — coordinated across multiple product teams and over 10 million client subscriptions worldwide.",
     challenge:

@@ -68,7 +68,7 @@ export default function ContactChapter() {
       <div className={styles.contactLinks}>
         <Link href="/pricing" prefetch={false}>Engagement &amp; pricing</Link>
         <Link href="/about" prefetch={false}>Meet the studio</Link>
-        <a href="#ai-lab">Plan a project in the Idea Lab</a>
+        <Link href="/contact">Send a project brief</Link>
         <span className={styles.email}><a href={"mailto:" + address}>{address}</a>
           <motion.button type="button" aria-label="Copy email address" onClick={copyAddress}
             whileTap={reduced ? undefined : { scale: .92 }}>

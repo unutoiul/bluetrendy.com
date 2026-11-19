@@ -34,10 +34,9 @@ export default function CTASection({
     <Box
       component="section"
       sx={{
-        background: "linear-gradient(115deg, #071b2d 10%, #0a2d48 100%)",
+        background: "#0b2034",
         color: "#fff",
         py: { xs: 6, md: 8 },
-        borderBlock: "1px solid #2e526c",
         position: "relative",
         overflow: "hidden",
         isolation: "isolate",
@@ -63,19 +62,18 @@ export default function CTASection({
               size="large"
               endIcon={<ArrowForwardIcon />}
               onClick={() => trackEvent("cta_book_call_click", { location })}
-              sx={{ bgcolor: "#85e7ff", color: "#06192b", "&:hover": { bgcolor: "#a2f0ff", boxShadow: "0 0 16px #37b8f34d" } }}
+              sx={{ bgcolor: "#b8ddf5", color: "#06192b", "&:hover": { bgcolor: "#d2eaff" } }}
             >
               {primaryLabel}
             </Button>
             <Button
               component={Link}
               href={secondaryHref}
-              variant="outlined"
+              variant="text"
               size="large"
               sx={{
                 color: "#fff",
-                borderColor: "rgba(255,255,255,0.4)",
-                "&:hover": { borderColor: "#fff" },
+                "&:hover": { bgcolor: "#18374f" },
               }}
             >
               {secondaryLabel}

@@ -30,7 +30,7 @@ export default function ProcessPage() {
           { text: "Ways to work together", href: "#engagement-models" },
           { text: "Common questions", href: "#process-questions" },
         ]} />}
-        subtitle="Every engagement starts with a fixed-scope discovery sprint, runs on a weekly demo cadence, and gives you direct access to the engineer writing your code."
+        subtitle="Meet your engineer, agree on a plan and try the work as we build it. Each stage gives you a chance to ask questions and decide what comes next."
       />
 
       <Container className={styles.anchor} id="delivery" sx={{ py: { xs: 5, md: 9 } }}>
@@ -59,11 +59,8 @@ export default function ProcessPage() {
                   spacing={2}
                   sx={{
                     height: "100%",
-                    bgcolor: "background.paper",
-                    border: "1px solid",
-                    borderColor: "divider",
-                    borderRadius: 3,
-                    p: 4,
+                    py: 1,
+                    pr: { xs: 0, md: 4 },
                   }}
                 >
                   <Typography variant="h6" component="h3">
@@ -72,7 +69,7 @@ export default function ProcessPage() {
                   <Typography variant="body2" color="text.secondary" sx={{ flexGrow: 1 }}>
                     {model.description}
                   </Typography>
-                  <Box sx={{ pt: 1, borderTop: "1px solid", borderColor: "divider" }}>
+                  <Box sx={{ pt: 1 }}>
                     <Typography variant="overline" sx={{ color: "text.secondary" }}>
                       Best for
                     </Typography>

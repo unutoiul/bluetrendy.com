@@ -1,4 +1,4 @@
-export type Service = {
+﻿export type Service = {
   slug: string;
   name: string;
   shortDescription: string;
@@ -31,10 +31,9 @@ export const services: Service[] = [
       related: { slug: "complex-mission-critical-systems", label: "Mission-critical systems" },
     },
     bullets: [
-      "Real-time data pipelines and WebSocket streaming for live pricing, monitoring, and analytics",
-      "AI copilots and automation embedded in internal tools and customer-facing UX",
-      "GraphQL and REST APIs designed for reliability under regulated or high-stakes workloads",
-      "Cloud-native deployment on AWS or Azure with CI/CD and automated testing from day one",
+      "Dashboards with live figures for your team to act on",
+      "Tools that automate routine tasks and connect to your existing systems",
+      "A tested release on AWS or Azure, with access set up for the right people",
     ],
     stack: ["React", "Next.js", "TypeScript", "GraphQL", "Node.js", "AWS", "Azure"],
   },
@@ -44,9 +43,9 @@ export const services: Service[] = [
     shortDescription: "Company websites, booking flows and online shops your team can update.",
     description: "We design the route from a first visit to an enquiry, booking or purchase. You get a fast, accessible site and an editor your team can use for product updates and campaigns.",
     bullets: [
-      "Page design, content structure and responsive layouts for desktop and mobile",
-      "Product catalogues, checkout, booking calendars and enquiry forms",
-      "Editable content, search metadata and measurement of key customer journeys",
+      "Pages that are easy to use on a phone or computer",
+      "Product listings, payments, booking calendars or enquiry forms",
+      "An editor for your team and reports on visits, bookings and sales",
     ],
     stack: ["Next.js", "CMS", "Payments", "Analytics"],
     preview: {
@@ -74,21 +73,21 @@ export const services: Service[] = [
       ],
     },
     bullets: [
-      "React Native apps sharing core logic and data layer with the web platform",
-      "Native-feeling UI and performance on iOS and Android from a single codebase",
-      "Push, offline, and device-integration patterns handled from the architecture stage, not retrofitted",
+      "One app for iPhone and Android, connected to your existing platform",
+      "Sign-in, notifications and offline access where your users need them",
+      "Testing on real devices and help publishing to both app stores",
     ],
     stack: ["React Native", "TypeScript", "GraphQL", "Redux"],
   },
   {
     slug: "it-implementation-and-integration",
-    name: "IT implementation & integration",
-    shortDescription: "System setup, data migration and integrations between the tools you rely on.",
-    description: "We help teams put a new platform into daily use. That can mean connecting a CRM to finance, moving records from a legacy database, or setting up cloud deployment and access for a new application.",
+    name: "IT setup & integration",
+    shortDescription: "Connect the tools you use and move your data safely.",
+    description: "We help your team start using a new system. For example, we can connect sales to finance so people enter a customer record once.",
     bullets: [
-      "Map current systems, owners and data flows before choosing the integration approach",
-      "Configure roles, connect APIs and reconcile a trial migration against source records",
-      "Rehearse cutover, train the people who run the system and hand over recovery instructions",
+      "A map of which systems hold your data and who needs access",
+      "Connected tools, with transferred records checked against the originals",
+      "A practice rollout, staff training and a recovery plan",
     ],
     stack: ["APIs", "Webhooks", "SQL", "Cloud infrastructure"],
     preview: {
@@ -103,38 +102,32 @@ export const services: Service[] = [
   },
   {
     slug: "complex-mission-critical-systems",
-    name: "Complex, Mission-Critical Systems",
-    shortDescription:
-      "Trading systems, geospatial platforms, and regulated data workflows — where correctness and security aren't optional.",
-    description:
-      "Some systems can't afford to be wrong. We bring defense, finance, and healthcare-grade engineering discipline — TDD/BDD, security clearance experience, and audited delivery processes — to platforms where a bug isn't an inconvenience, it's an incident.",
+    name: "Business-critical systems",
+    shortDescription: "Reliable software for work where accuracy matters, from trading to medical records.",
+    description: "Our engineers have built systems for banks, healthcare organisations and government teams. We test the high-risk tasks first and keep a record of how each release was checked.",
     bullets: [
-      "Real-time trading, pricing, and portfolio systems built on event-driven architecture",
-      "Geospatial and mission-critical platforms engineered for accuracy at scale (ArcGIS, spatial indexing, large multi-source datasets)",
-      "TDD/BDD test discipline (JUnit, Cucumber) validating every business-critical workflow",
-      "Delivery experience inside government and defense environments, including UK SC-cleared work",
+      "Live pricing and portfolio tools for financial teams",
+      "Mapping tools that combine information from multiple sources",
+      "Automated checks for the decisions and workflows your team depends on",
     ],
     stack: ["Java", "Spring Boot", "Python", "ArcGIS", "PostgreSQL", "Azure", "Kubernetes"],
   },
   {
     slug: "legacy-modernization",
-    name: "Legacy Modernization",
-    shortDescription:
-      "Migrating monoliths and aging stacks to modern, cloud-native architecture — incremental, tested, reversible.",
-    description:
-      "Legacy systems rarely fail because the business logic is wrong — they fail because the platform underneath can't keep up. We modernize incrementally: strangler patterns, test coverage before refactors, and cloud migration paths that don't require betting the business on a big-bang rewrite.",
+    name: "Upgrades for older software",
+    shortDescription: "Update an ageing system while your team keeps working.",
+    description: "We replace older software in stages. First we document what works today, then test each change with your team before moving to the next part.",
     bullets: [
-      "Incremental migration paths from legacy stacks (Angular.js, jQuery, on-prem systems) to modern architecture",
-      "Test coverage established before refactors begin, so behavior stays provably correct",
-      "Cloud migration to AWS or Azure with CI/CD pipelines replacing manual deployment",
+      "A plan for which parts to keep, update or replace",
+      "Tests that check important tasks before and after each change",
+      "A move to the cloud where it helps, with a way back at each stage",
     ],
     stack: ["Angular", "React", "Node.js", "Docker", "AWS", "Azure"],
   },
   {
     slug: "ai-automation-applied-ml",
     name: "AI & automation",
-    shortDescription:
-      "Document processing, internal assistants and approval flows with human review.",
+    shortDescription: "Use AI to read documents, find answers and handle routine tasks.",
     description:
       "We automate a repeatable task using your documents and business rules. Staff can see the source behind a result, correct a mistake and review uncertain cases before any action is taken.",
     preview: {
@@ -146,22 +139,21 @@ export const services: Service[] = [
       ],
     },
     bullets: [
-      "LLM integration for document processing, financial analysis, and internal automation",
-      "Applied ML and predictive models (Amazon SageMaker and equivalents) for maintenance, forecasting, and pattern recognition",
-      "AI-assisted diagnostics and image analysis in regulated healthcare and industrial contexts",
-      "Vendor-neutral model selection based on task fit, latency, cost, and compliance — not a single-provider lock-in",
+      "Document tools that extract figures or find answers in your own files",
+      "Forecasts and alerts for equipment maintenance or changing demand",
+      "Tests against real examples, with staff review for uncertain results",
     ],
     stack: ["Claude", "GPT", "Python", "SageMaker", "LangChain-style orchestration", "Vector search"],
   },
   {
     slug: "marketing-video-production",
-    name: "Marketing video production",
-    shortDescription: "Product demos, launch films and captioned edits for web and social.",
+    name: "Marketing videos",
+    shortDescription: "Product demos, launch videos and short clips for social media.",
     description: "We turn a product workflow or campaign brief into a film that shows buyers what they can do. We handle the script, storyboard, screen capture, motion graphics and final edit.",
     bullets: [
-      "An audience brief, script and storyboard for approval before production",
-      "Product footage, motion graphics, narration and captions matched to the campaign",
-      "Website-ready exports and vertical or square edits for social channels",
+      "A script and storyboard you can approve before filming",
+      "Footage, animation, voiceover and captions for your audience",
+      "Finished videos sized for your website and social channels",
     ],
     stack: ["Storyboarding", "Screen capture", "Motion graphics", "Editing & captions"],
     preview: {

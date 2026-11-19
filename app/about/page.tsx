@@ -45,10 +45,6 @@ export default function AboutPage() {
         eyebrow="About"
         title="Meet the engineer behind BlueTrendy"
         subtitle="Lucas Franco has spent 15+ years building production software for banks, government agencies, healthcare teams and enterprise software companies. He leads each engagement from the first conversation through handover."
-        aside={<figure className={styles.portrait}>
-          <Image src={founderPhoto} alt="Lucas Franco" width={254} height={254} sizes="(max-width: 760px) 200px, 254px" />
-          <figcaption><strong>Lucas Franco</strong><span>Founder & lead engineer</span></figcaption>
-        </figure>}
       />
 
       <Container sx={{ py: { xs: 5, md: 8 } }}>
@@ -61,18 +57,20 @@ export default function AboutPage() {
                 textAlign: { xs: "center", md: "left" },
               }}
             >
+              <figure className={styles.portrait}>
+                <Image src={founderPhoto} alt="Lucas Franco" width={254} height={254} sizes="254px" />
+                <figcaption><strong>Lucas Franco</strong><span>Founder & lead engineer</span></figcaption>
+              </figure>
               <Stack
                 sx={{
                   width: "100%",
                   maxWidth: { xs: 360, md: "none" },
                   bgcolor: brand.mist,
-                  border: "1px solid",
-                  borderColor: "divider",
                   borderRadius: 3,
                   textAlign: "left",
                 }}
               >
-                {credentials.map(({ icon: Icon, label, primary, secondary }, index) => (
+                {credentials.map(({ icon: Icon, label, primary, secondary }) => (
                   <Stack
                     key={label}
                     direction="row"
@@ -80,8 +78,6 @@ export default function AboutPage() {
                     sx={{
                       p: 2.25,
                       alignItems: "flex-start",
-                      borderTop: index === 0 ? "none" : "1px solid",
-                      borderColor: "divider",
                     }}
                   >
                     <Box
@@ -93,8 +89,6 @@ export default function AboutPage() {
                         flexShrink: 0,
                         borderRadius: 2,
                         bgcolor: "background.paper",
-                        border: "1px solid",
-                        borderColor: "divider",
                         color: "secondary.main",
                       }}
                     >
@@ -146,11 +140,8 @@ export default function AboutPage() {
                 <Stack
                   spacing={1.5}
                   sx={{
-                    bgcolor: "background.paper",
-                    border: "1px solid",
-                    borderColor: "divider",
-                    borderRadius: 3,
-                    p: 4,
+                    py: 1,
+                    pr: { xs: 0, md: 4 },
                     height: "100%",
                   }}
                 >
@@ -170,7 +161,7 @@ export default function AboutPage() {
       <Container sx={{ py: { xs: 6, md: 9 } }}>
         <SectionHeading title="Selected engineering engagements" align="left" />
         <Stack spacing={0} sx={{ mt: 6 }}>
-          {timeline.map((item, index) => {
+          {timeline.map(item => {
             const study = caseStudies.find(entry => entry.client === item.org);
             return (
             <Stack
@@ -179,9 +170,6 @@ export default function AboutPage() {
               spacing={{ xs: 0.5, sm: 3 }}
               sx={{
                 py: 2.5,
-                borderTop: index === 0 ? "1px solid" : "none",
-                borderBottom: "1px solid",
-                borderColor: "divider",
               }}
             >
               <Typography
