@@ -14,13 +14,34 @@ import { discoveryPackages, formatPounds, pricingFaqs } from "@/data/pricing";
 import { neural } from "@/components/experience/neuralStyle";
 import { brand } from "@/theme/theme";
 import styles from "@/components/interior/Editorial.styles";
+import JsonLd from "@/components/JsonLd";
+import { absoluteUrl, breadcrumbs, faqPage, organizationRef, pageMetadata } from "@/lib/seo";
 
 const lowest = formatPounds(Math.min(...discoveryPackages.map(item => item.price)));
 
-export const metadata: Metadata = {
-  title: "Engagement & Pricing",
-  description:
-    `Start with a fixed-price discovery sprint from ${lowest}, priced by company size. Move into a fixed-scope project or embedded engineering once the plan is clear.`,
+export const metadata: Metadata = pageMetadata({
+  title: `Pricing: Discovery Sprints from ${lowest}`,
+  description: `Start with a fixed-price discovery sprint from ${lowest}, priced by company size. Move into a fixed-scope project or embedded engineering once the plan is clear.`,
+  path: "/pricing",
+});
+
+const discoverySprint = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Discovery sprint",
+  serviceType: "Software project planning and estimate",
+  description: "A fixed-price planning sprint with our senior team: a technical plan, an estimate and a price for the build.",
+  url: absoluteUrl("/pricing"),
+  provider: organizationRef,
+  areaServed: { "@type": "Country", name: "United Kingdom" },
+  offers: discoveryPackages.map(item => ({
+    "@type": "Offer",
+    name: `${item.name} (${item.employees})`,
+    price: item.price,
+    priceCurrency: "GBP",
+    url: absoluteUrl("/pricing"),
+    availability: "https://schema.org/InStock",
+  })),
 };
 
 const nextSteps = [
@@ -45,6 +66,7 @@ const nextSteps = [
 export default function PricingPage() {
   return (
     <>
+      <JsonLd data={[discoverySprint, faqPage(pricingFaqs), breadcrumbs([{ name: "Pricing", path: "/pricing" }])]} />
       <PageHero
         eyebrow="Engagement & Pricing"
         title="Plan your project before you build"

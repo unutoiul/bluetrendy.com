@@ -9,16 +9,19 @@ import { processSteps, processFaqs } from "@/data/process";
 import JumpLinks from "@/components/interior/JumpLinks";
 import EngagementModels from "@/components/interior/EngagementModels";
 import styles from "@/components/interior/Editorial.styles";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbs, faqPage, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Process",
-  description:
-    "How bluetrendy engagements work: discovery call, paid discovery sprint, weekly build cadence, and a clean handover — with fixed-scope, embedded, and project-based models.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "How We Work: From Discovery to Launch",
+  description: "How BlueTrendy projects run: a discovery call, a paid discovery sprint, weekly builds and a clean handover, with fixed-scope, embedded and project-based models.",
+  path: "/process",
+});
 
 export default function ProcessPage() {
   return (
     <>
+      <JsonLd data={[faqPage(processFaqs), breadcrumbs([{ name: "Process", path: "/process" }])]} />
       <PageHero
         eyebrow="Process"
         title="From the first call to handover"

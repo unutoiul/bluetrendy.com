@@ -17,11 +17,25 @@ import { caseStudies } from "@/data/caseStudies";
 import { timeline, values } from "@/data/timeline";
 import { proofStats } from "@/data/stats";
 import founderPhoto from "@/public/brand/founder.png";
+import JsonLd from "@/components/JsonLd";
+import { absoluteUrl, breadcrumbs, ids, organizationRef, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About",
-  description:
-    "BlueTrendy is a London software and AI team led by a hands-on founder with 15+ years across banking, defence, healthcare and enterprise SaaS. UK SC cleared, still writing production code.",
+export const metadata: Metadata = pageMetadata({
+  title: "About Us: London Software & AI Team",
+  description: "A London software and AI team led by a hands-on founder with 15+ years in banking, defence, healthcare and enterprise SaaS. UK SC cleared.",
+  path: "/about",
+});
+
+const founder = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": ids.founder,
+  name: "Lucas Franco",
+  jobTitle: "Founder and lead engineer",
+  image: absoluteUrl("/brand/founder.png"),
+  url: absoluteUrl("/about"),
+  worksFor: organizationRef,
+  homeLocation: { "@type": "Place", name: "London, UK" },
 };
 
 const credentials = [
@@ -68,6 +82,7 @@ const paragraph = { m: 0, color: "#30495f", fontSize: { xs: "1.05rem", md: "1.15
 export default function AboutPage() {
   return (
     <>
+      <JsonLd data={[founder, breadcrumbs([{ name: "About", path: "/about" }])]} />
       <PageHero
         eyebrow="About"
         title="Meet the team behind BlueTrendy"

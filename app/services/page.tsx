@@ -6,14 +6,39 @@ import ServiceIndex from "@/components/interior/ServiceIndex";
 import ServiceScene from "@/components/interior/ServiceScene";
 import styles from "@/components/interior/Services.styles";
 import { services } from "@/data/services";
+import JsonLd from "@/components/JsonLd";
+import { absoluteUrl, breadcrumbs, organizationRef, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Services & Digital Production",
-  description: "Custom software, websites, mobile apps, IT implementation, systems integration, AI automation and marketing video production from BlueTrendy.",
+export const metadata: Metadata = pageMetadata({
+  title: "Software, Websites, Apps & AI Services",
+  description: "Custom software, websites and online shops, iOS and Android apps, IT integration, AI automation and marketing videos, built by a senior London team.",
+  path: "/services",
+});
+
+// Every service on the page, offered by the organisation described in the layout.
+const serviceList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "BlueTrendy services",
+  itemListElement: services.map((service, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "Service",
+      "@id": absoluteUrl("/services#" + service.slug),
+      url: absoluteUrl("/services#" + service.slug),
+      name: service.name,
+      serviceType: service.name,
+      description: service.shortDescription + " " + service.description,
+      provider: organizationRef,
+      areaServed: { "@type": "Country", name: "United Kingdom" },
+    },
+  })),
 };
 
 export default function ServicesPage() {
   return <>
+    <JsonLd data={[serviceList, breadcrumbs([{ name: "Services", path: "/services" }])]} />
     <PageHero eyebrow="Services" title="What can we build for you?"
       subtitle="Choose a service to see what you’ll get. We build websites, apps and business software, connect IT systems and produce marketing videos." />
     <div className={styles.catalogue}>

@@ -7,6 +7,8 @@ import PageHero from "@/components/PageHero";
 import { caseStudies, getCaseStudy } from "@/data/caseStudies";
 import styles from "@/components/interior/Work.styles";
 import editorial from "@/components/interior/Editorial.styles";
+import JsonLd from "@/components/JsonLd";
+import { absoluteUrl, breadcrumbs, organizationRef, pageMetadata } from "@/lib/seo";
 
 type CaseStudyPageProps = { params: Promise<{ slug: string }> };
 
@@ -16,15 +18,38 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: CaseStudyPageProps): Promise<Metadata> {
   const study = getCaseStudy((await params).slug);
-  return study ? { title: study.client, description: study.summary } : {};
+  if (!study) return {};
+  return pageMetadata({
+    title: `${study.client} Case Study`,
+    description: `${study.title}. ${study.summary}`,
+    path: "/case-studies/" + study.slug,
+    type: "article",
+  });
 }
 
 export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   const study = getCaseStudy((await params).slug);
   if (!study) notFound();
   const next = caseStudies[(caseStudies.indexOf(study) + 1) % caseStudies.length];
+  const path = "/case-studies/" + study.slug;
+  const article = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: study.title,
+    name: `${study.client} case study`,
+    description: study.summary,
+    about: study.sector,
+    keywords: study.stack.join(", "),
+    url: absoluteUrl(path),
+    mainEntityOfPage: absoluteUrl(path),
+    image: absoluteUrl("/opengraph-image"),
+    author: organizationRef,
+    publisher: organizationRef,
+    inLanguage: "en-GB",
+  };
 
   return <>
+    <JsonLd data={[article, breadcrumbs([{ name: "Case studies", path: "/case-studies" }, { name: study.client, path }])]} />
     <PageHero eyebrow={study.sector} title={study.title} subtitle={study.summary}
       aside={<dl className={styles.facts}>
         <div><dt>Client</dt><dd>{study.client}</dd></div>

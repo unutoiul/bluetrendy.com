@@ -13,11 +13,14 @@ import LinkButton from "@/components/LinkButton";
 import LivingBackground from "@/components/backgrounds/LivingBackground";
 import { services } from "@/data/services";
 import styles from "@/components/interior/Editorial.styles";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbs, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "Tell us about your project and hear back within one business day.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Contact Us",
+  description: "Tell us about your website, app, software or AI project and hear back within one business day. Email contact@bluetrendy.com or call +44 7815 627 527.",
+  path: "/contact",
+});
 
 const details = [
   { icon: EmailIcon, label: "contact@bluetrendy.com", href: "mailto:contact@bluetrendy.com" },
@@ -29,6 +32,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
   const { service } = await searchParams;
   const selected = services.find(item => item.slug === service)?.name ?? "";
   return <>
+    <JsonLd data={breadcrumbs([{ name: "Contact", path: "/contact" }])} />
     <PageHero eyebrow="Contact" title="Tell us what you’re building"
       subtitle="Send a project brief and our team will reply within one business day." />
     <Box sx={{ position: "relative", isolation: "isolate", overflow: "clip", bgcolor: "#f3f7fa" }}>
