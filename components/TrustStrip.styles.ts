@@ -1,4 +1,5 @@
 import type { CSSObject } from "@mui/material/styles";
+import { palette } from "@/theme/palette";
 
 const styles = {
   directory: "TrustStrip__directory",
@@ -18,7 +19,7 @@ export const trustStripSheet: CSSObject[] = [{
     display: "grid",
     gridTemplateColumns: "minmax(0, 3fr) minmax(0, 7fr)",
     columnGap: "clamp(48px, 7vw, 112px)",
-    color: "#102c47",
+    color: palette.navy[725],
   },
   ".TrustStrip__intro": {
     position: "relative",
@@ -35,7 +36,7 @@ export const trustStripSheet: CSSObject[] = [{
     position: "absolute",
     zIndex: -1,
     inset: "0 -48px 0 -100vw",
-    backgroundColor: "#e5f1fc",
+    backgroundColor: palette.slate[50],
     clipPath: "polygon(0 0, 100% 0, calc(100% - 54px) 100%, 0 100%)",
   },
   ".TrustStrip__intro h2": {
@@ -48,7 +49,7 @@ export const trustStripSheet: CSSObject[] = [{
   ".TrustStrip__intro p": {
     margin: "20px 0 0",
     maxWidth: "29ch",
-    color: "#385470",
+    color: palette.slate[525],
     fontSize: "clamp(1rem, 1.2vw, 1.125rem)",
     lineHeight: 1.55,
   },
@@ -59,7 +60,7 @@ export const trustStripSheet: CSSObject[] = [{
     width: "fit-content",
     minHeight: "44px",
     marginTop: "19px",
-    color: "#135899",
+    color: palette.blue[550],
     fontWeight: 650,
     textDecoration: "none",
   },
@@ -74,13 +75,13 @@ export const trustStripSheet: CSSObject[] = [{
     alignItems: "center",
     gap: "12px",
     paddingBottom: "15px",
-    borderBottom: "1px solid #d9e4ed",
+    borderBottom: `1px solid ${palette.slate[150]}`,
   },
   ".TrustStrip__toolbar [role='status']": {
     flexShrink: 0,
     fontSize: ".9rem",
     fontWeight: 600,
-    color: "#405871",
+    color: palette.slate[525],
     fontVariantNumeric: "tabular-nums",
   },
   ".TrustStrip__wall": {
@@ -124,11 +125,11 @@ export const trustStripSheet: CSSObject[] = [{
     fontSize: ".75rem",
     lineHeight: 1.2,
     fontWeight: 550,
-    color: "#425e77",
+    color: palette.slate[525],
     opacity: 0,
   },
   ".TrustStrip__wall a:is(:hover, :focus-visible) .TrustStrip__caption": { opacity: 1 },
-  ".TrustStrip__directory :is(a:focus-visible, .Dropdown__pill:has(:focus-visible))": { outline: "2px solid #226bb5 !important", outlineOffset: "2px !important" },
+  ".TrustStrip__directory :is(a:focus-visible, .Dropdown__pill:has(:focus-visible))": { outline: `2px solid ${palette.blue[475]} !important`, outlineOffset: "2px !important" },
   "@media (prefers-reduced-motion: no-preference)": {
     "@keyframes clientSelection": { from: { opacity: .45, transform: "translateY(4px)" }, to: { opacity: 1, transform: "translateY(0)" } },
     ".TrustStrip__wall": { animation: "clientSelection .24s ease-out" },

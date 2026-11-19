@@ -25,6 +25,8 @@ import CheckRounded from "@mui/icons-material/CheckRounded";
 import TaskAltRounded from "@mui/icons-material/TaskAltRounded";
 import ReplayRounded from "@mui/icons-material/ReplayRounded";
 import { neural } from "./neuralStyle";
+import ActionButton from "@/components/ActionButton";
+import { palette, withAlpha } from "@/theme/palette";
 
 type Step = { title: string; detail: string; Icon: SvgIconComponent; person?: boolean };
 type Example = {
@@ -92,10 +94,10 @@ const examples: Example[] = [
 
 const stepTime = 1100;
 const firstStep = 450;
-const personTone = "#ffd27a";
+const personTone = palette.amber[175];
 
 function Caption({ children }: { children: ReactNode }) {
-  return <Box component="p" sx={{ m: "0 0 12px", color: "#8fb3d1", fontSize: "0.78rem", fontWeight: 650, letterSpacing: "0.14em", textTransform: "uppercase" }}>
+  return <Box component="p" sx={{ m: "0 0 12px", color: palette.slate[275], fontSize: "0.78rem", fontWeight: 650, letterSpacing: "0.14em", textTransform: "uppercase" }}>
     {children}
   </Box>;
 }
@@ -154,7 +156,7 @@ export default function AgentDemo() {
       <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 2 }}>
         <Box component="p" sx={{ ...neural.label, m: 0 }}>Watch an agent at work</Box>
         <Box role="tablist" aria-label="Example tasks" sx={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 0.5, p: 0.5,
-          width: { xs: "100%", sm: "auto" }, borderRadius: "14px", background: "rgba(3, 12, 30, 0.6)", border: "1px solid rgba(86, 156, 222, 0.3)" }}>
+          width: { xs: "100%", sm: "auto" }, borderRadius: "14px", background: withAlpha(palette.navy[850], 0.6), border: `1px solid ${withAlpha(palette.blue[325], 0.3)}` }}>
           {examples.map(({ id, tab, TabIcon }, index) => {
             const selected = index === current;
             return (
@@ -165,12 +167,12 @@ export default function AgentDemo() {
                 sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, alignItems: "center", justifyContent: "center", gap: { xs: 0.5, sm: 1 },
                   minHeight: 44, px: { xs: 1, sm: 1.75 }, py: 0.75, border: 0, borderRadius: "10px", cursor: "pointer", font: "inherit",
                   fontSize: { xs: "0.78rem", sm: "0.88rem" }, fontWeight: 600, lineHeight: 1.2, textAlign: "center",
-                  color: selected ? "#04172e" : "#b9d4ea",
-                  background: selected ? "linear-gradient(125deg, #c6f3ff, #83d6ff 68%, #69bcff)" : "transparent",
-                  boxShadow: selected ? "0 6px 18px -8px rgba(60, 180, 255, 0.8)" : "none",
+                  color: selected ? palette.navy[800] : palette.slate[125],
+                  background: selected ? `linear-gradient(125deg, ${palette.slate[75]}, ${palette.sky[175]} 68%, ${palette.blue[250]})` : "transparent",
+                  boxShadow: selected ? `0 6px 18px -8px ${withAlpha(palette.blue[250], 0.8)}` : "none",
                   transition: "background-color 0.25s ease, color 0.25s ease",
-                  "&:hover": selected ? {} : { color: "#eaf8ff", background: "rgba(80, 170, 255, 0.12)" },
-                  "&:focus-visible": { outline: "2px solid #a8ecff", outlineOffset: 2 },
+                  "&:hover": selected ? {} : { color: palette.grey[25], background: withAlpha(palette.blue[300], 0.12) },
+                  "&:focus-visible": { outline: `2px solid ${palette.sky[100]}`, outlineOffset: 2 },
                   "& svg": { fontSize: 18 } }}>
                 <TabIcon aria-hidden="true" />
                 {tab}
@@ -187,31 +189,31 @@ export default function AgentDemo() {
           <div>
             <Caption>What comes in</Caption>
             <Box sx={{ position: "relative", overflow: "hidden", borderRadius: "16px", p: 2.25,
-              border: "1px solid rgba(142, 214, 255, 0.28)",
-              background: "linear-gradient(170deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03))",
-              boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 18px 40px -26px rgba(0, 0, 0, 0.9)" }}>
+              border: `1px solid ${withAlpha(palette.sky[175], 0.28)}`,
+              background: `linear-gradient(170deg, ${withAlpha(palette.white, 0.09)}, ${withAlpha(palette.white, 0.03)})`,
+              boxShadow: `inset 0 1px 0 ${withAlpha(palette.white, 0.12)}, 0 18px 40px -26px ${withAlpha(palette.black, 0.9)}` }}>
               {/* While the agent reads, a band of light passes down the message. */}
               {shown === 0 && !reduced && inView && <Box aria-hidden="true" key={run} sx={{ position: "absolute", left: 0, right: 0, height: "40%", top: "-40%",
-                pointerEvents: "none", background: "linear-gradient(180deg, transparent, rgba(111, 220, 255, 0.16), transparent)",
+                pointerEvents: "none", background: `linear-gradient(180deg, transparent, ${withAlpha(palette.sky[150], 0.16)}, transparent)`,
                 animation: `agent-read 1.4s ${neural.ease} ${firstStep}ms infinite`,
                 "@keyframes agent-read": { from: { top: "-40%" }, to: { top: "100%" } } }} />}
               <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                <Box aria-hidden="true" sx={{ display: "grid", placeItems: "center", flex: "none", width: 40, height: 40, borderRadius: "12px", color: "#04172e",
-                  background: "linear-gradient(140deg, #c6f3ff, #6cc4ff)", "& svg": { fontSize: 22 } }}>
+                <Box aria-hidden="true" sx={{ display: "grid", placeItems: "center", flex: "none", width: 40, height: 40, borderRadius: "12px", color: palette.navy[800],
+                  background: `linear-gradient(140deg, ${palette.slate[75]}, ${palette.blue[200]})`, "& svg": { fontSize: 22 } }}>
                   <example.arrives.Icon />
                 </Box>
                 <Box sx={{ minWidth: 0 }}>
-                  <Box sx={{ fontWeight: 650, color: "#f1f8ff", fontSize: "0.95rem" }}>{example.arrives.from}</Box>
-                  <Box sx={{ color: "#8fb3d1", fontSize: "0.82rem", overflowWrap: "anywhere" }}>{example.arrives.meta}</Box>
+                  <Box sx={{ fontWeight: 650, color: palette.grey[25], fontSize: "0.95rem" }}>{example.arrives.from}</Box>
+                  <Box sx={{ color: palette.slate[275], fontSize: "0.82rem", overflowWrap: "anywhere" }}>{example.arrives.meta}</Box>
                 </Box>
               </Box>
-              <Box sx={{ mt: 2, fontWeight: 650, color: "#eaf6ff", fontSize: "1rem" }}>{example.arrives.subject}</Box>
-              <Box component="p" sx={{ m: "6px 0 0", color: "#c3d6ea", lineHeight: 1.55, fontSize: "0.93rem" }}>{example.arrives.body}</Box>
-              {example.arrives.rows && <Box component="dl" sx={{ m: "14px 0 0", display: "grid", gap: 0.75, pt: 1.5, borderTop: "1px dashed rgba(142, 214, 255, 0.3)" }}>
+              <Box sx={{ mt: 2, fontWeight: 650, color: palette.grey[25], fontSize: "1rem" }}>{example.arrives.subject}</Box>
+              <Box component="p" sx={{ m: "6px 0 0", color: palette.slate[125], lineHeight: 1.55, fontSize: "0.93rem" }}>{example.arrives.body}</Box>
+              {example.arrives.rows && <Box component="dl" sx={{ m: "14px 0 0", display: "grid", gap: 0.75, pt: 1.5, borderTop: `1px dashed ${withAlpha(palette.sky[175], 0.3)}` }}>
                 {example.arrives.rows.map(([term, value]) => (
                   <Box key={term} sx={{ display: "flex", justifyContent: "space-between", gap: 2, fontSize: "0.9rem" }}>
-                    <Box component="dt" sx={{ color: "#8fb3d1" }}>{term}</Box>
-                    <Box component="dd" sx={{ m: 0, color: "#f1f8ff", fontWeight: 650, fontFamily: "var(--font-mono), monospace" }}>{value}</Box>
+                    <Box component="dt" sx={{ color: palette.slate[275] }}>{term}</Box>
+                    <Box component="dd" sx={{ m: 0, color: palette.grey[25], fontWeight: 650, fontFamily: "var(--font-mono), monospace" }}>{value}</Box>
                   </Box>
                 ))}
               </Box>}
@@ -225,29 +227,29 @@ export default function AgentDemo() {
               {example.steps.map(({ title, detail, Icon, person }, index) => {
                 const done = index < shown;
                 const active = index === shown && !finished;
-                const accent = person ? personTone : "#6fdcff";
+                const accent = person ? personTone : palette.sky[150];
                 return (
                   <Box component="li" key={`${example.id}-${title}`} sx={{ position: "relative", display: "grid", gridTemplateColumns: "40px minmax(0, 1fr)",
                     columnGap: 1.75, alignItems: "start", py: 0.75, opacity: done || active ? 1 : 0.42,
                     transition: `opacity 0.45s ${neural.ease}`,
                     // The thread between markers fills in as the agent moves on.
                     "&:not(:last-of-type)::after": { content: '""', position: "absolute", left: 19, top: 48, bottom: -6, width: 2, borderRadius: 2,
-                      background: done ? "linear-gradient(180deg, #6fdcff, rgba(111, 220, 255, 0.35))" : "rgba(142, 214, 255, 0.16)",
+                      background: done ? `linear-gradient(180deg, ${palette.sky[150]}, ${withAlpha(palette.sky[150], 0.35)})` : withAlpha(palette.sky[175], 0.16),
                       transition: "background 0.45s ease" } }}>
                     <Box aria-hidden="true" sx={{ position: "relative", display: "grid", placeItems: "center", width: 40, height: 40, borderRadius: "12px",
-                      color: done ? "#04172e" : accent,
-                      background: done ? (person ? `linear-gradient(140deg, #fff0c9, ${personTone})` : "linear-gradient(140deg, #c6f3ff, #6cc4ff)") : "rgba(4, 16, 36, 0.7)",
-                      border: `1px solid ${active || done ? accent : "rgba(142, 214, 255, 0.3)"}`,
-                      boxShadow: active ? `0 0 0 4px ${person ? "rgba(255, 210, 122, 0.16)" : "rgba(111, 220, 255, 0.14)"}, 0 0 22px ${person ? "rgba(255, 190, 80, 0.45)" : "rgba(40, 170, 255, 0.55)"}` : "none",
+                      color: done ? palette.navy[800] : accent,
+                      background: done ? (person ? `linear-gradient(140deg, ${palette.amber[100]}, ${personTone})` : `linear-gradient(140deg, ${palette.slate[75]}, ${palette.blue[200]})`) : withAlpha(palette.navy[850], 0.7),
+                      border: `1px solid ${active || done ? accent : withAlpha(palette.sky[175], 0.3)}`,
+                      boxShadow: active ? `0 0 0 4px ${person ? withAlpha(palette.amber[175], 0.16) : withAlpha(palette.sky[150], 0.14)}, 0 0 22px ${person ? withAlpha(palette.amber[175], 0.45) : withAlpha(palette.blue[300], 0.55)}` : "none",
                       transition: `background 0.4s ease, box-shadow 0.4s ease, color 0.4s ease, border-color 0.4s ease`,
                       "& svg": { fontSize: 21 } }}>
                       {done ? <CheckRounded /> : <Icon />}
                     </Box>
                     <Box sx={{ minWidth: 0, pt: "2px" }}>
                       <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1 }}>
-                        <Box component="span" sx={{ fontWeight: 650, color: "#f1f8ff", fontSize: "0.98rem" }}>{title}</Box>
+                        <Box component="span" sx={{ fontWeight: 650, color: palette.grey[25], fontSize: "0.98rem" }}>{title}</Box>
                         {person && <Box component="span" sx={{ px: 1, py: "1px", borderRadius: 99, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.04em",
-                          color: "#2a1a00", background: personTone }}>A person decides</Box>}
+                          color: palette.amber[775], background: personTone }}>A person decides</Box>}
                         {active && <Box component="span" aria-hidden="true" sx={{ display: "inline-flex", gap: "3px", ml: 0.5,
                           "& i": { width: 5, height: 5, borderRadius: "2px", background: accent, animation: "agent-dot 1s ease-in-out infinite" },
                           "& i:nth-of-type(2)": { animationDelay: "0.15s" }, "& i:nth-of-type(3)": { animationDelay: "0.3s" },
@@ -255,7 +257,7 @@ export default function AgentDemo() {
                           <i /><i /><i />
                         </Box>}
                       </Box>
-                      <Box component="p" sx={{ m: "3px 0 0", color: "#b9cde2", fontSize: "0.9rem", lineHeight: 1.5 }}>{detail}</Box>
+                      <Box component="p" sx={{ m: "3px 0 0", color: palette.slate[125], fontSize: "0.9rem", lineHeight: 1.5 }}>{detail}</Box>
                     </Box>
                   </Box>
                 );
@@ -267,31 +269,25 @@ export default function AgentDemo() {
         {/* What you get */}
         <Box sx={{ mt: { xs: 3, md: 3.5 }, display: "flex", flexDirection: { xs: "column", sm: "row" }, alignItems: { sm: "center" }, gap: 2,
           p: { xs: 2, md: 2.5 }, borderRadius: "16px",
-          border: `1px solid ${finished ? "rgba(111, 220, 255, 0.55)" : "rgba(142, 214, 255, 0.18)"}`,
-          background: finished ? "linear-gradient(110deg, rgba(40, 140, 255, 0.22), rgba(111, 220, 255, 0.08))" : "rgba(4, 16, 36, 0.35)",
+          border: `1px solid ${finished ? withAlpha(palette.sky[150], 0.55) : withAlpha(palette.sky[175], 0.18)}`,
+          background: finished ? `linear-gradient(110deg, ${withAlpha(palette.blue[350], 0.22)}, ${withAlpha(palette.sky[150], 0.08)})` : withAlpha(palette.navy[850], 0.35),
           transition: "background 0.5s ease, border-color 0.5s ease" }}>
           <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1.5, flex: 1, minWidth: 0 }}>
-            <TaskAltRounded aria-hidden="true" sx={{ flex: "none", mt: "2px", fontSize: 26, color: finished ? "#8eeaff" : "#4f6f8f", transition: "color 0.4s ease" }} />
+            <TaskAltRounded aria-hidden="true" sx={{ flex: "none", mt: "2px", fontSize: 26, color: finished ? palette.sky[100] : palette.slate[475], transition: "color 0.4s ease" }} />
             <Box sx={{ minWidth: 0 }}>
-              <Box component="p" sx={{ m: 0, color: "#8fb3d1", fontSize: "0.78rem", fontWeight: 650, letterSpacing: "0.14em", textTransform: "uppercase" }}>
+              <Box component="p" sx={{ m: 0, color: palette.slate[275], fontSize: "0.78rem", fontWeight: 650, letterSpacing: "0.14em", textTransform: "uppercase" }}>
                 {finished ? "What you get" : `Working… step ${Math.min(shown + 1, total)} of ${total}`}
               </Box>
               <Box sx={{ opacity: finished ? 1 : 0.45, transition: "opacity 0.5s ease" }}>
-                <Box component="p" sx={{ m: "4px 0 0", fontWeight: 650, color: "#f1f8ff", fontSize: "1.05rem" }}>{example.result.title}</Box>
-                <Box component="p" sx={{ m: "4px 0 0", color: "#c3d6ea", lineHeight: 1.55, fontSize: "0.93rem" }}>{example.result.text}</Box>
+                <Box component="p" sx={{ m: "4px 0 0", fontWeight: 650, color: palette.grey[25], fontSize: "1.05rem" }}>{example.result.title}</Box>
+                <Box component="p" sx={{ m: "4px 0 0", color: palette.slate[125], lineHeight: 1.55, fontSize: "0.93rem" }}>{example.result.text}</Box>
               </Box>
             </Box>
           </Box>
-          {!reduced && <Box component="button" type="button" onClick={() => show(current)} disabled={!finished}
-            sx={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 0.75, flex: "none", minHeight: 44, px: 2, borderRadius: 99,
-              border: "1px solid rgba(111, 220, 255, 0.45)", background: "transparent", color: "#bff3ff", font: "inherit", fontSize: "0.88rem", fontWeight: 650,
-              cursor: "pointer", transition: "background-color 0.25s ease, opacity 0.25s ease",
-              "&:hover:not(:disabled)": { background: "rgba(40, 140, 255, 0.16)" },
-              "&:disabled": { opacity: 0.4, cursor: "default" },
-              "&:focus-visible": { outline: "2px solid #a8ecff", outlineOffset: 2 },
-              "& svg": { fontSize: 18 } }}>
-            <ReplayRounded aria-hidden="true" /> Watch again
-          </Box>}
+          {!reduced && <ActionButton variant="outlined" tone="dark" startIcon={<ReplayRounded aria-hidden="true" />}
+            onClick={() => show(current)} disabled={!finished} sx={{ flex: "none" }}>
+            Watch again
+          </ActionButton>}
         </Box>
       </Box>
     </Box>

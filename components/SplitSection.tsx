@@ -5,6 +5,7 @@ import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
 import LivingBackground from "./backgrounds/LivingBackground";
 import HeadingMotion from "./motion/HeadingMotion";
 import type { EffectName } from "./backgrounds/effects";
+import { palette, withAlpha } from "@/theme/palette";
 
 type SplitSectionProps = {
   id: string;
@@ -26,9 +27,9 @@ type SplitSectionProps = {
 };
 
 const palettes = {
-  light: { field: "transparent", blade: "#e5f1fc", edge: "transparent", heading: "#102c47", text: "#385470", link: "#135899", linkHover: "#0b3d6e" },
-  dark: { field: "#050f22", blade: "linear-gradient(160deg, #0f3266 0%, #0a1f40 70%)", edge: "linear-gradient(180deg, #8eeaff, #2f7dff 60%, transparent)",
-    heading: "#f3f8ff", text: "#c3d6ea", link: "#9fe8ff", linkHover: "#d8f8ff" },
+  light: { field: "transparent", blade: palette.slate[50], edge: "transparent", heading: palette.navy[725], text: palette.slate[525], link: palette.blue[550], linkHover: palette.navy[650] },
+  dark: { field: palette.navy[850], blade: `linear-gradient(160deg, ${palette.navy[675]} 0%, ${palette.navy[775]} 70%)`, edge: `linear-gradient(180deg, ${palette.sky[100]}, ${palette.blue[350]} 60%, transparent)`,
+    heading: palette.grey[25], text: palette.slate[125], link: palette.sky[100], linkHover: palette.slate[50] },
 };
 
 // The blade's slanted edge echoes the BlueTrendy mark. It runs to the left edge of the page.
@@ -43,7 +44,7 @@ export default function SplitSection({ id, title, text, link, tone = "light", bl
   const colors = palettes[tone];
   return (
     <Box component="section" aria-labelledby={id} sx={{ position: "relative", overflow: "clip", isolation: "isolate",
-      background: background ?? (tone === "dark" ? "radial-gradient(ellipse at 90% 40%, rgba(13, 64, 140, 0.5), transparent 55%), linear-gradient(180deg, #091b2d 0%, #0a2340 50%, #091b2d 100%)" : colors.field),
+      background: background ?? (tone === "dark" ? `radial-gradient(ellipse at 90% 40%, ${withAlpha(palette.navy[600], 0.5)}, transparent 55%), linear-gradient(180deg, ${palette.navy[800]} 0%, ${palette.navy[750]} 50%, ${palette.navy[800]} 100%)` : colors.field),
       color: colors.heading, containerType: "inline-size" }}>
       {effect && <LivingBackground effect={effect} seed={seed} light={tone === "light"} />}
       <Box sx={{ position: "relative", zIndex: 1, width: "min(100% - 48px, 1200px)", mx: "auto", display: "grid",
@@ -52,11 +53,11 @@ export default function SplitSection({ id, title, text, link, tone = "light", bl
           justifyContent: pinned ? "flex-start" : "center", py: { xs: 4, md: "clamp(48px, 6vw, 88px)" } }}>
           <Box aria-hidden="true" sx={{ position: "absolute", zIndex: -1, background: colors.blade,
             inset: { xs: "0 calc((100% - 100cqw) / 2)", md: "0 -48px 0 -100vw" }, clipPath: { md: slant },
-            boxShadow: tone === "dark" ? "inset 0 1px 0 rgba(150, 215, 255, 0.2)" : "none" }} />
+            boxShadow: tone === "dark" ? `inset 0 1px 0 ${withAlpha(palette.sky[175], 0.2)}` : "none" }} />
           {tone === "dark" && <Box aria-hidden="true" sx={{ display: { xs: "none", md: "block" }, position: "absolute", zIndex: -1,
             inset: "0 -50px 0 -100vw", background: colors.edge, opacity: 0.85,
             clipPath: "polygon(calc(100% - 2px) 0, 100% 0, calc(100% - 52px) 100%, calc(100% - 54px) 100%)",
-            filter: "drop-shadow(0 0 8px #2fa8ff)" }} />}
+            filter: `drop-shadow(0 0 8px ${palette.blue[300]})` }} />}
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start", width: "100%",
             position: pinned ? { md: "sticky" } : undefined, top: pinned ? { md: 110 } : undefined }}>
           <HeadingMotion id={id} text={title} tone={tone} sx={{ m: 0, fontWeight: 650, letterSpacing: "-0.06em",

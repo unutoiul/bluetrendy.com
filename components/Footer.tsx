@@ -12,19 +12,20 @@ import CookieSettingsButton from "./analytics/CookieSettingsButton";
 import { consentRequired } from "@/lib/analyticsConfig";
 import { brand } from "@/theme/theme";
 import { linkedIn } from "@/lib/seo";
+import { palette } from "@/theme/palette";
 
 const email = "contact@bluetrendy.com";
-const rule = "1px solid #284763";
+const rule = `1px solid ${palette.navy[650]}`;
 const contactLink = {
   display: "inline-flex", alignItems: "center", gap: 1, minHeight: 44,
-  color: "secondary.light", fontWeight: 600, fontSize: 15, textDecoration: "none", "&:hover": { color: "#fff" },
+  color: "secondary.light", fontWeight: 600, fontSize: 15, textDecoration: "none", "&:hover": { color: palette.white },
 } as const;
 
 function LinkColumn({ title, links }: { title: string; links: { href: string; label: string }[] }) {
   const id = `footer-${title.toLowerCase()}`;
   return (
     <Box component="nav" aria-labelledby={id}>
-      <Typography component="h2" id={id} sx={{ m: 0, mb: { xs: 0.5, md: 1.25 }, fontSize: 14, fontWeight: 650, color: "#8fb0cc" }}>
+      <Typography component="h2" id={id} sx={{ m: 0, mb: { xs: 0.5, md: 1.25 }, fontSize: 14, fontWeight: 650, color: palette.slate[275] }}>
         {title}
       </Typography>
       <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0 }}>
@@ -35,7 +36,7 @@ function LinkColumn({ title, links }: { title: string; links: { href: string; la
                 display: "inline-flex", alignItems: "center",
                 // Full-height touch targets on phones; a tighter list on desktop.
                 minHeight: { xs: 44, md: 34 }, fontSize: { xs: 16, md: 15 },
-                color: "#dbe8f4", "&:hover": { color: "#fff" },
+                color: palette.slate[100], "&:hover": { color: palette.white },
               }}>
               {link.label}
             </LinkTypography>
@@ -49,7 +50,7 @@ function LinkColumn({ title, links }: { title: string; links: { href: string; la
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <Box component="footer" sx={{ bgcolor: brand.navyDark, color: "#fff" }}>
+    <Box component="footer" sx={{ bgcolor: brand.navyDark, color: palette.white }}>
       <Container sx={{ pt: { xs: 6, md: 8 }, pb: { xs: "calc(24px + env(safe-area-inset-bottom))", md: 4 } }}>
         <Box sx={{
           display: "grid", gap: { xs: 5, md: 6 },
@@ -57,7 +58,7 @@ export default function Footer() {
         }}>
           <div>
             <Box sx={{ zoom: { xs: 0.8, md: 1 } }}><Logo inverse height={45} /></Box>
-            <Typography variant="body2" sx={{ mt: 2, maxWidth: 340, color: "#c5d8e8", fontSize: { xs: 15, md: 14 }, lineHeight: 1.6 }}>
+            <Typography variant="body2" sx={{ mt: 2, maxWidth: 340, color: palette.slate[125], fontSize: { xs: 15, md: 14 }, lineHeight: 1.6 }}>
               A senior software and AI team building web platforms, mobile apps and AI workflows for businesses and public institutions.
             </Typography>
             <Box sx={{ display: "flex", flexWrap: "wrap", columnGap: 3, mt: 1.5 }}>
@@ -87,22 +88,22 @@ export default function Footer() {
           <PaymentMarks />
           <Box sx={{
             display: "flex", flexDirection: { xs: "column", md: "row" }, alignItems: { md: "center" },
-            gap: { xs: 1.5, md: 3 }, mt: 2.5, color: "#a9c0d4", fontSize: 14,
+            gap: { xs: 1.5, md: 3 }, mt: 2.5, color: palette.slate[200], fontSize: 14,
           }}>
             <Box component="nav" aria-label="Legal" sx={{ display: "flex", flexWrap: "wrap", columnGap: 3, order: { md: 2 } }}>
               {footerLinks.legal.map(link => (
                 <LinkTypography key={link.href} href={link.href} className="link-draw"
-                  sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14, color: "#cfe0ef", "&:hover": { color: "#fff" } }}>
+                  sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14, color: palette.slate[125], "&:hover": { color: palette.white } }}>
                   {link.label}
                 </LinkTypography>
               ))}
               {consentRequired && <CookieSettingsButton className="link-draw"
-                sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14, color: "#cfe0ef", "&:hover": { color: "#fff" } }} />}
+                sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14, color: palette.slate[125], "&:hover": { color: palette.white } }} />}
             </Box>
             <Box component="p" sx={{ m: 0, order: { md: 1 } }}>© {year} BlueTrendy Intelligence</Box>
             <Box component="p" sx={{ m: 0, order: 3, ml: { md: "auto" } }}>
               Designed with{" "}
-              <FavoriteRounded titleAccess="love" sx={{ fontSize: "1.05em", color: "#ff6b8a", verticalAlign: "-0.15em" }} />
+              <FavoriteRounded titleAccess="love" sx={{ fontSize: "1.05em", color: palette.red[275], verticalAlign: "-0.15em" }} />
               {" "}in London, UK
             </Box>
           </Box>

@@ -13,6 +13,7 @@ import { services } from "@/data/services";
 import PointerGlow from "@/components/motion/PointerGlow";
 import ChapterIntro from "./ChapterIntro";
 import { neural } from "./neuralStyle";
+import { palette, withAlpha } from "@/theme/palette";
 
 const icons = {
   cube: CodeRounded,
@@ -33,11 +34,11 @@ const card = {
   "&:hover, &:focus-visible": { ...neural.glassCard["&:hover, &:focus-visible, &:focus-within"], transform: "translateY(-6px)" },
   "&:active": { transform: "translateY(-2px) scale(0.985)" },
   "&:hover .service-orb, &:focus-visible .service-orb": {
-    transform: "scale(1.08) rotate(-4deg)", color: "#d6f8ff",
-    boxShadow: "0 0 0 1px rgba(150, 235, 255, 0.5), 0 0 28px rgba(30, 170, 255, 0.65), inset 0 0 14px rgba(120, 210, 255, 0.4)",
+    transform: "scale(1.08) rotate(-4deg)", color: palette.slate[50],
+    boxShadow: `0 0 0 1px ${withAlpha(palette.sky[100], 0.5)}, 0 0 28px ${withAlpha(palette.blue[300], 0.65)}, inset 0 0 14px ${withAlpha(palette.sky[175], 0.4)}`,
   },
-  "&:hover .service-arrow, &:focus-visible .service-arrow": { transform: "translate(3px, -3px)", color: "#c9f6ff" },
-  "&:focus-visible": { outline: "2px solid #a8ecff", outlineOffset: 3 },
+  "&:hover .service-arrow, &:focus-visible .service-arrow": { transform: "translate(3px, -3px)", color: palette.cyan[75] },
+  "&:focus-visible": { outline: `2px solid ${palette.sky[100]}`, outlineOffset: 3 },
 };
 
 export default function ServicesChapter() {
@@ -50,15 +51,15 @@ export default function ServicesChapter() {
       {featuredServices.map(service => {
         const Icon = icons[service.preview.icon];
         return <Box component={Link} key={service.slug} href={"/services#" + service.slug} data-panel sx={card}>
-          <PointerGlow color="rgba(70, 175, 255, 0.2)" size={340} />
+          <PointerGlow color={withAlpha(palette.blue[300], 0.2)} size={340} />
           <Box sx={{ position: "relative", zIndex: 1, display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
             <Box className="service-orb" sx={neural.iconOrb}><Icon aria-hidden="true" /></Box>
             <ArrowOutwardRounded className="service-arrow" aria-hidden="true"
-              sx={{ fontSize: 20, color: "#7fb4d8", transition: `transform 0.35s ${neural.ease}, color 0.3s ease` }} />
+              sx={{ fontSize: 20, color: palette.slate[275], transition: `transform 0.35s ${neural.ease}, color 0.3s ease` }} />
           </Box>
           <Box component="h3" sx={{ position: "relative", zIndex: 1, m: "22px 0 0", fontSize: { xs: "1.2rem", md: "1.32rem" },
             fontWeight: 650, letterSpacing: "-0.03em", lineHeight: 1.25 }}>{service.name}</Box>
-          <Box component="p" sx={{ position: "relative", zIndex: 1, m: "8px 0 0", color: "#b9cde2", lineHeight: 1.6, fontSize: "0.98rem" }}>
+          <Box component="p" sx={{ position: "relative", zIndex: 1, m: "8px 0 0", color: palette.slate[125], lineHeight: 1.6, fontSize: "0.98rem" }}>
             {service.shortDescription}
           </Box>
         </Box>;

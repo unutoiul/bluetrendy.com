@@ -1,5 +1,6 @@
 // Living backgrounds: each effect draws one frame of a full-bleed scene in light.
 // Effects keep their own state in a closure and react to the pointer and to clicks.
+import { palette, withAlpha } from "@/theme/palette";
 
 export type Frame = {
   context: CanvasRenderingContext2D;
@@ -22,23 +23,23 @@ export type Effect = (random: () => number) => (frame: Frame) => void;
 const TAU = Math.PI * 2;
 
 function blue(frame: Frame, alpha: number) {
-  return frame.light ? `rgba(22, 95, 204, ${alpha})` : `rgba(70, 160, 255, ${alpha})`;
+  return withAlpha(frame.light ? palette.blue[500] : palette.blue[300], alpha);
 }
 function ice(frame: Frame, alpha: number) {
-  return frame.light ? `rgba(30, 120, 225, ${alpha})` : `rgba(190, 240, 255, ${alpha})`;
+  return withAlpha(frame.light ? palette.blue[425] : palette.slate[75], alpha);
 }
 
 /** A soft halo with a bright core. */
 function glow(frame: Frame, x: number, y: number, radius: number, alpha: number) {
   const { context } = frame;
   const halo = context.createRadialGradient(x, y, 0, x, y, radius * 4.5);
-  halo.addColorStop(0, frame.light ? `rgba(40, 120, 230, ${0.24 * alpha})` : `rgba(120, 215, 255, ${0.38 * alpha})`);
-  halo.addColorStop(1, "rgba(30, 120, 255, 0)");
+  halo.addColorStop(0, frame.light ? withAlpha(palette.blue[425], 0.24 * alpha) : withAlpha(palette.sky[150], 0.38 * alpha));
+  halo.addColorStop(1, withAlpha(palette.blue[450], 0));
   context.fillStyle = halo;
   context.beginPath();
   context.arc(x, y, radius * 4.5, 0, TAU);
   context.fill();
-  context.fillStyle = frame.light ? `rgba(22, 95, 204, ${0.8 * alpha})` : `rgba(225, 248, 255, ${0.85 * alpha})`;
+  context.fillStyle = frame.light ? withAlpha(palette.blue[500], 0.8 * alpha) : withAlpha(palette.slate[50], 0.85 * alpha);
   context.beginPath();
   context.arc(x, y, radius, 0, TAU);
   context.fill();
@@ -218,10 +219,10 @@ export const ribbons: Effect = random => {
         bottom.push({ x, y: y + thickness / 2 });
       }
       const fill = context.createLinearGradient(0, 0, width, 0);
-      fill.addColorStop(0, "rgba(30, 110, 255, 0)");
-      fill.addColorStop(0.3, frame.light ? "rgba(22, 95, 204, 0.05)" : "rgba(30, 110, 255, 0.08)");
-      fill.addColorStop(0.65, frame.light ? "rgba(60, 150, 240, 0.06)" : "rgba(120, 220, 255, 0.12)");
-      fill.addColorStop(1, "rgba(30, 110, 255, 0)");
+      fill.addColorStop(0, withAlpha(palette.blue[450], 0));
+      fill.addColorStop(0.3, frame.light ? withAlpha(palette.blue[500], 0.05) : withAlpha(palette.blue[450], 0.08));
+      fill.addColorStop(0.65, frame.light ? withAlpha(palette.blue[350], 0.06) : withAlpha(palette.sky[150], 0.12));
+      fill.addColorStop(1, withAlpha(palette.blue[450], 0));
       context.fillStyle = fill;
       context.beginPath();
       top.forEach((point, i) => (i ? context.lineTo(point.x, point.y) : context.moveTo(point.x, point.y)));
@@ -436,8 +437,8 @@ export const globe: Effect = () => {
     const radius = frame.narrow ? Math.min(width * 0.44, height * 0.38) : Math.min(height * 0.56, width * 0.26);
     // A soft glow behind the sphere so it reads as a ball of light.
     const halo = context.createRadialGradient(cx, cy, radius * 0.2, cx, cy, radius * 1.25);
-    halo.addColorStop(0, frame.light ? "rgba(22, 95, 204, 0.05)" : "rgba(40, 120, 255, 0.12)");
-    halo.addColorStop(1, "rgba(40, 120, 255, 0)");
+    halo.addColorStop(0, frame.light ? withAlpha(palette.blue[500], 0.05) : withAlpha(palette.blue[450], 0.12));
+    halo.addColorStop(1, withAlpha(palette.blue[450], 0));
     context.fillStyle = halo;
     context.fillRect(cx - radius * 1.3, cy - radius * 1.3, radius * 2.6, radius * 2.6);
     const step = Math.min(frame.delta, 0.05);
@@ -526,9 +527,9 @@ export const horizonGrid: Effect = () => {
     const horizon = height * (0.46 + tiltY * 0.08);
     const vanish = width * (0.34 + tiltX * 0.22);
     const band = context.createLinearGradient(0, horizon - 60, 0, horizon + 40);
-    band.addColorStop(0, "rgba(40, 140, 255, 0)");
-    band.addColorStop(0.6, frame.light ? "rgba(22, 95, 204, 0.12)" : "rgba(60, 170, 255, 0.3)");
-    band.addColorStop(1, "rgba(40, 140, 255, 0)");
+    band.addColorStop(0, withAlpha(palette.blue[350], 0));
+    band.addColorStop(0.6, frame.light ? withAlpha(palette.blue[500], 0.12) : withAlpha(palette.blue[300], 0.3));
+    band.addColorStop(1, withAlpha(palette.blue[350], 0));
     context.fillStyle = band;
     context.fillRect(0, horizon - 60, width, 100);
     glow(frame, vanish, horizon, 5, 0.9);

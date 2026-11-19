@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import LockRounded from "@mui/icons-material/LockRounded";
+import { palette } from "@/theme/palette";
 
 // Brand paths from Simple Icons 16.36.0 (CC0), https://simpleicons.org.
 // Checkout runs on Stripe; these are the card brands it takes by default.
@@ -16,11 +17,11 @@ const markSx = { display: "block", width: 22, height: 22, fill: "currentColor" }
 
 export default function PaymentMarks() {
   return (
-    <Stack direction="row" spacing={1.5} useFlexGap sx={{ alignItems: "center", flexWrap: "wrap", color: "#bdd2e3" }}>
+    <Stack direction="row" spacing={1.5} useFlexGap sx={{ alignItems: "center", flexWrap: "wrap", color: palette.slate[125] }}>
       <Box component="ul" aria-label="Cards we accept" sx={{ display: "flex", gap: 0.75, listStyle: "none", m: 0, p: 0 }}>
         {cards.map(card => (
           <Box component="li" key={card.name} sx={{ display: "grid", placeItems: "center", width: 46, height: 32,
-            border: "1px solid #355069", borderRadius: "6px", color: "#dbe8f3" }}>
+            border: `1px solid ${palette.navy[625]}`, borderRadius: "6px", color: palette.slate[100] }}>
             <Box component="svg" viewBox="0 0 24 24" role="img" aria-label={card.name} sx={{ ...markSx, width: 26, height: 26 }}><path d={card.d} /></Box>
           </Box>
         ))}

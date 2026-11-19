@@ -5,7 +5,7 @@ import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import ActionButton from "./ActionButton";
 import Alert from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -211,10 +211,9 @@ export default function LeadForm({ projectTypes, initialProjectType }: { project
         </Alert>
       ) : null}
 
-      <Button
+      <ActionButton
         type="submit"
         variant="contained"
-        color="primary"
         size="large"
         disabled={status === "loading"}
         startIcon={status === "loading" ? <CircularProgress size={16} color="inherit" /> : null}
@@ -222,7 +221,7 @@ export default function LeadForm({ projectTypes, initialProjectType }: { project
         sx={{ alignSelf: "flex-start", "&:hover .MuiButton-endIcon": { transform: "translate(4px, -3px) rotate(-14deg)" } }}
       >
         {status === "loading" ? "Sending…" : "Send project brief"}
-      </Button>
+      </ActionButton>
       <Typography variant="caption" color="text.secondary">
         We&apos;ll use your details to respond to your enquiry and send a confirmation email.{" "}
         <Box component={Link} href="/legal/privacy" sx={{ textDecoration: "underline" }}>Privacy policy</Box>

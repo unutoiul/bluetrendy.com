@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { palette, withAlpha } from "@/theme/palette";
 
 type PointerGlowProps = {
   color?: string;
@@ -11,7 +12,7 @@ type PointerGlowProps = {
  * A soft light that follows the mouse across its parent. The parent needs
  * `position: relative` (or another positioning context) and `overflow: hidden`.
  */
-export default function PointerGlow({ color = "rgba(22,95,204,0.12)", size = 420 }: PointerGlowProps) {
+export default function PointerGlow({ color = withAlpha(palette.blue[500], 0.12), size = 420 }: PointerGlowProps) {
   const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {

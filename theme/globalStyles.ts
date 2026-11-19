@@ -1,10 +1,11 @@
 import type { CSSObject } from "@mui/material/styles";
+import { palette } from "./palette";
 
 // Site-wide styles, rendered once by SiteStyles through MUI GlobalStyles.
 
 export const siteGlobalStyles: CSSObject[] = [
   { "html, body": { maxWidth: "100vw", overflowX: "clip" } },
-  { body: { minHeight: "100vh", display: "flex", flexDirection: "column", background: "linear-gradient(180deg, #f6f9fd 0%, #edf4fb 55%, #e6f0fa 100%)" } },
+  { body: { minHeight: "100vh", display: "flex", flexDirection: "column", background: `linear-gradient(180deg, ${palette.grey[25]} 0%, ${palette.grey[25]} 55%, ${palette.slate[50]} 100%)` } },
   { main: { flex: "1", scrollMarginTop: "80px" } },
   { ".skip-to-content": {
       position: "fixed",
@@ -13,8 +14,8 @@ export const siteGlobalStyles: CSSObject[] = [
       left: "8px",
       padding: "10px 16px",
       borderRadius: "6px",
-      color: "#fff",
-      background: "#0c2b45",
+      color: palette.white,
+      background: palette.navy[725],
       transform: "translateY(-170%)",
     } },
   { ".skip-to-content:focus": { transform: "none" } },
@@ -58,7 +59,7 @@ export const siteGlobalStyles: CSSObject[] = [
   { ".click-spark svg": { position: "absolute", left: "-32px", top: "-32px", width: "64px", height: "64px", overflow: "visible" } },
   { ".click-spark circle": {
       fill: "none",
-      stroke: "#2f7dff",
+      stroke: palette.blue[350],
       strokeWidth: "2",
       vectorEffect: "non-scaling-stroke",
       transformBox: "fill-box",
@@ -66,9 +67,9 @@ export const siteGlobalStyles: CSSObject[] = [
       animation: "spark-ring 0.55s var(--ease-out) forwards",
     } },
   // Alternate cobalt and ice rays so the spark reads on light and dark sections.
-  { ".click-spark g:nth-of-type(odd) line": { stroke: "#165fcc" } },
+  { ".click-spark g:nth-of-type(odd) line": { stroke: palette.blue[500] } },
   { ".click-spark line": {
-      stroke: "#8bd6ff",
+      stroke: palette.sky[175],
       strokeWidth: "2.4",
       strokeLinecap: "round",
       animation: "spark-ray 0.5s var(--ease-out) forwards",
@@ -140,8 +141,8 @@ export const siteGlobalStyles: CSSObject[] = [
       width: "3px",
       marginLeft: "-3px",
       borderRadius: "3px",
-      background: "#e6fbff",
-      boxShadow: "0 0 10px 2px #5fd8ff, 0 0 28px 6px #1f8bff",
+      background: palette.cyan[25],
+      boxShadow: `0 0 10px 2px ${palette.sky[150]}, 0 0 28px 6px ${palette.blue[350]}`,
       opacity: "0",
       pointerEvents: "none",
       animation: "accent-beam 0.95s cubic-bezier(0.65, 0, 0.35, 1) both",

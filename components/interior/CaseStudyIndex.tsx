@@ -13,6 +13,7 @@ import type { EffectName } from "@/components/backgrounds/effects";
 import Magnetic from "@/components/motion/Magnetic";
 import { caseStudies, type CaseStudy } from "@/data/caseStudies";
 import { clientLogos } from "@/data/clients";
+import { palette, withAlpha } from "@/theme/palette";
 import styles from "./Work.styles";
 
 // Matches the lens height and the tether column in Work.styles.
@@ -73,7 +74,7 @@ export default function CaseStudyIndex() {
   const lift = useTransform(speed, value => Math.min(1, Math.abs(value) / 1600));
   const scale = useTransform(lift, value => 1 + value * 0.035);
   const boxShadow = useTransform(lift, value =>
-    `0 ${34 + value * 40}px ${70 + value * 60}px -38px rgba(9, 27, 45, ${0.82 + value * 0.14})`);
+    `0 ${34 + value * 40}px ${70 + value * 60}px -38px ${withAlpha(palette.navy[800], 0.82 + value * 0.14)}`);
   const tetherEnd = useTransform(() => clamp(anchorY.get(), lensY.get() + 56, lensY.get() + lensHeight - 56));
   const tether = useTransform(() => {
     const start = anchorY.get(), end = tetherEnd.get();

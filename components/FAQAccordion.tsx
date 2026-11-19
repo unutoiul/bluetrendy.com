@@ -2,7 +2,8 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";import { palette } from "@/theme/palette";
+
 
 type FAQItem = { question: string; answer: string };
 
@@ -16,7 +17,7 @@ export default function FAQAccordion({ items }: { items: FAQItem[] }) {
           elevation={0}
           sx={{
             border: 0,
-            bgcolor: "#f2f6f9",
+            bgcolor: palette.grey[25],
             borderRadius: "8px !important",
             mb: 1.5,
             "&:before": { display: "none" },

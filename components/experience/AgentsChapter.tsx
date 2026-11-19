@@ -8,6 +8,7 @@ import ManageSearchOutlined from "@mui/icons-material/ManageSearchOutlined";
 import SplitSection from "@/components/SplitSection";
 import AgentDemo from "./AgentDemo";
 import { neural } from "./neuralStyle";
+import { palette, withAlpha } from "@/theme/palette";
 
 // The quickest way to explain an agent: put it next to the chatbot everyone already knows.
 const comparison = [
@@ -38,18 +39,18 @@ export default function AgentsChapter() {
           const agent = index === 1;
           return (
             <Box key={who} sx={{ display: "flex", gap: 1.75, alignItems: "flex-start", p: 2.25, borderRadius: "16px",
-              border: `1px solid ${agent ? "rgba(111, 220, 255, 0.5)" : "rgba(142, 214, 255, 0.2)"}`,
-              background: agent ? "linear-gradient(140deg, rgba(40, 140, 255, 0.22), rgba(8, 30, 62, 0.6))" : "rgba(4, 16, 36, 0.45)",
-              boxShadow: agent ? "0 0 26px -6px rgba(40, 160, 255, 0.45)" : "none" }}>
+              border: `1px solid ${agent ? withAlpha(palette.sky[150], 0.5) : withAlpha(palette.sky[175], 0.2)}`,
+              background: agent ? `linear-gradient(140deg, ${withAlpha(palette.blue[350], 0.22)}, ${withAlpha(palette.navy[775], 0.6)})` : withAlpha(palette.navy[850], 0.45),
+              boxShadow: agent ? `0 0 26px -6px ${withAlpha(palette.blue[300], 0.45)}` : "none" }}>
               <Box aria-hidden="true" sx={{ ...neural.iconOrb, width: 42, height: 42, borderRadius: "12px", "& svg": { fontSize: 22 },
-                ...(agent ? {} : { color: "#8fb3d1", boxShadow: "none", border: "1px solid rgba(142, 214, 255, 0.25)", background: "rgba(8, 30, 62, 0.8)" }) }}>
+                ...(agent ? {} : { color: palette.slate[275], boxShadow: "none", border: `1px solid ${withAlpha(palette.sky[175], 0.25)}`, background: withAlpha(palette.navy[775], 0.8) }) }}>
                 <Icon />
               </Box>
               <Box sx={{ minWidth: 0 }}>
                 <Box component="h3" sx={{ m: 0, fontSize: "0.82rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase",
-                  color: agent ? "#8eeaff" : "#8fb3d1" }}>{who}</Box>
-                <Box component="p" sx={{ m: "6px 0 0", color: agent ? "#f1f8ff" : "#c3d6ea", fontSize: "1rem", lineHeight: 1.45, fontWeight: agent ? 600 : 500 }}>{says}</Box>
-                <Box component="p" sx={{ m: "6px 0 0", color: "#8fb3d1", fontSize: "0.88rem" }}>{note}</Box>
+                  color: agent ? palette.sky[100] : palette.slate[275] }}>{who}</Box>
+                <Box component="p" sx={{ m: "6px 0 0", color: agent ? palette.grey[25] : palette.slate[125], fontSize: "1rem", lineHeight: 1.45, fontWeight: agent ? 600 : 500 }}>{says}</Box>
+                <Box component="p" sx={{ m: "6px 0 0", color: palette.slate[275], fontSize: "0.88rem" }}>{note}</Box>
               </Box>
             </Box>
           );
@@ -58,7 +59,7 @@ export default function AgentsChapter() {
 
       <AgentDemo />
 
-      <Box component="h3" sx={{ m: { xs: "36px 0 16px", md: "44px 0 18px" }, fontSize: "1.25rem", fontWeight: 650, letterSpacing: "-0.02em", color: "#f1f8ff" }}>
+      <Box component="h3" sx={{ m: { xs: "36px 0 16px", md: "44px 0 18px" }, fontSize: "1.25rem", fontWeight: 650, letterSpacing: "-0.02em", color: palette.grey[25] }}>
         What an agent can do for your business
       </Box>
       <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))" }, gap: 2 }}>
@@ -66,8 +67,8 @@ export default function AgentsChapter() {
           <Box key={title} data-panel sx={{ ...neural.glassCard, display: "flex", gap: 2, alignItems: "flex-start", p: 2.5 }}>
             <Box sx={{ ...neural.iconOrb, position: "relative", zIndex: 1, width: 44, height: 44, "& svg": { fontSize: 22 } }}><Icon aria-hidden="true" /></Box>
             <Box sx={{ position: "relative", zIndex: 1 }}>
-              <Box component="h4" sx={{ m: 0, fontSize: "1.08rem", fontWeight: 650, letterSpacing: "-0.02em", color: "#f1f8ff" }}>{title}</Box>
-              <Box component="p" sx={{ m: "6px 0 0", color: "#b9cde2", lineHeight: 1.55, fontSize: ".95rem" }}>{text}</Box>
+              <Box component="h4" sx={{ m: 0, fontSize: "1.08rem", fontWeight: 650, letterSpacing: "-0.02em", color: palette.grey[25] }}>{title}</Box>
+              <Box component="p" sx={{ m: "6px 0 0", color: palette.slate[125], lineHeight: 1.55, fontSize: ".95rem" }}>{text}</Box>
             </Box>
           </Box>
         ))}

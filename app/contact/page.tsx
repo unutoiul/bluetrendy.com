@@ -15,6 +15,7 @@ import { services } from "@/data/services";
 import styles from "@/components/interior/Editorial.styles";
 import JsonLd from "@/components/JsonLd";
 import { breadcrumbs, pageMetadata } from "@/lib/seo";
+import { palette } from "@/theme/palette";
 
 export const metadata: Metadata = pageMetadata({
   title: "Contact Us",
@@ -35,7 +36,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
     <JsonLd data={breadcrumbs([{ name: "Contact", path: "/contact" }])} />
     <PageHero eyebrow="Contact" title="Tell us what you’re building"
       subtitle="Send a project brief and our team will reply within one business day." />
-    <Box sx={{ position: "relative", isolation: "isolate", overflow: "clip", bgcolor: "#f3f7fa" }}>
+    <Box sx={{ position: "relative", isolation: "isolate", overflow: "clip", bgcolor: palette.grey[25] }}>
       {/* The same lattice of dots on springs as the booking page, giving way under the mouse. */}
       <LivingBackground effect="springGrid" light quiet="none" seed={113} />
       <Container sx={{ position: "relative", zIndex: 1, py: { xs: 4, md: 7 } }}>

@@ -1,19 +1,20 @@
 "use client";
 
 import { useEffect } from "react";
-import Cal, { getCalApi } from "@calcom/embed-react";
+import Cal, { getCalApi } from "@calcom/embed-react";import { palette } from "@/theme/palette";
+
 
 const namespace = "bluetrendy-discovery";
 const colors = {
-  "cal-brand": "#2879DF",
-  "cal-brand-emphasis": "#1F63B8",
-  "cal-brand-text": "#FFFFFF",
-  "cal-text": "#0B1F2B",
-  "cal-text-emphasis": "#0B1F2B",
-  "cal-text-subtle": "#4B6577",
-  "cal-bg": "#FFFFFF",
-  "cal-bg-subtle": "#F5F8FA",
-  "cal-border": "#DCE5EB",
+  "cal-brand": palette.blue[425],
+  "cal-brand-emphasis": palette.blue[475],
+  "cal-brand-text": palette.white,
+  "cal-text": palette.navy[800],
+  "cal-text-emphasis": palette.navy[800],
+  "cal-text-subtle": palette.slate[525],
+  "cal-bg": palette.white,
+  "cal-bg-subtle": palette.grey[25],
+  "cal-border": palette.slate[150],
   "cal-border-booker-width": "0px",
   "radius": "10px",
 };

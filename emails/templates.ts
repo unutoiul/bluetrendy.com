@@ -4,20 +4,21 @@
  * Preview, upload and test them with `npm run emails -- preview|upload|test`.
  */
 import { emailTemplates, type EmailTemplateAlias } from "../lib/emailTemplates";
+import { palette } from "@/theme/palette";
 
 const site = "https://www.bluetrendy.com";
 const font = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
 const color = {
-  page: "#eef3f9",
-  header: "#081e35",
-  accent: "#2f86f0",
-  ink: "#0c2b45",
-  body: "#3d566e",
-  muted: "#6b8196",
-  line: "#dde7f1",
-  panel: "#f3f7fc",
-  button: "#2879df",
-  link: "#1f6fd6",
+  page: palette.grey[25],
+  header: palette.navy[775],
+  accent: palette.blue[350],
+  ink: palette.navy[725],
+  body: palette.slate[525],
+  muted: palette.slate[375],
+  line: palette.slate[100],
+  panel: palette.grey[25],
+  button: palette.blue[425],
+  link: palette.blue[425],
 };
 
 // ------------------------------------------------------------ building blocks
@@ -60,7 +61,7 @@ const quote = (label: string, html: string) => `
 const button = (href: string, label: string) => `
   <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:8px 0 20px;">
     <tr><td bgcolor="${color.button}" style="border-radius:999px;background:${color.button};">
-      <a href="${href}" style="display:inline-block;padding:14px 28px;font-family:${font};font-size:15px;line-height:20px;font-weight:700;color:#ffffff;text-decoration:none;border-radius:999px;">${label}&nbsp;&rarr;</a>
+      <a href="${href}" style="display:inline-block;padding:14px 28px;font-family:${font};font-size:15px;line-height:20px;font-weight:700;color:${palette.white};text-decoration:none;border-radius:999px;">${label}&nbsp;&rarr;</a>
     </td></tr>
   </table>`;
 
@@ -108,13 +109,13 @@ function layout({ title, preheader, body, footer }: { title: string; preheader: 
   <tr><td align="center" style="padding:32px 12px;">
     <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;">
       <tr><td class="px" bgcolor="${color.header}" style="padding:28px 40px;background:${color.header};border-radius:16px 16px 0 0;">
-        <a href="${site}" style="text-decoration:none;"><img src="${site}/brand/logo-inverse.png" width="184" height="45" alt="BlueTrendy Intelligence" style="display:block;width:184px;height:auto;border:0;outline:none;color:#ffffff;font-family:${font};font-size:20px;font-weight:700;" /></a>
+        <a href="${site}" style="text-decoration:none;"><img src="${site}/brand/logo-inverse.png" width="184" height="45" alt="BlueTrendy Intelligence" style="display:block;width:184px;height:auto;border:0;outline:none;color:${palette.white};font-family:${font};font-size:20px;font-weight:700;" /></a>
       </td></tr>
       <tr><td height="4" bgcolor="${color.accent}" style="height:4px;background:${color.accent};font-size:0;line-height:0;">&nbsp;</td></tr>
-      <tr><td class="px" bgcolor="#ffffff" style="padding:40px 40px 36px;background:#ffffff;">
+      <tr><td class="px" bgcolor="${palette.white}" style="padding:40px 40px 36px;background:${palette.white};">
         ${body}
       </td></tr>
-      <tr><td class="px" bgcolor="${color.panel}" style="padding:22px 40px;background:${color.panel};border-radius:0 0 16px 16px;font-family:${font};font-size:12px;line-height:19px;color:${color.muted};">
+      <tr><td class="px" bgcolor="${palette.white}" style="padding:22px 40px;background:${palette.white};border-top:1px solid ${color.line};border-radius:0 0 16px 16px;font-family:${font};font-size:12px;line-height:19px;color:${color.muted};">
         ${footer}
       </td></tr>
     </table>
@@ -179,7 +180,7 @@ export const templates: TemplateDefinition[] = [
         paragraph("Prefer to talk it through now? Pick a time for a free call."),
         button("{{{BOOKING_URL}}}", "Book a free call"),
         paragraph("30 minutes &middot; Free &middot; With a senior engineer", 13),
-        signoff("Something to add? Just reply to this email.<br /><strong style=\"color:#0c2b45;\">The BlueTrendy team</strong>"),
+        signoff(`Something to add? Just reply to this email.<br /><strong style=\"color:${palette.navy[725]};\">The BlueTrendy team</strong>`),
       ].join(""),
       footer: customerFooter("sent us a project enquiry"),
     }),
@@ -232,7 +233,7 @@ export const templates: TemplateDefinition[] = [
           "Invite anyone else who should be part of the decision.",
         ]),
         paragraph(`Need a different time? ${link("{{{BOOKING_MANAGE_URL_HTML}}}", "Reschedule or cancel")} whenever you need to. Your calendar invite comes separately from Cal.com.`, 14),
-        signoff("Talk soon,<br /><strong style=\"color:#0c2b45;\">The BlueTrendy team</strong>"),
+        signoff(`Talk soon,<br /><strong style=\"color:${palette.navy[725]};\">The BlueTrendy team</strong>`),
       ].join(""),
       footer: customerFooter("booked a call with us"),
     }),
@@ -288,7 +289,7 @@ export const templates: TemplateDefinition[] = [
         ]),
         button("{{{KICKOFF_URL_HTML}}}", "Book your kickoff call"),
         paragraph("If you go ahead with the full project within 60 days, the sprint fee is credited against it.", 14),
-        signoff("We're looking forward to it.<br /><strong style=\"color:#0c2b45;\">The BlueTrendy team</strong>"),
+        signoff(`We're looking forward to it.<br /><strong style=\"color:${palette.navy[725]};\">The BlueTrendy team</strong>`),
       ].join(""),
       footer: customerFooter("paid for a discovery sprint"),
     }),

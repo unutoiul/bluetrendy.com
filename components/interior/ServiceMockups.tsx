@@ -28,7 +28,8 @@ import StorageRounded from "@mui/icons-material/StorageRounded";
 import SupportAgentRounded from "@mui/icons-material/SupportAgentRounded";
 import SyncRounded from "@mui/icons-material/SyncRounded";
 import TaskAltRounded from "@mui/icons-material/TaskAltRounded";
-import WarningAmberRounded from "@mui/icons-material/WarningAmberRounded";
+import WarningAmberRounded from "@mui/icons-material/WarningAmberRounded";import { palette } from "@/theme/palette";
+
 
 /*
  * Each service is shown as the thing a client would actually receive: a believable screen
@@ -110,7 +111,7 @@ function Operations() {
               <span className="Mock__legend"><i />This week<i data-muted />Last week</span></div>
             <svg viewBox="0 0 400 100" preserveAspectRatio="none">
               <defs><linearGradient id="mock-ops-fill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor="#2f7de1" stopOpacity=".22" /><stop offset="1" stopColor="#2f7de1" stopOpacity="0" />
+                <stop offset="0" stopColor={palette.blue[425]} stopOpacity=".22" /><stop offset="1" stopColor={palette.blue[425]} stopOpacity="0" />
               </linearGradient></defs>
               {[25, 50, 75].map(y => <line key={y} x1="0" x2="400" y1={y} y2={y} className="Mock__grid" />)}
               <path d={`M0,100 L${line.join(" L")} L400,100 Z`} fill="url(#mock-ops-fill)" className="Mock__area" />
@@ -220,19 +221,19 @@ function Field() {
     <Phone className="Mock__fieldPhone">
       <div className="Mock__map">
         <svg viewBox="0 0 200 230" preserveAspectRatio="xMidYMid slice">
-          <rect width="200" height="230" fill="#ede7dc" />
-          <path d="M-10 170 C40 150 70 190 120 172 S190 140 215 150 L215 200 C170 190 140 222 100 214 S30 200 -10 214 Z" fill="#b9dcf2" />
-          <path d="M120 20 h70 v60 h-60 Z" fill="#cfe5c2" />
-          <g fill="#e2dacb">
+          <rect width="200" height="230" fill={palette.amber[75]} />
+          <path d="M-10 170 C40 150 70 190 120 172 S190 140 215 150 L215 200 C170 190 140 222 100 214 S30 200 -10 214 Z" fill={palette.slate[125]} />
+          <path d="M120 20 h70 v60 h-60 Z" fill={palette.amber[75]} />
+          <g fill={palette.amber[75]}>
             <rect x="14" y="22" width="40" height="30" rx="2" /><rect x="62" y="22" width="44" height="30" rx="2" />
             <rect x="14" y="64" width="40" height="38" rx="2" /><rect x="62" y="64" width="26" height="38" rx="2" />
             <rect x="126" y="96" width="60" height="40" rx="2" /><rect x="14" y="114" width="74" height="26" rx="2" />
           </g>
-          <g stroke="#d6cdbd" strokeWidth="9" fill="none"><path d="M0 58 H200" /><path d="M58 0 V160" /><path d="M110 0 V150 L200 88" /><path d="M0 108 H110" /></g>
-          <g stroke="#fff" strokeWidth="6.5" fill="none"><path d="M0 58 H200" /><path d="M58 0 V160" /><path d="M110 0 V150 L200 88" /><path d="M0 108 H110" /></g>
-          <path d="M58 160 V108 H110 V128" stroke="#2f7de1" strokeWidth="3.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <g stroke={palette.amber[150]} strokeWidth="9" fill="none"><path d="M0 58 H200" /><path d="M58 0 V160" /><path d="M110 0 V150 L200 88" /><path d="M0 108 H110" /></g>
+          <g stroke={palette.white} strokeWidth="6.5" fill="none"><path d="M0 58 H200" /><path d="M58 0 V160" /><path d="M110 0 V150 L200 88" /><path d="M0 108 H110" /></g>
+          <path d="M58 160 V108 H110 V128" stroke={palette.blue[425]} strokeWidth="3.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
           <circle cx="58" cy="160" r="9" className="Mock__ping" />
-          <circle cx="58" cy="160" r="5" fill="#fff" stroke="#2f7de1" strokeWidth="3" />
+          <circle cx="58" cy="160" r="5" fill={palette.white} stroke={palette.blue[425]} strokeWidth="3" />
         </svg>
         <span className="Mock__mapSearch"><SearchRounded fontSize="inherit" />Riverside Works, Unit 4</span>
         <span className="Mock__pin"><i /></span>

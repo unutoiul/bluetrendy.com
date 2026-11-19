@@ -2,6 +2,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import { palette } from "@/theme/palette";
 
 export const alt = "BlueTrendy Intelligence. Custom software, delivered 10x faster.";
 export const size = { width: 1200, height: 630 };
@@ -18,16 +19,16 @@ export default async function OpengraphImage() {
     <div style={{
       width: "100%", height: "100%", display: "flex", flexDirection: "column",
       justifyContent: "space-between", padding: "62px 70px", position: "relative",
-      background: "linear-gradient(115deg, #061423 2%, #09273e 100%)", color: "#f5fbff",
+      background: `linear-gradient(115deg, ${palette.navy[850]} 2%, ${palette.navy[750]} 100%)`, color: palette.grey[25],
     }}>
       <img alt="" src={`data:image/svg+xml;base64,${network}`} width={800} height={480}
         style={{ position: "absolute", right: -185, bottom: -44, opacity: 0.55, objectFit: "contain" }} />
       <img alt="BlueTrendy Intelligence" src={`data:image/svg+xml;base64,${logo}`} width={320} height={78} />
       <div style={{ display: "flex", flexDirection: "column", fontSize: 78, fontWeight: 700, letterSpacing: -4, lineHeight: 1.12 }}>
         <span>Custom software,</span>
-        <span style={{ color: "#88e9ff" }}>delivered 10x faster.</span>
+        <span style={{ color: palette.sky[100] }}>delivered 10x faster.</span>
       </div>
-      <div style={{ display: "flex", fontSize: 26, color: "#c6daea", maxWidth: 780 }}>
+      <div style={{ display: "flex", fontSize: 26, color: palette.slate[125], maxWidth: 780 }}>
         Services, systems integration and digital production.
       </div>
     </div>,

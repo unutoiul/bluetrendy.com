@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
-import { useLumaKey, useNeedsLumaKey } from "@/components/motion/useLumaKey";
+import { useLumaKey, useNeedsLumaKey } from "@/components/motion/useLumaKey";import { palette, withAlpha } from "@/theme/palette";
+
 
 const source = "/brand/3d-bluetrendy.mp4";
 const ease = "cubic-bezier(0.22, 1, 0.36, 1)";
@@ -59,7 +60,7 @@ export default function RibbonFilm() {
       sx={{ display: "block", width: "100%", height: "auto", aspectRatio: "3 / 2", objectFit: "cover",
         // Crop the empty studio margin so the B itself is larger.
         transformOrigin: "50% 58%",
-        maskImage: "radial-gradient(closest-side at 50% 48%, #000 52%, rgba(0, 0, 0, 0.5) 78%, transparent 100%), linear-gradient(180deg, #000 70%, transparent 97%)",
+        maskImage: `radial-gradient(closest-side at 50% 48%, ${palette.black} 52%, ${withAlpha(palette.black, 0.5)} 78%, transparent 100%), linear-gradient(180deg, ${palette.black} 70%, transparent 97%)`,
         maskComposite: "intersect",
         WebkitMaskComposite: "source-in",
         mixBlendMode: "screen",
@@ -72,8 +73,8 @@ export default function RibbonFilm() {
         "@media (prefers-reduced-motion: reduce)": { scale: "1.1", transition: "opacity 0.6s ease" } }} />
     {needsKey && <Box component="canvas" ref={keyed} width={1178} height={786} aria-hidden="true"
       sx={{ position: "absolute", top: 0, left: 0, width: "100%", aspectRatio: "3 / 2", objectFit: "cover", transformOrigin: "50% 58%",
-        maskImage: "radial-gradient(closest-side at 50% 48%, #000 52%, rgba(0, 0, 0, 0.5) 78%, transparent 100%), linear-gradient(180deg, #000 70%, transparent 97%)",
-        WebkitMaskImage: "radial-gradient(closest-side at 50% 48%, #000 52%, rgba(0, 0, 0, 0.5) 78%, transparent 100%), linear-gradient(180deg, #000 70%, transparent 97%)",
+        maskImage: `radial-gradient(closest-side at 50% 48%, ${palette.black} 52%, ${withAlpha(palette.black, 0.5)} 78%, transparent 100%), linear-gradient(180deg, ${palette.black} 70%, transparent 97%)`,
+        WebkitMaskImage: `radial-gradient(closest-side at 50% 48%, ${palette.black} 52%, ${withAlpha(palette.black, 0.5)} 78%, transparent 100%), linear-gradient(180deg, ${palette.black} 70%, transparent 97%)`,
         maskComposite: "intersect", WebkitMaskComposite: "source-in",
         opacity: ready ? 1 : 0, scale: ready ? "1.1" : "1.04", transition: `opacity 1.2s ${ease}, scale 1.6s ${ease}` }} />}
   </Box>;

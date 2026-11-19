@@ -4,14 +4,15 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Script from "next/script";
 import Link from "next/link";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import CookieOutlined from "@mui/icons-material/CookieOutlined";
+import ActionButton from "@/components/ActionButton";
 import { analyticsIds, trackingLive } from "@/lib/analyticsConfig";
 import {
   clearAnalyticsCookies, onConsentSettings, readConsent, subscribeConsent, writeConsent, type Consent,
 } from "@/lib/consent";
+import { palette, withAlpha } from "@/theme/palette";
 
 // The server cannot see the visitor's choice, so it renders nothing and the browser decides.
 const serverSnapshot = () => "unknown" as const;
@@ -73,12 +74,12 @@ window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted'
       <Box component="section" ref={banner} aria-labelledby="consent-title" sx={{
         position: "fixed", zIndex: 1250, insetInline: 0, bottom: 0,
         pb: "env(safe-area-inset-bottom)",
-        color: "#dcecff",
-        bgcolor: "rgba(7, 22, 40, 0.97)",
-        backgroundImage: "linear-gradient(100deg, rgba(22, 95, 204, 0.2), transparent 55%)",
+        color: palette.slate[100],
+        bgcolor: withAlpha(palette.navy[800], 0.97),
+        backgroundImage: `linear-gradient(100deg, ${withAlpha(palette.blue[500], 0.2)}, transparent 55%)`,
         backdropFilter: "blur(12px)",
-        borderTop: "1px solid #1d4472",
-        boxShadow: "0 -20px 44px -26px rgba(0, 8, 24, 0.8)",
+        borderTop: `1px solid ${palette.navy[650]}`,
+        boxShadow: `0 -20px 44px -26px ${withAlpha(palette.navy[850], 0.8)}`,
         "--rise": "28px",
         animation: "rise-in .5s var(--ease-out) both",
         "@media (prefers-reduced-motion: reduce)": { animation: "none" },
@@ -88,22 +89,23 @@ window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted'
           gap: { xs: 2, md: 4 }, py: { xs: 2, md: 2.25 },
         }}>
           <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1.75, flex: 1, minWidth: 0 }}>
-            <CookieOutlined sx={{ display: { xs: "none", sm: "block" }, mt: "1px", color: "#8BD6FF" }} />
+            <CookieOutlined sx={{ display: { xs: "none", sm: "block" }, mt: "1px", color: palette.sky[175] }} />
             <Box>
-              <Typography component="h2" id="consent-title" sx={{ m: 0, color: "#fff", fontSize: "1rem", fontWeight: 650, lineHeight: 1.35 }}>
+              <Typography component="h2" id="consent-title" sx={{ m: 0, color: palette.white, fontSize: "1rem", fontWeight: 650, lineHeight: 1.35 }}>
                 We use cookies to improve the site
               </Typography>
-              <Typography sx={{ mt: 0.5, maxWidth: "72ch", color: "#b9cee2", fontSize: ".875rem", lineHeight: 1.55 }}>
+              <Typography sx={{ mt: 0.5, maxWidth: "72ch", color: palette.slate[125], fontSize: ".875rem", lineHeight: 1.55 }}>
                 With your permission, {tools} show us which pages help visitors
                 {clarity ? " and how people move through them. Anything typed into a form stays hidden" : ""}.
                 {" "}Nothing loads unless you accept.{" "}
-                <Link href="/legal/privacy#cookies" style={{ color: "#9fe8ff", fontWeight: 600 }}>Privacy policy</Link>
+                <Link href="/legal/privacy#cookies" style={{ color: palette.sky[100], fontWeight: 600 }}>Privacy policy</Link>
               </Typography>
             </Box>
           </Box>
           <Box sx={{ display: "flex", gap: 1, flexShrink: 0 }}>
-            <Button variant="outlined" onClick={() => choose("denied")} sx={{ flex: { xs: 1, md: "none" }, minWidth: 124 }}>Reject</Button>
-            <Button variant="contained" onClick={() => choose("granted")} sx={{ flex: { xs: 1, md: "none" }, minWidth: 124 }}>Accept</Button>
+            {/* The site's own buttons: Reject in the dark-surface style, as easy to see as Accept. */}
+            <ActionButton tone="dark" variant="outlined" onClick={() => choose("denied")} sx={{ flex: { xs: 1, md: "none" }, minWidth: 124 }}>Reject</ActionButton>
+            <ActionButton variant="contained" onClick={() => choose("granted")} sx={{ flex: { xs: 1, md: "none" }, minWidth: 124 }}>Accept</ActionButton>
           </Box>
         </Container>
       </Box>

@@ -8,6 +8,7 @@ import AgentsChapter from "./AgentsChapter";
 import { HomeArrivals } from "./PanelMotion";
 import { neural } from "./neuralStyle";
 import styles from "./Experience.styles";
+import { palette } from "@/theme/palette";
 
 // Content sits above the background canvas.
 const above = { position: "relative", zIndex: 1 } as const;
@@ -31,7 +32,7 @@ export default function Experience() {
       <Box className={styles.scene} sx={{ ...above, pb: "clamp(80px, 9vw, 140px) !important" }}><ServicesChapter /></Box>
     </Box>
     <Box component="section" id="clients" aria-labelledby="clients-heading"
-      sx={{ position: "relative", isolation: "isolate", bgcolor: "#fff", color: "#102c47", containerType: "inline-size", overflow: "clip" }}>
+      sx={{ position: "relative", isolation: "isolate", bgcolor: palette.white, color: palette.navy[725], containerType: "inline-size", overflow: "clip" }}>
       <LivingBackground effect="dotField" light seed={17} />
       <Box id="work" className={styles.frontScene} sx={{ ...above, scrollMarginTop: 76 }}><TrustStrip /></Box>
     </Box>

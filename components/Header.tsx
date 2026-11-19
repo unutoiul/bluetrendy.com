@@ -18,10 +18,11 @@ import MailOutlineRounded from "@mui/icons-material/MailOutlineRounded";
 import { motion, useMotionValueEvent, useScroll } from "motion/react";
 import Logo from "./Logo";
 import Magnetic from "./motion/Magnetic";
-import RollText from "./motion/RollText";
+import LinkButton from "./LinkButton";
 import { navLinks } from "@/data/nav";
 import { trackEvent } from "@/lib/analytics";
 import { easeOut } from "@/theme/theme";
+import { palette, withAlpha } from "@/theme/palette";
 
 const barHeight = { xs: 64, md: 78 };
 // The lockup is drawn at 50px; phones get a smaller one so the bar has room to breathe.
@@ -67,9 +68,9 @@ function DetailHeader({ path }: { path: string }) {
     <AppBar position="sticky" elevation={0} color="transparent"
       sx={{
         // Dark glass, so the header reads as part of the dark banners below it, as on the home page.
-        bgcolor: scrolled ? "rgba(5, 15, 34, 0.84)" : "#071628",
+        bgcolor: scrolled ? withAlpha(palette.navy[850], 0.84) : palette.navy[800],
         backdropFilter: scrolled ? "saturate(160%) blur(16px)" : "none",
-        borderBottom: "1px solid #1d4472", color: "#e4f2ff",
+        borderBottom: `1px solid ${palette.navy[650]}`, color: palette.slate[50],
         transition: "background-color 0.35s ease",
       }}>
       <Container>
@@ -84,20 +85,20 @@ function DetailHeader({ path }: { path: string }) {
                   onPointerEnter={() => setHovered(link.href)} onFocus={() => setHovered(link.href)} onBlur={() => setHovered(null)}
                   sx={{
                     px: { md: 1, lg: 1.35 }, minWidth: 0, position: "relative", zIndex: 0,
-                    color: active ? "#9fe8ff" : "#dcecff",
+                    color: active ? palette.sky[100] : palette.slate[100],
                     // The sliding pill below is the hover fill.
-                    "&:hover": { color: "#9fe8ff", bgcolor: "transparent" },
+                    "&:hover": { color: palette.sky[100], bgcolor: "transparent" },
                   }}>
                   {hovered === link.href && (
                     <Box component={motion.span} layoutId="nav-hover" aria-hidden="true"
                       transition={{ type: "spring", stiffness: 480, damping: 36 }}
-                      sx={{ position: "absolute", inset: "7px 0", zIndex: -1, borderRadius: 999, bgcolor: "rgba(63, 168, 255, 0.14)" }} />
+                      sx={{ position: "absolute", inset: "7px 0", zIndex: -1, borderRadius: 999, bgcolor: withAlpha(palette.blue[300], 0.14) }} />
                   )}
                   {link.label}
                   {active && (
                     <Box component={motion.span} layoutId="active-nav" aria-hidden="true"
                       transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                      sx={{ position: "absolute", left: 12, right: 12, bottom: 3, height: 2, borderRadius: 2, background: "linear-gradient(90deg, #3fa8ff, #9fe8ff)" }} />
+                      sx={{ position: "absolute", left: 12, right: 12, bottom: 3, height: 2, borderRadius: 2, background: `linear-gradient(90deg, ${palette.blue[300]}, ${palette.sky[100]})` }} />
                   )}
                 </Button>
               );
@@ -105,14 +106,14 @@ function DetailHeader({ path }: { path: string }) {
           </Box>
           <Box sx={{ display: { xs: "none", md: "inline-flex" } }}>
             <Magnetic>
-              <Button component={Link} href="/book-a-call" variant="contained" endIcon={<ArrowOutward />}
+              <LinkButton href="/book-a-call" variant="contained" endIcon={<ArrowOutward />}
                 onClick={() => trackEvent("cta_book_call_click", { location: "header" })}>
-                <RollText>Book a call</RollText>
-              </Button>
+                Book a call
+              </LinkButton>
             </Magnetic>
           </Box>
           <IconButton aria-label="Open menu" aria-haspopup="dialog" aria-expanded={open} aria-controls={open ? "mobile-nav" : undefined}
-            onClick={() => setOpen(true)} sx={{ display: { md: "none" }, width: 48, height: 48, mr: -1, color: "#e3f4ff" }}>
+            onClick={() => setOpen(true)} sx={{ display: { md: "none" }, width: 48, height: 48, mr: -1, color: palette.slate[50] }}>
             <MenuGlyph open={false} />
           </IconButton>
         </Stack>
@@ -144,17 +145,17 @@ function MobileMenu({ open, onClose, current }: { open: boolean; onClose: () => 
         paper: {
           id: "mobile-nav", "aria-label": "Site menu",
           sx: {
-            color: "#e4f2ff", bgcolor: "#071628",
-            backgroundImage: "radial-gradient(120% 60% at 100% 0%, rgba(63, 168, 255, 0.16), transparent 60%), linear-gradient(180deg, #071628, #0a2244)",
+            color: palette.slate[50], bgcolor: palette.navy[800],
+            backgroundImage: `radial-gradient(120% 60% at 100% 0%, ${withAlpha(palette.blue[300], 0.16)}, transparent 60%), linear-gradient(180deg, ${palette.navy[800]}, ${palette.navy[750]})`,
           },
         },
       }}>
       {/* The same bar as the header, so opening the menu changes only the page beneath it. */}
-      <Box sx={{ flexShrink: 0, borderBottom: "1px solid #1d4472" }}>
+      <Box sx={{ flexShrink: 0, borderBottom: `1px solid ${palette.navy[650]}` }}>
         <Container>
           <Stack direction="row" sx={{ height: barHeight, alignItems: "center", justifyContent: "space-between" }}>
             <Box sx={{ zoom: logoScale }}><Logo height={50} inverse onNavigate={onClose} /></Box>
-            <IconButton aria-label="Close menu" onClick={onClose} sx={{ width: 48, height: 48, mr: -1, color: "#e4f2ff" }}>
+            <IconButton aria-label="Close menu" onClick={onClose} sx={{ width: 48, height: 48, mr: -1, color: palette.slate[50] }}>
               <MenuGlyph open={crossed} />
             </IconButton>
           </Stack>
@@ -162,26 +163,34 @@ function MobileMenu({ open, onClose, current }: { open: boolean; onClose: () => 
       </Box>
 
       <Container sx={{ flex: 1, display: "flex", flexDirection: "column", overflowY: "auto", overscrollBehavior: "contain" }}>
-        <Box component="nav" aria-label="Mobile navigation" sx={{ pt: 2 }}>
-          <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0 }}>
+        {/* A calm list in the desktop nav's voice: body-size labels that stay smaller than the
+            logo, and the current page in the same soft blue pill the desktop links use. */}
+        <Box component="nav" aria-label="Mobile navigation" sx={{ pt: 3 }}>
+          <Box component={motion.p} {...enter(0)} aria-hidden="true"
+            sx={{ m: "0 0 10px 12px", color: palette.slate[275], fontSize: 12, fontWeight: 650, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+            Menu
+          </Box>
+          <Box component="ul" sx={{ listStyle: "none", m: "0 -12px", p: 0, display: "grid", gap: "2px" }}>
             {navLinks.map((link, index) => {
               const active = current(link.href);
               return (
-                <Box component={motion.li} key={link.href} {...enter(index)}
-                  sx={{ borderBottom: "1px solid rgba(159, 232, 255, 0.12)" }}>
+                <Box component={motion.li} key={link.href} {...enter(index + 1)}>
                   <Box component={Link} href={link.href} aria-current={active ? "page" : undefined} onClick={onClose}
                     sx={{
-                      display: "flex", alignItems: "center", gap: 1.5, minHeight: 64, py: 1,
-                      color: active ? "#9fe8ff" : "#eef6ff", textDecoration: "none",
-                      fontSize: "clamp(1.6rem, 7vw, 2rem)", fontWeight: 650, letterSpacing: "-0.045em", lineHeight: 1.1,
-                      "& .arrow": { ml: "auto", fontSize: 22, color: active ? "#9fe8ff" : "#6f93b8", transition: `translate 0.3s ${easeOut}` },
-                      "&:hover .arrow, &:focus-visible .arrow": { translate: "4px 0", color: "#9fe8ff" },
-                      "&:focus-visible": { outline: "2px solid #9fe8ff", outlineOffset: 2, borderRadius: 1 },
+                      display: "flex", alignItems: "center", gap: 1.5, minHeight: 52, px: 1.5,
+                      borderRadius: "12px", textDecoration: "none",
+                      color: active ? palette.sky[100] : palette.slate[100], bgcolor: active ? withAlpha(palette.blue[300], 0.14) : "transparent",
+                      fontSize: "1.125rem", fontWeight: active ? 600 : 500, letterSpacing: "-0.015em", lineHeight: 1.2,
+                      transition: "background-color 0.2s ease, color 0.2s ease",
+                      "& .arrow": { ml: "auto", fontSize: 18, color: palette.blue[400], transition: `translate 0.3s ${easeOut}, color 0.2s ease` },
+                      "&:hover": { color: palette.white, bgcolor: active ? withAlpha(palette.blue[300], 0.18) : withAlpha(palette.blue[300], 0.08) },
+                      "&:hover .arrow, &:focus-visible .arrow": { translate: "3px 0", color: palette.sky[100] },
+                      "&:focus-visible": { outline: `2px solid ${palette.sky[100]}`, outlineOffset: -2 },
                     }}>
                     {link.label}
                     {/* The current page gets a dot where the other rows have an arrow. */}
                     {active
-                      ? <Box component="span" aria-hidden="true" sx={{ ml: "auto", mr: "7px", width: 9, height: 9, borderRadius: "50%", bgcolor: "#9fe8ff", boxShadow: "0 0 12px #3fa8ff" }} />
+                      ? <Box component="span" aria-hidden="true" sx={{ ml: "auto", mr: "5px", width: 7, height: 7, borderRadius: "50%", bgcolor: palette.sky[100], boxShadow: `0 0 10px ${palette.blue[300]}` }} />
                       : <ArrowForwardRounded className="arrow" aria-hidden="true" />}
                   </Box>
                 </Box>
@@ -191,21 +200,20 @@ function MobileMenu({ open, onClose, current }: { open: boolean; onClose: () => 
         </Box>
 
         {/* The call to action sits at the bottom, where a thumb reaches it. */}
-        <Box component={motion.div} {...enter(navLinks.length)}
+        <Box component={motion.div} {...enter(navLinks.length + 1)}
           sx={{ mt: "auto", pt: 4, pb: "calc(24px + env(safe-area-inset-bottom))" }}>
-          <Box component="p" sx={{ m: "0 0 12px", color: "#a9c3dc", fontSize: 15, lineHeight: 1.5 }}>
+          <Box component="p" sx={{ m: "0 0 12px", color: palette.slate[200], fontSize: 15, lineHeight: 1.5 }}>
             Free 30-minute discovery call. We’ll map your first release with you.
           </Box>
-          <Button component={Link} href="/book-a-call" variant="contained" fullWidth endIcon={<ArrowOutward />}
-            onClick={() => { onClose(); trackEvent("cta_book_call_click", { location: "mobile_nav" }); }}
-            sx={{ minHeight: 54, fontSize: 17 }}>
+          <LinkButton href="/book-a-call" variant="contained" size="large" fullWidth endIcon={<ArrowOutward />}
+            onClick={() => { onClose(); trackEvent("cta_book_call_click", { location: "mobile_nav" }); }}>
             Book a call
-          </Button>
+          </LinkButton>
           <Box component="a" href={`mailto:${email}`}
             sx={{
               display: "flex", alignItems: "center", justifyContent: "center", gap: 1, minHeight: 48, mt: 1,
-              color: "#cfe3f6", fontSize: 15, fontWeight: 600, textDecoration: "none",
-              "&:hover, &:focus-visible": { color: "#fff", textDecoration: "underline", textUnderlineOffset: "0.25em" },
+              color: palette.slate[150], fontSize: 15, fontWeight: 600, textDecoration: "none",
+              "&:hover, &:focus-visible": { color: palette.white, textDecoration: "underline", textUnderlineOffset: "0.25em" },
             }}>
             <MailOutlineRounded aria-hidden="true" sx={{ fontSize: 19 }} />{email}
           </Box>

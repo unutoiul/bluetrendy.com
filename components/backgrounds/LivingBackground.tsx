@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import Box from "@mui/material/Box";
 import type { SxProps, Theme } from "@mui/material/styles";
-import { effects, type EffectName, type Frame } from "./effects";
+import { effects, type EffectName, type Frame } from "./effects";import { palette, withAlpha } from "@/theme/palette";
+
 
 type LivingBackgroundProps = {
   effect: EffectName;
@@ -87,8 +88,8 @@ export default function LivingBackground({ effect, quiet = "left", light = false
           : quiet === "right"
             ? narrow ? context!.createLinearGradient(0, height, 0, height * 0.45) : context!.createLinearGradient(width, 0, width * 0.46, 0)
             : context!.createLinearGradient(0, 0, 0, height * 0.42);
-        fade.addColorStop(0, quiet === "right" ? "rgba(0, 0, 0, 0.95)" : "rgba(0, 0, 0, 0.72)");
-        fade.addColorStop(1, "rgba(0, 0, 0, 0)");
+        fade.addColorStop(0, quiet === "right" ? withAlpha(palette.black, 0.95) : withAlpha(palette.black, 0.72));
+        fade.addColorStop(1, withAlpha(palette.black, 0));
         context!.globalAlpha = 1;
         context!.globalCompositeOperation = "destination-out";
         context!.fillStyle = fade;

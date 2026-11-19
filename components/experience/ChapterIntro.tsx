@@ -4,7 +4,8 @@ import Link from "next/link";
 import Box from "@mui/material/Box";
 import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
 import HeadingMotion from "../motion/HeadingMotion";
-import { neural } from "./neuralStyle";
+import { neural } from "./neuralStyle";import { palette } from "@/theme/palette";
+
 
 type ChapterIntroProps = {
   id: string;
@@ -25,7 +26,7 @@ export default function ChapterIntro({ id, label, title, accent, subtitle, actio
         <Box component="p" sx={neural.label}>{label}</Box>
         <HeadingMotion id={id} text={title} accent={accent}
           sx={{ m: 0, fontSize: "clamp(2.1rem, 4.4vw, 3.9rem)", fontWeight: 650, letterSpacing: "-0.05em", lineHeight: 1.05 }} />
-        {subtitle && <Box component="p" sx={{ mt: 1.75, mb: 0, maxWidth: "56ch", color: "#c3d6ea", fontSize: { xs: "1rem", md: "1.12rem" }, lineHeight: 1.55 }}>
+        {subtitle && <Box component="p" sx={{ mt: 1.75, mb: 0, maxWidth: "56ch", color: palette.slate[125], fontSize: { xs: "1rem", md: "1.12rem" }, lineHeight: 1.55 }}>
           {subtitle}
         </Box>}
       </Box>

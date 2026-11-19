@@ -10,6 +10,7 @@ import { keyframes, type SxProps, type Theme } from "@mui/material/styles";
 import PowerSettingsNewRounded from "@mui/icons-material/PowerSettingsNewRounded";
 import { bindIntroTagline } from "@/lib/introTagline";
 import SplitWords, { countWords } from "@/components/motion/SplitWords";
+import { palette, withAlpha } from "@/theme/palette";
 
 const compactMedia = "(max-width: 899px), (pointer: coarse) and (max-height: 560px)";
 const compactFilm = "/brand/shadow-intro/entrance-mobile.mp4";
@@ -220,7 +221,7 @@ export default function WebsiteEntrance() {
             size="small" aria-label="Seek intro" min={0} max={filmSeconds} step={0.01} value={time}
             getAriaValueText={value => `${value.toFixed(1)} of ${filmSeconds} seconds`}
             onChange={(_, value) => seek(value as number)}
-            sx={{ color: "#8edfff" }}
+            sx={{ color: palette.sky[175] }}
           />
           <Button data-sound-toggle aria-label={muted ? "Enable intro sound" : "Mute intro sound"} aria-pressed={!muted}
             onClick={() => { if (player.current) player.current.muted = !player.current.muted; }}>
@@ -234,6 +235,9 @@ export default function WebsiteEntrance() {
 
 const shortStage = "@container (height < 320px)";
 const taglineLead = "Your Business, powered by";
+// The home page's accent-write, with room around the small "AI" so the beam's glow fades out
+// softly instead of being cut into a box.
+const write = keyframes`from { clip-path: inset(-1em 100% -1em -1em); } to { clip-path: inset(-1em -.4em -1em -1em); }`;
 // A glint of light crossing "AI" once the beam has written it.
 const glint = keyframes`from { background-position: 100% 50%; } to { background-position: 0% 50%; }`;
 
@@ -252,12 +256,12 @@ const sx = {
     border: 0,
     overflow: "hidden",
     gridTemplateRows: "minmax(0, 1fr) auto",
-    bgcolor: "#000628",
-    color: "#eaf3ff",
+    bgcolor: palette.navy[850],
+    color: palette.slate[50],
     colorScheme: "dark",
     "&[open]": { display: "grid" },
     "[data-entry-pending] > &": { display: "grid", zIndex: 1400 },
-    "&::backdrop": { background: "#000628" },
+    "&::backdrop": { background: palette.navy[850] },
   },
   stage: {
     containerType: "size",
@@ -289,7 +293,7 @@ const sx = {
   },
   tagline: {
     mt: "clamp(12px, 2.2cqh, 20px)",
-    color: "#d4e2f3",
+    color: palette.slate[150],
     fontSize: "clamp(16px, 2.5cqw, 22px)",
     fontWeight: 440,
     lineHeight: 1.4,
@@ -301,22 +305,22 @@ const sx = {
     "& .w": { transformOrigin: "50% 100%", backfaceVisibility: "hidden" },
     "& strong": {
       position: "relative",
-      color: "#8fddff",
+      color: palette.sky[175],
       fontWeight: 750,
-      background: "linear-gradient(108deg, #8fddff 30%, #f5fdff 50%, #8fddff 70%) 100% 50% / 320% 100%",
+      background: `linear-gradient(108deg, ${palette.sky[175]} 30%, ${palette.white} 50%, ${palette.sky[175]} 70%) 100% 50% / 320% 100%`,
       backgroundClip: "text",
       WebkitTextFillColor: "transparent",
     },
-    "& ::selection": { color: "#fff", background: "#215d8d", WebkitTextFillColor: "white" },
-    // Arrives like the home page headlines (word-in, accent-write and accent-beam live in
-    // globalStyles): the words flip up out of a blur, then a beam of light writes "AI".
+    "& ::selection": { color: palette.white, background: palette.blue[550], WebkitTextFillColor: "white" },
+    // Arrives like the home page headlines (word-in and accent-beam live in globalStyles):
+    // the words flip up out of a blur, then a beam of light writes "AI".
     "&[data-state='wait'] :is(.w, strong)": { opacity: 0 },
     "&[data-state='in'] .w": {
       animation: "word-in .85s var(--ease-out) both",
       animationDelay: "calc(var(--i) * 70ms + 60ms)",
     },
     "&[data-state='in'] strong": {
-      animation: `accent-write .95s cubic-bezier(.65, 0, .35, 1) var(--split-delay) backwards, ${glint} 1.3s ease-in-out calc(var(--split-delay) + .8s) both`,
+      animation: `${write} .95s cubic-bezier(.65, 0, .35, 1) var(--split-delay) backwards, ${glint} 1.3s ease-in-out calc(var(--split-delay) + .8s) both`,
     },
     "&[data-state='in'] strong::after": {
       content: '""',
@@ -326,8 +330,8 @@ const sx = {
       width: "3px",
       ml: "-3px",
       borderRadius: "3px",
-      background: "#e6fbff",
-      boxShadow: "0 0 10px 2px #5fd8ff, 0 0 28px 6px #1f8bff",
+      background: palette.cyan[25],
+      boxShadow: `0 0 6px 1px ${palette.sky[150]}, 0 0 14px 3px ${palette.blue[350]}`,
       opacity: 0,
       pointerEvents: "none",
       animation: "accent-beam .95s cubic-bezier(.65, 0, .35, 1) var(--split-delay) both",
@@ -345,17 +349,17 @@ const sx = {
     minHeight: 46,
     px: "22px",
     py: 0,
-    border: "1px solid #cbf4ff",
-    background: "linear-gradient(125deg, #c6f3ff, #83d6ff 68%, #69bcff)",
-    boxShadow: "0 4px 20px #087ac224",
-    color: "#03172c",
+    border: `1px solid ${palette.cyan[75]}`,
+    background: `linear-gradient(125deg, ${palette.slate[75]}, ${palette.sky[175]} 68%, ${palette.blue[250]})`,
+    boxShadow: `0 4px 20px ${withAlpha(palette.blue[475], 0.14)}`,
+    color: palette.navy[800],
     fontSize: 12,
     fontWeight: 720,
     letterSpacing: ".13em",
     lineHeight: 1,
     whiteSpace: "nowrap",
-    "&:hover": { background: "#c4f2ff" },
-    "&.Mui-focusVisible": { outline: "2px solid #fff", outlineOffset: 4 },
+    "&:hover": { background: palette.slate[75] },
+    "&.Mui-focusVisible": { outline: `2px solid ${palette.white}`, outlineOffset: 4 },
     [shortStage]: { mt: "9px", minHeight: 40 },
   },
   controls: {
@@ -365,9 +369,9 @@ const sx = {
     gap: "14px",
     width: "min(340px, calc(100% - 32px))",
     pb: "max(8px, env(safe-area-inset-bottom))",
-    "& .MuiButton-root": { minWidth: 66, px: 0.5, color: "#bdd3e4", fontSize: 12, fontWeight: 400 },
-    "& .MuiButton-root:hover": { color: "#fff", bgcolor: "transparent" },
+    "& .MuiButton-root": { minWidth: 66, px: 0.5, color: palette.slate[125], fontSize: 12, fontWeight: 400 },
+    "& .MuiButton-root:hover": { color: palette.white, bgcolor: "transparent" },
     "@media (max-height: 360px)": { pb: 0 },
   },
-  notice: { my: 1, mx: "auto", color: "#bdd3e4", fontSize: 13 },
+  notice: { my: 1, mx: "auto", color: palette.slate[125], fontSize: 13 },
 } satisfies Record<string, SxProps<Theme>>;

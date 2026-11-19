@@ -1,5 +1,6 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { palette, withAlpha } from "@/theme/palette";
 
 type SectionHeadingProps = {
   eyebrow?: string;
@@ -34,13 +35,13 @@ export default function SectionHeading({
           {eyebrow}
         </Typography>
       ) : null}
-      <Typography variant="h3" component="h2" sx={{ color: light ? "#fff" : "text.primary" }}>
+      <Typography variant="h3" component="h2" sx={{ color: light ? palette.white : "text.primary" }}>
         {title}
       </Typography>
       {subtitle ? (
         <Typography
           variant="body1"
-          sx={{ mt: 2, color: light ? "rgba(255,255,255,0.78)" : "text.secondary" }}
+          sx={{ mt: 2, color: light ? withAlpha(palette.white, 0.78) : "text.secondary" }}
         >
           {subtitle}
         </Typography>

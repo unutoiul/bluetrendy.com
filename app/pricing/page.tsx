@@ -16,6 +16,7 @@ import { brand } from "@/theme/theme";
 import styles from "@/components/interior/Editorial.styles";
 import JsonLd from "@/components/JsonLd";
 import { absoluteUrl, breadcrumbs, faqPage, organizationRef, pageMetadata } from "@/lib/seo";
+import { palette, withAlpha } from "@/theme/palette";
 
 const lowest = formatPounds(Math.min(...discoveryPackages.map(item => item.price)));
 
@@ -95,12 +96,12 @@ export default function PricingPage() {
               <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, display: "grid", gap: 3, gridTemplateColumns: { xs: "minmax(0, 1fr)", sm: "repeat(2, minmax(0, 1fr))" } }}>
                 {nextSteps.map(({ title, Icon, href, action, text, details }) => (
                   <Box component="li" key={title} data-panel sx={{ display: "flex", flexDirection: "column", p: { xs: 3, md: 3.5 }, borderRadius: "20px",
-                    background: "linear-gradient(170deg, #ffffff, #f4f8fd)", border: `1px solid ${brand.border}`,
-                    boxShadow: "0 1px 0 #fff inset, 0 18px 40px -30px rgba(12, 41, 66, 0.45)",
+                    background: `linear-gradient(170deg, ${palette.white}, ${palette.grey[25]})`, border: `1px solid ${brand.border}`,
+                    boxShadow: `0 1px 0 ${palette.white} inset, 0 18px 40px -30px ${withAlpha(palette.navy[750], 0.45)}`,
                     transition: "border-color 0.3s ease, box-shadow 0.3s ease",
-                    "&:hover": { borderColor: "#8fc2ee", boxShadow: "0 1px 0 #fff inset, 0 24px 48px -28px rgba(22, 95, 204, 0.45)" } }}>
+                    "&:hover": { borderColor: palette.blue[200], boxShadow: `0 1px 0 ${palette.white} inset, 0 24px 48px -28px ${withAlpha(palette.blue[500], 0.45)}` } }}>
                     <Box aria-hidden="true" sx={{ display: "grid", placeItems: "center", width: 48, height: 48, borderRadius: "14px", color: brand.blue,
-                      background: "linear-gradient(160deg, #e5f1fc, #d3e7fa)", border: "1px solid #bfdaf3", "& svg": { fontSize: 24 } }}>
+                      background: `linear-gradient(160deg, ${palette.slate[50]}, ${palette.slate[100]})`, border: `1px solid ${palette.slate[125]}`, "& svg": { fontSize: 24 } }}>
                       <Icon />
                     </Box>
                     <Box component="h3" sx={{ m: "20px 0 0", color: brand.ink, fontSize: "1.3rem", fontWeight: 650, letterSpacing: "-0.03em" }}>{title}</Box>
@@ -121,11 +122,11 @@ export default function PricingPage() {
               </Box>
 
               <Box sx={{ mt: 3, display: "flex", flexDirection: { xs: "column", sm: "row" }, alignItems: { sm: "center" }, justifyContent: "space-between",
-                gap: 2.5, p: { xs: 3, md: 3.5 }, borderRadius: "20px", color: "#eef6ff",
-                background: neural.blueFlow("hero", "services"), border: "1px solid rgba(86, 156, 222, 0.4)" }}>
+                gap: 2.5, p: { xs: 3, md: 3.5 }, borderRadius: "20px", color: palette.grey[25],
+                background: neural.blueFlow("hero", "services"), border: `1px solid ${withAlpha(palette.blue[325], 0.4)}` }}>
                 <div>
                   <Box component="h3" sx={{ m: 0, fontSize: "1.2rem", fontWeight: 650, letterSpacing: "-0.02em" }}>Not sure which fits?</Box>
-                  <Box component="p" sx={{ m: "6px 0 0", color: "#c3d6ea", lineHeight: 1.55 }}>
+                  <Box component="p" sx={{ m: "6px 0 0", color: palette.slate[125], lineHeight: 1.55 }}>
                     A discovery call is free and usually makes the right choice obvious.
                   </Box>
                 </div>

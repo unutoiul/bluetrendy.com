@@ -3,6 +3,7 @@
 import { Fragment, useEffect, useRef, useState, type CSSProperties } from "react";
 import Box from "@mui/material/Box";
 import { keyframes, type SxProps, type Theme } from "@mui/material/styles";
+import { palette, withAlpha } from "@/theme/palette";
 
 type HeadingMotionProps = {
   component?: "h1" | "h2";
@@ -30,10 +31,10 @@ const sweep = keyframes`
 `;
 
 const palettes = {
-  dark: { fill: "linear-gradient(180deg, #ffffff 30%, #c9e8ff 100%)", shine: "rgba(255, 255, 255, 0.95)",
-    accent: "linear-gradient(100deg, #d6f8ff 0%, #74d8ff 45%, #3d95ff 100%)" },
-  light: { fill: "linear-gradient(180deg, #0f2a47 30%, #1d4f86 100%)", shine: "rgba(110, 185, 255, 0.95)",
-    accent: "linear-gradient(100deg, #1e6bff 0%, #1597e5 60%, #0b5cc4 100%)" },
+  dark: { fill: `linear-gradient(180deg, ${palette.white} 30%, ${palette.slate[100]} 100%)`, shine: withAlpha(palette.white, 0.95),
+    accent: `linear-gradient(100deg, ${palette.slate[50]} 0%, ${palette.sky[150]} 45%, ${palette.blue[350]} 100%)` },
+  light: { fill: `linear-gradient(180deg, ${palette.navy[725]} 30%, ${palette.blue[550]} 100%)`, shine: withAlpha(palette.blue[250], 0.95),
+    accent: `linear-gradient(100deg, ${palette.blue[450]} 0%, ${palette.blue[325]} 60%, ${palette.blue[500]} 100%)` },
 };
 
 const words = (text: string) => text.split(/\s+/).filter(Boolean);
@@ -89,13 +90,13 @@ export default function HeadingMotion({ component = "h2", id, text, accent, tone
           backgroundClip: "text",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
-          color: tone === "dark" ? "#f3f8ff" : "#102c47",
+          color: tone === "dark" ? palette.grey[25] : palette.navy[725],
           // Keep descenders inside the painted box.
           paddingBottom: "0.08em",
         },
         "& .accent": {
           backgroundImage: `linear-gradient(100deg, transparent 42%, ${colors.shine} 50%, transparent 58%), ${colors.accent}`,
-          filter: tone === "dark" ? "drop-shadow(0 0 18px rgba(53, 182, 255, 0.25))" : "none",
+          filter: tone === "dark" ? `drop-shadow(0 0 18px ${withAlpha(palette.blue[250], 0.25)})` : "none",
         },
         "&[data-motion='waiting'] .word": { opacity: 0 },
         "&[data-motion='shown'] .word": {

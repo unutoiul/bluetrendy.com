@@ -10,6 +10,7 @@ import CheckRounded from "@mui/icons-material/CheckRounded";
 import { usePanelTilt } from "@/components/experience/PanelMotion";
 import { neural } from "@/components/experience/neuralStyle";
 import { formatPounds, type DiscoveryPackage } from "@/data/pricing";
+import { palette, withAlpha } from "@/theme/palette";
 
 const suits = { small: PersonOutlineRounded, growing: GroupsOutlined, established: ApartmentRounded };
 const ease = neural.ease;
@@ -35,8 +36,8 @@ function Corner({ item, flipped = false }: { item: DiscoveryPackage; flipped?: b
   return (
     <Box className="play-corner" aria-hidden="true" sx={{ position: "absolute", zIndex: 1, display: "grid", justifyItems: "center", gap: "2px",
       ...(flipped ? { right: 16, bottom: 14, rotate: "180deg" } : { left: 16, top: 14 }),
-      color: "#8eeaff", fontFamily: "var(--font-mono), monospace", fontWeight: 700, fontSize: "1.35rem", lineHeight: 1,
-      "& svg": { fontSize: 18, filter: "drop-shadow(0 0 5px rgba(34, 181, 255, 0.8))" } }}>
+      color: palette.sky[100], fontFamily: "var(--font-mono), monospace", fontWeight: 700, fontSize: "1.35rem", lineHeight: 1,
+      "& svg": { fontSize: 18, filter: `drop-shadow(0 0 5px ${withAlpha(palette.blue[250], 0.8)})` } }}>
       {item.rank}
       <Suit />
     </Box>
@@ -64,7 +65,7 @@ export default function PlayCard({ item, index, selected, faceUp, onSelect }: Pl
       "@media (hover: hover)": { "&:hover": { rotate: "0deg", translate: { xs: "0 -4px", md: "0 -14px" }, zIndex: 3 } },
       "@media (prefers-reduced-motion: reduce)": { transition: "none" },
       // The radio is hidden, so the card shows its keyboard focus.
-      "&:has(input:focus-visible) .play-face": { outline: "2px solid #a8ecff", outlineOffset: 4 },
+      "&:has(input:focus-visible) .play-face": { outline: `2px solid ${palette.sky[100]}`, outlineOffset: 4 },
     }}>
       {/* Named by the card's title, size and price rather than everything printed on it. */}
       <Box component="input" type="radio" name="discovery-package" id={label} value={item.id}
@@ -86,8 +87,8 @@ export default function PlayCard({ item, index, selected, faceUp, onSelect }: Pl
             // The bottom padding leaves room for the upside-down corner under the button.
             px: { xs: 3, md: 3.5 }, pt: 5, pb: 7.5, borderRadius: "22px",
             ...(selected && {
-              borderColor: "#6fdcff",
-              boxShadow: "inset 0 1px 0 rgba(180, 238, 255, 0.45), inset 0 0 34px rgba(39, 150, 255, 0.26), 0 0 0 1px rgba(111, 220, 255, 0.35), 0 0 34px rgba(20, 150, 255, 0.45), 0 30px 60px -30px rgba(0, 60, 160, 0.95)",
+              borderColor: palette.sky[150],
+              boxShadow: `inset 0 1px 0 ${withAlpha(palette.slate[75], 0.45)}, inset 0 0 34px ${withAlpha(palette.blue[350], 0.26)}, 0 0 0 1px ${withAlpha(palette.sky[150], 0.35)}, 0 0 34px ${withAlpha(palette.blue[350], 0.45)}, 0 30px 60px -30px ${withAlpha(palette.navy[600], 0.95)}`,
               "&::before": { ...neural.glassCard["&::before"], left: 0, right: 0, opacity: 1 },
             }),
             "label:hover &": neural.glassCard["&:hover, &:focus-visible, &:focus-within"],
@@ -95,7 +96,7 @@ export default function PlayCard({ item, index, selected, faceUp, onSelect }: Pl
             "label:hover &::after": { animation: `neural-sweep 1.1s ${ease}` },
             // Light that follows the pointer across the face, like a sheen on a printed card.
             "& .play-sheen": { position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none", opacity: 0, transition: "opacity 0.35s ease",
-              background: "radial-gradient(420px circle at var(--light-x, 50%) var(--light-y, 0%), rgba(140, 220, 255, 0.16), transparent 55%)" },
+              background: `radial-gradient(420px circle at var(--light-x, 50%) var(--light-y, 0%), ${withAlpha(palette.sky[175], 0.16)}, transparent 55%)` },
             "label:hover & .play-sheen": { opacity: 1 },
             "& > :not(.play-sheen, .play-corner)": { position: "relative", zIndex: 1 },
           }}>
@@ -104,15 +105,15 @@ export default function PlayCard({ item, index, selected, faceUp, onSelect }: Pl
             <Corner item={item} flipped />
 
             <Box className="play-orb" sx={{ ...neural.iconOrb, width: 64, height: 64, borderRadius: "50%",
-              "& svg": { fontSize: 32, filter: "drop-shadow(0 0 7px rgba(34, 181, 255, 0.95))" },
-              ...(selected && { color: "#d6f8ff", boxShadow: "0 0 0 1px rgba(150, 235, 255, 0.5), 0 0 30px rgba(30, 170, 255, 0.7), inset 0 0 14px rgba(120, 210, 255, 0.4)" }) }}>
+              "& svg": { fontSize: 32, filter: `drop-shadow(0 0 7px ${withAlpha(palette.blue[250], 0.95)})` },
+              ...(selected && { color: palette.slate[50], boxShadow: `0 0 0 1px ${withAlpha(palette.sky[100], 0.5)}, 0 0 30px ${withAlpha(palette.blue[300], 0.7)}, inset 0 0 14px ${withAlpha(palette.sky[175], 0.4)}` }) }}>
               <Suit aria-hidden="true" />
             </Box>
-            <Box component="h4" id={`${label}-name`} sx={{ m: "18px 0 0", fontSize: "1.35rem", fontWeight: 650, letterSpacing: "-0.03em", color: "#f1f8ff" }}>
+            <Box component="h4" id={`${label}-name`} sx={{ m: "18px 0 0", fontSize: "1.35rem", fontWeight: 650, letterSpacing: "-0.03em", color: palette.grey[25] }}>
               {item.name}
             </Box>
-            <Box component="span" id={`${label}-size`} sx={{ mt: 1, px: 1.5, py: 0.5, borderRadius: 99, fontSize: "0.82rem", fontWeight: 600, color: "#bff3ff",
-              border: "1px solid rgba(111, 220, 255, 0.35)", background: "rgba(40, 140, 255, 0.12)" }}>
+            <Box component="span" id={`${label}-size`} sx={{ mt: 1, px: 1.5, py: 0.5, borderRadius: 99, fontSize: "0.82rem", fontWeight: 600, color: palette.slate[75],
+              border: `1px solid ${withAlpha(palette.sky[150], 0.35)}`, background: withAlpha(palette.blue[350], 0.12) }}>
               {item.employees}
             </Box>
 
@@ -120,18 +121,18 @@ export default function PlayCard({ item, index, selected, faceUp, onSelect }: Pl
               <Box component="span" sx={{ ...neural.accentText, fontSize: { xs: "2.6rem", md: "3rem" }, fontWeight: 700, letterSpacing: "-0.05em", lineHeight: 1 }}>
                 {formatPounds(item.price)}
               </Box>
-              <Box component="span" sx={{ color: "#9fb8cf", fontSize: "0.9rem" }}>fixed</Box>
+              <Box component="span" sx={{ color: palette.slate[200], fontSize: "0.9rem" }}>fixed</Box>
             </Box>
-            <Box component="p" sx={{ m: "6px 0 0", color: "#9fb8cf", fontSize: "0.88rem" }}>{item.duration}</Box>
-            <Box component="p" sx={{ m: "14px 0 0", maxWidth: "30ch", color: "#c3d6ea", fontSize: "0.95rem", lineHeight: 1.5 }}>{item.summary}</Box>
+            <Box component="p" sx={{ m: "6px 0 0", color: palette.slate[200], fontSize: "0.88rem" }}>{item.duration}</Box>
+            <Box component="p" sx={{ m: "14px 0 0", maxWidth: "30ch", color: palette.slate[125], fontSize: "0.95rem", lineHeight: 1.5 }}>{item.summary}</Box>
 
             <Box aria-hidden="true" sx={{ alignSelf: "stretch", height: "1px", my: 2.5,
-              background: "linear-gradient(90deg, transparent, rgba(111, 220, 255, 0.45), transparent)" }} />
+              background: `linear-gradient(90deg, transparent, ${withAlpha(palette.sky[150], 0.45)}, transparent)` }} />
 
             <Box component="ul" id={`${label}-includes`} sx={{ listStyle: "none", m: 0, p: 0, display: "grid", gap: 1.25, textAlign: "left", alignSelf: "stretch" }}>
               {item.includes.map(line => (
-                <Box component="li" key={line} sx={{ display: "flex", gap: 1.25, alignItems: "flex-start", color: "#d3e3f2", fontSize: "0.92rem", lineHeight: 1.45 }}>
-                  <CheckRounded aria-hidden="true" sx={{ fontSize: 18, mt: "2px", color: "#6fdcff", flex: "none" }} />
+                <Box component="li" key={line} sx={{ display: "flex", gap: 1.25, alignItems: "flex-start", color: palette.slate[150], fontSize: "0.92rem", lineHeight: 1.45 }}>
+                  <CheckRounded aria-hidden="true" sx={{ fontSize: 18, mt: "2px", color: palette.sky[150], flex: "none" }} />
                   {line}
                 </Box>
               ))}
@@ -141,8 +142,8 @@ export default function PlayCard({ item, index, selected, faceUp, onSelect }: Pl
               <Box component="span" sx={{ width: "100%", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 1,
                 minHeight: 44, borderRadius: 99, fontWeight: 650, fontSize: "0.95rem", transition: `background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease`,
                 ...(selected
-                  ? { background: "#2879df", color: "#f1fbff", border: "1px solid #2879df", boxShadow: "0 10px 26px -14px rgba(40, 121, 223, 0.9)" }
-                  : { color: "#bff3ff", border: "1px solid rgba(111, 220, 255, 0.45)", "label:hover &": { background: "rgba(40, 140, 255, 0.16)" } }),
+                  ? { background: palette.blue[425], color: palette.grey[25], border: `1px solid ${palette.blue[425]}`, boxShadow: `0 10px 26px -14px ${withAlpha(palette.blue[425], 0.9)}` }
+                  : { color: palette.slate[75], border: `1px solid ${withAlpha(palette.sky[150], 0.45)}`, "label:hover &": { background: withAlpha(palette.blue[350], 0.16) } }),
                 "& svg": { fontSize: 18 } }}>
                 {selected ? <><CheckRounded /> Selected</> : "Choose this sprint"}
               </Box>
@@ -152,11 +153,11 @@ export default function PlayCard({ item, index, selected, faceUp, onSelect }: Pl
           {/* Back, seen while the card waits to be dealt */}
           <Box aria-hidden="true" sx={{
             gridArea: "1 / 1", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)",
-            borderRadius: "22px", border: "1px solid rgba(86, 156, 222, 0.5)", display: "grid", placeItems: "center",
-            background: "repeating-linear-gradient(45deg, rgba(111, 220, 255, 0.07) 0 2px, transparent 2px 14px), repeating-linear-gradient(-45deg, rgba(111, 220, 255, 0.07) 0 2px, transparent 2px 14px), radial-gradient(circle at 50% 45%, #134a93, #071a36 70%)",
-            boxShadow: "inset 0 0 0 10px rgba(5, 18, 40, 0.65), inset 0 0 0 11px rgba(111, 220, 255, 0.3)",
+            borderRadius: "22px", border: `1px solid ${withAlpha(palette.blue[325], 0.5)}`, display: "grid", placeItems: "center",
+            background: `repeating-linear-gradient(45deg, ${withAlpha(palette.sky[150], 0.07)} 0 2px, transparent 2px 14px), repeating-linear-gradient(-45deg, ${withAlpha(palette.sky[150], 0.07)} 0 2px, transparent 2px 14px), radial-gradient(circle at 50% 45%, ${palette.navy[600]}, ${palette.navy[775]} 70%)`,
+            boxShadow: `inset 0 0 0 10px ${withAlpha(palette.navy[850], 0.65)}, inset 0 0 0 11px ${withAlpha(palette.sky[150], 0.3)}`,
           }}>
-            <Box component="img" src="/brand/ribbon-mark.svg" alt="" sx={{ width: "38%", filter: "drop-shadow(0 0 18px rgba(40, 160, 255, 0.6))" }} />
+            <Box component="img" src="/brand/ribbon-mark.svg" alt="" sx={{ width: "38%", filter: `drop-shadow(0 0 18px ${withAlpha(palette.blue[300], 0.6)})` }} />
           </Box>
         </motion.div>
       </motion.div>

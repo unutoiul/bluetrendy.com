@@ -12,6 +12,7 @@ import {
   defaultDiscoveryPackage, discoveryEssentials, discoveryPackages, findDiscoveryPackage, formatPounds,
   type DiscoveryPackageId,
 } from "@/data/pricing";
+import { palette, withAlpha } from "@/theme/palette";
 
 const hidden = { position: "absolute", width: 1, height: 1, overflow: "hidden", clipPath: "inset(50%)", whiteSpace: "nowrap" } as const;
 
@@ -21,11 +22,11 @@ const steps = ["Choose your company size", "Add your details", "Pay, then pick a
 function Step({ number, children, id }: { number: number; children: ReactNode; id?: string }) {
   return (
     <Box component="h3" id={id} sx={{ display: "flex", alignItems: "center", gap: 1.5, m: 0, fontSize: { xs: "1.1rem", md: "1.2rem" },
-      fontWeight: 650, letterSpacing: "-0.02em", color: "#f1f8ff" }}>
+      fontWeight: 650, letterSpacing: "-0.02em", color: palette.grey[25] }}>
       <Box component="span" aria-hidden="true" sx={{ display: "grid", placeItems: "center", flex: "none", width: 32, height: 32, borderRadius: "50%",
-        fontFamily: "var(--font-mono), monospace", fontSize: "0.85rem", color: "#bff3ff",
-        background: "radial-gradient(circle, #0f3d78, #071a36 75%)", border: "1px solid #63d4ff",
-        boxShadow: "0 0 14px rgba(20, 150, 255, 0.45)" }}>{number}</Box>
+        fontFamily: "var(--font-mono), monospace", fontSize: "0.85rem", color: palette.slate[75],
+        background: `radial-gradient(circle, ${palette.navy[600]}, ${palette.navy[775]} 75%)`, border: `1px solid ${palette.sky[150]}`,
+        boxShadow: `0 0 14px ${withAlpha(palette.blue[350], 0.45)}` }}>{number}</Box>
       <Box component="span" sx={hidden}>{`Step ${number}: `}</Box>
       {children}
     </Box>
@@ -54,7 +55,7 @@ export default function DiscoverySprint() {
 
   return (
     <Box component="section" id="discovery-sprint" aria-labelledby="discovery-heading" sx={{
-      position: "relative", overflow: "clip", isolation: "isolate", color: "#eef6ff", scrollMarginTop: 76,
+      position: "relative", overflow: "clip", isolation: "isolate", color: palette.grey[25], scrollMarginTop: 76,
       background: neural.blueFlow("header", "agents"),
     }}>
       <LivingBackground effect="streaks" quiet="top" seed={23} />
@@ -67,7 +68,7 @@ export default function DiscoverySprint() {
               letterSpacing: "-0.047em", lineHeight: 1.06 }}>
               A plan priced for <Box component="span" sx={neural.accentText}>your size</Box>
             </Box>
-            <Box component="p" sx={{ m: "18px 0 0", maxWidth: "52ch", color: "#c3d6ea", fontSize: "clamp(1rem, 1.25vw, 1.12rem)", lineHeight: 1.6 }}>
+            <Box component="p" sx={{ m: "18px 0 0", maxWidth: "52ch", color: palette.slate[125], fontSize: "clamp(1rem, 1.25vw, 1.12rem)", lineHeight: 1.6 }}>
               Smaller companies have fewer systems and people to plan around, so their sprint costs less.
               Every sprint ends with a written plan, a build estimate and a fixed price.
             </Box>
@@ -76,9 +77,9 @@ export default function DiscoverySprint() {
           <Box component="ol" aria-label="How booking works" sx={{ listStyle: "none", m: 0, p: 0, display: { xs: "none", md: "grid" }, gap: 1.25,
             justifySelf: { md: "end" } }}>
             {steps.map((step, index) => (
-              <Box component="li" key={step} sx={{ display: "flex", alignItems: "center", gap: 1.5, color: "#c3d6ea", fontSize: "0.95rem" }}>
+              <Box component="li" key={step} sx={{ display: "flex", alignItems: "center", gap: 1.5, color: palette.slate[125], fontSize: "0.95rem" }}>
                 <Box component="span" aria-hidden="true" sx={{ display: "grid", placeItems: "center", width: 26, height: 26, borderRadius: "50%",
-                  fontFamily: "var(--font-mono), monospace", fontSize: "0.75rem", color: "#8eeaff", border: "1px solid rgba(111, 220, 255, 0.45)" }}>
+                  fontFamily: "var(--font-mono), monospace", fontSize: "0.75rem", color: palette.sky[100], border: `1px solid ${withAlpha(palette.sky[150], 0.45)}` }}>
                   {index + 1}
                 </Box>
                 {step}
@@ -108,23 +109,23 @@ export default function DiscoverySprint() {
           <div>
             <Step number={2}>Add your details</Step>
             <Box aria-live="polite" sx={{ mt: 3, display: "flex", alignItems: "center", gap: 2, p: 2, borderRadius: "16px",
-              border: "1px solid rgba(111, 220, 255, 0.3)", background: "rgba(4, 16, 36, 0.45)" }}>
+              border: `1px solid ${withAlpha(palette.sky[150], 0.3)}`, background: withAlpha(palette.navy[850], 0.45) }}>
               <Box aria-hidden="true" sx={{ display: "grid", placeItems: "center", flex: "none", width: 48, height: 64, borderRadius: "8px",
-                fontFamily: "var(--font-mono), monospace", fontWeight: 700, fontSize: "1.3rem", color: "#8eeaff",
-                border: "1px solid rgba(111, 220, 255, 0.5)", background: "linear-gradient(160deg, rgba(20, 56, 104, 0.9), rgba(6, 20, 44, 0.95))",
-                boxShadow: "0 0 16px rgba(20, 150, 255, 0.3)" }}>{sprint.rank}</Box>
+                fontFamily: "var(--font-mono), monospace", fontWeight: 700, fontSize: "1.3rem", color: palette.sky[100],
+                border: `1px solid ${withAlpha(palette.sky[150], 0.5)}`, background: `linear-gradient(160deg, ${withAlpha(palette.navy[675], 0.9)}, ${withAlpha(palette.navy[800], 0.95)})`,
+                boxShadow: `0 0 16px ${withAlpha(palette.blue[350], 0.3)}` }}>{sprint.rank}</Box>
               <Box sx={{ minWidth: 0, flex: 1 }}>
-                <Box sx={{ fontWeight: 650, color: "#f1f8ff" }}>{sprint.name}</Box>
-                <Box sx={{ color: "#9fb8cf", fontSize: "0.9rem" }}>{sprint.employees} · {sprint.duration}</Box>
+                <Box sx={{ fontWeight: 650, color: palette.grey[25] }}>{sprint.name}</Box>
+                <Box sx={{ color: palette.slate[200], fontSize: "0.9rem" }}>{sprint.employees} · {sprint.duration}</Box>
               </Box>
               <Box sx={{ ...neural.accentText, fontSize: "1.6rem", fontWeight: 700, letterSpacing: "-0.04em" }}>{formatPounds(sprint.price)}</Box>
             </Box>
-            <Box component="p" sx={{ m: "28px 0 12px", color: "#7fe3ff", fontSize: "0.76rem", fontWeight: 650, letterSpacing: "0.16em",
+            <Box component="p" sx={{ m: "28px 0 12px", color: palette.sky[150], fontSize: "0.76rem", fontWeight: 650, letterSpacing: "0.16em",
               textTransform: "uppercase" }}>Every sprint includes</Box>
             <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, display: "grid", gap: 1.25 }}>
               {discoveryEssentials.map(line => (
-                <Box component="li" key={line} sx={{ display: "flex", gap: 1.25, alignItems: "flex-start", color: "#d3e3f2", fontSize: "0.95rem", lineHeight: 1.5 }}>
-                  <CheckRounded aria-hidden="true" sx={{ fontSize: 18, mt: "3px", color: "#6fdcff", flex: "none" }} />
+                <Box component="li" key={line} sx={{ display: "flex", gap: 1.25, alignItems: "flex-start", color: palette.slate[150], fontSize: "0.95rem", lineHeight: 1.5 }}>
+                  <CheckRounded aria-hidden="true" sx={{ fontSize: 18, mt: "3px", color: palette.sky[150], flex: "none" }} />
                   {line}
                 </Box>
               ))}

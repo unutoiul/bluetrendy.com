@@ -6,6 +6,7 @@ import BookingSteps from "@/components/booking/BookingSteps";
 import LivingBackground from "@/components/backgrounds/LivingBackground";
 import JsonLd from "@/components/JsonLd";
 import { breadcrumbs, pageMetadata } from "@/lib/seo";
+import { palette } from "@/theme/palette";
 
 export const metadata: Metadata = pageMetadata({
   title: "Book a Free 30-Minute Call",
@@ -16,7 +17,7 @@ export const metadata: Metadata = pageMetadata({
 export default function BookACallPage() {
   return (
     <Box component="section" aria-labelledby="booking-heading"
-      sx={{ position: "relative", isolation: "isolate", overflow: "clip", bgcolor: "#f1f6fa", pt: { xs: 3, md: 5 }, pb: { xs: 6, md: 8 } }}>
+      sx={{ position: "relative", isolation: "isolate", overflow: "clip", bgcolor: palette.grey[25], pt: { xs: 3, md: 5 }, pb: { xs: 6, md: 8 } }}>
       <JsonLd data={breadcrumbs([{ name: "Book a call", path: "/book-a-call" }])} />
       {/* A lattice of dots on springs that gives way under the mouse, in the light page's colours. */}
       <LivingBackground effect="springGrid" light quiet="none" seed={113} />

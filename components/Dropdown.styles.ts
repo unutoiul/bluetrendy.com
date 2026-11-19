@@ -1,4 +1,5 @@
 import type { CSSObject } from "@mui/material/styles";
+import { palette } from "@/theme/palette";
 
 // Class names used in the markup. The list itself is styled through MuiMenu in theme.ts.
 const styles = {
@@ -15,13 +16,13 @@ export const dropdownSheet: CSSObject[] = [
       maxWidth: "100%",
       minWidth: 0,
       borderRadius: 22,
-      color: "#183953",
-      backgroundColor: "#eff4f8",
+      color: palette.navy[700],
+      backgroundColor: palette.grey[25],
       fontSize: ".9rem",
       fontWeight: 550,
       transition: "background-color .2s ease",
     } },
-  { [`${pill}:hover, ${pill}:has([aria-expanded='true'])`]: { backgroundColor: "#e4eef6" } },
+  { [`${pill}:hover, ${pill}:has([aria-expanded='true'])`]: { backgroundColor: palette.grey[75] } },
   // The value fills the whole pill, so a click anywhere on it opens the list.
   { [`${pill} .MuiSelect-select.MuiInputBase-input`]: {
       height: "auto",
@@ -33,20 +34,20 @@ export const dropdownSheet: CSSObject[] = [
   // The focus ring traces the pill rather than the value inside it.
   { [`${pill} .MuiSelect-select:focus-visible`]: { outline: "none" } },
   { [`${pill}:has(.MuiSelect-select:focus-visible)`]: {
-      outline: "3px solid #2585dd",
+      outline: `3px solid ${palette.blue[425]}`,
       outlineOffset: 3,
       animation: "focus-ring .28s var(--ease-out)",
     } },
-  { [`${pill} .MuiSelect-icon`]: { right: 12, color: "#49637b", fontSize: "1.25rem" } },
+  { [`${pill} .MuiSelect-icon`]: { right: 12, color: palette.slate[525], fontSize: "1.25rem" } },
   // The pill is disabled only until the page hydrates, so it keeps its usual colours.
   { [`${pill}.Mui-disabled, ${pill} .MuiSelect-select.Mui-disabled`]: {
-      color: "#183953",
+      color: palette.navy[700],
       WebkitTextFillColor: "currentColor",
       cursor: "default",
     } },
   { ".Dropdown__hint": {
       marginLeft: "auto",
-      color: "#6b8297",
+      color: palette.slate[375],
       fontSize: ".8rem",
       fontWeight: 500,
       fontVariantNumeric: "tabular-nums",

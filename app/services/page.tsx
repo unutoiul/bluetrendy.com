@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import ArrowOutwardRounded from "@mui/icons-material/ArrowOutwardRounded";
+import LinkButton from "@/components/LinkButton";
 import PageHero from "@/components/PageHero";
 import LivingBackground from "@/components/backgrounds/LivingBackground";
 import ServiceIndex from "@/components/interior/ServiceIndex";
@@ -63,9 +64,10 @@ export default function ServicesPage() {
               <div>
                 <h3>What we deliver</h3>
                 <ul className={styles.deliverables}>{service.bullets.map(bullet => <li key={bullet}>{bullet}</li>)}</ul>
-                <Link className={styles.briefLink} href="/book-a-call" aria-label={"Book a call about " + service.name}>
-                  Book a call about this service <span aria-hidden="true">↗</span>
-                </Link>
+                <LinkButton href="/book-a-call" variant="outlined" endIcon={<ArrowOutwardRounded />}
+                  aria-label={"Book a call about " + service.name}>
+                  Book a call about this service
+                </LinkButton>
               </div>
             </div>
           </section>)}

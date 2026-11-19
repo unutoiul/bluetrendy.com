@@ -1,13 +1,13 @@
 "use client";
 
-import Link from "next/link";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { trackEvent } from "@/lib/analytics";
+import LinkButton from "./LinkButton";
+import { trackEvent } from "@/lib/analytics";import { palette, withAlpha } from "@/theme/palette";
+
 
 type CTASectionProps = {
   eyebrow?: string;
@@ -34,8 +34,8 @@ export default function CTASection({
     <Box
       component="section"
       sx={{
-        background: "linear-gradient(180deg, #091b2d 0%, #0c2a4c 55%, #081e35 100%)",
-        color: "#fff",
+        background: `linear-gradient(180deg, ${palette.navy[800]} 0%, ${palette.navy[725]} 55%, ${palette.navy[775]} 100%)`,
+        color: palette.white,
         py: { xs: 6, md: 8 },
         position: "relative",
         overflow: "hidden",
@@ -50,34 +50,17 @@ export default function CTASection({
           <Typography variant="h3" component="h2">
             {title}
           </Typography>
-          <Typography variant="body1" sx={{ color: "rgba(255,255,255,0.78)" }}>
+          <Typography variant="body1" sx={{ color: withAlpha(palette.white, 0.78) }}>
             {subtitle}
           </Typography>
           <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ pt: 0.5, width: { xs: "100%", sm: "auto" } }}>
-            <Button
-              component={Link}
-              href={primaryHref}
-              variant="contained"
-              color="secondary"
-              size="large"
-              endIcon={<ArrowForwardIcon />}
-              onClick={() => trackEvent("cta_book_call_click", { location })}
-              
-            >
+            <LinkButton href={primaryHref} variant="contained" size="large" endIcon={<ArrowForwardIcon />}
+              onClick={() => trackEvent("cta_book_call_click", { location })}>
               {primaryLabel}
-            </Button>
-            <Button
-              component={Link}
-              href={secondaryHref}
-              variant="text"
-              size="large"
-              sx={{
-                color: "#fff",
-                "&:hover": { bgcolor: "#18374f" },
-              }}
-            >
+            </LinkButton>
+            <LinkButton href={secondaryHref} variant="outlined" tone="dark" size="large">
               {secondaryLabel}
-            </Button>
+            </LinkButton>
           </Stack>
         </Stack>
       </Container>

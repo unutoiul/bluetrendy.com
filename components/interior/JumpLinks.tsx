@@ -11,6 +11,7 @@ import ArrowDownwardRounded from "@mui/icons-material/ArrowDownwardRounded";
 import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
 import ExpandMoreRounded from "@mui/icons-material/ExpandMoreRounded";
 import { easeOut } from "@/theme/theme";
+import { palette, withAlpha } from "@/theme/palette";
 
 type JumpLink = { href: string; text: string };
 
@@ -51,7 +52,7 @@ export default function JumpLinks({ label, links }: { label: string; links: Jump
 // The node, rail and stops share one centre line, 22px in from the left.
 const line = 22;
 const stopHeight = 44;
-const cyan = "#46d7ff";
+const cyan = palette.sky[150];
 // Travels from the toggle to the last stop (pulse is 34px tall, so its centre sits 17px below its top).
 const current = keyframes({
   "0%": { top: "-24px", opacity: 0 },
@@ -71,18 +72,18 @@ const sx = {
     pl: "7px",
     pr: 1.5,
     justifyContent: "flex-start",
-    border: "1px solid #2a5479",
+    border: `1px solid ${palette.navy[650]}`,
     borderRadius: 999,
-    bgcolor: "rgba(10, 32, 56, 0.72)",
+    bgcolor: withAlpha(palette.navy[775], 0.72),
     backdropFilter: "blur(8px)",
-    color: "#e8f6ff",
+    color: palette.slate[50],
     fontSize: ".95rem",
     fontWeight: 600,
     transition: `border-color .25s ease, background-color .25s ease, box-shadow .4s ${easeOut}`,
-    "&:hover": { borderColor: "#4aa8e0", bgcolor: "rgba(16, 46, 78, 0.85)" },
+    "&:hover": { borderColor: palette.blue[325], bgcolor: withAlpha(palette.navy[725], 0.85) },
     "[data-open=true] > &": {
-      borderColor: "#5fd2ff",
-      boxShadow: "0 0 0 3px rgba(70, 215, 255, .12), 0 10px 30px -14px rgba(37, 160, 255, .8)",
+      borderColor: palette.sky[150],
+      boxShadow: `0 0 0 3px ${withAlpha(palette.sky[150], 0.12)}, 0 10px 30px -14px ${withAlpha(palette.blue[300], 0.8)}`,
     },
   },
   // A ring with a lit core; it brightens while the menu is open.
@@ -93,25 +94,25 @@ const sx = {
     width: 28,
     height: 28,
     borderRadius: "50%",
-    border: "1px solid #3f86bd",
-    background: "radial-gradient(circle, rgba(70, 215, 255, .22), transparent 70%)",
+    border: `1px solid ${palette.blue[400]}`,
+    background: `radial-gradient(circle, ${withAlpha(palette.sky[150], 0.22)}, transparent 70%)`,
     transition: "border-color .25s ease",
     "&::after": {
       content: '""',
       width: 8,
       height: 8,
       borderRadius: "50%",
-      bgcolor: "#6fd8ff",
+      bgcolor: palette.sky[150],
       boxShadow: `0 0 8px ${cyan}`,
       transition: `transform .35s ${easeOut}, background-color .25s ease`,
     },
-    "[data-open=true] &": { borderColor: "#7fe4ff" },
-    "[data-open=true] &::after": { bgcolor: "#d4f8ff", transform: "scale(1.25)" },
+    "[data-open=true] &": { borderColor: palette.sky[150] },
+    "[data-open=true] &::after": { bgcolor: palette.cyan[75], transform: "scale(1.25)" },
   },
   chevron: {
     ml: "auto",
     fontSize: 20,
-    color: "#8bd6ff",
+    color: palette.sky[175],
     transition: `transform .35s ${easeOut}`,
     "[data-open=true] &": { transform: "rotate(180deg)" },
   },
@@ -128,7 +129,7 @@ const sx = {
       bottom: stopHeight / 2,
       width: 2,
       borderRadius: 1,
-      background: `linear-gradient(${cyan}, #2a5f8c)`,
+      background: `linear-gradient(${cyan}, ${palette.blue[550]})`,
     },
     // One pulse of current runs down the line each time the menu opens.
     "&::after": {
@@ -139,7 +140,7 @@ const sx = {
       width: 4,
       height: 34,
       borderRadius: 2,
-      background: "linear-gradient(transparent, #e2fbff, transparent)",
+      background: `linear-gradient(transparent, ${palette.cyan[25]}, transparent)`,
       boxShadow: `0 0 12px ${cyan}`,
       opacity: 0,
     },
@@ -153,15 +154,15 @@ const sx = {
     minHeight: stopHeight,
     pr: 1.5,
     borderRadius: "10px",
-    color: "#d7e9f8",
+    color: palette.slate[100],
     fontSize: ".95rem",
     fontWeight: 550,
     lineHeight: 1.3,
     textDecoration: "none",
     transition: "background-color .2s ease, color .2s ease",
     "&:hover, &:focus-visible": {
-      bgcolor: "rgba(70, 215, 255, .07)",
-      color: "#b5efff",
+      bgcolor: withAlpha(palette.sky[150], 0.07),
+      color: palette.slate[75],
     },
   },
   // A hollow station on the line that lights up when its link is hovered or focused.
@@ -174,20 +175,20 @@ const sx = {
     ml: `${line - 5}px`,
     mr: "9px",
     borderRadius: "50%",
-    border: "2px solid #4f8fc0",
-    bgcolor: "#0a1d31",
+    border: `2px solid ${palette.blue[400]}`,
+    bgcolor: palette.navy[775],
     transition: `background-color .2s ease, border-color .2s ease, box-shadow .3s ${easeOut}, transform .3s ${easeOut}`,
     "a:hover > &, a:focus-visible > &": {
-      borderColor: "#bff5ff",
+      borderColor: palette.slate[75],
       bgcolor: cyan,
       transform: "scale(1.2)",
-      boxShadow: "0 0 0 4px rgba(70, 215, 255, .16), 0 0 12px #46d7ff",
+      boxShadow: `0 0 0 4px ${withAlpha(palette.sky[150], 0.16)}, 0 0 12px ${palette.sky[150]}`,
     },
   },
   arrow: {
     flex: "none",
     fontSize: 18,
-    color: "#6fcff5",
+    color: palette.sky[150],
     opacity: 0.6,
     transition: `transform .3s ${easeOut}, opacity .2s ease`,
     "a:hover > &, a:focus-visible > &": { opacity: 1, transform: "translateX(3px)" },

@@ -1,4 +1,5 @@
-import type { CSSObject } from "@mui/material/styles";
+import type { CSSObject } from "@mui/material/styles";import { palette } from "@/theme/palette";
+
 
 // Class names used in the markup. Each is prefixed so it stays unique across the site.
 const styles = {
@@ -25,15 +26,15 @@ export default styles;
 export const editorialSheet: CSSObject[] = [
   { ".Editorial__hero": {
       position: "relative",
-      color: "#f5fbff",
-      background: "#091b2d",
+      color: palette.grey[25],
+      background: palette.navy[800],
     } },
   { ".Editorial__heroGrid, .Editorial__width": { width: "min(100% - 48px, 1152px)", marginInline: "auto" } },
   { ".Editorial__heroGrid": { display: "grid", gap: "clamp(24px, 5vw, 76px)", alignItems: "center", paddingBlock: "clamp(38px, 5vw, 76px)" } },
   // The second column holds the 3D logo film, which is large enough to need nearly half the banner.
   { ".Editorial__heroSplit": { gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", minHeight: "clamp(460px, 42vw, 640px)" } },
   { ".Editorial__heroCopy": { maxWidth: "55rem" } },
-  { ".Editorial__context": { margin: "0 0 15px", color: "#a0ddef", fontSize: ".88rem", fontWeight: "570" } },
+  { ".Editorial__context": { margin: "0 0 15px", color: palette.sky[100], fontSize: ".88rem", fontWeight: "570" } },
   { ".Editorial__hero h1": {
       margin: "0",
       fontWeight: "590",
@@ -43,7 +44,7 @@ export const editorialSheet: CSSObject[] = [
       textWrap: "balance",
     } },
   { ".Editorial__heroCopy > p:last-of-type:not(.Editorial__context)": {
-      color: "#c1d5e3",
+      color: palette.slate[125],
       fontSize: "clamp(1rem, 1.32vw, 1.19rem)",
       lineHeight: "1.58",
       maxWidth: "62ch",
@@ -60,7 +61,7 @@ export const editorialSheet: CSSObject[] = [
       justifyItems: "start",
       gap: "3px",
     } },
-  { ".Editorial__nextProject small": { color: "#48677c" } },
+  { ".Editorial__nextProject small": { color: palette.slate[525] } },
   { ".Editorial__nextProject a": {
       fontSize: "clamp(1.1rem, 2vw, 1.5rem)",
       textDecorationThickness: "1px",
@@ -83,22 +84,22 @@ export const editorialSheet: CSSObject[] = [
       left: "21px",
       top: "42px",
       bottom: "-12px",
-      background: "#add2e3",
+      background: palette.slate[125],
     } },
   { ".Editorial__milestone": {
       zIndex: "1",
       width: "44px",
       height: "44px",
-      background: "#0e344d",
-      color: "#b5f0ff",
+      background: palette.navy[700],
+      color: palette.slate[75],
       borderRadius: "50%",
       display: "grid",
       placeItems: "center",
       font: "550 .87rem var(--font-mono),monospace",
     } },
   { ".Editorial__roadmap h2": { margin: "2px 0 6px", lineHeight: "1.15", fontSize: "clamp(1.4rem,2.4vw,2rem)", letterSpacing: "-.045em" } },
-  { ".Editorial__roadmap small": { color: "#21638a", fontWeight: "650" } },
-  { ".Editorial__roadmap p": { margin: "0", lineHeight: "1.7", color: "#415d72", maxWidth: "65ch" } },
+  { ".Editorial__roadmap small": { color: palette.blue[550], fontWeight: "650" } },
+  { ".Editorial__roadmap p": { margin: "0", lineHeight: "1.7", color: palette.slate[525], maxWidth: "65ch" } },
   { ".Editorial__portrait": { margin: "auto", position: "relative", width: "min(100%, 254px)" } },
   { ".Editorial__portrait img": {
       display: "block",
@@ -107,10 +108,10 @@ export const editorialSheet: CSSObject[] = [
       height: "auto",
       objectFit: "cover",
       borderRadius: "45% 45% 4px 4px",
-      background: "#cfdfec",
+      background: palette.slate[125],
     } },
   { ".Editorial__portrait figcaption": { display: "flex", flexWrap: "wrap", gap: "3px 10px", alignItems: "baseline", paddingTop: "9px" } },
-  { ".Editorial__portrait figcaption span": { color: "#476478", fontSize: ".78rem" } },
+  { ".Editorial__portrait figcaption span": { color: palette.slate[525], fontSize: ".78rem" } },
   { ".Editorial__brief": {
       padding: "clamp(18px,4vw,48px)",
       background: "white",

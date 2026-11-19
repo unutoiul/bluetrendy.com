@@ -3,18 +3,10 @@ import {
   listCheck, listOption, listOptionActive, listOptionFocus, listOptionSelected,
   listOptionSelectedActive, listPadding, listSeparator, listSurface,
 } from "./menuStyle";
+import { brand, palette, withAlpha } from "./palette";
 
-export const brand = {
-  navy: "#0C2B45",
-  navyDark: "#081E35",
-  navyMid: "#19466F",
-  blue: "#165FCC",
-  blueLight: "#8BD6FF",
-  mist: "#F1F6FC",
-  ink: "#0C2942",
-  slate: "#455E71",
-  border: "#CCD9E5",
-};
+// Every colour comes from theme/palette.ts; `brand` stays exported here for existing imports.
+export { brand };
 
 // One easing curve for every interaction: a quick start that settles softly.
 export const easeOut = "cubic-bezier(0.22, 1, 0.36, 1)";
@@ -25,24 +17,29 @@ const theme = createTheme({
     primary: {
       main: brand.navy,
       dark: brand.navyDark,
-      light: "#346287",
-      contrastText: "#FFFFFF",
+      light: palette.slate[525],
+      contrastText: palette.white,
     },
     secondary: {
       main: brand.blue,
-      dark: "#104DAB",
+      dark: palette.blue[550],
       light: brand.blueLight,
-      contrastText: "#FFFFFF",
+      contrastText: palette.white,
     },
     background: {
-      default: "#FFFFFF",
-      paper: "#FFFFFF",
+      default: palette.white,
+      paper: palette.white,
     },
     text: {
       primary: brand.ink,
       secondary: brand.slate,
     },
     divider: brand.border,
+    // MUI's own status colours, swapped for the palette's so alerts and form errors match the site.
+    error: { main: palette.red[400], contrastText: palette.white },
+    warning: { main: palette.amber[300], contrastText: palette.navy[800] },
+    success: { main: palette.green[375], contrastText: palette.white },
+    info: { main: palette.blue[425], contrastText: palette.white },
   },
   shape: {
     borderRadius: 10,
@@ -72,13 +69,13 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         ":where(a, button, input, select, textarea, [tabindex]):focus-visible, .MuiButtonBase-root.Mui-focusVisible": {
-          outline: "3px solid #2585dd",
+          outline: `3px solid ${palette.blue[425]}`,
           outlineOffset: 3,
           animation: `focus-ring 0.28s ${easeOut}`,
         },
         "h1, h2, h3": { textWrap: "balance" },
         ":where(a, button)": { touchAction: "manipulation" },
-        "::selection": { backgroundColor: brand.blue, color: "#fff" },
+        "::selection": { backgroundColor: brand.blue, color: palette.white },
       },
     },
     MuiButtonBase: {
@@ -116,20 +113,20 @@ const theme = createTheme({
         },
         // One primary action style across the site: the bright blue pill from the home page.
         contained: {
-          backgroundColor: "#2879df",
-          color: "#f1fbff",
-          boxShadow: "0 10px 26px -14px rgba(40, 121, 223, 0.9)",
-          "&:hover": { transform: "translateY(-1px)", backgroundColor: "#3c8bef", boxShadow: "0 14px 30px -14px rgba(60, 139, 239, 0.95)" },
+          backgroundColor: palette.blue[425],
+          color: palette.grey[25],
+          boxShadow: `0 10px 26px -14px ${withAlpha(palette.blue[425], 0.9)}`,
+          "&:hover": { transform: "translateY(-1px)", backgroundColor: palette.blue[350], boxShadow: `0 14px 30px -14px ${withAlpha(palette.blue[350], 0.95)}` },
           "&:active": { transform: "scale(0.98)", boxShadow: "none" },
         },
         outlined: {
           border: 0,
           backgroundColor: brand.mist,
-          "&:hover": { border: 0, backgroundColor: "#E3EDF5" },
+          "&:hover": { border: 0, backgroundColor: palette.grey[75] },
         },
         // Text buttons fill with a soft blue pill on hover, the same tint as the header links.
         text: {
-          "&:hover": { backgroundColor: "rgba(63, 168, 255, 0.14)" },
+          "&:hover": { backgroundColor: withAlpha(palette.blue[300], 0.14) },
         },
       },
     },
@@ -145,13 +142,13 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 12,
-          backgroundColor: "#F7FAFE",
+          backgroundColor: palette.grey[25],
           transition: `background-color 0.25s ease, box-shadow 0.4s ${easeOut}`,
           "& .MuiOutlinedInput-notchedOutline": { borderColor: brand.border, transition: "border-color 0.25s ease" },
-          "&:hover:not(.Mui-focused, .Mui-disabled, .Mui-error) .MuiOutlinedInput-notchedOutline": { borderColor: "#8FA9C0" },
+          "&:hover:not(.Mui-focused, .Mui-disabled, .Mui-error) .MuiOutlinedInput-notchedOutline": { borderColor: palette.slate[275] },
           "&.Mui-focused": {
-            backgroundColor: "#fff",
-            boxShadow: "0 0 0 3px rgba(22,95,204,0.1)",
+            backgroundColor: palette.white,
+            boxShadow: `0 0 0 3px ${withAlpha(palette.blue[500], 0.1)}`,
           },
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: brand.blue, borderWidth: 1.5 },
 
@@ -199,7 +196,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           transition: "background-color 0.2s ease",
-          "&.Mui-expanded": { backgroundColor: "#edf3f7", boxShadow: "none" },
+          "&.Mui-expanded": { backgroundColor: palette.grey[25], boxShadow: "none" },
         },
       },
     },

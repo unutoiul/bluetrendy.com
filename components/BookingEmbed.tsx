@@ -1,12 +1,12 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import CalendarMonthOutlined from "@mui/icons-material/CalendarMonthOutlined";
 import OpenInNew from "@mui/icons-material/OpenInNew";
 import CalEmbed, { type BookingPrefill } from "@/components/CalEmbed";
 import CalendlyEmbed from "@/components/CalendlyEmbed";
 import LinkButton from "@/components/LinkButton";
+import ActionButton from "@/components/ActionButton";
 import { getBookingConfig } from "@/lib/booking";
 
 export default function BookingEmbed({ prefill }: { prefill?: BookingPrefill }) {
@@ -24,9 +24,9 @@ export default function BookingEmbed({ prefill }: { prefill?: BookingPrefill }) 
           Tell us a little about your project and a few times that suit you.
           We&apos;ll reply within one business day to arrange your free discovery call.
         </Typography>
-        <Button href="mailto:contact@bluetrendy.com?subject=Free%20discovery%20call" variant="contained" color="primary">
+        <ActionButton href="mailto:contact@bluetrendy.com?subject=Free%20discovery%20call" variant="contained">
           Arrange a discovery call
-        </Button>
+        </ActionButton>
         <LinkButton href="/contact" variant="text">Or send a project brief</LinkButton>
       </Stack>
     );
