@@ -131,7 +131,7 @@ export default function BookingSteps() {
         <AnimatePresence mode="wait" custom={direction} initial={false}>
           <motion.div key={step} custom={direction} variants={slide} initial="enter" animate="center" exit="exit">
             {step === 0 && (
-              <Box component="form" noValidate onSubmit={submitDetails}>
+              <Box component="form" noValidate onSubmit={submitDetails} data-clarity-mask="true">
                 <StepIntro headingRef={headingRef} title="Who should we expect?"
                   text="A free 30-minute video call with the team that would build it." />
                 <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" } }}>
@@ -156,7 +156,7 @@ export default function BookingSteps() {
             )}
 
             {step === 1 && (
-              <Box component="form" noValidate onSubmit={submitNeeds}>
+              <Box component="form" noValidate onSubmit={submitNeeds} data-clarity-mask="true">
                 <StepIntro headingRef={headingRef} id="needs-heading" title="What can we help with?"
                   text="Pick everything that applies, so we come to the call prepared." />
                 <Box role="group" aria-labelledby="needs-heading"

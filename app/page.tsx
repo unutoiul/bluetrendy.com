@@ -1,4 +1,8 @@
+import type { Metadata } from "next";
 import WebsiteEntrance from "@/components/WebsiteEntrance";
+import { homeTitle, pageMetadata, siteDescription } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata({ title: homeTitle, absolute: true, description: siteDescription, path: "/" });
 import Experience from "@/components/experience/Experience";
 import HomeStyles from "@/components/experience/HomeStyles";
 

@@ -7,6 +7,8 @@ import Logo from "./Logo";
 import PaymentMarks from "./PaymentMarks";
 import LinkTypography from "./LinkTypography";
 import { footerLinks } from "@/data/nav";
+import CookieSettingsButton from "./analytics/CookieSettingsButton";
+import { consentRequired } from "@/lib/analyticsConfig";
 import { brand } from "@/theme/theme";
 
 const email = "contact@bluetrendy.com";
@@ -86,6 +88,8 @@ export default function Footer() {
                   {link.label}
                 </LinkTypography>
               ))}
+              {consentRequired && <CookieSettingsButton className="link-draw"
+                sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14, color: "#cfe0ef", "&:hover": { color: "#fff" } }} />}
             </Box>
             <Box component="p" sx={{ m: 0, order: { md: 1 } }}>© {year} BlueTrendy Intelligence</Box>
             <Box component="p" sx={{ m: 0, order: 3, ml: { md: "auto" } }}>

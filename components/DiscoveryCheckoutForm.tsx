@@ -64,7 +64,7 @@ export default function DiscoveryCheckoutForm({ sprint }: { sprint: DiscoveryPac
   }
 
   return (
-    <Stack component="form" onSubmit={handleSubmit} spacing={2}>
+    <Stack component="form" onSubmit={handleSubmit} spacing={2} data-clarity-mask="true">
       <TextField
         label="Work email"
         name="email"

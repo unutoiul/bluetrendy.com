@@ -6,6 +6,9 @@ import ThemeRegistry from "@/theme/ThemeRegistry";
 import Header from "@/components/Header";
 import SiteFooter from "@/components/SiteFooter";
 import Panel3D from "@/components/motion/Panel3D";
+import ConsentAnalytics from "@/components/analytics/ConsentAnalytics";
+import JsonLd from "@/components/JsonLd";
+import { absoluteUrl, contact, homeTitle, ids, siteDescription, siteName, siteUrl, tagline } from "@/lib/seo";
 
 const geist = localFont({
   src: "../public/fonts/geist-latin.woff2",
@@ -23,42 +26,101 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.bluetrendy.com";
-const siteTitle = "BlueTrendy Intelligence — Services & digital production";
-const siteDescription = "BlueTrendy builds custom software, websites and mobile apps, implements and integrates IT systems, automates workflows with AI and produces marketing videos.";
+const siteTitle = homeTitle;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: siteTitle,
-    template: "%s — BlueTrendy Intelligence",
+    template: "%s | BlueTrendy",
   },
   description: siteDescription,
+  applicationName: siteName,
   keywords: [
-    "AI software consultancy",
-    "custom software development",
-    "enterprise software agency",
-    "AI automation development",
-    "Next.js development agency",
-    "legacy system modernization",
+    "AI agents",
+    "AI automation",
+    "custom software development London",
+    "software development company UK",
+    "web development agency London",
+    "mobile app development",
+    "e-commerce website development",
+    "systems integration",
+    "legacy software modernisation",
+    "marketing video production",
   ],
-  authors: [{ name: "BlueTrendy Intelligence" }],
+  authors: [{ name: siteName, url: siteUrl }],
+  creator: siteName,
+  publisher: siteName,
+  category: "technology",
   openGraph: {
     type: "website",
-    siteName: "BlueTrendy Intelligence",
+    siteName,
+    locale: "en_GB",
     title: siteTitle,
     description: siteDescription,
-    url: siteUrl,
+    url: "/",
   },
   twitter: {
     card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
   },
+  // Let Google show large image previews and full-length snippets.
   robots: {
     index: true,
     follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   },
+  // Ownership checks: the tokens from Google Search Console's and Bing Webmaster Tools' "HTML tag" methods.
+  verification: {
+    ...(process.env.GOOGLE_SITE_VERIFICATION && { google: process.env.GOOGLE_SITE_VERIFICATION }),
+    ...(process.env.BING_SITE_VERIFICATION && { other: { "msvalidate.01": process.env.BING_SITE_VERIFICATION } }),
+  },
+};
+
+// Who we are, for search engines and AI assistants: the business behind every page, and the site's name.
+const organization = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["Organization", "ProfessionalService"],
+      "@id": ids.organization,
+      name: siteName,
+      alternateName: "BlueTrendy",
+      url: siteUrl,
+      logo: { "@type": "ImageObject", url: absoluteUrl("/brand/logo.png"), width: 1320, height: 322 },
+      image: absoluteUrl("/brand/logo.png"),
+      description: siteDescription,
+      slogan: tagline,
+      email: contact.email,
+      telephone: contact.telephone,
+      address: { "@type": "PostalAddress", addressLocality: contact.locality, addressCountry: contact.country },
+      areaServed: { "@type": "Country", name: "United Kingdom" },
+      founder: { "@type": "Person", "@id": ids.founder, name: "Lucas Franco", jobTitle: "Founder and lead engineer" },
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        email: contact.email,
+        telephone: contact.telephone,
+        areaServed: "GB",
+        availableLanguage: "English",
+      },
+      knowsAbout: [
+        "AI agents", "AI automation", "Custom software development", "Web development", "E-commerce",
+        "Mobile app development", "Systems integration", "Legacy software modernisation", "Video production",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": ids.website,
+      url: siteUrl,
+      name: siteName,
+      alternateName: "BlueTrendy",
+      description: siteDescription,
+      inLanguage: "en-GB",
+      publisher: { "@id": ids.organization },
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -67,14 +129,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geist.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en-GB" className={`${geist.variable} ${jetbrainsMono.variable}`}>
       <body>
+        <JsonLd data={organization} />
         <ThemeRegistry>
           <a className="skip-to-content" href="#main-content">Skip to content</a>
           <Header />
           <main id="main-content" tabIndex={-1}>{children}</main>
           <SiteFooter />
           <Panel3D />
+          <ConsentAnalytics />
         </ThemeRegistry>
         <Analytics />
       </body>

@@ -109,7 +109,7 @@ export default function LeadForm({ projectTypes, initialProjectType }: { project
   }
 
   return (
-    <Stack component="form" onSubmit={handleSubmit} spacing={2.5} aria-busy={status === "loading"}>
+    <Stack component="form" onSubmit={handleSubmit} spacing={2.5} aria-busy={status === "loading"} data-clarity-mask="true">
       <Box aria-hidden="true" sx={{ position: "absolute", left: -10000, width: 1, height: 1, overflow: "hidden" }}>
         <label htmlFor="contact-website">Leave this field empty</label>
         <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" value={website} onChange={(event) => setWebsite(event.target.value)} />

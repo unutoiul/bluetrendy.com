@@ -3,6 +3,8 @@ import PolicyArticle from "@/components/interior/PolicyArticle";
 import Typography from "@mui/material/Typography";
 import PageHero from "@/components/PageHero";
 import { getBookingConfig } from "@/lib/booking";
+import { analyticsIds, consentRequired } from "@/lib/analyticsConfig";
+import CookieSettingsButton from "@/components/analytics/CookieSettingsButton";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -12,6 +14,7 @@ export const metadata: Metadata = {
 export default function PrivacyPolicyPage() {
   const booking = getBookingConfig(process.env.NEXT_PUBLIC_CAL_COM_URL, process.env.NEXT_PUBLIC_CALENDLY_URL);
   const schedulingProvider = booking?.provider === "calendly" ? "Calendly" : "Cal.com";
+  const tools = [analyticsIds.ga && "Google Analytics", analyticsIds.clarity && "Microsoft Clarity"].filter(Boolean).join(" and ");
   return (
     <>
       <PageHero eyebrow="Legal" title="Privacy Policy" subtitle="Last updated: to be confirmed before launch." />
@@ -47,6 +50,31 @@ export default function PrivacyPolicyPage() {
               </Typography>
             </>,
           },
+          ...(consentRequired ? [{
+            id: "cookies", title: "Cookies and analytics",
+            body: <>
+              <Typography variant="body1" color="text.secondary">
+                With your permission, we also use {tools} to understand how visitors use this site, so we
+                can improve it.
+              </Typography>
+              {analyticsIds.ga && <Typography variant="body1" color="text.secondary">
+                Google Analytics shows how people find the site, which pages they view and roughly where they
+                are, such as their country or city. It sets cookies whose names begin with _ga.
+              </Typography>}
+              {analyticsIds.clarity && <Typography variant="body1" color="text.secondary">
+                Microsoft Clarity records how pages are used, such as clicks, scrolling and mouse movement, and
+                turns this into heatmaps and session replays. Anything typed into our forms is hidden from these
+                recordings. It sets cookies named _clck and _clsk.
+              </Typography>}
+              <Typography variant="body1" color="text.secondary">
+                These tools load only after you choose Accept on the cookie banner. You can change your choice at
+                any time with{" "}
+                <CookieSettingsButton sx={{ color: "secondary.main", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: "0.2em" }} />,
+                here or at the bottom of every page. Google and Microsoft process this data under their own
+                privacy policies and may do so outside the UK.
+              </Typography>
+            </>,
+          }] : []),
           {
             id: "payments", title: "Payments",
             body: <>

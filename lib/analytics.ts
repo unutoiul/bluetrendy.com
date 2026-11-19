@@ -17,6 +17,9 @@ export type AnalyticsEvent =
 export function trackEvent(event: AnalyticsEvent, props?: Record<string, string | number | boolean>) {
   try {
     track(event, props);
+    // Google Analytics and Clarity exist only after the visitor accepts analytics cookies.
+    window.gtag?.("event", event, props);
+    window.clarity?.("event", event);
   } catch {
     // analytics must never break the UI
   }

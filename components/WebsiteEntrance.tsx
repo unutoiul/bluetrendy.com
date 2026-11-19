@@ -83,6 +83,39 @@ export default function WebsiteEntrance() {
     gate.showModal();
     shell?.removeAttribute("data-entry-pending");
     const unbindTagline = tagline.current ? bindIntroTagline(video, tagline.current) : null;
+
+    // The intro plays with sound. Browsers only allow that once the visitor has interacted with
+    // the page, so when the film has to start muted, their first click, tap or key press turns
+    // the sound on. The sound button and POWER ME handle their own presses.
+    const gestures = ["pointerdown", "pointerup", "keydown"];
+    function waitForGesture() {
+      for (const type of gestures) document.addEventListener(type, unmuteOnGesture, true);
+    }
+    function stopWaitingForGesture() {
+      for (const type of gestures) document.removeEventListener(type, unmuteOnGesture, true);
+    }
+    function unmuteOnGesture(event: Event) {
+      const target = event.target instanceof Element ? event.target : null;
+      if (!video!.muted || target?.closest("[data-sound-toggle], [data-enter]")) {
+        stopWaitingForGesture();
+        return;
+      }
+      // Not every event counts as a gesture (a lone Escape key, say); wait for one that does.
+      const activation = (navigator as Navigator & { userActivation?: { isActive: boolean } }).userActivation;
+      if (activation && !activation.isActive) return;
+      stopWaitingForGesture();
+      const wasPlaying = !video!.paused;
+      video!.muted = false;
+      if (wasPlaying && video!.paused) {
+        // The browser refused sound after all: stay muted and try again on the next press.
+        void video!.play().catch(() => {
+          video!.muted = true;
+          void video!.play().catch(() => { /* The play control remains available. */ });
+          waitForGesture();
+        });
+      }
+    }
+
     if (video.error) setFailed(true);
     else if (!reduced.matches && !savesData() && !document.hidden) {
       prepareFilm(video);
@@ -90,6 +123,7 @@ export default function WebsiteEntrance() {
         if (!active || !gate.open || document.hidden || reduced.matches || error.name !== "NotAllowedError") return;
         video.muted = true;
         void video.play().catch(() => { /* The play control remains available. */ });
+        waitForGesture();
       });
     }
     function pauseIfNeeded() {
@@ -99,6 +133,7 @@ export default function WebsiteEntrance() {
     document.addEventListener("visibilitychange", pauseIfNeeded);
     return () => {
       active = false;
+      stopWaitingForGesture();
       unbindTagline?.();
       reduced.removeEventListener("change", pauseIfNeeded);
       document.removeEventListener("visibilitychange", pauseIfNeeded);
@@ -184,7 +219,7 @@ export default function WebsiteEntrance() {
             onChange={(_, value) => seek(value as number)}
             sx={{ color: "#8edfff" }}
           />
-          <Button aria-label={muted ? "Enable intro sound" : "Mute intro sound"} aria-pressed={!muted}
+          <Button data-sound-toggle aria-label={muted ? "Enable intro sound" : "Mute intro sound"} aria-pressed={!muted}
             onClick={() => { if (player.current) player.current.muted = !player.current.muted; }}>
             {muted ? "Sound off" : "Sound on"}
           </Button>
