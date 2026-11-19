@@ -45,7 +45,7 @@ export const experienceSheet: CSSObject[] = [
       color: "#eef6ff",
       fontFamily: "var(--font-sans), Arial, sans-serif",
     } },
-  { "body:has(.Experience__header)": {
+  { "body:has(.Experience__experience)": {
       background: "#091b2d",
       "--experience-frame": "100%",
     } },

@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import AccessTimeOutlined from "@mui/icons-material/AccessTimeOutlined";
 import VideocamOutlined from "@mui/icons-material/VideocamOutlined";
 import BookingEmbed from "@/components/BookingEmbed";
-import RibbonFilm from "@/components/interior/RibbonFilm";
+import LivingBackground from "@/components/backgrounds/LivingBackground";
 import styles from "@/components/interior/Editorial.styles";
 
 export const metadata: Metadata = {
@@ -16,8 +16,11 @@ export const metadata: Metadata = {
 
 export default function BookACallPage() {
   return (
-    <Box component="section" aria-labelledby="booking-heading" sx={{ bgcolor: "#f1f6fa", pt: { xs: 3, md: 4 }, pb: 5 }}>
-      <Container sx={{ px: { xs: 2, sm: 3 } }}>
+    <Box component="section" aria-labelledby="booking-heading"
+      sx={{ position: "relative", isolation: "isolate", overflow: "clip", bgcolor: "#f1f6fa", pt: { xs: 3, md: 4 }, pb: 5 }}>
+      {/* A lattice of dots on springs that gives way under the mouse, in the light page's colours. */}
+      <LivingBackground effect="springGrid" light quiet="none" seed={113} />
+      <Container sx={{ position: "relative", zIndex: 1, px: { xs: 2, sm: 3 } }}>
         <Box sx={{ maxWidth: 1080, mx: "auto" }}>
           <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2, mb: { xs: 2, md: 3 } }}>
           <Stack className={styles.arrival} spacing={1.25}>
@@ -37,7 +40,6 @@ export default function BookACallPage() {
               <Typography variant="body2" sx={{ color: "primary.main", fontWeight: 700 }}>Free</Typography>
             </Stack>
           </Stack>
-          <RibbonFilm compact />
           </Box>
           <BookingEmbed />
           <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", mt: 2 }}>

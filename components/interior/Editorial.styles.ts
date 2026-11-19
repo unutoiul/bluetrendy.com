@@ -33,7 +33,7 @@ export const editorialSheet: CSSObject[] = [
   { ".Editorial__heroGrid, .Editorial__width": { width: "min(100% - 48px, 1152px)", marginInline: "auto" } },
   { ".Editorial__heroGrid": { display: "grid", gap: "clamp(24px, 5vw, 76px)", alignItems: "center", paddingBlock: "clamp(38px, 5vw, 76px)" } },
   // The second column holds the 3D logo film, which is large enough to need nearly half the banner.
-  { ".Editorial__heroSplit": { gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 1fr)", minHeight: "clamp(420px, 38vw, 580px)" } },
+  { ".Editorial__heroSplit": { gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", minHeight: "clamp(460px, 42vw, 640px)" } },
   { ".Editorial__heroCopy": { maxWidth: "55rem" } },
   { ".Editorial__context": { margin: "0 0 15px", color: "#a0ddef", fontSize: ".88rem", fontWeight: "570" } },
   { ".Editorial__hero h1": {

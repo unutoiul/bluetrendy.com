@@ -18,5 +18,5 @@ export default function PageBackdrop() {
   const path = usePathname();
   const [, effect, seed] = scenes.find(([prefix]) => path === prefix || path.startsWith(prefix + "/")) ?? ["", "constellation", 89];
   // The animation lives under the headline; it fades out before it reaches the logo film.
-  return <LivingBackground effect={effect} seed={seed} quiet="right" />;
+  return <LivingBackground effect={effect} seed={seed} quiet="right" sx={{ zIndex: -1 }} />;
 }

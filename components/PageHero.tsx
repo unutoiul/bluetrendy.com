@@ -16,7 +16,7 @@ type PageHeroProps = {
 export default function PageHero({ eyebrow, title, subtitle, aside, children }: PageHeroProps) {
   return <Box component="section" className={styles.hero} sx={{ overflow: "clip", isolation: "isolate" }}>
     <PageBackdrop />
-    <Box className={styles.heroGrid + " " + styles.heroSplit} sx={{ position: "relative", zIndex: 1 }}>
+    <Box className={styles.heroGrid + " " + styles.heroSplit} sx={{ position: "relative" }}>
       <div className={styles.heroCopy}>
         {eyebrow && <p className={styles.context}>{eyebrow}</p>}
         <HeadingMotion component="h1" text={title} immediate />

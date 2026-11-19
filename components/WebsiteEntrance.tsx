@@ -135,7 +135,8 @@ export default function WebsiteEntrance() {
       <div className={styles.layout}>
         <div className="intro-stage">
           <div className="intro-stack">
-            <div className="intro-picture" aria-hidden="true" data-lockup={failed || (!playing && (!loaded || ended || time === 0))}>
+            <div className="intro-picture" aria-hidden="true" data-lockup={failed}
+              style={{ opacity: loaded || failed ? 1 : 0, transition: "opacity 0.6s ease" }}>
               <video
                 ref={player}
                 width="1920" height="1080" preload="none" playsInline disablePictureInPicture suppressHydrationWarning
