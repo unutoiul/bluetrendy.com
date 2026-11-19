@@ -40,15 +40,17 @@ function DetailHeader({ path }: { path: string }) {
   return (
     <AppBar position="sticky" elevation={0} color="transparent"
       sx={{
-        bgcolor: scrolled ? "rgba(255,255,255,0.82)" : "background.paper",
-        backdropFilter: scrolled ? "saturate(170%) blur(16px)" : "none",
+        // Dark glass, so the header reads as part of the dark banners below it, as on the home page.
+        bgcolor: scrolled ? "rgba(5, 15, 34, 0.84)" : "#071628",
+        backdropFilter: scrolled ? "saturate(160%) blur(16px)" : "none",
+        borderBottom: "1px solid #1d4472", color: "#e4f2ff",
         transition: "background-color 0.35s ease",
       }}>
       <Container>
         <Stack direction="row" sx={{ height: { xs: 65, md: 78 }, alignItems: "center", justifyContent: "space-between", gap: 1 }}>
-          <Logo height={42} spinOnArrival />
+          <Logo height={42} spinOnArrival inverse />
           {booking ? (
-            <Button component={Link} href="/" startIcon={<ArrowBack />} size="small">Back to site</Button>
+            <Button component={Link} href="/" startIcon={<ArrowBack />} size="small" sx={{ color: "#cfe7ff" }}>Back to site</Button>
           ) : (
             <>
               <Box component="nav" aria-label="Main navigation" onPointerLeave={() => setHovered(null)}
@@ -60,20 +62,20 @@ function DetailHeader({ path }: { path: string }) {
                       onPointerEnter={() => setHovered(link.href)} onFocus={() => setHovered(link.href)} onBlur={() => setHovered(null)}
                       sx={{
                         px: { md: 1, lg: 1.35 }, minWidth: 0, position: "relative", zIndex: 0,
-                        color: active ? "secondary.dark" : "text.primary",
+                        color: active ? "#9fe8ff" : "#dcecff",
                         "&::before": { display: "none" },
-                        "&:hover": { color: "secondary.dark" },
+                        "&:hover": { color: "#9fe8ff" },
                       }}>
                       {hovered === link.href && (
                         <Box component={motion.span} layoutId="nav-hover" aria-hidden="true"
                           transition={{ type: "spring", stiffness: 480, damping: 36 }}
-                          sx={{ position: "absolute", inset: "7px 0", zIndex: -1, borderRadius: 999, bgcolor: brand.mist }} />
+                          sx={{ position: "absolute", inset: "7px 0", zIndex: -1, borderRadius: 999, bgcolor: "rgba(63, 168, 255, 0.14)" }} />
                       )}
                       {link.label}
                       {active && (
                         <Box component={motion.span} layoutId="active-nav" aria-hidden="true"
                           transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                          sx={{ position: "absolute", left: 12, right: 12, bottom: 3, height: 2, borderRadius: 2, bgcolor: "secondary.main" }} />
+                          sx={{ position: "absolute", left: 12, right: 12, bottom: 3, height: 2, borderRadius: 2, background: "linear-gradient(90deg, #3fa8ff, #9fe8ff)" }} />
                       )}
                     </Button>
                   );
@@ -82,13 +84,14 @@ function DetailHeader({ path }: { path: string }) {
               <Box sx={{ display: { xs: "none", md: "inline-flex" } }}>
                 <Magnetic>
                   <Button component={Link} href="/book-a-call" variant="contained" endIcon={<ArrowOutward />}
-                    onClick={() => trackEvent("cta_book_call_click", { location: "header" })}>
+                    onClick={() => trackEvent("cta_book_call_click", { location: "header" })}
+                    sx={{ bgcolor: "#e1f2ff", color: "#071a2a", "&:hover": { bgcolor: "#fff" } }}>
                     <RollText>Book a call</RollText>
                   </Button>
                 </Magnetic>
               </Box>
               <IconButton aria-label="Open menu" aria-expanded={open} aria-controls={open ? "mobile-nav" : undefined}
-                onClick={() => setOpen(true)} sx={{ display: { md: "none" }, width: 44, height: 44, color: "primary.main" }}><Menu /></IconButton>
+                onClick={() => setOpen(true)} sx={{ display: { md: "none" }, width: 44, height: 44, color: "#e3f4ff" }}><Menu /></IconButton>
             </>
           )}
         </Stack>

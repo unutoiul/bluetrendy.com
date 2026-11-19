@@ -140,7 +140,6 @@ export const experienceSheet: CSSObject[] = [
       whiteSpace: "nowrap",
     } },
   { ".Experience__frontScene, .Experience__scene": { width: "var(--shell-width)", marginInline: "auto", minWidth: "0" } },
-  { ".Experience__servicesScene": { background: "#0b2034", color: "#eef5ff" } },
   { ".Experience__opening": {
       position: "relative",
       isolation: "isolate",
@@ -149,9 +148,6 @@ export const experienceSheet: CSSObject[] = [
       overflow: "clip",
     } },
   { ".Experience__production, .Experience__clients, .Experience__lab": { position: "relative", isolation: "isolate" } },
-  { ".Experience__production": { background: "#0b2034", color: "#eef5ff" } },
-  { ".Experience__clients": { colorScheme: "light", color: "#132c48", background: "#f5f8fa" } },
-  { ".Experience__clients .Experience__scene": { scrollMarginTop: "76px" } },
   { ".Experience__drawer .Experience__industryList": { color: "#dcecff", fontSize: "1rem" } },
   { ".Experience__industryList summary": { cursor: "pointer", padding: "12px" } },
   { ".Experience__industryList a": { display: "block", padding: "9px 18px", color: "#bcdaef", textDecoration: "none" } },

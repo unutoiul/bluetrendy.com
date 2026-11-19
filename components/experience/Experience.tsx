@@ -1,43 +1,41 @@
 ﻿import Box from "@mui/material/Box";
-import Link from "next/link";
 import Hero from "@/components/Hero";
 import TrustStrip from "@/components/TrustStrip";
+import LivingBackground from "@/components/backgrounds/LivingBackground";
 import ServicesChapter from "./ServicesChapter";
+import ProcessChapter from "./ProcessChapter";
+import AgentsChapter from "./AgentsChapter";
 import { HomeArrivals } from "./PanelMotion";
+import { neural } from "./neuralStyle";
 import styles from "./Experience.styles";
 
-const steps = [
-  ["Tell us what you need", "We talk through the problem, who will use the solution and what to build first."],
-  ["Try a working version", "You see the work as it takes shape and give feedback before launch."],
-  ["Launch with support", "We test the release, help your team get started and hand over the tools to run it."],
-];
+// Content sits above the background canvas.
+const above = { position: "relative", zIndex: 1 } as const;
 
+// Each chapter has its own living background, and each one answers the mouse:
+// synapses fire in the hero, ribbons of light bend in "What we do", ripples run through
+// the client wall, packets flow to the pointer in "AI agents", and streams pass through
+// three gates in "How we work".
 export default function Experience() {
   return <Box id="home-content" data-experience tabIndex={-1} className={styles.experience}>
     <HomeArrivals />
     <Box className={styles.opening}>
-      <Box component="section" id="discover" aria-labelledby="hero-heading" className={styles.frontScene}><Hero /></Box>
+      <LivingBackground effect="synapses" quiet="right" seed={5} />
+      <Box component="section" id="discover" aria-labelledby="hero-heading" className={styles.frontScene} sx={above}><Hero /></Box>
     </Box>
-    <Box component="section" id="services" aria-labelledby="services-heading" className={styles.servicesScene}>
-      <Box className={styles.scene}><ServicesChapter /></Box>
+    <Box component="section" id="services" aria-labelledby="services-heading" sx={neural.sectionTone("88% 0%")}>
+      <LivingBackground effect="ribbons" seed={11} />
+      <Box className={styles.scene} sx={{ ...above, pb: "clamp(80px, 9vw, 140px) !important" }}><ServicesChapter /></Box>
     </Box>
-    <Box component="section" id="clients" aria-labelledby="clients-heading" className={styles.clients}>
-      <Box id="work" className={styles.scene}><TrustStrip /></Box>
+    <Box component="section" id="clients" aria-labelledby="clients-heading"
+      sx={{ position: "relative", isolation: "isolate", bgcolor: "#fff", color: "#102c47", containerType: "inline-size", overflow: "clip" }}>
+      <LivingBackground effect="dotField" light seed={17} />
+      <Box id="work" className={styles.frontScene} sx={{ ...above, scrollMarginTop: 76 }}><TrustStrip /></Box>
     </Box>
-    <Box component="section" id="production" aria-labelledby="production-heading" className={styles.production}>
-      <Box className={styles.scene}>
-        <Box className={styles.chapterHeading}><h2 id="production-heading">How we work</h2></Box>
-        <Box component="ol" sx={{ listStyle: "decimal-leading-zero", m: 0, pl: 3.5, display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3,1fr)" }, gap: { xs: 3, md: 6 } }}>
-          {steps.map(([title, text], index) => <Box component="li" key={title} data-arrive={index}
-            sx={{ pl: 0.5, "&::marker": { color: "#8bc8e8", fontSize: ".85rem" } }}>
-            <Box component="h3" sx={{ m: 0, fontSize: "1.25rem", color: "#eef5ff", fontWeight: 600 }}>{title}</Box>
-            <Box component="p" sx={{ mt: 1, mb: 0, color: "#b4c7d7", lineHeight: 1.65 }}>{text}</Box>
-          </Box>)}
-        </Box>
-        <Box sx={{ mt: 4, "& a": { color: "#a6d8f4", textUnderlineOffset: 4 } }}>
-          <Link href="/process">See our delivery process</Link>
-        </Box>
-      </Box>
+    <Box id="ai-agents" sx={{ scrollMarginTop: 76, borderTop: "1px solid #1d4472" }}><AgentsChapter /></Box>
+    <Box component="section" id="production" aria-labelledby="production-heading" sx={neural.sectionTone("85% 4%")}>
+      <LivingBackground effect="gates" quiet="top" seed={41} />
+      <Box className={styles.scene} sx={{ ...above, pb: "clamp(80px, 9vw, 140px) !important" }}><ProcessChapter /></Box>
     </Box>
   </Box>;
 }

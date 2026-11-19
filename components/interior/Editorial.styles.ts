@@ -32,7 +32,8 @@ export const editorialSheet: CSSObject[] = [
     } },
   { ".Editorial__heroGrid, .Editorial__width": { width: "min(100% - 48px, 1152px)", marginInline: "auto" } },
   { ".Editorial__heroGrid": { display: "grid", gap: "clamp(24px, 5vw, 76px)", alignItems: "center", paddingBlock: "clamp(38px, 5vw, 76px)" } },
-  { ".Editorial__heroSplit": { gridTemplateColumns: "minmax(0, 1.65fr) minmax(250px, .85fr)" } },
+  // The second column holds the 3D logo film, which is large enough to need nearly half the banner.
+  { ".Editorial__heroSplit": { gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 1fr)", minHeight: "clamp(420px, 38vw, 580px)" } },
   { ".Editorial__heroCopy": { maxWidth: "55rem" } },
   { ".Editorial__context": { margin: "0 0 15px", color: "#a0ddef", fontSize: ".88rem", fontWeight: "570" } },
   { ".Editorial__hero h1": {
@@ -50,7 +51,7 @@ export const editorialSheet: CSSObject[] = [
       maxWidth: "62ch",
       margin: "20px 0 0",
     } },
-  { ".Editorial__heroAside": { minWidth: "0" } },
+  { ".Editorial__heroAside": { minWidth: "0", display: "grid", justifyItems: "end" } },
   { ".Editorial__heroTools": { marginTop: "20px" } },
   { ".Editorial__heroTools summary": { width: "fit-content", padding: "7px 0", cursor: "pointer", fontWeight: 600, color: "#aee8ff" } },
   { ".Editorial__heroTools details[open] nav": { marginTop: "8px" } },
@@ -154,7 +155,8 @@ export const editorialSheet: CSSObject[] = [
   { "@keyframes Editorial__stamp": { from: { transform: "scale(.72) rotate(-18deg)" }, to: { transform: "none" } } },
   { "@media (max-width: 760px)": {
       ".Editorial__heroGrid,.Editorial__width": { width: "min(100% - 36px, 1152px)" },
-      ".Editorial__heroSplit": { gridTemplateColumns: "minmax(0,1fr)" },
+      ".Editorial__heroSplit": { gridTemplateColumns: "minmax(0,1fr)", minHeight: "0" },
+      ".Editorial__heroAside": { justifyItems: "center" },
       ".Editorial__heroAside:has(.Editorial__portrait)": { justifySelf: "start", width: "min(100%, 200px)" },
       ".Editorial__jumpList": { gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,135px),1fr))", gap: "0 14px" },
       ".Editorial__jumpList a:last-child": { borderBottom: "none" },

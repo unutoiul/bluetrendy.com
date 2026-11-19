@@ -33,8 +33,8 @@ export default function ServicesPage() {
                 <details><summary>Tools we use</summary>
                   <ul aria-label="Tools and technologies" className={styles.stack}>{service.stack.map(tech => <li key={tech}>{tech}</li>)}</ul>
                 </details>
-                <Link className={styles.briefLink} href={"/contact?service=" + service.slug + "#project-brief"} aria-label={"Start a project brief for " + service.name}>
-                  Start a project brief <span aria-hidden="true">↗</span>
+                <Link className={styles.briefLink} href="/book-a-call" aria-label={"Book a call about " + service.name}>
+                  Book a call about this service <span aria-hidden="true">↗</span>
                 </Link>
               </div>
             </div>

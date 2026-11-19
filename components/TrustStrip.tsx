@@ -4,19 +4,27 @@ import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import ArrowOutwardRounded from "@mui/icons-material/ArrowOutwardRounded";
+import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
+import KeyboardArrowDownRounded from "@mui/icons-material/KeyboardArrowDownRounded";
 import { clientLogos, industries, type ClientLogo, type Industry } from "@/data/clients";
+import HeadingMotion from "./motion/HeadingMotion";
 import styles from "./TrustStrip.styles";
 
+const industryOptions = Object.entries(industries).sort(([, a], [, b]) => a.localeCompare(b));
+
 function ClientMark({ client }: { client: ClientLogo }) {
-  const mark = client.file
-    ? <span className={styles.mark}><Image src={`/brand/clients/${client.file}`} alt="" fill
-        sizes="(max-width: 380px) 42vw, (max-width: 600px) 27vw, 146px" unoptimized /></span>
-    : client.name;
+  const mark = <>
+    {client.file
+      ? <span className={styles.mark} data-logo={client.file}>
+          <Image src={`/brand/clients/${client.file}`} alt="" fill sizes="144px" />
+        </span>
+      : client.name}
+    {client.file && <span className={styles.caption} aria-hidden="true">{client.name}</span>}
+  </>;
 
   return client.external
-    ? <a href={client.href} target="_blank" rel="noopener noreferrer" aria-label={`${client.name} (opens in a new tab)`} title={client.name}>{mark}</a>
-    : <Link href={client.href} prefetch={false} aria-label={`${client.name} case study`} title={client.name}>{mark}</Link>;
+    ? <a href={client.href} target="_blank" rel="noopener noreferrer" aria-label={`${client.name} website (opens in a new tab)`}>{mark}</a>
+    : <Link href={client.href} prefetch={false} aria-label={`${client.name} case study`}>{mark}</Link>;
 }
 
 function ClientDirectory({ industry = "", onChange }: {
@@ -24,24 +32,30 @@ function ClientDirectory({ industry = "", onChange }: {
 }) {
   const clients = industry ? clientLogos.filter(client => client.industry === industry) : clientLogos;
   return (
-    <>
-      <div className={styles.heading}>
-        <h2 id="clients-heading">Our clients</h2>
-        <label className={styles.filter}>Industry
-          <select value={industry} disabled={!onChange} onChange={event => onChange?.(event.target.value)}>
-            <option value="">All industries</option>
-            {Object.entries(industries).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-          </select>
-        </label>
+    <div className={styles.directory}>
+      <div className={styles.intro}>
+        <HeadingMotion id="clients-heading" text="Our" accent="clients" tone="light" />
+        <p>From helping radiologists share scans to building mapping tools for NATO, our work spans {industryOptions.length} industries.</p>
+        <Link href="/case-studies" prefetch={false} className={styles.workLink}>
+          Read case studies <ArrowForwardRounded fontSize="small" />
+        </Link>
       </div>
-      <ul className={styles.wall} aria-label="Client logos">
-        {clients.map(client => <li key={client.name}><ClientMark client={client} /></li>)}
-      </ul>
-      <div className={styles.foot}>
-        <span role="status">{clients.length} {clients.length === 1 ? "client" : "clients"}{industry ? ` in ${industries[industry]}` : ` across ${Object.keys(industries).length} industries`}</span>
-        <Link href="/case-studies" prefetch={false}>Read case studies <ArrowOutwardRounded /></Link>
+      <div className={styles.gallery}>
+        <div className={styles.toolbar}>
+          <span role="status" aria-atomic="true">{clients.length} {clients.length === 1 ? "client" : "clients"}</span>
+          <label className={styles.filter}>
+            <select aria-label="Filter clients by industry" value={industry} disabled={!onChange} onChange={event => onChange?.(event.target.value)}>
+              <option value="">All industries</option>
+              {industryOptions.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+            </select>
+            <KeyboardArrowDownRounded aria-hidden="true" fontSize="small" />
+          </label>
+        </div>
+        <ul key={industry} className={styles.wall} aria-label={industry ? `Clients in ${industries[industry]}` : "Client logos"}>
+          {clients.map(client => <li key={client.name}><ClientMark client={client} /></li>)}
+        </ul>
       </div>
-    </>
+    </div>
   );
 }
 

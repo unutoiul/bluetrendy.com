@@ -24,7 +24,7 @@ export default function FAQAccordion({ items }: { items: FAQItem[] }) {
           }}
         >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="subtitle1">{item.question}</Typography>
+            <Typography variant="subtitle1" component="span">{item.question}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography variant="body2" color="text.secondary">

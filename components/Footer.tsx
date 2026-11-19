@@ -21,7 +21,7 @@ function LinkColumn({ title, links }: { title: string; links: { href: string; la
           href={link.href}
           variant="body2"
           className="link-draw"
-          sx={{ alignSelf: "flex-start", color: "#c5d8e8", "&:hover": { color: "#fff" } }}
+          sx={{ alignSelf: "flex-start", display: "inline-flex", alignItems: "center", minHeight: 28, color: "#c5d8e8", "&:hover": { color: "#fff" } }}
         >
           {link.label}
         </LinkTypography>
@@ -45,7 +45,7 @@ export default function Footer() {
               href="mailto:contact@bluetrendy.com"
               variant="body2"
               className="link-draw"
-              sx={{ display: "inline-block", mt: 2, color: "secondary.light", fontWeight: 600, "&:hover": { color: "#fff" } }}
+              sx={{ display: "inline-flex", alignItems: "center", minHeight: 28, mt: 2, color: "secondary.light", fontWeight: 600, "&:hover": { color: "#fff" } }}
             >
               contact@bluetrendy.com
             </Typography>

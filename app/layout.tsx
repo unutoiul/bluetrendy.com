@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import ThemeRegistry from "@/theme/ThemeRegistry";
 import Header from "@/components/Header";
 import SiteFooter from "@/components/SiteFooter";
+import Panel3D from "@/components/motion/Panel3D";
 
 const geist = localFont({
   src: "../public/fonts/geist-latin.woff2",
@@ -73,6 +74,7 @@ export default function RootLayout({
           <Header />
           <main id="main-content" tabIndex={-1}>{children}</main>
           <SiteFooter />
+          <Panel3D />
         </ThemeRegistry>
         <Analytics />
       </body>

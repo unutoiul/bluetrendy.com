@@ -1,0 +1,79 @@
+import type { ReactNode } from "react";
+import Link from "next/link";
+import Box from "@mui/material/Box";
+import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
+import LivingBackground from "./backgrounds/LivingBackground";
+import HeadingMotion from "./motion/HeadingMotion";
+import type { EffectName } from "./backgrounds/effects";
+
+type SplitSectionProps = {
+  id: string;
+  title: string;
+  text?: string;
+  link?: { href: string; label: string };
+  /** Light: white field with a pale blue blade, like Our clients. Dark: navy field with a glass blade. */
+  tone?: "light" | "dark";
+  /** Extra content under the copy on the blade, such as a portrait. */
+  blade?: ReactNode;
+  /** A living background across the section; it fades toward the blade so the copy stays clear. */
+  effect?: EffectName;
+  seed?: number;
+  /** Keep the heading in view while a long right-hand side scrolls past. */
+  pinned?: boolean;
+  children: ReactNode;
+};
+
+const palettes = {
+  light: { field: "#ffffff", blade: "#e5f1fc", edge: "transparent", heading: "#102c47", text: "#385470", link: "#135899", linkHover: "#0b3d6e" },
+  dark: { field: "#050f22", blade: "linear-gradient(160deg, #0f3266 0%, #0a1f40 70%)", edge: "linear-gradient(180deg, #8eeaff, #2f7dff 60%, transparent)",
+    heading: "#f3f8ff", text: "#c3d6ea", link: "#9fe8ff", linkHover: "#d8f8ff" },
+};
+
+// The blade's slanted edge echoes the BlueTrendy mark. It runs to the left edge of the page.
+const slant = "polygon(0 0, 100% 0, calc(100% - 54px) 100%, 0 100%)";
+
+/**
+ * A section split in two: a slanted blade on the left carries the heading, a short
+ * paragraph and one link; the right-hand side carries the evidence. On narrow screens
+ * the blade becomes a full-width band above the content.
+ */
+export default function SplitSection({ id, title, text, link, tone = "light", blade, effect, seed, pinned, children }: SplitSectionProps) {
+  const colors = palettes[tone];
+  return (
+    <Box component="section" aria-labelledby={id} sx={{ position: "relative", overflow: "clip", isolation: "isolate",
+      background: tone === "dark" ? "radial-gradient(ellipse at 90% 10%, rgba(13, 64, 140, 0.6), transparent 55%), #050f22" : colors.field,
+      color: colors.heading, containerType: "inline-size" }}>
+      {effect && <LivingBackground effect={effect} seed={seed} light={tone === "light"} />}
+      <Box sx={{ position: "relative", zIndex: 1, width: "min(100% - 48px, 1200px)", mx: "auto", display: "grid",
+        gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "minmax(0, 3fr) minmax(0, 7fr)" }, columnGap: "clamp(48px, 7vw, 112px)" }}>
+        <Box sx={{ position: "relative", isolation: "isolate", display: "flex", flexDirection: "column", alignItems: "flex-start",
+          justifyContent: pinned ? "flex-start" : "center", py: { xs: 4, md: "clamp(48px, 6vw, 88px)" } }}>
+          <Box aria-hidden="true" sx={{ position: "absolute", zIndex: -1, background: colors.blade,
+            inset: { xs: "0 calc((100% - 100cqw) / 2)", md: "0 -48px 0 -100vw" }, clipPath: { md: slant },
+            boxShadow: tone === "dark" ? "inset 0 1px 0 rgba(150, 215, 255, 0.2)" : "none" }} />
+          {tone === "dark" && <Box aria-hidden="true" sx={{ display: { xs: "none", md: "block" }, position: "absolute", zIndex: -1,
+            inset: "0 -50px 0 -100vw", background: colors.edge, opacity: 0.85,
+            clipPath: "polygon(calc(100% - 2px) 0, 100% 0, calc(100% - 52px) 100%, calc(100% - 54px) 100%)",
+            filter: "drop-shadow(0 0 8px #2fa8ff)" }} />}
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start", width: "100%",
+            position: pinned ? { md: "sticky" } : undefined, top: pinned ? { md: 110 } : undefined }}>
+          <HeadingMotion id={id} text={title} tone={tone} sx={{ m: 0, fontWeight: 650, letterSpacing: "-0.06em",
+            // Short titles, like "Our clients", fill the blade; longer ones step down so they wrap in two or three lines.
+            fontSize: title.length > 16 ? "clamp(2.2rem, 3.3vw, 3.3rem)" : "clamp(2.6rem, 4.6vw, 4.5rem)",
+            lineHeight: 1.04, textWrap: "balance" }} />
+          {text && <Box component="p" sx={{ m: "20px 0 0", maxWidth: "31ch", color: colors.text, fontSize: "clamp(1rem, 1.2vw, 1.125rem)",
+            lineHeight: 1.55 }}>{text}</Box>}
+          {link && <Box sx={{ mt: 2.25, "& a": { display: "inline-flex", alignItems: "center", gap: "9px", minHeight: 44, color: colors.link,
+            fontWeight: 650, textDecoration: "none" }, "& a:hover": { color: colors.linkHover, textDecoration: "underline", textUnderlineOffset: ".25em" },
+            "& svg": { transition: "transform .3s cubic-bezier(0.22, 1, 0.36, 1)" }, "& a:hover svg": { transform: "translateX(3px)" },
+            "& a:focus-visible": { outline: `2px solid ${colors.link}`, outlineOffset: 3, borderRadius: "4px" } }}>
+            <Link href={link.href} prefetch={false}>{link.label} <ArrowForwardRounded fontSize="small" /></Link>
+          </Box>}
+          {blade}
+          </Box>
+        </Box>
+        <Box sx={{ minWidth: 0, py: { xs: 4, md: "clamp(40px, 5vw, 72px)" }, alignSelf: "center" }}>{children}</Box>
+      </Box>
+    </Box>
+  );
+}

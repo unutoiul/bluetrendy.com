@@ -16,7 +16,7 @@ export default function Hero() {
       <Box className={styles.copy}>
         <HeroMessages />
         <Box className={page.actions} data-arrive="2">
-          <Button component={Link} href="/contact" className={page.primary} endIcon={<ArrowForwardRounded />}><RollText>Start a project</RollText></Button>
+          <Button component={Link} href="/book-a-call" className={page.primary} endIcon={<ArrowForwardRounded />}><RollText>Start a project</RollText></Button>
           <Button href="#services" className={page.secondary}><RollText>Explore services</RollText></Button>
         </Box>
       </Box>
