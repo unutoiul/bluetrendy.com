@@ -1,13 +1,19 @@
 "use client";
 
 import { useLayoutEffect, useRef, useState } from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import GlobalStyles from "@mui/material/GlobalStyles";
+import Slider from "@mui/material/Slider";
+import Typography from "@mui/material/Typography";
+import type { SxProps, Theme } from "@mui/material/styles";
+import PowerSettingsNewRounded from "@mui/icons-material/PowerSettingsNewRounded";
 import { bindIntroTagline } from "@/lib/introTagline";
-import styles from "./WebsiteEntrance.styles";
 
-const mediaPath = "/brand/shadow-intro";
 const compactMedia = "(max-width: 899px), (pointer: coarse) and (max-height: 560px)";
-const compactFilm = mediaPath + "/entrance-mobile.mp4";
-const desktopFilm = mediaPath + "/entrance.mp4";
+const compactFilm = "/brand/shadow-intro/entrance-mobile.mp4";
+const desktopFilm = "/brand/shadow-intro/entrance.mp4";
+const filmSeconds = 8;
 const entryKey = "bluetrendy:entered";
 let enteredThisVisit = false;
 
@@ -23,7 +29,7 @@ const prepareEntrance = `{
       video.src = matchMedia(${JSON.stringify(compactMedia)}).matches
         ? ${JSON.stringify(compactFilm)} : ${JSON.stringify(desktopFilm)};
     }
-    gate.querySelector(".power-me").addEventListener("click", () => {
+    gate.querySelector("[data-enter]").addEventListener("click", () => {
       if (gate.open || !shell.hasAttribute("data-entry-pending")) return;
       shell.removeAttribute("data-entry-pending");
       if (video.hasAttribute("src")) { video.removeAttribute("src"); video.load(); }
@@ -57,8 +63,8 @@ export default function WebsiteEntrance() {
   const [ended, setEnded] = useState(false);
   const [muted, setMuted] = useState(false);
   const [failed, setFailed] = useState(false);
-  const [time, setTime] = useState(0);
   const [loaded, setLoaded] = useState(false);
+  const [time, setTime] = useState(0);
 
   useLayoutEffect(() => {
     const shell = dialog.current?.closest<HTMLElement>("[data-studio-home]");
@@ -124,65 +130,172 @@ export default function WebsiteEntrance() {
     void video.play().catch(() => { if (video.error) setFailed(true); });
   }
 
+  function seek(value: number) {
+    setTime(value);
+    const video = player.current;
+    if (video && video.readyState >= 1) video.currentTime = value;
+    else pendingSeek.current = value;
+  }
+
   return (
-    <dialog
+    <Box
+      component="dialog"
       ref={dialog}
       data-website-entrance
-      className={styles.entrance}
       aria-label="BlueTrendy Intelligence website entrance"
       onCancel={event => { event.preventDefault(); enter(); }}
+      sx={sx.entrance}
     >
-      <div className={styles.layout}>
-        <div className="intro-stage">
-          <div className="intro-stack">
-            <div className="intro-picture" aria-hidden="true" data-lockup={failed}
-              style={{ opacity: loaded || failed ? 1 : 0, transition: "opacity 0.6s ease" }}>
-              <video
-                ref={player}
-                width="1920" height="1080" preload="none" playsInline disablePictureInPicture suppressHydrationWarning
-                onLoadedMetadata={event => {
-                  if (pendingSeek.current !== null) {
-                    event.currentTarget.currentTime = pendingSeek.current;
-                    pendingSeek.current = null;
-                  }
-                }}
-                onLoadedData={() => setLoaded(true)}
-                onPlaying={() => { setLoaded(true); setPlaying(true); setEnded(false); }}
-                onPause={() => setPlaying(false)}
-                onEnded={() => { setPlaying(false); setEnded(true); }}
-                onSeeked={event => { setEnded(event.currentTarget.ended); setTime(event.currentTarget.currentTime); }}
-                onVolumeChange={event => setMuted(event.currentTarget.muted)}
-                onTimeUpdate={event => setTime(event.currentTarget.currentTime)}
-                onError={() => setFailed(true)}
-                hidden={failed}
-              />
-            </div>
-            <p className="intro-tagline" ref={tagline}><span>Your Business, powered by</span>{" "}<strong>AI</strong></p>
-            <button type="button" className="power-me" onClick={enter}>
-              <span aria-hidden="true">⏻</span> POWER ME
-            </button>
-            <script dangerouslySetInnerHTML={{ __html: prepareEntrance }} />
-          </div>
-        </div>
-        {failed ? <p className={styles.notice} role="status">The intro could not play.</p> : (
-          <div className={styles.controls} role="group" aria-label="Intro playback">
-            <button type="button" onClick={togglePlayback}>{ended ? "Replay" : playing ? "Pause" : "Play"}</button>
-            <input type="range" aria-label="Seek intro" aria-valuetext={`${time.toFixed(1)} of 8 seconds`}
-              min={0} max={8} step={0.01} value={time}
-              onChange={event => {
-                const value = event.currentTarget.valueAsNumber;
-                setTime(value);
-                if (player.current && player.current.readyState >= 1) player.current.currentTime = value;
-                else pendingSeek.current = value;
-              }}
-            />
-            <button type="button" aria-label={muted ? "Enable intro sound" : "Mute intro sound"}
-              aria-pressed={!muted} onClick={() => { if (player.current) player.current.muted = !player.current.muted; }}>
-              {muted ? "Sound off" : "Sound on"}
-            </button>
-          </div>
-        )}
-      </div>
-    </dialog>
+      <GlobalStyles styles={{ "html:has(dialog[data-website-entrance][open])": { overflow: "hidden" } }} />
+      <Box sx={sx.stage}>
+        <Box aria-hidden sx={[sx.picture, failed && sx.lockup, { opacity: loaded || failed ? 1 : 0 }]}>
+          <video
+            ref={player}
+            width="1920" height="1080" preload="none" playsInline disablePictureInPicture suppressHydrationWarning
+            onLoadedMetadata={event => {
+              if (pendingSeek.current === null) return;
+              event.currentTarget.currentTime = pendingSeek.current;
+              pendingSeek.current = null;
+            }}
+            onLoadedData={() => setLoaded(true)}
+            onPlaying={() => { setLoaded(true); setPlaying(true); setEnded(false); }}
+            onPause={() => setPlaying(false)}
+            onEnded={() => { setPlaying(false); setEnded(true); }}
+            onSeeked={event => { setEnded(event.currentTarget.ended); setTime(event.currentTarget.currentTime); }}
+            onVolumeChange={event => setMuted(event.currentTarget.muted)}
+            onTimeUpdate={event => setTime(event.currentTarget.currentTime)}
+            onError={() => setFailed(true)}
+          />
+        </Box>
+        <Typography ref={tagline} component="p" sx={sx.tagline}>
+          <span>Your Business, powered by</span>{" "}<strong>AI</strong>
+        </Typography>
+        <Button data-enter onClick={enter} startIcon={<PowerSettingsNewRounded />} sx={sx.powerMe}>
+          POWER ME
+        </Button>
+        <script dangerouslySetInnerHTML={{ __html: prepareEntrance }} />
+      </Box>
+      {failed ? <Typography role="status" sx={sx.notice}>The intro could not play.</Typography> : (
+        <Box role="group" aria-label="Intro playback" sx={sx.controls}>
+          <Button onClick={togglePlayback}>{ended ? "Replay" : playing ? "Pause" : "Play"}</Button>
+          <Slider
+            size="small" aria-label="Seek intro" min={0} max={filmSeconds} step={0.01} value={time}
+            getAriaValueText={value => `${value.toFixed(1)} of ${filmSeconds} seconds`}
+            onChange={(_, value) => seek(value as number)}
+            sx={{ color: "#8edfff" }}
+          />
+          <Button aria-label={muted ? "Enable intro sound" : "Mute intro sound"} aria-pressed={!muted}
+            onClick={() => { if (player.current) player.current.muted = !player.current.muted; }}>
+            {muted ? "Sound off" : "Sound on"}
+          </Button>
+        </Box>
+      )}
+    </Box>
   );
 }
+
+const shortStage = "@container (height < 320px)";
+
+const sx = {
+  // A full-screen modal. Before hydration, the home page marks its shell [data-entry-pending]
+  // so the closed dialog already covers the page on first paint.
+  entrance: {
+    position: "fixed",
+    inset: 0,
+    width: "100%",
+    height: "100dvh",
+    maxWidth: "none",
+    maxHeight: "none",
+    m: 0,
+    p: 0,
+    border: 0,
+    overflow: "hidden",
+    gridTemplateRows: "minmax(0, 1fr) auto",
+    bgcolor: "#000628",
+    color: "#eaf3ff",
+    colorScheme: "dark",
+    "&[open]": { display: "grid" },
+    "[data-entry-pending] > &": { display: "grid", zIndex: 1400 },
+    "&::backdrop": { background: "#000628" },
+  },
+  stage: {
+    containerType: "size",
+    minHeight: 0,
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  // Frames the film through the INTELLIGENCE wordmark; the tagline below is live text.
+  picture: {
+    position: "relative",
+    flexShrink: 0,
+    width: "min(169cqw, 1140px, calc(320cqh - 334px))",
+    aspectRatio: "1920 / 600",
+    overflow: "hidden",
+    pointerEvents: "none",
+    maskImage: "linear-gradient(transparent, black 5%, black 98%, transparent), linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+    maskComposite: "intersect",
+    transition: "opacity 0.6s ease",
+    "& video": { position: "absolute", top: "-31.6667%", left: 0, display: "block", width: "100%", height: "auto", aspectRatio: "16 / 9" },
+  },
+  // Shown instead of the film when it cannot play.
+  lockup: {
+    maskImage: "none",
+    background: "url(/brand/logo-inverse.svg) center / min(100%, 77cqw, 480px, 138cqh) auto no-repeat",
+    "& video": { display: "none" },
+  },
+  tagline: {
+    mt: "clamp(6px, 1.2cqh, 12px)",
+    color: "#d4e2f3",
+    fontSize: "clamp(16px, 2.5cqw, 22px)",
+    fontWeight: 440,
+    lineHeight: 1.4,
+    letterSpacing: "-.03em",
+    textAlign: "center",
+    whiteSpace: "nowrap",
+    "& span, & strong": { display: "inline-block" },
+    "& strong": {
+      color: "#8fddff",
+      fontWeight: 750,
+      background: "linear-gradient(108deg, #8fddff 30%, #f5fdff 50%, #8fddff 70%) 100% 50% / 320% 100%",
+      backgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+    },
+    "& ::selection": { color: "#fff", background: "#215d8d", WebkitTextFillColor: "white" },
+    [shortStage]: { mt: "2px", fontSize: 15 },
+    "@media (forced-colors: active)": { "& strong": { WebkitTextFillColor: "currentColor" } },
+  },
+  powerMe: {
+    mt: "clamp(15px, 2.7cqh, 25px)",
+    minWidth: 152,
+    minHeight: 46,
+    px: "22px",
+    py: 0,
+    border: "1px solid #cbf4ff",
+    background: "linear-gradient(125deg, #c6f3ff, #83d6ff 68%, #69bcff)",
+    boxShadow: "0 4px 20px #087ac224",
+    color: "#03172c",
+    fontSize: 12,
+    fontWeight: 720,
+    letterSpacing: ".13em",
+    lineHeight: 1,
+    whiteSpace: "nowrap",
+    "&:hover": { background: "#c4f2ff" },
+    "&.Mui-focusVisible": { outline: "2px solid #fff", outlineOffset: 4 },
+    [shortStage]: { mt: "9px", minHeight: 40 },
+  },
+  controls: {
+    display: "flex",
+    alignItems: "center",
+    justifySelf: "center",
+    gap: "14px",
+    width: "min(340px, calc(100% - 32px))",
+    pb: "max(8px, env(safe-area-inset-bottom))",
+    "& .MuiButton-root": { minWidth: 66, px: 0.5, color: "#bdd3e4", fontSize: 12, fontWeight: 400 },
+    "& .MuiButton-root:hover": { color: "#fff", bgcolor: "transparent" },
+    "@media (max-height: 360px)": { pb: 0 },
+  },
+  notice: { my: 1, mx: "auto", color: "#bdd3e4", fontSize: 13 },
+} satisfies Record<string, SxProps<Theme>>;

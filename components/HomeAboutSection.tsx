@@ -19,7 +19,7 @@ export default function HomeAboutSection() {
             </Box>
             <Typography variant="h3" component="h2">Work directly with the engineer building your product.</Typography>
             <Typography color="text.secondary" sx={{ mt: 2 }}>Our team has shipped software inside banks, hospitals, and government agencies. You work with us from the first architecture decision through deployment and handover.</Typography>
-            <LinkButton href="/about" variant="text" sx={{ mt: 2, px: 0, "--underline-inset": "0px" }}>Meet BlueTrendy</LinkButton>
+            <LinkButton href="/about" variant="text" sx={{ mt: 2, ml: "-1.3rem" }}>Meet BlueTrendy</LinkButton>
           </Reveal>
           <Box sx={{ bgcolor: "background.default", borderLeft: { md: "1px solid" }, borderColor: "divider", pl: { md: 5 } }}><StatStrip compact /></Box>
         </Box>

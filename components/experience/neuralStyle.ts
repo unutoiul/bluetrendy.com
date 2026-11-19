@@ -4,6 +4,11 @@ type Style = SxProps<Theme>;
 
 const ease = "cubic-bezier(0.22, 1, 0.36, 1)";
 
+// The home page's blues, top to bottom: from the header's navy, up to a bright blue at the
+// services, and back down to the footer's navy.
+const homeBlues = { header: "#091b2d", hero: "#0b2a52", services: "#0f3c7a", agents: "#0c3164", footer: "#081e35" };
+export type HomeBlue = keyof typeof homeBlues;
+
 /**
  * Animations for the neural chapters. These sections render on the server, where MUI's
  * keyframes() helper is unavailable, so HomeStyles injects them through GlobalStyles.
@@ -90,10 +95,22 @@ export const neural = {
     "& svg": { fontSize: 26, filter: "drop-shadow(0 0 6px rgba(34, 181, 255, 0.9))" },
   } satisfies Style,
 
+  /**
+   * The home page background, one smooth gradient through the blues. Each dark section runs
+   * from one stop to the next, so the colour carries on unbroken across section edges. A
+   * sideways layer, darker on the left where the copy sits, adds depth in the middle and
+   * fades out toward the top and bottom, so each edge is a single flat colour that meets
+   * its neighbour (or the header and footer) without a seam.
+   */
+  blueFlow: (from: HomeBlue, to: HomeBlue) => [
+    `linear-gradient(180deg, ${homeBlues[from]}, transparent 20%, transparent 80%, ${homeBlues[to]})`,
+    "linear-gradient(90deg, rgba(3, 11, 28, 0.4), rgba(3, 11, 28, 0) 45%, rgba(56, 140, 255, 0.08))",
+    `linear-gradient(180deg, ${homeBlues[from]}, ${homeBlues[to]})`,
+  ].join(", "),
+
   /** Section backgrounds: deep navy with pools of blue light. */
   sectionTone: (glowAt: string) => ({
     position: "relative", overflow: "hidden", isolation: "isolate", color: "#eef6ff",
-    background: `radial-gradient(ellipse at ${glowAt}, rgba(13, 64, 140, 0.75) 0%, transparent 52%), radial-gradient(ellipse at 0% 100%, rgba(7, 42, 85, 0.8) 0%, transparent 45%), linear-gradient(180deg, #050f22, #061833)`,
-    borderTop: "1px solid #1d4472",
+    background: `radial-gradient(ellipse at ${glowAt}, rgba(13, 64, 140, 0.6) 0%, transparent 52%), radial-gradient(ellipse 60% 40% at 0% 70%, rgba(7, 42, 85, 0.55) 0%, transparent 70%), linear-gradient(180deg, #091b2d 0%, #0a2340 50%, #091b2d 100%)`,
   }) satisfies Style,
 };

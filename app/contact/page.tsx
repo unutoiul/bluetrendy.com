@@ -10,6 +10,7 @@ import PlaceIcon from "@mui/icons-material/PlaceOutlined";
 import PageHero from "@/components/PageHero";
 import LeadForm from "@/components/LeadForm";
 import LinkButton from "@/components/LinkButton";
+import LivingBackground from "@/components/backgrounds/LivingBackground";
 import { services } from "@/data/services";
 import styles from "@/components/interior/Editorial.styles";
 
@@ -30,8 +31,10 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
   return <>
     <PageHero eyebrow="Contact" title="Tell us what you’re building"
       subtitle="Send a project brief and an engineer will reply within one business day." />
-    <Box sx={{ bgcolor: "#f3f7fa" }}>
-      <Container sx={{ py: { xs: 4, md: 7 } }}>
+    <Box sx={{ position: "relative", isolation: "isolate", overflow: "clip", bgcolor: "#f3f7fa" }}>
+      {/* The same lattice of dots on springs as the booking page, giving way under the mouse. */}
+      <LivingBackground effect="springGrid" light quiet="none" seed={113} />
+      <Container sx={{ position: "relative", zIndex: 1, py: { xs: 4, md: 7 } }}>
         <Grid container spacing={{ xs: 4, md: 7 }}>
           <Grid size={{ xs: 12, md: 8 }}>
             <section className={styles.brief + " " + styles.anchor} id="project-brief" aria-labelledby="brief-heading">

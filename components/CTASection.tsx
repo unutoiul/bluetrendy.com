@@ -34,7 +34,7 @@ export default function CTASection({
     <Box
       component="section"
       sx={{
-        background: "#0b2034",
+        background: "linear-gradient(180deg, #091b2d 0%, #0c2a4c 55%, #081e35 100%)",
         color: "#fff",
         py: { xs: 6, md: 8 },
         position: "relative",
@@ -62,7 +62,7 @@ export default function CTASection({
               size="large"
               endIcon={<ArrowForwardIcon />}
               onClick={() => trackEvent("cta_book_call_click", { location })}
-              sx={{ bgcolor: "#b8ddf5", color: "#06192b", "&:hover": { bgcolor: "#d2eaff" } }}
+              
             >
               {primaryLabel}
             </Button>

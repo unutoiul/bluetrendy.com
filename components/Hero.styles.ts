@@ -23,7 +23,6 @@ const styles = {
   messageDot: "Hero__messageDot",
   messageLayer: "Hero__messageLayer",
   messageToggle: "Hero__messageToggle",
-  playback: "Hero__playback",
   proof: "Hero__proof",
   ring: "Hero__ring",
   screen: "Hero__screen",
@@ -151,6 +150,9 @@ export const heroSheet: CSSObject[] = [
       paddingLeft: "clamp(8px, 2vw, 30px)",
       boxSizing: "border-box",
     } },
+  // Screen blending makes the MP4's black background disappear (Safari gets that file).
+  // Safari only blends inside the nearest stacking context, so no ancestor up to
+  // .Experience__opening may set z-index, transform, opacity or filter.
   { ".Hero__art[data-view=\"brain\"]": { mixBlendMode: "screen" } },
   { ".Hero__screen": { position: "relative", aspectRatio: "1.48", display: "grid", placeItems: "center" } },
   { ".Hero__brain, .Hero__logoFilm": { display: "block", width: "100%", height: "100%", minHeight: "0", objectFit: "contain" } },
@@ -158,7 +160,7 @@ export const heroSheet: CSSObject[] = [
   { ".Hero__art:not([data-view=\"brain\"]) .Hero__screen": { background: "#030c19", borderRadius: "13px", overflow: "hidden" } },
   { ".Hero__logoFilm": { position: "absolute", inset: "0" } },
   { ".Hero__filmError": { zIndex: "1", padding: "6px 12px", background: "#021326" } },
-  { ".Hero__playback, .Hero__filmSwitch": {
+  { ".Hero__filmSwitch": {
       display: "inline-flex",
       alignItems: "center",
       justifyContent: "center",
@@ -173,16 +175,6 @@ export const heroSheet: CSSObject[] = [
       cursor: "pointer",
       textDecoration: "none",
     } },
-  { ".Hero__playback": {
-      position: "absolute",
-      top: "6px",
-      right: "2px",
-      width: "42px",
-      border: "0",
-      borderRadius: "50%",
-      background: "#1a354d",
-    } },
-  { ".Hero__playback svg": { width: "19px", height: "19px" } },
   { ".Hero__mediaControls": {
       display: "grid",
       gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
@@ -199,7 +191,6 @@ export const heroSheet: CSSObject[] = [
     } },
   { ".Hero__filmSwitch[aria-pressed=\"true\"]": { borderTopColor: "#73dfff", color: "#dffaff" } },
   { ".Hero__filmSwitch svg": { width: "15px", height: "15px" } },
-  { ".Hero__playback:hover": { background: "#294a64" } },
   { ".Hero__filmSwitch:hover": { color: "#fff" } },
   { ".Hero__benefits": {
       gridArea: "2 / 1",
@@ -313,7 +304,8 @@ export const heroSheet: CSSObject[] = [
       },
       ".Hero__copy .Hero__title": { fontSize: "clamp(2.27rem, 7.6vw, 3.75rem)" },
       ".Hero__copy .Hero__body": { marginTop: "13px" },
-      ".Hero__art": { width: "min(100%, 500px)", padding: "0", marginBlock: "20px 16px" },
+      // The brain leads on phones; `order` keeps the headline first in the DOM for screen readers.
+      ".Hero__art": { order: "-1", width: "min(100%, 500px)", padding: "0", marginBlock: "0 20px" },
       ".Hero__screen": { aspectRatio: "1.55" },
       ".Hero__benefits": { width: "100%", columnGap: "8px", marginTop: "6px", justifyContent: "space-between" },
       ".Hero__benefits li": { gap: "4px", alignItems: "start" },

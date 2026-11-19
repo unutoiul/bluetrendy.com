@@ -20,11 +20,13 @@ type SplitSectionProps = {
   seed?: number;
   /** Keep the heading in view while a long right-hand side scrolls past. */
   pinned?: boolean;
+  /** Replaces the dark tone's own background, such as a stretch of the home page's blue gradient. */
+  background?: string;
   children: ReactNode;
 };
 
 const palettes = {
-  light: { field: "#ffffff", blade: "#e5f1fc", edge: "transparent", heading: "#102c47", text: "#385470", link: "#135899", linkHover: "#0b3d6e" },
+  light: { field: "transparent", blade: "#e5f1fc", edge: "transparent", heading: "#102c47", text: "#385470", link: "#135899", linkHover: "#0b3d6e" },
   dark: { field: "#050f22", blade: "linear-gradient(160deg, #0f3266 0%, #0a1f40 70%)", edge: "linear-gradient(180deg, #8eeaff, #2f7dff 60%, transparent)",
     heading: "#f3f8ff", text: "#c3d6ea", link: "#9fe8ff", linkHover: "#d8f8ff" },
 };
@@ -37,11 +39,11 @@ const slant = "polygon(0 0, 100% 0, calc(100% - 54px) 100%, 0 100%)";
  * paragraph and one link; the right-hand side carries the evidence. On narrow screens
  * the blade becomes a full-width band above the content.
  */
-export default function SplitSection({ id, title, text, link, tone = "light", blade, effect, seed, pinned, children }: SplitSectionProps) {
+export default function SplitSection({ id, title, text, link, tone = "light", blade, effect, seed, pinned, background, children }: SplitSectionProps) {
   const colors = palettes[tone];
   return (
     <Box component="section" aria-labelledby={id} sx={{ position: "relative", overflow: "clip", isolation: "isolate",
-      background: tone === "dark" ? "radial-gradient(ellipse at 90% 10%, rgba(13, 64, 140, 0.6), transparent 55%), #050f22" : colors.field,
+      background: background ?? (tone === "dark" ? "radial-gradient(ellipse at 90% 40%, rgba(13, 64, 140, 0.5), transparent 55%), linear-gradient(180deg, #091b2d 0%, #0a2340 50%, #091b2d 100%)" : colors.field),
       color: colors.heading, containerType: "inline-size" }}>
       {effect && <LivingBackground effect={effect} seed={seed} light={tone === "light"} />}
       <Box sx={{ position: "relative", zIndex: 1, width: "min(100% - 48px, 1200px)", mx: "auto", display: "grid",

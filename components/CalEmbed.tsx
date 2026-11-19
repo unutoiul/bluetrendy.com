@@ -5,8 +5,8 @@ import Cal, { getCalApi } from "@calcom/embed-react";
 
 const namespace = "bluetrendy-discovery";
 const colors = {
-  "cal-brand": "#0B4563",
-  "cal-brand-emphasis": "#071E2C",
+  "cal-brand": "#2879DF",
+  "cal-brand-emphasis": "#1F63B8",
   "cal-brand-text": "#FFFFFF",
   "cal-text": "#0B1F2B",
   "cal-text-emphasis": "#0B1F2B",
@@ -19,7 +19,9 @@ const colors = {
 };
 const embedConfig = { layout: "month_view", theme: "light" } as const;
 
-export default function CalEmbed({ calLink }: { calLink: string }) {
+export type BookingPrefill = { name: string; email: string; notes: string };
+
+export default function CalEmbed({ calLink, prefill }: { calLink: string; prefill?: BookingPrefill }) {
   useEffect(() => {
     let active = true;
     getCalApi({ namespace }).then((cal) => {
@@ -41,7 +43,8 @@ export default function CalEmbed({ calLink }: { calLink: string }) {
       namespace={namespace}
       calLink={calLink}
       style={{ width: "100%", minHeight: 420 }}
-      config={embedConfig}
+      // The details from the earlier booking steps are already filled in on the booking form.
+      config={prefill ? { ...embedConfig, ...prefill } : embedConfig}
     />
   );
 }

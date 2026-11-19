@@ -346,37 +346,16 @@ export const packetMesh: Effect = random => {
   };
 };
 
-/** Particles stream left to right through three glowing gates, one per step; they part around the pointer. */
-export const gates: Effect = random => {
+/** Streaks of light drift left to right across the section; they part around the pointer. */
+export const streaks: Effect = random => {
   const particles = Array.from({ length: 70 }, () => ({ x: random(), lane: random(), speed: 0.04 + random() * 0.05 }));
   return frame => {
-    const { context, width, height, delta } = frame;
-    const centres = [0.2, 0.5, 0.8].map(share => share * width);
-    const cy = height * 0.5, ry = height * 0.36, rx = Math.max(16, width * 0.03);
-    for (const gx of centres) {
-      const busy = particles.filter(particle => Math.abs(particle.x * width - gx) < 40).length;
-      const ring = context.createRadialGradient(gx, cy, 0, gx, cy, ry);
-      ring.addColorStop(0, frame.light ? "rgba(22, 95, 204, 0.06)" : "rgba(60, 160, 255, 0.12)");
-      ring.addColorStop(1, "rgba(60, 160, 255, 0)");
-      context.fillStyle = ring;
-      context.beginPath();
-      context.ellipse(gx, cy, rx * 3, ry, 0, 0, TAU);
-      context.fill();
-      context.strokeStyle = ice(frame, 0.18 + Math.min(0.25, busy * 0.04));
-      context.lineWidth = 1;
-      context.beginPath();
-      context.ellipse(gx, cy, rx, ry, 0, 0, TAU);
-      context.stroke();
-    }
+    const { width, height, delta } = frame;
     for (const particle of particles) {
       particle.x += particle.speed * Math.min(delta, 0.05);
       if (particle.x > 1.05) { particle.x = -0.05; particle.lane = random(); }
       const x = particle.x * width;
       let y = particle.lane * height;
-      for (const gx of centres) {
-        const near = Math.max(0, 1 - Math.abs(x - gx) / 150);
-        y += (cy + (y - cy) * 0.4 - y) * near * near;
-      }
       if (frame.pointer) {
         const dx = x - frame.pointer.x, dy = y - frame.pointer.y, distance = Math.hypot(dx, dy);
         if (distance < 130) y += (dy / (distance || 1)) * (130 - distance) * 0.6;
@@ -702,6 +681,6 @@ export const springGrid: Effect = () => {
 };
 
 export const effects = {
-  constellation, synapses, ribbons, dotField, ripples, packetMesh, gates, circuit, globe, flow, horizonGrid, orbit, dotWave, springGrid,
+  constellation, synapses, ribbons, dotField, ripples, packetMesh, streaks, circuit, globe, flow, horizonGrid, orbit, dotWave, springGrid,
 };
 export type EffectName = keyof typeof effects;

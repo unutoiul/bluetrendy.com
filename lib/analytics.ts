@@ -6,6 +6,7 @@ export type AnalyticsEvent =
   | "chapter_view"
   | "cta_book_call_click"
   | "cta_start_project_click"
+  | "booking_step_complete"
   | "lead_form_submit"
   | "lead_form_success"
   | "lead_form_error"

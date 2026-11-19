@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
-import PauseRounded from "@mui/icons-material/PauseRounded";
-import PlayArrowRounded from "@mui/icons-material/PlayArrowRounded";
+import { useLumaKey, useNeedsLumaKey } from "@/components/motion/useLumaKey";
 
 const source = "/brand/3d-bluetrendy.mp4";
 const ease = "cubic-bezier(0.22, 1, 0.36, 1)";
@@ -17,10 +16,10 @@ const ease = "cubic-bezier(0.22, 1, 0.36, 1)";
  */
 export default function RibbonFilm() {
   const player = useRef<HTMLVideoElement>(null);
+  const keyed = useRef<HTMLCanvasElement>(null);
+  const needsKey = useNeedsLumaKey();
+  useLumaKey(player, keyed, needsKey);
   const [ready, setReady] = useState(false);
-  const [playing, setPlaying] = useState(false);
-  const [failed, setFailed] = useState(false);
-  const paused = useRef(false);
 
   useEffect(() => {
     const video = player.current;
@@ -32,11 +31,11 @@ export default function RibbonFilm() {
       if (!video || !visible) { video?.pause(); return; }
       if (!video.hasAttribute("src")) video.src = source;
       // A still first frame for reduced motion or Save-Data; otherwise play while on screen.
-      if (paused.current || document.hidden || reduced.matches || connection?.saveData) {
+      if (document.hidden || reduced.matches || connection?.saveData) {
         video.pause();
         return;
       }
-      void video.play().catch(() => { /* The play button works when autoplay is blocked. */ });
+      void video.play().catch(() => { /* Autoplay blocked: the first frame stays. */ });
     }
     const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); }, { threshold: 0.15 });
     observer.observe(video);
@@ -50,14 +49,6 @@ export default function RibbonFilm() {
     };
   }, []);
 
-  function toggle() {
-    const video = player.current;
-    if (!video) return;
-    paused.current = !video.paused;
-    if (paused.current) video.pause();
-    else void video.play().catch(() => {});
-  }
-
   return <Box sx={{ position: "relative", flexShrink: 0, maxWidth: "100%", justifySelf: "center",
     width: { xs: "100%", sm: "min(100%, 520px)", md: "clamp(480px, 40vw, 700px)" },
     // The film reaches a little past its column toward the page margin.
@@ -65,28 +56,25 @@ export default function RibbonFilm() {
     <Box component="video" ref={player} muted loop playsInline disablePictureInPicture preload="metadata" width={1178} height={786}
       aria-label="The BlueTrendy logo in blue glass and brushed steel, turning on its plinth"
       onLoadedData={() => setReady(true)}
-      onPlaying={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => setFailed(true)}
       sx={{ display: "block", width: "100%", height: "auto", aspectRatio: "3 / 2", objectFit: "cover",
         // Crop the empty studio margin so the B itself is larger.
         transformOrigin: "50% 58%",
-        maskImage: "radial-gradient(ellipse 58% 56% at 50% 52%, #000 58%, rgba(0, 0, 0, 0.55) 78%, transparent 100%)",
+        maskImage: "radial-gradient(closest-side at 50% 48%, #000 52%, rgba(0, 0, 0, 0.5) 78%, transparent 100%), linear-gradient(180deg, #000 70%, transparent 97%)",
+        maskComposite: "intersect",
+        WebkitMaskComposite: "source-in",
         mixBlendMode: "screen",
         filter: "saturate(1.12) contrast(1.06)",
         // One settle once the first frame is in: fade up while easing into place.
-        opacity: ready ? 1 : 0,
+        // On Safari the keyed canvas above shows the film; the video only supplies its frames.
+        opacity: needsKey ? 0.01 : ready ? 1 : 0,
         scale: ready ? "1.1" : "1.04",
         transition: `opacity 1.2s ${ease}, scale 1.6s ${ease}`,
         "@media (prefers-reduced-motion: reduce)": { scale: "1.1", transition: "opacity 0.6s ease" } }} />
-    {!failed && ready && <Box component="button" type="button" onClick={toggle}
-      aria-label={playing ? "Pause logo film" : "Play logo film"}
-      sx={{ position: "absolute", right: "20%", bottom: "16%", zIndex: 1, display: "grid", placeItems: "center",
-        width: 44, height: 44, borderRadius: "50%", cursor: "pointer", color: "#e4f6ff",
-        border: "1px solid rgba(111, 220, 255, 0.4)", background: "rgba(6, 22, 43, 0.72)", backdropFilter: "blur(6px)",
-        transition: "border-color .25s ease, box-shadow .3s ease",
-        "&:hover": { borderColor: "#7fe3ff", boxShadow: "0 0 16px rgba(40, 170, 255, 0.55)" },
-        "&:focus-visible": { outline: "2px solid #a8ecff", outlineOffset: 3 },
-        "& svg": { fontSize: 20 } }}>
-      {playing ? <PauseRounded /> : <PlayArrowRounded />}
-    </Box>}
+    {needsKey && <Box component="canvas" ref={keyed} width={1178} height={786} aria-hidden="true"
+      sx={{ position: "absolute", top: 0, left: 0, width: "100%", aspectRatio: "3 / 2", objectFit: "cover", transformOrigin: "50% 58%",
+        maskImage: "radial-gradient(closest-side at 50% 48%, #000 52%, rgba(0, 0, 0, 0.5) 78%, transparent 100%), linear-gradient(180deg, #000 70%, transparent 97%)",
+        WebkitMaskImage: "radial-gradient(closest-side at 50% 48%, #000 52%, rgba(0, 0, 0, 0.5) 78%, transparent 100%), linear-gradient(180deg, #000 70%, transparent 97%)",
+        maskComposite: "intersect", WebkitMaskComposite: "source-in",
+        opacity: ready ? 1 : 0, scale: ready ? "1.1" : "1.04", transition: `opacity 1.2s ${ease}, scale 1.6s ${ease}` }} />}
   </Box>;
 }

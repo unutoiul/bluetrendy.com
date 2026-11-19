@@ -4,7 +4,7 @@ import type { CSSObject } from "@mui/material/styles";
 
 export const siteGlobalStyles: CSSObject[] = [
   { "html, body": { maxWidth: "100vw", overflowX: "clip" } },
-  { body: { minHeight: "100vh", display: "flex", flexDirection: "column" } },
+  { body: { minHeight: "100vh", display: "flex", flexDirection: "column", background: "linear-gradient(180deg, #f6f9fd 0%, #edf4fb 55%, #e6f0fa 100%)" } },
   { main: { flex: "1", scrollMarginTop: "80px" } },
   { ".skip-to-content": {
       position: "fixed",

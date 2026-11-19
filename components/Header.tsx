@@ -46,7 +46,7 @@ function DetailHeader({ path }: { path: string }) {
       }}>
       <Container>
         <Stack direction="row" sx={{ height: { xs: 65, md: 78 }, alignItems: "center", justifyContent: "space-between", gap: 1 }}>
-          <Logo height={42} spinOnArrival inverse />
+          <Logo height={50} spinOnArrival inverse />
               <Box component="nav" aria-label="Main navigation" onPointerLeave={() => setHovered(null)}
                 sx={{ display: { xs: "none", md: "flex" }, gap: { md: 0, lg: 0.5 } }}>
                 {navLinks.map(link => {
@@ -57,8 +57,8 @@ function DetailHeader({ path }: { path: string }) {
                       sx={{
                         px: { md: 1, lg: 1.35 }, minWidth: 0, position: "relative", zIndex: 0,
                         color: active ? "#9fe8ff" : "#dcecff",
-                        "&::before": { display: "none" },
-                        "&:hover": { color: "#9fe8ff" },
+                        // The sliding pill below is the hover fill.
+                        "&:hover": { color: "#9fe8ff", bgcolor: "transparent" },
                       }}>
                       {hovered === link.href && (
                         <Box component={motion.span} layoutId="nav-hover" aria-hidden="true"
@@ -78,8 +78,7 @@ function DetailHeader({ path }: { path: string }) {
               <Box sx={{ display: { xs: "none", md: "inline-flex" } }}>
                 <Magnetic>
                   <Button component={Link} href="/book-a-call" variant="contained" endIcon={<ArrowOutward />}
-                    onClick={() => trackEvent("cta_book_call_click", { location: "header" })}
-                    sx={{ bgcolor: "#e1f2ff", color: "#071a2a", "&:hover": { bgcolor: "#fff" } }}>
+                    onClick={() => trackEvent("cta_book_call_click", { location: "header" })}>
                     <RollText>Book a call</RollText>
                   </Button>
                 </Magnetic>
@@ -93,7 +92,7 @@ function DetailHeader({ path }: { path: string }) {
         <Stack id="mobile-nav" component="nav" aria-label="Mobile navigation" spacing={1}
           sx={{ width: "min(86vw, 340px)", p: 3, height: "100%", overscrollBehavior: "contain" }}>
           <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", mb: 2 }}>
-            <Box onClick={() => setOpen(false)}><Logo height={33} inverse /></Box>
+            <Box onClick={() => setOpen(false)}><Logo height={40} inverse /></Box>
             <IconButton aria-label="Close menu" onClick={() => setOpen(false)}
               sx={{ color: "#e4f2ff", "&:hover svg": { transform: "rotate(90deg)" }, "& svg": { transition: `transform 0.4s ${easeOut}` } }}><Close /></IconButton>
           </Stack>
@@ -105,7 +104,6 @@ function DetailHeader({ path }: { path: string }) {
                 <Button component={Link} href={link.href} fullWidth aria-current={active ? "page" : undefined} onClick={() => setOpen(false)}
                   sx={{ justifyContent: "flex-start", py: 1.4, px: 2, fontSize: 17, borderRadius: 3,
                     bgcolor: active ? "rgba(63, 168, 255, 0.16)" : undefined, color: active ? "#9fe8ff" : "#dcecff",
-                    "&::before": { display: "none" },
                     "&:hover": { bgcolor: "rgba(63, 168, 255, 0.12)", color: "#9fe8ff", pl: 2.75 },
                     transition: `transform 0.22s ${easeOut}, padding 0.35s ${easeOut}, background-color 0.25s ease, color 0.25s ease` }}>
                   {link.label}
@@ -116,8 +114,7 @@ function DetailHeader({ path }: { path: string }) {
           <Box component={motion.div} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.12 + navLinks.length * 0.05, duration: 0.5, ease: [0.22, 1, 0.36, 1] }} sx={{ pt: 1.5 }}>
             <Button component={Link} href="/book-a-call" variant="contained" fullWidth endIcon={<ArrowOutward />}
-              onClick={() => { setOpen(false); trackEvent("cta_book_call_click", { location: "mobile_nav" }); }}
-              sx={{ bgcolor: "#e1f2ff", color: "#071a2a", "&:hover": { bgcolor: "#fff" } }}>Book a call</Button>
+              onClick={() => { setOpen(false); trackEvent("cta_book_call_click", { location: "mobile_nav" }); }}>Book a call</Button>
           </Box>
         </Stack>
       </Drawer>

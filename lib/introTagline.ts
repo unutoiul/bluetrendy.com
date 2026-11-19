@@ -1,6 +1,5 @@
 import { animate } from "motion/mini";
 
-// The offline player uses this same module, bundled with esbuild as the IIFE IntroTagline.
 // The HyperFrames title lands just after the ribbons lock together.
 const revealStart = 5.13;
 const revealDuration = 0.58;

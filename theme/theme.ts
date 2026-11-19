@@ -110,8 +110,12 @@ const theme = createTheme({
           paddingBlock: "0.9rem",
           fontSize: "1rem",
         },
+        // One primary action style across the site: the bright blue pill from the home page.
         contained: {
-          "&:hover": { transform: "translateY(-1px)", boxShadow: "none" },
+          backgroundColor: "#2879df",
+          color: "#f1fbff",
+          boxShadow: "0 10px 26px -14px rgba(40, 121, 223, 0.9)",
+          "&:hover": { transform: "translateY(-1px)", backgroundColor: "#3c8bef", boxShadow: "0 14px 30px -14px rgba(60, 139, 239, 0.95)" },
           "&:active": { transform: "scale(0.98)", boxShadow: "none" },
         },
         outlined: {
@@ -119,24 +123,9 @@ const theme = createTheme({
           backgroundColor: brand.mist,
           "&:hover": { border: 0, backgroundColor: "#E3EDF5" },
         },
-        // Text buttons draw an underline instead of filling.
+        // Text buttons fill with a soft blue pill on hover, the same tint as the header links.
         text: {
-          "&::before": {
-            content: '""',
-            position: "absolute",
-            left: "var(--underline-inset, 0.55rem)",
-            right: "var(--underline-inset, 0.55rem)",
-            bottom: "0.42rem",
-            height: "1.5px",
-            borderRadius: 2,
-            backgroundColor: "currentColor",
-            pointerEvents: "none",
-            transform: "scaleX(0)",
-            transformOrigin: "right",
-            transition: `transform 0.45s ${easeOut}`,
-          },
-          "&:hover": { backgroundColor: "transparent" },
-          "&:hover::before, &.Mui-focusVisible::before": { transform: "scaleX(1)", transformOrigin: "left" },
+          "&:hover": { backgroundColor: "rgba(63, 168, 255, 0.14)" },
         },
       },
     },

@@ -1,4 +1,5 @@
 import type { CSSObject } from "@mui/material/styles";
+import { neural } from "./neuralStyle";
 
 // Class names used in the markup. Each is prefixed so it stays unique across the site.
 const styles = {
@@ -143,7 +144,7 @@ export const experienceSheet: CSSObject[] = [
   { ".Experience__opening": {
       position: "relative",
       isolation: "isolate",
-      background: "#091b2d",
+      background: neural.blueFlow("header", "hero"),
       paddingBottom: "clamp(24px, 3vw, 48px)",
       overflow: "clip",
     } },
@@ -192,16 +193,19 @@ export const experienceSheet: CSSObject[] = [
       fontWeight: "650",
       fontSize: ".95rem",
       textTransform: "none",
-      transition: "background-color .22s ease, transform .22s ease",
+      transition: "background-color .25s ease, transform .22s cubic-bezier(.22,1,.36,1), box-shadow .4s cubic-bezier(.22,1,.36,1)",
     } },
+  // Matches the site-wide contained button in theme.ts.
   { ".Experience__experience .Experience__primary": {
       background: "#2879df",
       color: "#f1fbff",
       border: "0",
+      boxShadow: "0 10px 26px -14px rgba(40, 121, 223, 0.9)",
     } },
   { ".Experience__experience .Experience__primary:hover": {
-      transform: "translateY(-2px)",
+      transform: "translateY(-1px)",
       background: "#3c8bef",
+      boxShadow: "0 14px 30px -14px rgba(60, 139, 239, 0.95)",
     } },
   { ".Experience__experience :is(.Experience__primary,.Experience__secondary):active": { transform: "scale(.96)" } },
   { ".Experience__experience .Experience__secondary": { color: "#e1f0ff", border: "0", backgroundColor: "transparent" } },

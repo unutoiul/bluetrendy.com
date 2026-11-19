@@ -85,7 +85,7 @@ export default function AgentsChapter() {
     <SplitSection id="agents-heading" tone="dark" title="AI agents that take on real work"
       text="We design, build and run AI agents that handle repeat tasks across your documents and systems, while a person stays in charge of the decisions that matter."
       link={{ href: "/contact", label: "Plan your first agent" }}
-      effect="packetMesh" seed={57}>
+      effect="packetMesh" seed={57} background={neural.blueFlow("services", "agents")}>
       <AgentMap />
       <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))" }, gap: 2 }}>
         {capabilities.map(({ title, text, Icon }) => (

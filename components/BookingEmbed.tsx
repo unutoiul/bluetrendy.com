@@ -4,12 +4,12 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import CalendarMonthOutlined from "@mui/icons-material/CalendarMonthOutlined";
 import OpenInNew from "@mui/icons-material/OpenInNew";
-import CalEmbed from "@/components/CalEmbed";
+import CalEmbed, { type BookingPrefill } from "@/components/CalEmbed";
 import CalendlyEmbed from "@/components/CalendlyEmbed";
 import LinkButton from "@/components/LinkButton";
 import { getBookingConfig } from "@/lib/booking";
 
-export default function BookingEmbed() {
+export default function BookingEmbed({ prefill }: { prefill?: BookingPrefill }) {
   const booking = getBookingConfig(
     process.env.NEXT_PUBLIC_CAL_COM_URL,
     process.env.NEXT_PUBLIC_CALENDLY_URL,
@@ -41,7 +41,7 @@ export default function BookingEmbed() {
         </Box>
       </Stack>
       <Box sx={{ minWidth: 0 }}>
-        {booking.provider === "cal" ? <CalEmbed calLink={booking.calLink} /> : <CalendlyEmbed url={booking.url} />}
+        {booking.provider === "cal" ? <CalEmbed calLink={booking.calLink} prefill={prefill} /> : <CalendlyEmbed url={booking.url} prefill={prefill} />}
       </Box>
     </Box>
   );

@@ -72,7 +72,7 @@ export default function AboutPage() {
         subtitle="Lucas Franco has spent 15+ years building production software for banks, government agencies, healthcare teams and enterprise software companies. He leads each engagement from the first conversation through handover."
       />
 
-      <SplitSection id="engineer-heading" title="Lucas Franco"
+      <SplitSection id="engineer-heading" title="Lucas Franco" effect="dotField" seed={131}
         text="Founder and lead engineer. He writes the code on every engagement, from the first call to handover." blade={portrait}>
         <Box sx={{ display: "grid", gap: 2.5 }}>
           <Box component="p" sx={paragraph}>
