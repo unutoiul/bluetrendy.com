@@ -105,7 +105,7 @@ const organization = {
         postalCode: company.registeredOffice.postcode, addressCountry: company.registeredOffice.country,
       },
       areaServed: { "@type": "Country", name: "United Kingdom" },
-      founder: { "@type": "Person", "@id": ids.founder, name: "Lucas Franco", jobTitle: "Founder and lead engineer" },
+      founder: { "@type": "Person", "@id": ids.founder, name: "Lucas Franco", jobTitle: "Software engineer, AI engineer & founder" },
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "sales",

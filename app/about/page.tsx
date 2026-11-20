@@ -45,7 +45,7 @@ const team: Member[] = [
   {
     id: ids.founder,
     name: "Lucas Franco",
-    role: "Founder and lead engineer",
+    role: "Software engineer, AI engineer & founder",
     linkedIn: undefined,
     photo: founderPhoto,
     initials: "LF",
