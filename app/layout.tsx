@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
@@ -78,6 +78,11 @@ export const metadata: Metadata = {
     ...(process.env.GOOGLE_SITE_VERIFICATION && { google: process.env.GOOGLE_SITE_VERIFICATION }),
     ...(process.env.BING_SITE_VERIFICATION && { other: { "msvalidate.01": process.env.BING_SITE_VERIFICATION } }),
   },
+};
+
+// The site has no dark theme: ask phone browsers not to auto-darken it (see theme/globalStyles.ts).
+export const viewport: Viewport = {
+  colorScheme: "only light",
 };
 
 // Who we are, for search engines and AI assistants: the business behind every page, and the site's name.

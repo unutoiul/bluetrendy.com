@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test": "tsx --test tests/*.test.ts",
     "emails": "tsx scripts/emails.ts",
-    "indexnow": "tsx scripts/indexnow.ts"
+    "indexnow": "tsx scripts/indexnow.ts",
+    "client-tiles": "tsx scripts/client-tiles.ts"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",

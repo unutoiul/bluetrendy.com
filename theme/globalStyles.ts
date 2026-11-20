@@ -22,6 +22,11 @@ export const siteGlobalStyles: CSSObject[] = [
   { a: { color: "inherit" } },
   // ---------- Motion ----------
   { ":root": { "--ease-out": "cubic-bezier(0.22, 1, 0.36, 1)" } },
+  // ---------- Colour scheme ----------
+  // The site is designed light. "only light" (with the matching meta tag in app/layout.tsx) asks
+  // browsers not to auto-darken it; Chrome on Android honours this. Samsung Internet may still
+  // darken the page, which is why the client logos carry their own white plates.
+  { ":root": { colorScheme: "only light" } },
   // ---------- Page width ----------
   // One content width for the whole site: the header, every section and the footer line up.
   // MUI's Container uses it (theme.ts), and so do the hand-built sections.

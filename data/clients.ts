@@ -21,6 +21,9 @@ export type ClientLogo = {
   external: boolean;
 };
 
+/** The white-plated tile scripts/client-tiles.ts builds from a logo file, e.g. "nato.svg" -> "nato". */
+export const tileName = (file: string) => file.replace(/\.[^.]+$/, "");
+
 export const clientLogos: ClientLogo[] = [
   { name: "NATO", industry: "government", file: "nato.svg", href: "/case-studies/nato-nci-agency-arcgis", external: false },
   { name: "Boston Consulting Group", industry: "consulting", file: "bcg.svg", href: "/case-studies/bcg-bayer-medical-imaging", external: false },
