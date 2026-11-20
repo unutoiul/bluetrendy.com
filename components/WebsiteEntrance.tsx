@@ -220,7 +220,9 @@ export default function WebsiteEntrance() {
         {/* Plays in under the button once the logo has settled; it keeps its space so nothing moves. */}
         <Box ref={tagline} data-intro-message data-state="wait" sx={sx.message}>
           <Box component="h2" sx={sx.claim}>
-            <span className="accent" style={{ "--split-delay": `${claimDelay}ms` } as CSSProperties}>{claim}</span>
+            <span className="accent" style={{ "--split-delay": `${claimDelay}ms` } as CSSProperties}>
+              {claimBefore}<span className="ai">AI</span>{claimAfter}
+            </span>
           </Box>
           <Box component="ul" aria-label="What it means for you" sx={sx.outcomes}
             style={{ "--outcomes-delay": `${outcomesDelay}ms` } as CSSProperties}>
@@ -267,7 +269,8 @@ const soundPulse = keyframes`
   50% { box-shadow: 0 0 0 6px ${withAlpha(palette.sky[175], 0.18)}; }
 `;
 // The message: one claim, then what it means for the visitor's business.
-const claim = "We make AI work for your business.";
+const claimBefore = "We make ";
+const claimAfter = " work for your business.";
 const outcomes = [
   { label: "More customers", Icon: GroupsRounded },
   { label: "Less manual work", Icon: AutoModeRounded },
@@ -276,9 +279,10 @@ const outcomes = [
 // One sequence, in milliseconds from the cue: the beam writes the claim, the outcomes switch
 // on left to right, and the enter button glows once to say "ready".
 const claimDelay = 250;
-// The beam starts slowly, lingers, then races to the end of the line.
-const claimWrite = "1.8s cubic-bezier(.8, 0, .85, .45)";
-const outcomesDelay = claimDelay + 1700;
+// The beam starts slowly and lingers over the opening words, then races to the end of the line.
+const claimWriteMs = 3400;
+const claimWrite = `${claimWriteMs}ms cubic-bezier(.9, 0, .88, .4)`;
+const outcomesDelay = claimDelay + claimWriteMs;
 const outcomeStagger = 180;
 const readyDelay = outcomesDelay + outcomes.length * outcomeStagger + 500;
 // The home page's accent-write, with room around the line so the beam's glow fades out
@@ -369,8 +373,9 @@ const sx = {
     "& ::selection": { color: palette.white, background: palette.blue[550], WebkitTextFillColor: "white" },
     "&[data-state='wait'] :is(.accent, .outcome)": { opacity: 0 },
     "&[data-state='in'] .accent": {
-      animation: `${write} ${claimWrite} var(--split-delay) backwards, ${glint} 1.4s ease-in-out calc(var(--split-delay) + 1.7s) both`,
+      animation: `${write} ${claimWrite} var(--split-delay) backwards`,
     },
+    "&[data-state='in'] .ai": { animation: `${glint} 1.4s ease-in-out calc(var(--split-delay) + ${claimWriteMs}ms) both` },
     "&[data-state='in'] .accent::after": {
       content: '""',
       position: "absolute",
@@ -390,7 +395,7 @@ const sx = {
       animationDelay: `calc(var(--outcomes-delay) + var(--i) * ${outcomeStagger}ms)`,
     },
     "@media (prefers-reduced-motion: reduce)": {
-      "& :is(.accent, .outcome)": { animation: "none !important", opacity: "1 !important" },
+      "& :is(.accent, .ai, .outcome)": { animation: "none !important", opacity: "1 !important" },
       "& .accent::after": { display: "none" },
     },
   },
@@ -403,19 +408,28 @@ const sx = {
       width: "fit-content",
       maxWidth: "100%",
       mx: "auto",
-      color: palette.sky[175],
+      color: palette.white,
       fontSize: "clamp(18px, min(2.6cqw, 3.6cqh), 28px)",
       fontWeight: 680,
       lineHeight: 1.15,
       letterSpacing: "-.03em",
       textWrap: "balance",
-      background: `linear-gradient(108deg, ${palette.sky[175]} 25%, ${palette.white} 50%, ${palette.sky[175]} 75%) 100% 50% / 320% 100%`,
+      filter: `drop-shadow(0 0 24px ${withAlpha(palette.blue[250], 0.22)})`,
+    },
+    // White line, blue "AI", with a glint of light crossing it once the beam has passed.
+    "& .ai": {
+      // Larger and heavier than the words around it, sitting on the same baseline.
+      fontSize: "1.4em",
+      fontWeight: 800,
+      lineHeight: 1,
+      letterSpacing: "-.02em",
+      color: palette.sky[150],
+      background: `linear-gradient(108deg, ${palette.sky[150]} 30%, ${palette.white} 50%, ${palette.sky[150]} 70%) 100% 50% / 320% 100%`,
       backgroundClip: "text",
       WebkitTextFillColor: "transparent",
-      filter: `drop-shadow(0 0 24px ${withAlpha(palette.blue[250], 0.3)})`,
     },
     [shortStage]: { "& .accent": { fontSize: 16 } },
-    "@media (forced-colors: active)": { "& .accent": { WebkitTextFillColor: "currentColor" } },
+    "@media (forced-colors: active)": { "& .ai": { WebkitTextFillColor: "currentColor" } },
   },
   // What the visitor gets, as three glass chips in a row; on phones the third wraps, centred.
   outcomes: {
