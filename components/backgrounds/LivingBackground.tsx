@@ -24,7 +24,9 @@ type LivingBackgroundProps = {
   sx?: SxProps<Theme>;
 };
 
-const frameGap = 1000 / 40;
+// 40 frames a second on desktop; 30 on phones and tablets, where the battery and the touch
+// response matter more and the drift of soft light looks the same.
+const frameGapFor = () => 1000 / (matchMedia("(pointer: coarse)").matches ? 30 : 40);
 // Everything is drawn a little dimmer and slower than the effects' own values: calm, not busy.
 const opacity = 0.7;
 const pace = 0.6;
@@ -59,7 +61,10 @@ export default function LivingBackground({ effect, quiet = "left", light = false
     if (!canvas || !area || !section || !context) return;
     const draw = effects[effect](random(seed));
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-    let width = 0, height = 0, frame = 0, last = 0, start = 0, previous = 0, visible = false;
+    const frameGap = frameGapFor();
+    let width = 0, height = 0, frame = 0, last = 0, start = 0, previous = 0;
+    // Whether the section is on screen; unknown until the first size or visibility report.
+    let visible: boolean | null = null;
     let pointer: Frame["pointer"] = null;
     const clicks: { x: number; y: number; at: number }[] = [];
 
@@ -108,7 +113,14 @@ export default function LivingBackground({ effect, quiet = "left", light = false
       canvas!.width = Math.round(width * ratio);
       canvas!.height = Math.round(height * ratio);
       context!.setTransform(ratio, 0, 0, ratio, 0, 0);
-      render(reduced.matches ? start : performance.now());
+      // The first size report comes before the visibility one; check for ourselves so a
+      // section on screen draws its first frame straight away. (Layout is already done here,
+      // so this costs nothing.) Sections off screen draw when they arrive.
+      if (visible === null) {
+        const box = section!.getBoundingClientRect();
+        visible = box.bottom > 0 && box.top < window.innerHeight;
+      }
+      if (visible) render(reduced.matches ? start : performance.now());
     }
 
     function tick(now: number) {
@@ -120,9 +132,21 @@ export default function LivingBackground({ effect, quiet = "left", light = false
 
     function update() {
       cancelAnimationFrame(frame);
+      window.removeEventListener("load", update);
       previous = 0;
-      if (visible && !reduced.matches && !document.hidden) frame = requestAnimationFrame(tick);
-      else render(reduced.matches ? start : performance.now());
+      if (!visible) return;
+      if (reduced.matches || document.hidden) {
+        render(reduced.matches ? start : performance.now());
+        return;
+      }
+      // While the page is still loading, one frame is enough: the scene is there from the
+      // start, and the animation begins once the page has nothing more urgent to do.
+      if (document.readyState !== "complete") {
+        render(performance.now());
+        window.addEventListener("load", update, { once: true });
+        return;
+      }
+      frame = requestAnimationFrame(tick);
     }
 
     function follow(event: PointerEvent) {
@@ -149,6 +173,7 @@ export default function LivingBackground({ effect, quiet = "left", light = false
     reduced.addEventListener("change", update);
     return () => {
       cancelAnimationFrame(frame);
+      window.removeEventListener("load", update);
       sizeWatcher.disconnect();
       viewWatcher.disconnect();
       section.removeEventListener("pointermove", follow);

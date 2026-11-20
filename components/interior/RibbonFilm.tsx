@@ -6,6 +6,9 @@ import { useLumaKey, useNeedsLumaKey } from "@/components/motion/useLumaKey";im
 
 
 const source = "/brand/3d-bluetrendy.mp4";
+// The same film at 900px wide for phones and tablets, where it never shows larger than that.
+const compactSource = "/brand/3d-bluetrendy-compact.mp4";
+const compactMedia = "(max-width: 899px)";
 const ease = "cubic-bezier(0.22, 1, 0.36, 1)";
 
 /**
@@ -30,7 +33,15 @@ export default function RibbonFilm() {
     let visible = false;
     function sync() {
       if (!video || !visible) { video?.pause(); return; }
-      if (!video.hasAttribute("src")) video.src = source;
+      if (!video.hasAttribute("src")) {
+        const compact = matchMedia(compactMedia).matches || connection?.saveData;
+        // On phones the film waits until the page itself has loaded, so it never slows the page down.
+        if (compact && document.readyState !== "complete") {
+          window.addEventListener("load", sync, { once: true });
+          return;
+        }
+        video.src = compact ? compactSource : source;
+      }
       // A still first frame for reduced motion or Save-Data; otherwise play while on screen.
       if (document.hidden || reduced.matches || connection?.saveData) {
         video.pause();
@@ -46,6 +57,7 @@ export default function RibbonFilm() {
       observer.disconnect();
       reduced.removeEventListener("change", sync);
       document.removeEventListener("visibilitychange", sync);
+      window.removeEventListener("load", sync);
       video.pause();
     };
   }, []);

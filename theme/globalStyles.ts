@@ -136,7 +136,9 @@ export const siteGlobalStyles: CSSObject[] = [
   { "@keyframes accent-out": { to: { opacity: "0", transform: "translateY(-0.25em)", filter: "blur(8px)" } } },
   { ".msg[data-state=\"in\"] .w": { animation: "word-in 0.85s var(--ease-out) both", animationDelay: "calc(var(--i) * 70ms + 60ms)" } },
   { ".msg[data-state=\"out\"] .w": { animation: "word-out 0.42s cubic-bezier(0.5, 0, 0.75, 0) both", animationDelay: "calc(var(--i) * 22ms)" } },
-  { ".msg-body[data-state=\"in\"] .w": { animationName: "word-soft-in", animationDuration: "0.6s", animationDelay: "calc(var(--i) * 9ms + 420ms)" } },
+  // The body copy follows the headline closely and settles within a second: it is usually the
+  // largest text on the page, and the page only counts as shown once it has fully arrived.
+  { ".msg-body[data-state=\"in\"] .w": { animationName: "word-soft-in", animationDuration: "0.5s", animationDelay: "calc(var(--i) * 5ms + 220ms)" } },
   { ".msg-body[data-state=\"out\"] .w": { animation: "fade-away 0.25s ease-in both" } },
   { ".msg-accent": { position: "relative", width: "fit-content" } },
   { ".msg[data-state=\"in\"] .msg-accent": { animation: "accent-write 0.95s cubic-bezier(0.65, 0, 0.35, 1) backwards", animationDelay: "var(--split-delay)" } },

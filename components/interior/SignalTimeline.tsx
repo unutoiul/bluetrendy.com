@@ -1,29 +1,27 @@
-"use client";
-
 import Link from "next/link";
 import Box from "@mui/material/Box";
-import { keyframes } from "@mui/material/styles";
 import { palette, withAlpha } from "@/theme/palette";
 
 type Entry = { period: string; org: string; role: string; href?: string };
 
-// A pulse of light runs down the line, like a signal along a nerve.
-const signal = keyframes`
-  0% { top: 0; opacity: 0; }
-  8% { opacity: 1; }
-  92% { opacity: 1; }
-  100% { top: 100%; opacity: 0; }
-`;
+// A pulse of light runs down the line, like a signal along a nerve. The keyframes live in
+// the list's own styles, so this stays a server component with nothing to hydrate.
+const signal = {
+  "0%": { top: 0, opacity: 0 },
+  "8%": { opacity: 1 },
+  "92%": { opacity: 1 },
+  "100%": { top: "100%", opacity: 0 },
+};
 
 /** The career as a glowing signal line: each engagement is a node that lights up as it arrives. */
 export default function SignalTimeline({ entries }: { entries: Entry[] }) {
   return (
-    <Box component="ol" data-panel-group sx={{ position: "relative", listStyle: "none", m: 0, p: 0, pl: { xs: 4, sm: 5 },
+    <Box component="ol" data-panel-group sx={{ position: "relative", listStyle: "none", m: 0, p: 0, pl: { xs: 4, sm: 5 }, "@keyframes signal-pulse": signal,
       "&::before": { content: '""', position: "absolute", left: { xs: 9, sm: 13 }, top: 8, bottom: 8, width: 2, borderRadius: 2,
         background: `linear-gradient(180deg, ${palette.sky[100]}, ${palette.blue[350]} 40%, ${palette.blue[550]} 80%, transparent)`, boxShadow: `0 0 12px ${withAlpha(palette.blue[300], 0.7)}` },
       "&::after": { content: '""', position: "absolute", left: { xs: 6, sm: 10 }, width: 8, height: 26, borderRadius: 8,
         background: `linear-gradient(180deg, transparent, ${palette.cyan[25]}, transparent)`, boxShadow: `0 0 14px 4px ${withAlpha(palette.sky[150], 0.8)}`,
-        animation: `${signal} 6s cubic-bezier(0.45, 0, 0.55, 1) infinite`,
+        animation: "signal-pulse 6s cubic-bezier(0.45, 0, 0.55, 1) infinite",
         "@media (prefers-reduced-motion: reduce)": { display: "none" } } }}>
       {entries.map(entry => (
         <Box component="li" key={entry.org + entry.period} data-panel="reveal"

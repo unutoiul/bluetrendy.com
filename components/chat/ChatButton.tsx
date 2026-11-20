@@ -34,7 +34,8 @@ const breathe = keyframes`
   0% { box-shadow: 0 0 0 0 ${withAlpha(palette.green[175], 0.55)}; }
   70%, 100% { box-shadow: 0 0 0 7px ${withAlpha(palette.green[175], 0)}; }
 `;
-// The button rises into place once, after the page has settled.
+// The button rises into place once. ChatLauncher mounts it after the page has loaded, so only
+// a short pause is needed here.
 const arrive = keyframes`
   from { opacity: 0; transform: translateY(18px) scale(.8); }
   to { opacity: 1; transform: none; }
@@ -64,11 +65,11 @@ type State = "idle" | "loading" | "open";
 
 /**
  * The live chat button, in the corner of every page. It is ours, not Crisp's: Crisp loads only
- * when someone presses it (see lib/crisp.ts). It turns into a close button while the chat is
+ * when someone presses it (see lib/crisp.ts). ChatLauncher brings this in after the page has loaded. It turns into a close button while the chat is
  * open, with the same motion in both directions, counts replies that arrive while the chat is
  * closed, and sends people to the contact form if Crisp isn't set up or can't load.
  */
-export default function ChatLauncher() {
+export default function ChatButton() {
   const router = useRouter();
   const [state, setState] = useState<State>("idle");
   const [fullScreen, setFullScreen] = useState(false);
@@ -139,7 +140,7 @@ export default function ChatLauncher() {
       visibility: fullScreen ? "hidden" : "visible", pointerEvents: fullScreen ? "none" : "auto",
       transition: `opacity .3s ease, transform ${morph}, visibility .3s`,
       // "backwards", not "both": once it has played, the transitions above take over again.
-      animation: `${arrive} .7s ${ease} 1.2s backwards`,
+      animation: `${arrive} .7s ${ease} .3s backwards`,
       "@media print": { display: "none" },
       "@media (prefers-reduced-motion: reduce)": { animation: "none", transition: "none" },
     }}>

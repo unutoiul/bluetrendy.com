@@ -55,10 +55,16 @@ export default function HeadingMotion({ component = "h2", id, text, accent, tone
     if (immediate) return;
     const heading = ref.current;
     if (!heading) return;
-    // Headings already on screen stay visible; the rest wait for their turn.
-    if (heading.getBoundingClientRect().top < window.innerHeight * 0.9) return;
-    setState("waiting");
+    // Headings already on screen stay visible; the rest wait for their turn. The observer's
+    // first report says which is which, without forcing the page to lay out mid-hydration.
+    let reported = false;
     const observer = new IntersectionObserver(([entry]) => {
+      if (!reported) {
+        reported = true;
+        if (entry.isIntersecting) observer.disconnect();
+        else setState("waiting");
+        return;
+      }
       if (!entry.isIntersecting) return;
       observer.disconnect();
       setState("shown");
