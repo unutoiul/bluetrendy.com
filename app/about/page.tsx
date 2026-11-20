@@ -9,6 +9,14 @@ import AutoAwesomeOutlined from "@mui/icons-material/AutoAwesomeOutlined";
 import HubOutlined from "@mui/icons-material/HubOutlined";
 import CloudDoneOutlined from "@mui/icons-material/CloudDoneOutlined";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import WorkspacePremiumOutlined from "@mui/icons-material/WorkspacePremiumOutlined";
+import ShieldOutlined from "@mui/icons-material/ShieldOutlined";
+import PsychologyOutlined from "@mui/icons-material/PsychologyOutlined";
+import GroupsOutlined from "@mui/icons-material/GroupsOutlined";
+import RecordVoiceOverOutlined from "@mui/icons-material/RecordVoiceOverOutlined";
+import RocketLaunchOutlined from "@mui/icons-material/RocketLaunchOutlined";
+import StorageOutlined from "@mui/icons-material/StorageOutlined";
+import ChatOutlined from "@mui/icons-material/ChatOutlined";
 import PageHero from "@/components/PageHero";
 import SplitSection from "@/components/SplitSection";
 import CTASection from "@/components/CTASection";
@@ -50,6 +58,11 @@ const team: Member[] = [
     photo: founderPhoto,
     initials: "LF",
     credentials: [
+      { Icon: WorkspacePremiumOutlined, title: "Lead software engineer, 15+ years", detail: "Banking, defence, healthcare and enterprise SaaS" },
+      { Icon: ShieldOutlined, title: "Lead engineer on NATO programmes", detail: "Classified document systems and geospatial strategy platforms" },
+      { Icon: PsychologyOutlined, title: "AI in production for BCG, Bayer and A&M", detail: "Medical imaging, financial analysis and predictive maintenance" },
+      { Icon: CloudDoneOutlined, title: "Cloud architect on Azure and AWS", detail: "Kubernetes, serverless, CI/CD and TDD/BDD" },
+      { Icon: GroupsOutlined, title: "Hands-on team lead", detail: "Led up to 25 developers at Lloyds Bank" },
       { Icon: SchoolOutlined, title: "B.S. Economic Cybernetics, Statistics & Informatics", detail: "London School of Economics (LSE)" },
       { Icon: VerifiedUserOutlined, title: "UK SC (Security Check) cleared", detail: "Based in London, UK" },
     ],
@@ -61,8 +74,13 @@ const team: Member[] = [
     linkedIn: "https://www.linkedin.com/in/oisin-o-aba110248",
     initials: "OO",
     credentials: [
-      { Icon: HubOutlined, title: "Agentic AI platforms in production", detail: "Tool use, memory, evaluations and audit trails" },
-      { Icon: CloudDoneOutlined, title: "10+ years of full-stack and cloud engineering", detail: "AWS, GCP, Terraform, Next.js and Node.js" },
+      { Icon: WorkspacePremiumOutlined, title: "Senior full-stack engineer, 10+ years", detail: "Production SaaS, AI products and real-time systems" },
+      { Icon: HubOutlined, title: "Lead developer of agentic AI platforms", detail: "Orchestration, tool use, memory, approvals and audit trails" },
+      { Icon: RocketLaunchOutlined, title: "Generative AI platform for 10,000+ users", detail: "Built front and back end alone, in under 3 months" },
+      { Icon: RecordVoiceOverOutlined, title: "Real-time AI voice and messaging", detail: "Twilio, Deepgram, OpenAI and ElevenLabs" },
+      { Icon: CloudDoneOutlined, title: "Cloud and infrastructure as code", detail: "AWS, GCP, Terraform, Terragrunt and Docker" },
+      { Icon: StorageOutlined, title: "Data platforms at scale", detail: "Hundreds of millions of BigQuery rows at DPD" },
+      { Icon: ChatOutlined, title: "Meta Verified Tech Provider", detail: "WhatsApp, Instagram and Facebook integrations" },
     ],
   },
 ];
@@ -136,6 +154,15 @@ const members = (
   </Box>
 );
 
+const expertise = [
+  { title: "AI agents and LLM products", detail: "Tool calling, memory, retrieval, guardrails, evaluations and audit logs, with OpenAI, Gemini and local models." },
+  { title: "Secure, regulated systems", detail: "NATO classified-document and geospatial platforms, banking and medical imaging, built test-first with TDD/BDD." },
+  { title: "Cloud and infrastructure", detail: "Azure, AWS and GCP with Kubernetes, serverless, Terraform, Docker and CI/CD pipelines." },
+  { title: "Real-time and data platforms", detail: "Live market data over WebSockets, voice AI on Twilio, and BigQuery and Pub/Sub pipelines at scale." },
+  { title: "Full-stack products", detail: "React, Next.js, Angular, TypeScript, Node.js, Java and Python, from MVP to enterprise." },
+  { title: "Mobile, messaging and integrations", detail: "React Native and Flutter apps, Stripe, Shopify, Bloomberg, WhatsApp and Google APIs." },
+];
+
 const paragraph = { m: 0, color: palette.navy[625], fontSize: { xs: "1.05rem", md: "1.15rem" }, lineHeight: 1.7, maxWidth: "62ch" } as const;
 
 export default function AboutPage() {
@@ -152,10 +179,21 @@ export default function AboutPage() {
         text="Small and senior by design. Everyone on the team writes code, from the first call to handover." blade={members}>
         <Box sx={{ display: "grid", gap: 2.5 }}>
           <Box component="p" sx={paragraph}>
-            The people you meet on the first call work on your system. Our clients include NATO, HSBC, Credit Suisse,
-            Atlassian and Boston Consulting Group, on regulated and security-sensitive projects led by our founder,
-            Lucas Franco. Oisin O’Maolchallan, our senior full-stack and AI engineer, builds the agentic AI platforms and
-            cloud infrastructure behind them.
+            The people you meet on the first call work on your system. Between us we bring more than 25 years of
+            production engineering for banks, defence agencies, healthcare companies, global consultancies and
+            fast-growing startups.
+          </Box>
+          <Box component="p" sx={paragraph}>
+            Our founder, Lucas Franco, has spent over 15 years as a lead engineer on regulated and security-sensitive
+            work: NATO strategy maps and classified-document systems, a DICOM medical imaging platform for Bayer with
+            Boston Consulting Group, AI-driven financial analysis with Alvarez &amp; Marsal, and a structured-products
+            trading platform running on live Bloomberg data. Clients also include HSBC, Credit Suisse and Atlassian.
+          </Box>
+          <Box component="p" sx={paragraph}>
+            Oisin O’Maolchallan leads our agentic AI work. He has built multi-client AI agent platforms with governed tool
+            use, memory, approvals and audit trails, real-time AI voice systems, and a generative AI media platform that
+            grew to more than 10,000 users. Before that he built cloud and data platforms at DPD, Telus and Pictet Group,
+            and he automates client infrastructure end to end with Terraform.
           </Box>
           <Box component="p" sx={paragraph}>
             That background shapes how we work: TDD/BDD discipline where correctness matters, cloud-native architecture on
@@ -172,6 +210,19 @@ export default function AboutPage() {
                 {stat.value}
               </Box>
               <Box component="p" sx={{ m: "10px 0 0", color: palette.slate[125], fontSize: ".92rem", lineHeight: 1.45 }}>{stat.label}</Box>
+            </Box>
+          ))}
+        </Box>
+        {/* What the two of us cover together, so a visitor can match it to their own project. */}
+        <Box component="h3" sx={{ m: "44px 0 0", fontSize: "1.35rem", fontWeight: 700, color: palette.navy[725], letterSpacing: "-0.025em" }}>
+          What we bring together
+        </Box>
+        <Box component="ul" sx={{ listStyle: "none", m: "18px 0 0", p: 0, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))" }, gap: 2 }}>
+          {expertise.map(({ title, detail }) => (
+            <Box component="li" key={title} sx={{ p: 2.25, borderRadius: "14px", bgcolor: palette.white, border: `1px solid ${withAlpha(palette.blue[500], 0.14)}`,
+              boxShadow: `0 14px 30px -24px ${withAlpha(palette.blue[500], 0.8)}` }}>
+              <Box component="p" sx={{ m: 0, fontWeight: 650, color: palette.navy[725], fontSize: "1rem", lineHeight: 1.35 }}>{title}</Box>
+              <Box component="p" sx={{ m: "6px 0 0", color: palette.slate[525], fontSize: ".92rem", lineHeight: 1.55 }}>{detail}</Box>
             </Box>
           ))}
         </Box>
