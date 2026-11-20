@@ -119,6 +119,23 @@ export default function WebsiteEntrance() {
     };
   }, []);
 
+  // The beam slows down over "AI", so it needs to know where "AI" sits in the line.
+  useLayoutEffect(() => {
+    const line = tagline.current?.querySelector<HTMLElement>(".accent");
+    const word = line?.querySelector<HTMLElement>(".ai");
+    if (!line || !word) return;
+    function measure() {
+      const width = line!.offsetWidth;
+      if (!width) return;
+      line!.style.setProperty("--ai-from", `${(word!.offsetLeft / width) * 100}%`);
+      line!.style.setProperty("--ai-to", `${((word!.offsetLeft + word!.offsetWidth) / width) * 100}%`);
+    }
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(line);
+    return () => observer.disconnect();
+  }, []);
+
   // While the film is silent, the visitor's first click, tap or key press anywhere starts it
   // again with sound. the enter button and the sound buttons handle their own presses.
   useEffect(() => {
@@ -281,13 +298,28 @@ const outcomes = [
 const claimDelay = 250;
 // The beam starts slowly and lingers over the opening words, then races to the end of the line.
 const claimWriteMs = 3400;
-const claimWrite = `${claimWriteMs}ms cubic-bezier(.9, 0, .88, .4)`;
+const claimWrite = `${claimWriteMs}ms linear`;
 const outcomesDelay = claimDelay + claimWriteMs;
 const outcomeStagger = 180;
 const readyDelay = outcomesDelay + outcomes.length * outcomeStagger + 500;
 // The home page's accent-write, with room around the line so the beam's glow fades out
 // softly instead of being cut into a box.
-const write = keyframes`from { clip-path: inset(-1em 100% -1em -1em); } to { clip-path: inset(-1em -.4em -1em -1em); }`;
+// It moves in three speeds: quickly to "AI", very slowly across "AI", then quickly to the end.
+// --ai-from and --ai-to mark where "AI" sits in the line, measured in the browser.
+const write = keyframes`
+  0% { clip-path: inset(-1em 100% -1em -1em); animation-timing-function: cubic-bezier(.3, .6, .6, 1); }
+  18% { clip-path: inset(-1em calc(100% - var(--ai-from)) -1em -1em); animation-timing-function: cubic-bezier(.45, 0, .55, 1); }
+  80% { clip-path: inset(-1em calc(100% - var(--ai-to)) -1em -1em); animation-timing-function: cubic-bezier(.5, 0, .7, .4); }
+  100% { clip-path: inset(-1em -.4em -1em -1em); }
+`;
+const beam = keyframes`
+  0% { left: 0; opacity: 0; animation-timing-function: cubic-bezier(.3, .6, .6, 1); }
+  5% { opacity: 1; }
+  18% { left: var(--ai-from); animation-timing-function: cubic-bezier(.45, 0, .55, 1); }
+  80% { left: var(--ai-to); animation-timing-function: cubic-bezier(.5, 0, .7, .4); }
+  94% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+`;
 // A glint of light crossing the closing line once the beam has written it.
 const glint = keyframes`from { background-position: 100% 50%; } to { background-position: 0% 50%; }`;
 // Each outcome chip switches on like a light: it rises out of a blur, its rim flares, then settles.
@@ -388,7 +420,7 @@ const sx = {
       boxShadow: `0 0 10px 2px ${palette.sky[150]}, 0 0 28px 6px ${palette.blue[350]}`,
       opacity: 0,
       pointerEvents: "none",
-      animation: `accent-beam ${claimWrite} var(--split-delay) both`,
+      animation: `${beam} ${claimWrite} var(--split-delay) both`,
     },
     "&[data-state='in'] .outcome": {
       animation: `${powerOn} 1s var(--ease-out) both`,
@@ -403,6 +435,8 @@ const sx = {
   claim: {
     m: 0,
     "& .accent": {
+      "--ai-from": "22%",
+      "--ai-to": "31%",
       position: "relative",
       display: "block",
       width: "fit-content",
@@ -418,11 +452,6 @@ const sx = {
     },
     // White line, blue "AI", with a glint of light crossing it once the beam has passed.
     "& .ai": {
-      // Larger and heavier than the words around it, sitting on the same baseline.
-      fontSize: "1.4em",
-      fontWeight: 800,
-      lineHeight: 1,
-      letterSpacing: "-.02em",
       color: palette.sky[150],
       background: `linear-gradient(108deg, ${palette.sky[150]} 30%, ${palette.white} 50%, ${palette.sky[150]} 70%) 100% 50% / 320% 100%`,
       backgroundClip: "text",
