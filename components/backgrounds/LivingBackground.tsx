@@ -62,7 +62,7 @@ export default function LivingBackground({ effect, quiet = "left", light = false
     const draw = effects[effect](random(seed));
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     const frameGap = frameGapFor();
-    let width = 0, height = 0, frame = 0, last = 0, start = 0, previous = 0;
+    let width = 0, height = 0, frame = 0, last = 0, start = 0, previous = 0, latest = 0;
     // Whether the section is on screen; unknown until the first size or visibility report.
     let visible: boolean | null = null;
     let pointer: Frame["pointer"] = null;
@@ -71,7 +71,10 @@ export default function LivingBackground({ effect, quiet = "left", light = false
     function render(now: number) {
       // A hidden section (display: none) has no size; effects would divide by zero.
       if (!width || !height) return;
-      const time = ((now - start) / 1000) * pace;
+      // Frames drawn straight away (on resize, or while the page loads) use performance.now(),
+      // and the next animation frame's timestamp can be a touch earlier. Time never runs
+      // backwards, or effects that age things (a ring's radius, say) would go negative.
+      const time = latest = Math.max(latest, ((now - start) / 1000) * pace);
       // A resize draws with performance.now(), and the next frame's timestamp can be a touch
       // earlier. Never step backwards: a negative step feeds energy into the springs.
       const delta = (previous ? Math.max(0, Math.min(0.1, (now - previous) / 1000)) : frameGap / 1000) * pace;

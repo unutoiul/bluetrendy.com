@@ -286,7 +286,7 @@ function rippleDots(spacing: number, beacon: boolean) {
         context.strokeStyle = ice(frame, 0.2 * (1 - age / 2.4) * Math.min(1, ring.strength));
         context.lineWidth = 1.2;
         context.beginPath();
-        context.arc(ring.x, ring.y, age * 240, 0, TAU);
+        context.arc(ring.x, ring.y, Math.max(0, age * 240), 0, TAU);
         context.stroke();
       }
       glow(frame, beaconAt.x, beaconAt.y, 4, 1);

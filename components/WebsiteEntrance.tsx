@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type RefObject } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import GlobalStyles from "@mui/material/GlobalStyles";
@@ -54,6 +54,36 @@ function prepareFilm(video: HTMLVideoElement) {
   video.src = savesData() || matchMedia(compactMedia).matches ? compactFilm : desktopFilm;
 }
 
+// While the intro is open the page behind it does not scroll.
+const lockPageScroll = { "html:has(dialog[data-website-entrance][open])": { overflow: "hidden" } };
+
+/**
+ * The intro's progress slider. It follows the film on its own, so the film's frequent time
+ * updates re-render only this slider rather than the whole intro.
+ */
+function IntroSeek({ player, onSeek }: { player: RefObject<HTMLVideoElement | null>; onSeek: (value: number) => void }) {
+  const [time, setTime] = useState(0);
+  useEffect(() => {
+    const video = player.current;
+    if (!video) return;
+    const follow = () => setTime(video.currentTime);
+    video.addEventListener("timeupdate", follow);
+    video.addEventListener("seeked", follow);
+    return () => {
+      video.removeEventListener("timeupdate", follow);
+      video.removeEventListener("seeked", follow);
+    };
+  }, [player]);
+  return (
+    <Slider
+      size="small" aria-label="Seek intro" min={0} max={filmSeconds} step={0.01} value={time}
+      getAriaValueText={value => `${value.toFixed(1)} of ${filmSeconds} seconds`}
+      onChange={(_, value) => { setTime(value as number); onSeek(value as number); }}
+      sx={{ color: palette.sky[175] }}
+    />
+  );
+}
+
 function rememberEntry() {
   enteredThisVisit = true;
   try { sessionStorage.setItem(entryKey, "1"); } catch { /* Storage is optional. */ }
@@ -71,7 +101,6 @@ export default function WebsiteEntrance() {
   const [soundBlocked, setSoundBlocked] = useState(false);
   const [failed, setFailed] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [time, setTime] = useState(0);
 
   useLayoutEffect(() => {
     const shell = dialog.current?.closest<HTMLElement>("[data-studio-home]");
@@ -195,7 +224,6 @@ export default function WebsiteEntrance() {
   }
 
   function seek(value: number) {
-    setTime(value);
     const video = player.current;
     if (video && video.readyState >= 1) video.currentTime = value;
     else pendingSeek.current = value;
@@ -210,7 +238,7 @@ export default function WebsiteEntrance() {
       onCancel={event => { event.preventDefault(); enter(); }}
       sx={sx.entrance}
     >
-      <GlobalStyles styles={{ "html:has(dialog[data-website-entrance][open])": { overflow: "hidden" } }} />
+      <GlobalStyles styles={lockPageScroll} />
       <Box sx={sx.stage}>
         <Box aria-hidden sx={[sx.picture, failed && sx.lockup, { opacity: loaded || failed ? 1 : 0 }]}>
           <video
@@ -225,9 +253,8 @@ export default function WebsiteEntrance() {
             onPlaying={() => { setLoaded(true); setPlaying(true); setEnded(false); }}
             onPause={() => setPlaying(false)}
             onEnded={() => { setPlaying(false); setEnded(true); }}
-            onSeeked={event => { setEnded(event.currentTarget.ended); setTime(event.currentTarget.currentTime); }}
+            onSeeked={event => setEnded(event.currentTarget.ended)}
             onVolumeChange={event => setMuted(event.currentTarget.muted)}
-            onTimeUpdate={event => setTime(event.currentTarget.currentTime)}
             onError={() => setFailed(true)}
           />
         </Box>
@@ -260,12 +287,7 @@ export default function WebsiteEntrance() {
       {failed ? <Typography role="status" sx={sx.notice}>The intro could not play.</Typography> : (
         <Box role="group" aria-label="Intro playback" sx={sx.controls}>
           <Button onClick={togglePlayback}>{ended ? "Replay" : playing ? "Pause" : "Play"}</Button>
-          <Slider
-            size="small" aria-label="Seek intro" min={0} max={filmSeconds} step={0.01} value={time}
-            getAriaValueText={value => `${value.toFixed(1)} of ${filmSeconds} seconds`}
-            onChange={(_, value) => seek(value as number)}
-            sx={{ color: palette.sky[175] }}
-          />
+          <IntroSeek player={player} onSeek={seek} />
           <Button data-sound-toggle aria-label={muted ? "Enable intro sound" : "Mute intro sound"} aria-pressed={!muted}
             onClick={() => {
               if (soundBlocked) playWithSound();
