@@ -34,6 +34,7 @@ const palettes = {
 
 // The blade's slanted edge echoes the BlueTrendy mark. It runs to the left edge of the page.
 const slant = "polygon(0 0, 100% 0, calc(100% - 54px) 100%, 0 100%)";
+const bladeFade = `linear-gradient(180deg, ${palette.black} calc(100% - clamp(160px, 16%, 320px)), transparent)`;
 
 /**
  * A section split in two: a slanted blade on the left carries the heading, a short
@@ -53,7 +54,10 @@ export default function SplitSection({ id, title, text, link, tone = "light", bl
           justifyContent: pinned ? "flex-start" : "center", py: { xs: 4, md: "clamp(48px, 6vw, 88px)" } }}>
           <Box aria-hidden="true" sx={{ position: "absolute", zIndex: -1, background: colors.blade,
             inset: { xs: "0 calc((100% - 100cqw) / 2)", md: "0 -48px 0 -100vw" }, clipPath: { md: slant },
-            boxShadow: tone === "dark" ? `inset 0 1px 0 ${withAlpha(palette.sky[175], 0.2)}` : "none" }} />
+            boxShadow: tone === "dark" ? `inset 0 1px 0 ${withAlpha(palette.sky[175], 0.2)}` : "none",
+            // The dark blade runs to the foot of the section. Fading it out there lets the section's own
+            // gradient carry on into the next one, instead of the blade ending in a hard line.
+            ...(tone === "dark" && { maskImage: { md: bladeFade }, WebkitMaskImage: { md: bladeFade } }) }} />
           {tone === "dark" && <Box aria-hidden="true" sx={{ display: { xs: "none", md: "block" }, position: "absolute", zIndex: -1,
             inset: "0 -50px 0 -100vw", background: colors.edge, opacity: 0.85,
             clipPath: "polygon(calc(100% - 2px) 0, 100% 0, calc(100% - 52px) 100%, calc(100% - 54px) 100%)",

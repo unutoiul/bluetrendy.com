@@ -41,7 +41,7 @@ const paidSession = {
 test("every template only uses variables the site sends", () => {
   const booking = parseCalBooking(calEvent)!;
   const purchase = parseDiscoveryCheckout(paidSession, new Date("2026-11-19T10:00:00Z"))!;
-  const contact = contactVariables({ name: "Sam", email: "sam@example.test", company: "", projectType: "", budget: "", timeline: "", message: "Hi" });
+  const contact = contactVariables({ name: "Sam", email: "sam@example.test", company: "", projectType: "", budget: "", timeline: "", message: "Hi", source: "" });
   const sent: Record<string, Record<string, string>> = {
     [emailTemplates.contactNotification]: contact.notification,
     [emailTemplates.contactConfirmation]: contact.confirmation,

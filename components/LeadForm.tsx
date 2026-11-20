@@ -16,6 +16,7 @@ import FieldCheck from "./motion/FieldCheck";
 import Dropdown from "./Dropdown";
 import { trackEvent } from "@/lib/analytics";
 import { leadFieldLimits } from "@/lib/lead";
+import { leadSource } from "@/lib/attribution";
 
 const budgets = ["Under $25k", "$25k – $75k", "$75k – $150k", "$150k+", "Not sure yet"];
 
@@ -43,8 +44,15 @@ const initialState: FormState = {
   message: "",
 };
 
-export default function LeadForm({ projectTypes, initialProjectType }: { projectTypes: string[]; initialProjectType: string }) {
-  const [form, setForm] = useState<FormState>({ ...initialState, projectType: initialProjectType });
+type LeadFormProps = {
+  projectTypes: string[];
+  initialProjectType: string;
+  /** Opening lines for the brief, such as the Opportunity Scanner's suggestion. */
+  initialMessage?: string;
+};
+
+export default function LeadForm({ projectTypes, initialProjectType, initialMessage = "" }: LeadFormProps) {
+  const [form, setForm] = useState<FormState>({ ...initialState, projectType: initialProjectType, message: initialMessage });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [website, setWebsite] = useState("");
@@ -65,7 +73,7 @@ export default function LeadForm({ projectTypes, initialProjectType }: { project
       const response = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, website }),
+        body: JSON.stringify({ ...form, website, source: leadSource(initialMessage ? "Contact, from the Opportunity Scanner" : "Contact") }),
       });
 
       const data = await response.json();

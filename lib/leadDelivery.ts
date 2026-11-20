@@ -16,7 +16,8 @@ function notificationVariables(lead: LeadDetails) {
     CONTACT_PROJECT_TYPE: lead.projectType || "Not specified",
     CONTACT_BUDGET: lead.budget || "Not specified",
     CONTACT_TIMELINE: lead.timeline || "Not specified",
-    CONTACT_MESSAGE: lead.message,
+    // The hosted template has no field for the source, so it rides at the foot of the message.
+    CONTACT_MESSAGE: lead.source ? `${lead.message}\n\nHow they found us\n${lead.source}` : lead.message,
   };
   const variables: Record<string, string> = { CONTACT_EMAIL_URI: encodeURIComponent(lead.email) };
   for (const [key, value] of Object.entries(fields)) {

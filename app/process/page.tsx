@@ -13,8 +13,8 @@ import JsonLd from "@/components/JsonLd";
 import { breadcrumbs, faqPage, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "How We Work: From Discovery to Launch",
-  description: "How BlueTrendy projects run: a discovery call, a paid discovery sprint, weekly builds and a clean handover, with fixed-scope, embedded and project-based models.",
+  title: "How We Work: Discover, Design, Build, Launch",
+  description: "How BlueTrendy projects run: a free AI Opportunity Call, a fixed-price AI Implementation Blueprint, weekly builds, then launch, monitoring and improvement.",
   path: "/process",
 });
 
@@ -24,13 +24,13 @@ export default function ProcessPage() {
       <JsonLd data={[faqPage(processFaqs), breadcrumbs([{ name: "Process", path: "/process" }])]} />
       <PageHero
         eyebrow="Process"
-        title="From the first call to handover"
+        title="From the first call to AI in daily use"
         aside={<JumpLinks label="Explore the delivery process" links={[
           { text: "Delivery milestones", href: "#delivery" },
           { text: "Ways to work together", href: "#engagement-models" },
           { text: "Common questions", href: "#process-questions" },
         ]} />}
-        subtitle="Meet the team, agree on a plan and try the work as we build it. Each stage gives you a chance to ask questions and decide what comes next."
+        subtitle="Discover, design, build, then launch and improve. Each stage ends with something you can check, and gives you the chance to decide what comes next."
       />
 
       <Container className={styles.anchor} id="delivery" sx={{ py: { xs: 5, md: 9 } }}>
@@ -58,7 +58,8 @@ export default function ProcessPage() {
         </Grid>
       </Container>
 
-      <CTASection location="process_page" title="Talk through your first milestone" subtitle="Bring a workflow, a deadline or a system you need to replace. We’ll use the call to work out what belongs in discovery." />
+      <CTASection location="process_page" title="Talk through your first milestone" subtitle="Bring a workflow, a deadline or a system you need to replace. We’ll use the call to find the first project worth doing."
+        primaryLabel="Find my AI opportunities" />
     </>
   );
 }

@@ -30,7 +30,9 @@ export default function SignalTimeline({ entries }: { entries: Entry[] }) {
           sx={{ position: "relative", py: { xs: 1.75, sm: 2.25 }, borderBottom: `1px solid ${withAlpha(palette.blue[325], 0.18)}`,
             "&:last-of-type": { borderBottom: 0 },
             "&:hover .node, &:focus-within .node": { transform: "scale(1.35)", boxShadow: `0 0 0 4px ${withAlpha(palette.sky[150], 0.18)}, 0 0 22px ${palette.blue[250]}` } }}>
-          <Box className="node" aria-hidden="true" sx={{ position: "absolute", left: { xs: -29, sm: -36 }, top: { xs: 22, sm: 26 }, width: 12, height: 12,
+          {/* Centred on the line: its centre sits 10px (14px from sm) into the list, and the list
+              item starts 32px (40px) in, so the 12px node starts 28px (32px) left of the item. */}
+          <Box className="node" aria-hidden="true" sx={{ position: "absolute", left: { xs: -28, sm: -32 }, top: { xs: 22, sm: 26 }, width: 12, height: 12,
             borderRadius: "50%", background: `radial-gradient(circle, ${palette.cyan[25]} 0 30%, ${palette.blue[300]} 70%)`,
             boxShadow: `0 0 0 3px ${withAlpha(palette.blue[300], 0.18)}, 0 0 14px ${palette.blue[300]}`, transition: "transform .35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow .35s ease" }} />
           <Box component="p" sx={{ m: 0, color: palette.blue[200], fontSize: ".86rem", fontWeight: 550, fontVariantNumeric: "tabular-nums" }}>{entry.period}</Box>

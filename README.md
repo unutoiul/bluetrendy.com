@@ -36,6 +36,29 @@ Keep the key in ignored `.env.local` during development and in your hosting
 provider's secret environment settings in production. Never prefix it with
 `NEXT_PUBLIC_`. Restart the local server after changing environment values.
 
+## Services, demonstrations and where enquiries come from
+
+The seven services live in `data/services.ts`. Each one gets its own page at the site
+root (`/ai-agents`, `/predictive-ai` and so on) from `app/[service]/page.tsx`, a card on
+the home page, a chapter on `/services` and an entry in the header menu, the footer and
+the sitemap. Add or reword a service there and every one of those follows.
+
+The interactive demonstrations are in `components/lab/` (the Opportunity Scanner, the
+savings calculator, the forecast and the creative showcase) and
+`components/experience/AgentDemo.tsx`. Everything they show is sample data, and each one
+carries a `SampleBadge` saying so. The scanner and the home page ledger share
+`data/opportunities.ts`.
+
+Every enquiry tells the team how the visitor found the site: the form used, the first
+page of the visit, the referring website and any `utm_` campaign tags
+(`lib/attribution.ts`). It is kept in memory for the visit only, with no cookie, and is
+added to the foot of the message in the team's notification email.
+
+To route enquiries into a CRM, set `LEAD_WEBHOOK_URL` to an `https` webhook (HubSpot,
+Pipedrive, Zapier, Make and similar). Each enquiry is then also sent there as JSON
+(`lib/leadWebhook.ts`). It is off when the variable is empty, and a failing webhook never
+blocks the email or the visitor. Name the CRM in the privacy policy before switching it on.
+
 ## Free meeting booking
 
 The free 30-minute [BlueTrendy discovery call](https://cal.com/bluetrendy/discovery-call)

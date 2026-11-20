@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import PageHero from "@/components/PageHero";
-import { caseStudies, getCaseStudy } from "@/data/caseStudies";
+import { caseStudies, founderRole, getCaseStudy } from "@/data/caseStudies";
 import styles from "@/components/interior/Work.styles";
 import editorial from "@/components/interior/Editorial.styles";
 import JsonLd from "@/components/JsonLd";
@@ -56,7 +56,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         <div><dt>Client</dt><dd>{study.client}</dd></div>
         <div><dt>Location</dt><dd>{study.location}</dd></div>
         <div><dt>Timeframe</dt><dd>{study.timeframe}</dd></div>
-        <div><dt>Industry</dt><dd>{study.sector}</dd></div>
+        <div><dt>Led by</dt><dd>Lucas Franco, {founderRole(study)}</dd></div>
       </dl>} />
     <div className={editorial.width + " " + styles.readGrid}>
       <aside>

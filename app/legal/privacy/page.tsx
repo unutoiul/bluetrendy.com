@@ -5,6 +5,7 @@ import PageHero from "@/components/PageHero";
 import { getBookingConfig } from "@/lib/booking";
 import { analyticsIds, consentRequired } from "@/lib/analyticsConfig";
 import CookieSettingsButton from "@/components/analytics/CookieSettingsButton";
+import { company, registeredOffice, siteName } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -17,15 +18,16 @@ export default function PrivacyPolicyPage() {
   const tools = [analyticsIds.ga && "Google Analytics", analyticsIds.clarity && "Microsoft Clarity"].filter(Boolean).join(" and ");
   return (
     <>
-      <PageHero eyebrow="Legal" title="Privacy Policy" subtitle="Last updated: to be confirmed before launch." />
+      <PageHero eyebrow="Legal" title="Privacy Policy" subtitle="Last updated: 20 November 2026." />
       <PolicyArticle related={{ href: "/legal/terms", title: "Terms of Engagement" }}
         sections={[
           {
             id: "who-we-are", title: "Who we are",
             body: <>
               <Typography variant="body1" color="text.secondary">
-                bluetrendy ([registered company name, company number, and registered address — to be
-                confirmed]) operates this website. For any privacy-related question, contact
+                {siteName} is a trading name of {company.legalName}, a company registered in {company.jurisdiction}
+                (company number {company.number}, registered office {registeredOffice}), which operates this website
+                and is responsible for your personal data. For any privacy-related question, contact
                 contact@bluetrendy.com.
               </Typography>
             </>,
@@ -34,14 +36,17 @@ export default function PrivacyPolicyPage() {
             id: "what-we-collect", title: "What we collect",
             body: <>
               <Typography variant="body1" color="text.secondary">
-                We collect information you provide directly — through the contact form, the discovery sprint
-                checkout, or by booking a call — including your name, email address, company, and project
+                We collect information you provide directly — through the contact form, the AI Implementation Blueprint
+                (discovery sprint) checkout, or by booking a call — including your name, email address, company, and project
                 details. If you use our booking calendar, our scheduling provider ({schedulingProvider}) collects the
                 information needed to schedule and manage that appointment under its own privacy policy.
               </Typography>
               <Typography variant="body1" color="text.secondary">
                 Contact form messages and confirmation emails are delivered using Resend. Your contact
-                details and enquiry are processed to deliver these messages and help us respond to you.
+                details and enquiry are processed to deliver these messages and help us respond to you. When you
+                send an enquiry, it also tells us which page of this site you first arrived on, the website that
+                referred you and any campaign link you followed, so we know how people find us. This is noted only
+                for the length of your visit, without cookies, and is sent only if you submit the form.
               </Typography>
               <Typography variant="body1" color="text.secondary">
                 We use privacy-conscious, cookie-free analytics (Vercel Analytics) to understand aggregate site

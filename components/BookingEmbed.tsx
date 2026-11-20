@@ -22,10 +22,10 @@ export default function BookingEmbed({ prefill }: { prefill?: BookingPrefill }) 
         <Typography variant="h5">Let&apos;s find a time to talk</Typography>
         <Typography color="text.secondary" sx={{ maxWidth: 420 }}>
           Tell us a little about your project and a few times that suit you.
-          We&apos;ll reply within one business day to arrange your free discovery call.
+          We&apos;ll reply within one business day to arrange your free AI Opportunity Call.
         </Typography>
-        <ActionButton href="mailto:contact@bluetrendy.com?subject=Free%20discovery%20call" variant="contained">
-          Arrange a discovery call
+        <ActionButton href="mailto:contact@bluetrendy.com?subject=Free%20AI%20Opportunity%20Call" variant="contained">
+          Arrange a call
         </ActionButton>
         <LinkButton href="/contact" variant="text">Or send a project brief</LinkButton>
       </Stack>

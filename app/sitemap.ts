@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { caseStudies } from "@/data/caseStudies";
+import { services } from "@/data/services";
 import { absoluteUrl } from "@/lib/seo";
 
 // Every page we want in search, with the images that belong to it. Legal and checkout pages
@@ -25,6 +26,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: page.changeFrequency,
       priority: page.priority,
       ...(page.images && { images: page.images.map(image => absoluteUrl(image)) }),
+    })),
+    // Each service has its own page at the site root.
+    ...services.map(service => ({
+      url: absoluteUrl("/" + service.slug),
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
     })),
     ...caseStudies.map(study => ({
       url: absoluteUrl("/case-studies/" + study.slug),

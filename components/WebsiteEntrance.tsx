@@ -7,10 +7,12 @@ import GlobalStyles from "@mui/material/GlobalStyles";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 import { keyframes, type SxProps, type Theme } from "@mui/material/styles";
-import PowerSettingsNewRounded from "@mui/icons-material/PowerSettingsNewRounded";
+import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded";
+import GroupsRounded from "@mui/icons-material/GroupsRounded";
+import AutoModeRounded from "@mui/icons-material/AutoModeRounded";
+import BoltRounded from "@mui/icons-material/BoltRounded";
 import { bindIntroTagline } from "@/lib/introTagline";
-import SplitWords, { countWords } from "@/components/motion/SplitWords";
 import { palette, withAlpha } from "@/theme/palette";
 
 const compactMedia = "(max-width: 899px), (pointer: coarse) and (max-height: 560px)";
@@ -60,7 +62,7 @@ function rememberEntry() {
 export default function WebsiteEntrance() {
   const dialog = useRef<HTMLDialogElement>(null);
   const player = useRef<HTMLVideoElement>(null);
-  const tagline = useRef<HTMLParagraphElement>(null);
+  const tagline = useRef<HTMLDivElement>(null);
   const pendingSeek = useRef<number | null>(null);
   const [playing, setPlaying] = useState(false);
   const [ended, setEnded] = useState(false);
@@ -118,7 +120,7 @@ export default function WebsiteEntrance() {
   }, []);
 
   // While the film is silent, the visitor's first click, tap or key press anywhere starts it
-  // again with sound. POWER ME and the sound buttons handle their own presses.
+  // again with sound. the enter button and the sound buttons handle their own presses.
   useEffect(() => {
     if (!soundBlocked) return;
     const gestures = ["pointerdown", "pointerup", "keydown"];
@@ -212,14 +214,23 @@ export default function WebsiteEntrance() {
             onError={() => setFailed(true)}
           />
         </Box>
-        <Button data-enter onClick={enter} startIcon={<PowerSettingsNewRounded />} sx={sx.powerMe}>
-          POWER ME
+        <Button data-enter onClick={enter} endIcon={<ArrowForwardRounded />} sx={sx.powerMe}>
+          Enter the website
         </Button>
-        {/* Revealed under the button as the film finishes; it keeps its space so nothing moves. */}
-        <Typography ref={tagline} component="p" data-state="wait" sx={sx.tagline}>
-          <SplitWords text={taglineLead} />{" "}
-          <strong style={{ "--split-delay": `${countWords(taglineLead) * 70 + 170}ms` } as CSSProperties}>AI</strong>
-        </Typography>
+        {/* Plays in under the button once the logo has settled; it keeps its space so nothing moves. */}
+        <Box ref={tagline} data-intro-message data-state="wait" sx={sx.message}>
+          <Box component="h2" sx={sx.claim}>
+            <span className="accent" style={{ "--split-delay": `${claimDelay}ms` } as CSSProperties}>{claim}</span>
+          </Box>
+          <Box component="ul" aria-label="What it means for you" sx={sx.outcomes}
+            style={{ "--outcomes-delay": `${outcomesDelay}ms` } as CSSProperties}>
+            {outcomes.map(({ label, Icon }, index) => (
+              <li key={label} className="outcome" style={{ "--i": index } as CSSProperties}>
+                <Icon aria-hidden="true" />{label}
+              </li>
+            ))}
+          </Box>
+        </Box>
         <script dangerouslySetInnerHTML={{ __html: prepareEntrance }} />
         {soundBlocked && (
           <Button data-sound-toggle onClick={playWithSound} startIcon={<VolumeUpRounded />} sx={sx.soundPrompt}>
@@ -255,12 +266,43 @@ const soundPulse = keyframes`
   0%, 100% { box-shadow: 0 0 0 0 ${withAlpha(palette.sky[175], 0)}; }
   50% { box-shadow: 0 0 0 6px ${withAlpha(palette.sky[175], 0.18)}; }
 `;
-const taglineLead = "Your Business, powered by";
-// The home page's accent-write, with room around the small "AI" so the beam's glow fades out
+// The message: one claim, then what it means for the visitor's business.
+const claim = "We make AI work for your business.";
+const outcomes = [
+  { label: "More customers", Icon: GroupsRounded },
+  { label: "Less manual work", Icon: AutoModeRounded },
+  { label: "Faster results", Icon: BoltRounded },
+];
+// One sequence, in milliseconds from the cue: the beam writes the claim, the outcomes switch
+// on left to right, and the enter button glows once to say "ready".
+const claimDelay = 250;
+// The beam starts slowly, lingers, then races to the end of the line.
+const claimWrite = "1.8s cubic-bezier(.8, 0, .85, .45)";
+const outcomesDelay = claimDelay + 1700;
+const outcomeStagger = 180;
+const readyDelay = outcomesDelay + outcomes.length * outcomeStagger + 500;
+// The home page's accent-write, with room around the line so the beam's glow fades out
 // softly instead of being cut into a box.
 const write = keyframes`from { clip-path: inset(-1em 100% -1em -1em); } to { clip-path: inset(-1em -.4em -1em -1em); }`;
-// A glint of light crossing "AI" once the beam has written it.
+// A glint of light crossing the closing line once the beam has written it.
 const glint = keyframes`from { background-position: 100% 50%; } to { background-position: 0% 50%; }`;
+// Each outcome chip switches on like a light: it rises out of a blur, its rim flares, then settles.
+const chipBorder = withAlpha(palette.sky[175], 0.22);
+const chipInset = `inset 0 1px 0 ${withAlpha(palette.sky[175], 0.16)}`;
+const powerOn = keyframes`
+  0% { opacity: 0; transform: translateY(.6em) scale(.96); filter: blur(6px); border-color: ${withAlpha(palette.sky[175], 0)};
+    box-shadow: ${chipInset}, 0 0 0 0 ${withAlpha(palette.blue[350], 0)}; }
+  45% { opacity: 1; transform: none; filter: blur(0); border-color: ${palette.sky[150]}; color: ${palette.white};
+    box-shadow: ${chipInset}, 0 0 24px 0 ${withAlpha(palette.blue[350], 0.55)}; }
+  100% { opacity: 1; transform: none; filter: none; border-color: ${chipBorder}; color: ${palette.slate[50]};
+    box-shadow: ${chipInset}, 0 0 0 0 ${withAlpha(palette.blue[350], 0)}; }
+`;
+const powerMeShadow = `0 4px 20px ${withAlpha(palette.blue[475], 0.14)}`;
+// A single ring of light leaving the enter button once the message is complete.
+const ready = keyframes`
+  from { box-shadow: ${powerMeShadow}, 0 0 0 0 ${withAlpha(palette.sky[175], 0.6)}; }
+  to { box-shadow: ${powerMeShadow}, 0 0 0 16px ${withAlpha(palette.sky[175], 0)}; }
+`;
 
 const sx = {
   // A full-screen modal. Before hydration, the home page marks its shell [data-entry-pending]
@@ -289,17 +331,20 @@ const sx = {
     position: "relative",
     containerType: "size",
     minHeight: 0,
+    // Room at the bottom for "Tap for sound", so it never covers the enter button.
+    pb: "56px",
     overflow: "hidden",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
   },
-  // Frames the film through the INTELLIGENCE wordmark; the tagline below is live text.
+  // Frames the film through the INTELLIGENCE wordmark; the message below is live text. On short
+  // screens the film gives up height first, so the message and the enter button always fit.
   picture: {
     position: "relative",
     flexShrink: 0,
-    width: "min(169cqw, 1140px, calc(320cqh - 334px))",
+    width: "min(169cqw, 1140px, calc(243cqh - 220px))",
     aspectRatio: "1920 / 600",
     overflow: "hidden",
     pointerEvents: "none",
@@ -314,75 +359,120 @@ const sx = {
     background: "url(/brand/logo-inverse.svg) center / min(100%, 77cqw, 480px, 138cqh) auto no-repeat",
     "& video": { display: "none" },
   },
-  tagline: {
-    mt: "clamp(12px, 2.2cqh, 20px)",
-    color: palette.slate[150],
-    fontSize: "clamp(16px, 2.5cqw, 22px)",
-    fontWeight: 440,
-    lineHeight: 1.4,
-    letterSpacing: "-.03em",
+  // The claim and its outcomes. The claim arrives like the home page headline accents (the
+  // accent-beam keyframes live in globalStyles); the state comes from bindIntroTagline.
+  message: {
+    flexShrink: 0,
+    mt: "clamp(14px, 3cqh, 30px)",
+    px: "16px",
     textAlign: "center",
-    whiteSpace: "nowrap",
-    perspective: "900px",
-    "& .w, & strong": { display: "inline-block" },
-    "& .w": { transformOrigin: "50% 100%", backfaceVisibility: "hidden" },
-    "& strong": {
-      position: "relative",
-      color: palette.sky[175],
-      fontWeight: 750,
-      background: `linear-gradient(108deg, ${palette.sky[175]} 30%, ${palette.white} 50%, ${palette.sky[175]} 70%) 100% 50% / 320% 100%`,
-      backgroundClip: "text",
-      WebkitTextFillColor: "transparent",
-    },
     "& ::selection": { color: palette.white, background: palette.blue[550], WebkitTextFillColor: "white" },
-    // Arrives like the home page headlines (word-in and accent-beam live in globalStyles):
-    // the words flip up out of a blur, then a beam of light writes "AI".
-    "&[data-state='wait'] :is(.w, strong)": { opacity: 0 },
-    "&[data-state='in'] .w": {
-      animation: "word-in .85s var(--ease-out) both",
-      animationDelay: "calc(var(--i) * 70ms + 60ms)",
+    "&[data-state='wait'] :is(.accent, .outcome)": { opacity: 0 },
+    "&[data-state='in'] .accent": {
+      animation: `${write} ${claimWrite} var(--split-delay) backwards, ${glint} 1.4s ease-in-out calc(var(--split-delay) + 1.7s) both`,
     },
-    "&[data-state='in'] strong": {
-      animation: `${write} .95s cubic-bezier(.65, 0, .35, 1) var(--split-delay) backwards, ${glint} 1.3s ease-in-out calc(var(--split-delay) + .8s) both`,
-    },
-    "&[data-state='in'] strong::after": {
+    "&[data-state='in'] .accent::after": {
       content: '""',
       position: "absolute",
-      top: "10%",
-      bottom: "14%",
+      top: "8%",
+      bottom: "12%",
       width: "3px",
       ml: "-3px",
       borderRadius: "3px",
       background: palette.cyan[25],
-      boxShadow: `0 0 6px 1px ${palette.sky[150]}, 0 0 14px 3px ${palette.blue[350]}`,
+      boxShadow: `0 0 10px 2px ${palette.sky[150]}, 0 0 28px 6px ${palette.blue[350]}`,
       opacity: 0,
       pointerEvents: "none",
-      animation: "accent-beam .95s cubic-bezier(.65, 0, .35, 1) var(--split-delay) both",
+      animation: `accent-beam ${claimWrite} var(--split-delay) both`,
+    },
+    "&[data-state='in'] .outcome": {
+      animation: `${powerOn} 1s var(--ease-out) both`,
+      animationDelay: `calc(var(--outcomes-delay) + var(--i) * ${outcomeStagger}ms)`,
     },
     "@media (prefers-reduced-motion: reduce)": {
-      "& .w, & strong": { animation: "none !important", opacity: "1 !important" },
-      "& strong::after": { display: "none" },
+      "& :is(.accent, .outcome)": { animation: "none !important", opacity: "1 !important" },
+      "& .accent::after": { display: "none" },
     },
-    [shortStage]: { mt: "6px", fontSize: 15 },
-    "@media (forced-colors: active)": { "& strong": { WebkitTextFillColor: "currentColor" } },
+  },
+  // In sentence case, like every headline on the site: large and in light, written by the beam.
+  claim: {
+    m: 0,
+    "& .accent": {
+      position: "relative",
+      display: "block",
+      width: "fit-content",
+      maxWidth: "100%",
+      mx: "auto",
+      color: palette.sky[175],
+      fontSize: "clamp(18px, min(2.6cqw, 3.6cqh), 28px)",
+      fontWeight: 680,
+      lineHeight: 1.15,
+      letterSpacing: "-.03em",
+      textWrap: "balance",
+      background: `linear-gradient(108deg, ${palette.sky[175]} 25%, ${palette.white} 50%, ${palette.sky[175]} 75%) 100% 50% / 320% 100%`,
+      backgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+      filter: `drop-shadow(0 0 24px ${withAlpha(palette.blue[250], 0.3)})`,
+    },
+    [shortStage]: { "& .accent": { fontSize: 16 } },
+    "@media (forced-colors: active)": { "& .accent": { WebkitTextFillColor: "currentColor" } },
+  },
+  // What the visitor gets, as three glass chips in a row; on phones the third wraps, centred.
+  outcomes: {
+    listStyle: "none",
+    m: 0,
+    p: 0,
+    mt: "clamp(10px, 2.2cqh, 20px)",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: "10px",
+    "& .outcome": {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "8px",
+      minHeight: "clamp(32px, 5cqh, 40px)",
+      pl: "12px",
+      pr: "16px",
+      border: `1px solid ${chipBorder}`,
+      borderRadius: "999px",
+      background: `linear-gradient(180deg, ${withAlpha(palette.blue[350], 0.12)}, ${withAlpha(palette.navy[750], 0.45)})`,
+      boxShadow: chipInset,
+      backdropFilter: "blur(6px)",
+      color: palette.slate[50],
+      fontSize: "clamp(13px, min(1.6cqw, 2.3cqh), 15px)",
+      fontWeight: 560,
+      lineHeight: 1,
+      letterSpacing: "-.01em",
+      whiteSpace: "nowrap",
+    },
+    "& .outcome svg": { fontSize: "1.25em", color: palette.sky[175] },
+    "@container (width < 640px)": { gap: "8px", "& .outcome": { pl: "10px", pr: "13px", gap: "6px" } },
+    "@container (width < 360px)": { "& .outcome": { fontSize: 12, pl: "8px", pr: "10px" } },
+    [shortStage]: { mt: "8px", "& .outcome": { minHeight: 28, fontSize: 12 } },
   },
   powerMe: {
-    mt: "clamp(15px, 2.7cqh, 25px)",
+    flexShrink: 0,
+    mt: "clamp(12px, 2.6cqh, 26px)",
     minWidth: 152,
     minHeight: 46,
     px: "22px",
     py: 0,
     border: `1px solid ${palette.cyan[75]}`,
     background: `linear-gradient(125deg, ${palette.slate[75]}, ${palette.sky[175]} 68%, ${palette.blue[250]})`,
-    boxShadow: `0 4px 20px ${withAlpha(palette.blue[475], 0.14)}`,
+    boxShadow: powerMeShadow,
     color: palette.navy[800],
-    fontSize: 12,
-    fontWeight: 720,
-    letterSpacing: ".13em",
+    fontSize: 14,
+    fontWeight: 680,
+    letterSpacing: "-.005em",
     lineHeight: 1,
     whiteSpace: "nowrap",
     "&:hover": { background: palette.slate[75] },
     "&.Mui-focusVisible": { outline: `2px solid ${palette.white}`, outlineOffset: 4 },
+    "@media (prefers-reduced-motion: no-preference)": {
+      "&:has(~ [data-intro-message][data-state='in'])": { animation: `${ready} 1.4s ease-out ${readyDelay}ms both` },
+    },
     [shortStage]: { mt: "9px", minHeight: 40 },
   },
   controls: {

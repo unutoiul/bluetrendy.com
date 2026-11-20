@@ -12,6 +12,14 @@ const scenes: [prefix: string, effect: EffectName, seed: number][] = [
   ["/pricing", "horizonGrid", 83],
   ["/about", "orbit", 73],
   ["/contact", "ripples", 79],
+  // Each service page: a scene that suits what the service does.
+  ["/ai-websites-apps", "circuit", 43],
+  ["/ai-video-production", "ribbons", 47],
+  ["/ai-agents", "packetMesh", 53],
+  ["/agentic-automation", "flow", 59],
+  ["/predictive-ai", "horizonGrid", 61],
+  ["/ai-marketing-automation", "ripples", 67],
+  ["/ai-implementation", "orbit", 71],
 ];
 
 export default function PageBackdrop() {

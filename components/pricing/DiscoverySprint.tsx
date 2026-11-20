@@ -64,12 +64,13 @@ export default function DiscoverySprint() {
 
         <Box sx={{ display: "grid", gap: { xs: 3, md: 6 }, gridTemplateColumns: { md: "minmax(0, 1.25fr) minmax(0, 1fr)" }, alignItems: "end" }}>
           <div>
-            <Box component="p" sx={neural.label}>Discovery sprint</Box>
+            <Box component="p" sx={neural.label}>AI Implementation Blueprint</Box>
             <HeadingMotion id="discovery-heading" text="A plan priced for" accent="your size"
               sx={{ m: 0, fontSize: "clamp(2.1rem, 4.4vw, 3.9rem)", fontWeight: 630, letterSpacing: "-0.047em", lineHeight: 1.06 }} />
             <Box component="p" sx={{ m: "18px 0 0", maxWidth: "52ch", color: palette.slate[125], fontSize: "clamp(1rem, 1.25vw, 1.12rem)", lineHeight: 1.6 }}>
-              Smaller companies have fewer systems and people to plan around, so their sprint costs less.
-              Every sprint ends with a written plan, a build estimate and a fixed price.
+              The blueprint is our paid discovery sprint: we map your process and systems before anything is built.
+              Smaller companies have fewer systems and people to plan around, so theirs costs less.
+              Every blueprint ends with a written plan, a delivery roadmap, a build estimate and a fixed price.
             </Box>
           </div>
           {/* The whole journey at a glance; on phones step 1 follows straight after, so it is left out. */}
@@ -120,7 +121,7 @@ export default function DiscoverySprint() {
               <Box sx={{ ...neural.accentText, fontSize: "1.6rem", fontWeight: 700, letterSpacing: "-0.04em" }}>{formatPounds(sprint.price)}</Box>
             </Box>
             <Box component="p" sx={{ m: "28px 0 12px", color: palette.sky[150], fontSize: "0.76rem", fontWeight: 650, letterSpacing: "0.16em",
-              textTransform: "uppercase" }}>Every sprint includes</Box>
+              textTransform: "uppercase" }}>Every blueprint includes</Box>
             <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, display: "grid", gap: 1.25 }}>
               {discoveryEssentials.map(line => (
                 <Box component="li" key={line} sx={{ display: "flex", gap: 1.25, alignItems: "flex-start", color: palette.slate[150], fontSize: "0.95rem", lineHeight: 1.5 }}>

@@ -13,7 +13,7 @@ export default function CalendlyEmbed({ url, prefill }: { url: string; prefill?:
   return (
     <Box
       component="iframe"
-      title="Book a free discovery call with BlueTrendy"
+      title="Book a free AI Opportunity Call with BlueTrendy"
       src={embedUrl.href}
       loading="lazy"
       sx={{ display: "block", width: "100%", height: 780, border: 0 }}

@@ -11,7 +11,7 @@ import { footerLinks } from "@/data/nav";
 import CookieSettingsButton from "./analytics/CookieSettingsButton";
 import { consentRequired } from "@/lib/analyticsConfig";
 import { brand } from "@/theme/theme";
-import { linkedIn } from "@/lib/seo";
+import { company, companyStatement, linkedIn } from "@/lib/seo";
 import { palette } from "@/theme/palette";
 
 const email = "contact@bluetrendy.com";
@@ -59,7 +59,7 @@ export default function Footer() {
           <div>
             <Box sx={{ zoom: { xs: 0.8, md: 1 } }}><Logo inverse height={45} /></Box>
             <Typography variant="body2" sx={{ mt: 2, maxWidth: 340, color: palette.slate[125], fontSize: { xs: 15, md: 14 }, lineHeight: 1.6 }}>
-              A senior software and AI team building web platforms, mobile apps and AI workflows for businesses and public institutions.
+              We don’t just build AI. We make AI work for your business: more revenue, less work, faster delivery and smarter decisions.
             </Typography>
             <Box sx={{ display: "flex", flexWrap: "wrap", columnGap: 3, mt: 1.5 }}>
               <Box component="a" href={`mailto:${email}`} className="link-draw" sx={contactLink}>
@@ -75,12 +75,12 @@ export default function Footer() {
           {/* Two columns side by side at every width, so the links never stack into one long list. */}
           <Box sx={{
             display: "grid", gap: { xs: 3, md: 6 },
-            gridTemplateColumns: { xs: "repeat(2, minmax(0, 1fr))", md: "repeat(2, minmax(0, 12rem))" },
+            gridTemplateColumns: { xs: "repeat(2, minmax(0, 1fr))", md: "minmax(0, 15rem) minmax(0, 11rem)" },
             justifyContent: { md: "end" },
             pt: { xs: 3, md: 0 }, borderTop: { xs: rule, md: 0 },
           }}>
+            <LinkColumn title="Services" links={footerLinks.services} />
             <LinkColumn title="Company" links={footerLinks.company} />
-            <LinkColumn title="Work" links={footerLinks.work} />
           </Box>
         </Box>
 
@@ -100,12 +100,16 @@ export default function Footer() {
               {consentRequired && <CookieSettingsButton className="link-draw"
                 sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14, color: palette.slate[125], "&:hover": { color: palette.white } }} />}
             </Box>
-            <Box component="p" sx={{ m: 0, order: { md: 1 } }}>© {year} BlueTrendy Intelligence</Box>
+            <Box component="p" sx={{ m: 0, order: { md: 1 } }}>© {year} {company.legalName}</Box>
             <Box component="p" sx={{ m: 0, order: 3, ml: { md: "auto" } }}>
               Designed with{" "}
               <FavoriteRounded titleAccess="love" sx={{ fontSize: "1.05em", color: palette.red[275], verticalAlign: "-0.15em" }} />
               {" "}in London, UK
             </Box>
+          </Box>
+          {/* The company's registered details, as UK law asks of a company website. */}
+          <Box component="p" sx={{ m: "14px 0 0", maxWidth: "88ch", color: palette.slate[275], fontSize: 12.5, lineHeight: 1.6 }}>
+            {companyStatement}
           </Box>
         </Box>
       </Container>

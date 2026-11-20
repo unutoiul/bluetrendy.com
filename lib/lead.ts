@@ -6,6 +6,8 @@ export const leadFieldLimits = {
   budget: 100,
   timeline: 100,
   message: 4000,
+  /** Which form was used and how the visitor found the site (see lib/attribution.ts). Optional. */
+  source: 300,
 } as const;
 
 export type LeadDetails = { -readonly [Key in keyof typeof leadFieldLimits]: string };

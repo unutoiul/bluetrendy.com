@@ -22,8 +22,8 @@ import { absoluteUrl, breadcrumbs, ids, organizationRef, pageMetadata } from "@/
 import { palette, withAlpha } from "@/theme/palette";
 
 export const metadata: Metadata = pageMetadata({
-  title: "About Us: London Software & AI Team",
-  description: "A London software and AI team led by a hands-on founder with 15+ years in banking, defence, healthcare and enterprise SaaS. UK SC cleared.",
+  title: "About Us: London AI & Software Team",
+  description: "A London AI and software team led by a hands-on founder with 15+ years of engineering in banking, defence, healthcare and enterprise SaaS. UK SC cleared.",
   path: "/about",
 });
 
@@ -40,7 +40,7 @@ const founder = {
 };
 
 const credentials = [
-  { Icon: SchoolOutlined, title: "B.S. Economic Cybernetics, Statistics & Informatics", detail: "LSE University, London" },
+  { Icon: SchoolOutlined, title: "B.S. Economic Cybernetics, Statistics & Informatics", detail: "London School of Economics (LSE)" },
   { Icon: VerifiedUserOutlined, title: "UK SC (Security Check) cleared", detail: "Based in London, UK" },
 ];
 
@@ -87,15 +87,16 @@ export default function AboutPage() {
       <PageHero
         eyebrow="About"
         title="Meet the team behind BlueTrendy"
-        subtitle="We’re a London software and AI team building production software for banks, government agencies, healthcare teams and enterprise software companies. The people who plan your project are the people who build it."
+        subtitle="BlueTrendy is a London AI and software team, founded in 2014. We build production software for banks, government agencies, healthcare teams and enterprise software companies. The people who plan your project are the people who build it."
       />
 
       <SplitSection id="team-heading" title="Our team" effect="dotField" seed={131}
         text="Small and senior by design. Everyone on the team writes code, from the first call to handover." blade={portrait}>
         <Box sx={{ display: "grid", gap: 2.5 }}>
           <Box component="p" sx={paragraph}>
-            The people you meet on the first call work on your system. Our experience includes regulated and
-            security-sensitive projects for NATO, HSBC, Credit Suisse, Atlassian and Boston Consulting Group.
+            The people you meet on the first call work on your system. Our clients include NATO, HSBC, Credit Suisse,
+            Atlassian and Boston Consulting Group, on regulated and security-sensitive projects led by our founder,
+            Lucas Franco.
           </Box>
           <Box component="p" sx={paragraph}>
             That background shapes how we work: TDD/BDD discipline where correctness matters, cloud-native architecture on
@@ -140,7 +141,7 @@ export default function AboutPage() {
       </Box>
 
       <SplitSection id="career-heading" tone="dark" pinned title={`Selected engagements since ${firstYear}`}
-        text="Banks, defence agencies, healthcare platforms and software companies. Each engagement shipped to production."
+        text="Banks, defence agencies, healthcare platforms and software companies. Every engagement shipped to production, and many are still in active development."
         link={{ href: "/case-studies", label: "Read the case studies" }}
         effect="constellation" seed={101} background={neural.blueFlow("services", "header")}>
         <SignalTimeline entries={engagements} />

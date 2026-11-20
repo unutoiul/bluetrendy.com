@@ -7,8 +7,9 @@ import Header from "@/components/Header";
 import SiteFooter from "@/components/SiteFooter";
 import Panel3D from "@/components/motion/Panel3D";
 import ConsentAnalytics from "@/components/analytics/ConsentAnalytics";
+import Arrival from "@/components/analytics/Arrival";
 import JsonLd from "@/components/JsonLd";
-import { absoluteUrl, contact, homeTitle, ids, profiles, siteDescription, siteName, siteUrl, tagline } from "@/lib/seo";
+import { absoluteUrl, company, contact, homeTitle, ids, profiles, siteDescription, siteName, siteUrl, tagline } from "@/lib/seo";
 
 const geist = localFont({
   src: "../public/fonts/geist-latin.woff2",
@@ -37,16 +38,16 @@ export const metadata: Metadata = {
   description: siteDescription,
   applicationName: siteName,
   keywords: [
+    "AI implementation",
     "AI agents",
-    "AI automation",
-    "custom software development London",
-    "software development company UK",
-    "web development agency London",
+    "agentic AI",
+    "business automation",
+    "predictive AI",
+    "AI marketing automation",
+    "AI video production",
+    "AI website development",
     "mobile app development",
-    "e-commerce website development",
-    "systems integration",
-    "legacy software modernisation",
-    "marketing video production",
+    "AI consultancy London",
   ],
   authors: [{ name: siteName, url: siteUrl }],
   creator: siteName,
@@ -95,7 +96,14 @@ const organization = {
       sameAs: profiles,
       email: contact.email,
       telephone: contact.telephone,
-      address: { "@type": "PostalAddress", addressLocality: contact.locality, addressCountry: contact.country },
+      legalName: company.legalName,
+      foundingDate: company.incorporated,
+      vatID: company.vat.replace(/\s/g, ""),
+      identifier: { "@type": "PropertyValue", propertyID: "Companies House company number", value: company.number },
+      address: {
+        "@type": "PostalAddress", streetAddress: company.registeredOffice.street, addressLocality: company.registeredOffice.locality,
+        postalCode: company.registeredOffice.postcode, addressCountry: company.registeredOffice.country,
+      },
       areaServed: { "@type": "Country", name: "United Kingdom" },
       founder: { "@type": "Person", "@id": ids.founder, name: "Lucas Franco", jobTitle: "Founder and lead engineer" },
       contactPoint: {
@@ -107,8 +115,8 @@ const organization = {
         availableLanguage: "English",
       },
       knowsAbout: [
-        "AI agents", "AI automation", "Custom software development", "Web development", "E-commerce",
-        "Mobile app development", "Systems integration", "Legacy software modernisation", "Video production",
+        "AI implementation", "AI agents", "Agentic AI", "Business automation", "Predictive AI and forecasting",
+        "Marketing automation", "AI-assisted software development", "Web and mobile app development", "Video production",
       ],
     },
     {
@@ -140,6 +148,7 @@ export default function RootLayout({
           <SiteFooter />
           <Panel3D />
           <ConsentAnalytics />
+          <Arrival />
         </ThemeRegistry>
         <Analytics />
       </body>

@@ -4,6 +4,7 @@ import { parseLeadSubmission, type LeadDetails } from "@/lib/lead";
 import { deliverLead, EmailDeliveryError } from "@/lib/leadDelivery";
 import { checkLeadRateLimit } from "@/lib/leadRateLimit";
 import { getBookingConfig } from "@/lib/booking";
+import { forwardLead } from "@/lib/leadWebhook";
 
 const lead: LeadDetails = {
   name: "Alex Example",
@@ -13,6 +14,7 @@ const lead: LeadDetails = {
   budget: "Not sure yet",
   timeline: "Flexible",
   message: "We would like to discuss a new project.\nPlease get in touch.",
+  source: "",
 };
 type Sender = Parameters<typeof deliverLead>[1]["send"];
 const deliveryOptions = {
@@ -131,6 +133,42 @@ test("hosted template variables escape user input and confirmation excludes the 
   assert.deepEqual(Object.keys(confirmation ?? {}).sort(), ["BOOKING_URL", "CONTACT_NAME", "CONTACT_NAME_HTML"]);
   await deliverLead({ ...lead, email: "alex?subject=Injected@example.test" }, { ...deliveryOptions, send });
   assert.equal(messages[2].template?.variables?.CONTACT_EMAIL_URI, "alex%3Fsubject%3DInjected%40example.test");
+});
+
+test("the enquiry's source rides at the foot of the team's message and never reaches the visitor", async () => {
+  const messages: Parameters<Sender>[0][] = [];
+  const send: Sender = async (message) => {
+    messages.push(message);
+    return { data: { id: "accepted" }, error: null };
+  };
+  await deliverLead({ ...lead, source: "Form: Contact · First page: /ai-agents · Campaign: source <b>ads</b>" }, { ...deliveryOptions, send });
+  const notification = messages[0].template?.variables;
+  assert.ok(String(notification?.CONTACT_MESSAGE).endsWith("How they found us\nForm: Contact · First page: /ai-agents · Campaign: source <b>ads</b>"));
+  assert.ok(String(notification?.CONTACT_MESSAGE_HTML).includes("First page: /ai-agents"));
+  assert.ok(!String(notification?.CONTACT_MESSAGE_HTML).includes("<b>"));
+  assert.ok(!JSON.stringify(messages[1].template?.variables).includes("ai-agents"));
+  assert.equal(parseLeadSubmission({ ...lead, source: undefined }).lead?.source, "");
+  assert.ok(parseLeadSubmission({ ...lead, source: "x".repeat(301) }).error);
+  assert.ok(parseLeadSubmission({ ...lead, source: "Form: Contact\nBcc: somebody" }).error);
+});
+
+test("the CRM webhook is off by default, insists on https and never throws", async () => {
+  const calls: { url: string; body: string }[] = [];
+  const ok = (async (url: URL | RequestInfo, init?: RequestInit) => {
+    calls.push({ url: String(url), body: String(init?.body) });
+    return new Response(null, { status: 204 });
+  }) as typeof fetch;
+  assert.equal(await forwardLead(lead, undefined, ok), "off");
+  assert.equal(await forwardLead(lead, "http://crm.example.test/hook", ok), "invalid");
+  assert.equal(await forwardLead(lead, "not a url", ok), "invalid");
+  assert.equal(calls.length, 0);
+  assert.equal(await forwardLead(lead, "https://crm.example.test/hook", ok), "sent");
+  assert.equal(calls[0].url, "https://crm.example.test/hook");
+  assert.equal(JSON.parse(calls[0].body).email, lead.email);
+  const down = (async () => { throw new Error("offline"); }) as typeof fetch;
+  assert.equal(await forwardLead(lead, "https://crm.example.test/hook", down), "failed");
+  const refused = (async () => new Response(null, { status: 500 })) as typeof fetch;
+  assert.equal(await forwardLead(lead, "https://crm.example.test/hook", refused), "failed");
 });
 
 test("rate limits cover an address and shared IP and expire after ten minutes", () => {

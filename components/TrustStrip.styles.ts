@@ -1,5 +1,5 @@
 import type { CSSObject } from "@mui/material/styles";
-import { palette } from "@/theme/palette";
+import { palette, withAlpha } from "@/theme/palette";
 
 const styles = {
   directory: "TrustStrip__directory",
@@ -10,6 +10,8 @@ const styles = {
   wall: "TrustStrip__wall",
   mark: "TrustStrip__mark",
   caption: "TrustStrip__caption",
+  why: "TrustStrip__why",
+  principles: "TrustStrip__principles",
 } as const;
 
 export default styles;
@@ -129,6 +131,49 @@ export const trustStripSheet: CSSObject[] = [{
     opacity: 0,
   },
   ".TrustStrip__wall a:is(:hover, :focus-visible) .TrustStrip__caption": { opacity: 1 },
+  ".TrustStrip__why": { marginTop: "clamp(28px, 3.4vw, 48px)" },
+  ".TrustStrip__why h3": {
+    margin: 0,
+    color: palette.navy[725],
+    fontSize: "clamp(1.4rem, 2.3vw, 1.95rem)",
+    fontWeight: 650,
+    letterSpacing: "-.045em",
+    lineHeight: 1.15,
+  },
+  ".TrustStrip__why h3 span": { color: palette.blue[500] },
+  ".TrustStrip__principles": {
+    display: "grid",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gap: "14px",
+    listStyle: "none",
+    margin: "20px 0 0",
+    padding: 0,
+  },
+  ".TrustStrip__principles li": {
+    display: "flex",
+    alignItems: "flex-start",
+    gap: "14px",
+    padding: "18px",
+    borderRadius: "16px",
+    background: `linear-gradient(170deg, ${palette.white}, ${palette.grey[25]})`,
+    border: `1px solid ${palette.slate[150]}`,
+    boxShadow: `0 18px 40px -32px ${withAlpha(palette.navy[750], 0.5)}`,
+    transition: "border-color .3s ease, box-shadow .3s ease",
+  },
+  ".TrustStrip__principles li:hover": { borderColor: palette.blue[200], boxShadow: `0 22px 44px -28px ${withAlpha(palette.blue[500], 0.5)}` },
+  ".TrustStrip__principles svg": {
+    flex: "none",
+    boxSizing: "content-box",
+    width: "22px",
+    height: "22px",
+    padding: "10px",
+    borderRadius: "12px",
+    color: palette.blue[500],
+    background: `linear-gradient(160deg, ${palette.slate[50]}, ${palette.slate[100]})`,
+    border: `1px solid ${palette.slate[125]}`,
+  },
+  ".TrustStrip__principles h4": { margin: 0, color: palette.navy[725], fontSize: "1.05rem", fontWeight: 650, letterSpacing: "-.02em", lineHeight: 1.3 },
+  ".TrustStrip__principles p": { margin: "5px 0 0", color: palette.slate[525], fontSize: ".94rem", lineHeight: 1.5 },
   ".TrustStrip__directory :is(a:focus-visible, .Dropdown__pill:has(:focus-visible))": { outline: `2px solid ${palette.blue[475]} !important`, outlineOffset: "2px !important" },
   "@media (prefers-reduced-motion: no-preference)": {
     "@keyframes clientSelection": { from: { opacity: .45, transform: "translateY(4px)" }, to: { opacity: 1, transform: "translateY(0)" } },
@@ -147,6 +192,7 @@ export const trustStripSheet: CSSObject[] = [{
     ".TrustStrip__gallery": { paddingBlock: "24px 32px" },
   },
   "@media (max-width: 640px)": {
+    ".TrustStrip__principles": { gridTemplateColumns: "minmax(0, 1fr)" },
     ".TrustStrip__wall": { gridTemplateColumns: "repeat(3, minmax(0, 1fr))" },
   },
   "@media (max-width: 480px)": {

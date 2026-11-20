@@ -17,31 +17,36 @@ import CheckRounded from "@mui/icons-material/CheckRounded";
 import EditOutlined from "@mui/icons-material/EditOutlined";
 import HelpOutlineRounded from "@mui/icons-material/HelpOutlineRounded";
 import LanguageRounded from "@mui/icons-material/LanguageRounded";
-import PhoneIphoneRounded from "@mui/icons-material/PhoneIphoneRounded";
 import SmartToyOutlined from "@mui/icons-material/SmartToyOutlined";
-import StorefrontRounded from "@mui/icons-material/StorefrontRounded";
+import InsightsOutlined from "@mui/icons-material/InsightsOutlined";
+import CampaignOutlined from "@mui/icons-material/CampaignOutlined";
+import ExploreOutlined from "@mui/icons-material/ExploreOutlined";
 import VideocamOutlined from "@mui/icons-material/VideocamOutlined";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import BookingEmbed from "@/components/BookingEmbed";
 import HeadingMotion from "@/components/motion/HeadingMotion";
 import { trackEvent } from "@/lib/analytics";
-import founderPhoto from "@/public/brand/founder.png";import { palette, withAlpha } from "@/theme/palette";
+import founderPhoto from "@/public/brand/founder.png";
+import { palette, withAlpha } from "@/theme/palette";
 
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const blue = palette.blue[425];
 const ink = palette.navy[725];
 const steps = ["Your details", "What you need", "Pick a time"];
+// The seven services in a word or two each, plus a way out for visitors who can't say yet.
 const needs = [
-  { id: "Website", Icon: LanguageRounded },
-  { id: "Online shop", Icon: StorefrontRounded },
-  { id: "Mobile app", Icon: PhoneIphoneRounded },
+  { id: "Website or app", Icon: LanguageRounded },
+  { id: "Video & creative", Icon: VideocamOutlined },
   { id: "AI agents", Icon: SmartToyOutlined },
   { id: "Automation", Icon: AutoModeRounded },
+  { id: "Forecasting", Icon: InsightsOutlined },
+  { id: "Marketing", Icon: CampaignOutlined },
+  { id: "AI strategy", Icon: ExploreOutlined },
   { id: "Not sure yet", Icon: HelpOutlineRounded },
 ];
 const promises = [
-  "A clear plan for your website, app or AI agent",
+  "The AI opportunities worth pursuing in your business",
   "Straight answers on scope, timeline and cost",
   "Advice from the team that would build it",
   "No obligation. If we're not the right fit, we'll say so.",
@@ -126,7 +131,7 @@ export default function BookingSteps() {
       gridTemplateColumns: { xs: "minmax(0, 1fr)", md: step === 2 ? "minmax(0, 1fr)" : "minmax(0, 1.1fr) minmax(0, 0.9fr)" } }}>
       <Box sx={{ minWidth: 0 }}>
         <Stepper step={step} onJump={go} />
-        <HeadingMotion component="h1" id="booking-heading" text="Book a" accent="discovery call" tone="light" immediate
+        <HeadingMotion component="h1" id="booking-heading" text="Book your" accent="AI Opportunity Call" tone="light" immediate
           sx={{ mt: { xs: 3, md: 4 }, mb: { xs: 2.5, md: 3 }, fontSize: { xs: 36, sm: 48, md: 54 }, fontWeight: 700, lineHeight: 1.05, letterSpacing: "-0.045em" }} />
 
         <AnimatePresence mode="wait" custom={direction} initial={false}>
@@ -161,7 +166,7 @@ export default function BookingSteps() {
                 <StepIntro headingRef={headingRef} id="needs-heading" title="What can we help with?"
                   text="Pick everything that applies, so we come to the call prepared." />
                 <Box role="group" aria-labelledby="needs-heading"
-                  sx={{ display: "grid", gap: 1.5, gridTemplateColumns: { xs: "1fr 1fr", sm: "repeat(3, minmax(0, 1fr))" } }}>
+                  sx={{ display: "grid", gap: 1.5, gridTemplateColumns: { xs: "1fr 1fr", sm: "repeat(4, minmax(0, 1fr))" } }}>
                   {needs.map(({ id, Icon }, index) => {
                     const on = picked.includes(id);
                     return (

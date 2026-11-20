@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PolicyArticle from "@/components/interior/PolicyArticle";
 import Typography from "@mui/material/Typography";
 import PageHero from "@/components/PageHero";
+import { companyStatement } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Terms of Engagement",
@@ -11,14 +12,14 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <>
-      <PageHero eyebrow="Legal" title="Terms of Engagement" subtitle="Last updated: to be confirmed before launch." />
+      <PageHero eyebrow="Legal" title="Terms of Engagement" subtitle="Last updated: 20 November 2026." />
       <PolicyArticle related={{ href: "/legal/privacy", title: "Privacy Policy" }}
         sections={[
           {
-            id: "discovery-sprint", title: "Discovery sprint",
+            id: "discovery-sprint", title: "AI Implementation Blueprint (discovery sprint)",
             body: <>
               <Typography variant="body1" color="text.secondary">
-                Payment for a discovery sprint via this website secures a scoped, fixed-price engagement as
+                Payment for an AI Implementation Blueprint (our paid discovery sprint) via this website secures a scoped, fixed-price engagement as
                 described on the pricing page. Deliverables and timeline are confirmed by email after payment.
                 If you move forward with a fixed-scope project or embedded engagement within 60 days of your
                 discovery sprint, its fee is credited against that engagement.
@@ -69,7 +70,7 @@ export default function TermsPage() {
             id: "contact", title: "Contact",
             body: <>
               <Typography variant="body1" color="text.secondary">
-                Questions about these terms: contact@bluetrendy.com.
+                These terms are between you and us. {companyStatement} Questions about these terms: contact@bluetrendy.com.
               </Typography>
             </>,
           },

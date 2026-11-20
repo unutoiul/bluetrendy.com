@@ -4,10 +4,12 @@ import type { Metadata } from "next";
 
 export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.bluetrendy.com").replace(/\/+$/, "");
 export const siteName = "BlueTrendy Intelligence";
-export const tagline = "Your Business, powered by AI";
-export const homeTitle = "BlueTrendy Intelligence | AI Agents, Software & Apps, London";
+export const tagline = "We don’t just build AI. We make AI work for your business.";
+/** The four outcomes every page comes back to. */
+export const promise = "More revenue. Less work. Faster delivery. Smarter decisions.";
+export const homeTitle = "BlueTrendy Intelligence | AI Implementation, Automation & Software";
 export const siteDescription =
-  "London software and AI team building AI agents, custom software, websites and mobile apps. Senior engineers, a first release in days. Book a free call.";
+  "AI implementation, automation and software from a senior London team: AI agents, websites and apps, video, forecasting and marketing automation. Book a free call.";
 
 export const contact = {
   email: "contact@bluetrendy.com",
@@ -15,6 +17,23 @@ export const contact = {
   locality: "London",
   country: "GB",
 };
+
+/**
+ * The company behind the site, as registered at Companies House and HMRC. BlueTrendy
+ * Intelligence is its trading name. Shown in the footer and the legal pages, and given to
+ * search engines in the layout's structured data.
+ */
+export const company = {
+  legalName: "BlueTrendy Development Ltd",
+  number: "08847487",
+  jurisdiction: "England and Wales",
+  incorporated: "2014-01-16",
+  vat: "GB 203 0818 54",
+  registeredOffice: { street: "Flat 2, 839 Fulham Road", locality: "London", postcode: "SW6 5HQ", country: "GB" },
+};
+export const registeredOffice = `${company.registeredOffice.street}, ${company.registeredOffice.locality} ${company.registeredOffice.postcode}`;
+/** One sentence naming the company, for the footer and the legal pages. */
+export const companyStatement = `${siteName} is a trading name of ${company.legalName}, registered in ${company.jurisdiction}, company number ${company.number}. Registered office: ${registeredOffice}. VAT number ${company.vat}.`;
 
 /** The business's profiles elsewhere, so search engines know they are the same company. */
 export const linkedIn = "https://www.linkedin.com/company/bluetrendy";
@@ -50,7 +69,7 @@ export function pageMetadata({ title, absolute = false, description, path, type 
   const fullTitle = absolute ? title : `${title} | BlueTrendy`;
   const snippet = clip(description);
   // A page's own openGraph replaces the layout's, file-based share image included, so name it here.
-  const image = { url: "/opengraph-image", width: 1200, height: 630, alt: `${siteName}. Custom software, delivered 10x faster.` };
+  const image = { url: "/opengraph-image", width: 1200, height: 630, alt: `${siteName}. ${tagline}` };
   return {
     title: absolute ? { absolute: title } : title,
     description: snippet,

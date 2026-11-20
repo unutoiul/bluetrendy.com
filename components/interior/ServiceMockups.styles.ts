@@ -1,4 +1,5 @@
-import type { CSSObject } from "@mui/material/styles";import { palette, withAlpha } from "@/theme/palette";
+import type { CSSObject } from "@mui/material/styles";
+import { palette, withAlpha } from "@/theme/palette";
 
 
 // Styles for the drawn product mock-ups on the services page (see ServiceMockups.tsx).
@@ -281,6 +282,9 @@ const operations: CSSObject = {
   ".Mock__table > div[data-head] > span": { fontFamily: "inherit", fontSize: ".76em", fontWeight: 600, color: palette.slate[375] },
   ".Mock__table .Mock__pill": { fontSize: ".9em" },
   ".Mock__opsToast": { left: "45.5em", top: "35.4em", width: "24em" },
+  // A forecast: the line still to come, inside the range it is likely to fall in.
+  ".Mock__band": { fill: withAlpha(palette.blue[425], 0.16), stroke: "none" },
+  ".Mock__ahead": { fill: "none", stroke: palette.blue[425], strokeWidth: 2, strokeDasharray: "5 4", strokeLinecap: "round", vectorEffect: "non-scaling-stroke" },
 };
 
 /* Websites & e-commerce */

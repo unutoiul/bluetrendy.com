@@ -3,6 +3,8 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import FlagOutlined from "@mui/icons-material/FlagOutlined";
+import MonitorHeartOutlined from "@mui/icons-material/MonitorHeartOutlined";
+import CampaignOutlined from "@mui/icons-material/CampaignOutlined";
 import GroupAddOutlined from "@mui/icons-material/GroupAddOutlined";
 import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
 import PageHero from "@/components/PageHero";
@@ -22,17 +24,18 @@ import { palette, withAlpha } from "@/theme/palette";
 const lowest = formatPounds(Math.min(...discoveryPackages.map(item => item.price)));
 
 export const metadata: Metadata = pageMetadata({
-  title: `Pricing: Discovery Sprints from ${lowest}`,
-  description: `Start with a fixed-price discovery sprint from ${lowest}, priced by company size. Move into a fixed-scope project or embedded engineering once the plan is clear.`,
+  title: `Pricing: AI Implementation Blueprint from ${lowest}`,
+  description: `Start with a free AI Opportunity Call, then a fixed-price AI Implementation Blueprint from ${lowest}, priced by company size. A quick win, managed operations or a retainer follow.`,
   path: "/pricing",
 });
 
 const discoverySprint = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: "Discovery sprint",
-  serviceType: "Software project planning and estimate",
-  description: "A fixed-price planning sprint with our senior team: a technical plan, an estimate and a price for the build.",
+  name: "AI Implementation Blueprint",
+  alternateName: "Discovery sprint",
+  serviceType: "AI project discovery, planning and estimate",
+  description: "A fixed-price discovery and architecture sprint with our senior team: a technical plan, an estimate and a price for the build.",
   url: absoluteUrl("/pricing"),
   provider: organizationRef,
   areaServed: { "@type": "Country", name: "United Kingdom" },
@@ -48,11 +51,27 @@ const discoverySprint = {
 
 const nextSteps = [
   {
-    title: "Fixed-scope project", Icon: FlagOutlined, href: "/contact", action: "Get a quote",
-    text: "A defined deliverable, timeline and price, agreed from your discovery plan. You see a working demo every week.",
+    title: "Fixed-scope AI quick win", Icon: FlagOutlined, href: "/contact", action: "Get a quote",
+    text: "One useful agent, automation, marketing workflow or product feature, with acceptance criteria, a timeline and a price agreed from your blueprint. You see a working demo every week.",
     details: [
       { term: "How you pay", value: "By milestone, as each part is delivered" },
-      { term: "Best for", value: "A platform, a migration or an integration with a clear finish line" },
+      { term: "Best for", value: "A first system with a clear finish line and a number to measure" },
+    ],
+  },
+  {
+    title: "Managed AI operations", Icon: MonitorHeartOutlined, href: "/contact", action: "Discuss operations",
+    text: "We monitor the system, improve its models and workflows, report on usage, provide support and maintain the integrations as your tools change.",
+    details: [
+      { term: "How you pay", value: "Monthly, sized to the systems we look after" },
+      { term: "Best for", value: "Agents and automations already in daily use" },
+    ],
+  },
+  {
+    title: "AI growth & creative retainer", Icon: CampaignOutlined, href: "/contact", action: "Discuss a retainer",
+    text: "A steady supply of advertising concepts, video assets and compliant marketing sequences, with campaign testing and optimisation.",
+    details: [
+      { term: "How you pay", value: "Monthly, sized to the campaigns you run" },
+      { term: "Best for", value: "Teams that need fresh creative and campaigns every month" },
     ],
   },
   {
@@ -71,8 +90,8 @@ export default function PricingPage() {
       <JsonLd data={[discoverySprint, faqPage(pricingFaqs), breadcrumbs([{ name: "Pricing", path: "/pricing" }])]} />
       <PageHero
         eyebrow="Engagement & Pricing"
-        title="Plan your project before you build"
-        subtitle={`Start with a fixed-price planning sprint from ${lowest}, priced by the size of your company. You’ll get a technical plan, an estimate and a price for the build.`}
+        title="Plan your AI project before you build"
+        subtitle={`Start with a free AI Opportunity Call. Then the AI Implementation Blueprint, a fixed-price planning sprint from ${lowest}, priced by the size of your company, gives you a technical plan, an estimate and a price for the build.`}
       />
 
       <DiscoverySprint />
@@ -82,12 +101,13 @@ export default function PricingPage() {
           <Grid container spacing={{ xs: 4, md: 8 }} sx={{ alignItems: "flex-start" }}>
             <Grid size={{ xs: 12, md: 4 }}>
               <Box component="p" sx={{ ...neural.label, color: brand.blue, "&::after": { content: '""', width: 34, height: "1px", background: `linear-gradient(90deg, ${brand.blue}, transparent)` } }}>
-                After discovery
+                After the blueprint
               </Box>
-              <HeadingMotion id="ongoing-heading" text="Then choose" accent="how we build it" tone="light"
+              <HeadingMotion id="ongoing-heading" text="Then choose" accent="your next step" tone="light"
                 sx={{ m: 0, fontSize: "clamp(2rem, 3.6vw, 3.1rem)", fontWeight: 650, letterSpacing: "-0.05em", lineHeight: 1.05 }} />
               <Box component="p" sx={{ m: "18px 0 0", color: brand.slate, lineHeight: 1.6, maxWidth: "38ch" }}>
-                Your plan is yours either way. If you build with us within 60 days, the sprint fee comes off the price.
+                Your plan is yours either way. If you build with us within 60 days, the blueprint fee comes off the price.
+                Each step below is scoped and priced to your requirements, so we quote it rather than list it.
               </Box>
             </Grid>
 
@@ -126,7 +146,7 @@ export default function PricingPage() {
                 <div>
                   <Box component="h3" sx={{ m: 0, fontSize: "1.2rem", fontWeight: 650, letterSpacing: "-0.02em" }}>Not sure which fits?</Box>
                   <Box component="p" sx={{ m: "6px 0 0", color: palette.slate[125], lineHeight: 1.55 }}>
-                    A discovery call is free and usually makes the right choice obvious.
+                    An AI Opportunity Call is free and usually makes the right choice obvious.
                   </Box>
                 </div>
                 <LinkButton href="/book-a-call" variant="contained" endIcon={<ArrowForwardRounded />} sx={{ flexShrink: 0 }}>Book a free call</LinkButton>

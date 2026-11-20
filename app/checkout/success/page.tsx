@@ -32,7 +32,7 @@ export default async function CheckoutSuccessPage({ searchParams }: CheckoutSucc
   return (
     <>
       <PageHero
-        eyebrow="Discovery Sprint"
+        eyebrow="AI Implementation Blueprint"
         title="Payment received — you're booked in."
         subtitle={
           email

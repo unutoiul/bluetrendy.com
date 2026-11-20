@@ -1,3 +1,5 @@
+import { timeline } from "./timeline";
+
 export type CaseStudy = {
   slug: string;
   client: string;
@@ -166,4 +168,12 @@ export const caseStudies: CaseStudy[] = [
 
 export function getCaseStudy(slug: string) {
   return caseStudies.find((c) => c.slug === slug);
+}
+
+/**
+ * The role our founder, Lucas Franco, held on the engagement, from the timeline on the About
+ * page. Each case study and service page names who led the work.
+ */
+export function founderRole(study: CaseStudy) {
+  return timeline.find(item => item.org === study.client)?.role.split(" — ")[0] ?? "Lead Software Engineer";
 }

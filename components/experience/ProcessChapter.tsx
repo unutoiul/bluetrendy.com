@@ -1,40 +1,44 @@
 import Box from "@mui/material/Box";
 import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
-import ForumOutlined from "@mui/icons-material/ForumOutlined";
-import DevicesOutlined from "@mui/icons-material/DevicesOutlined";
+import TravelExploreOutlined from "@mui/icons-material/TravelExploreOutlined";
+import DesignServicesOutlined from "@mui/icons-material/DesignServicesOutlined";
+import CodeRounded from "@mui/icons-material/CodeRounded";
 import RocketLaunchOutlined from "@mui/icons-material/RocketLaunchOutlined";
 import ChapterIntro from "./ChapterIntro";
 import { neural } from "./neuralStyle";
 import { palette, withAlpha } from "@/theme/palette";
 
 const steps = [
-  { title: "Tell us what you need", Icon: ForumOutlined,
-    text: "We talk through the problem, who will use the solution and what to build first." },
-  { title: "Try a working version", Icon: DevicesOutlined,
-    text: "You see the work as it takes shape and give feedback before launch." },
-  { title: "Launch with support", Icon: RocketLaunchOutlined,
-    text: "We test the release, help your team get started and hand over the tools to run it." },
+  { title: "Discover", Icon: TravelExploreOutlined,
+    text: "We learn your business, your systems and where AI could pay off." },
+  { title: "Design", Icon: DesignServicesOutlined,
+    text: "We scope a first release you can measure, with the benefits we expect from it." },
+  { title: "Build", Icon: CodeRounded,
+    text: "We implement and test, and show you the work in progress every week." },
+  { title: "Launch & improve", Icon: RocketLaunchOutlined,
+    text: "We deploy, monitor performance, train your team and keep refining." },
 ];
 
-// Sits in the gap after a step card: to its right on wide screens, below it on narrow ones.
+// Sits in the gap after a step card: to its right on wide screens, below it on phones. In
+// between, the steps sit two to a row and need no connector.
 function Connector({ delay }: { delay: number }) {
   return (
-    <Box aria-hidden="true" sx={{ position: "absolute", zIndex: 2,
-      left: { xs: "50%", md: "100%" }, top: { xs: "100%", md: "50%" },
-      width: { xs: 2, md: 64 }, height: { xs: 48, md: 2 }, translate: { xs: "-50% 0", md: "0 -50%" },
-      background: { xs: `linear-gradient(180deg, transparent, ${palette.blue[300]}, transparent)`, md: `linear-gradient(90deg, transparent, ${palette.blue[300]}, transparent)` },
+    <Box aria-hidden="true" sx={{ position: "absolute", zIndex: 2, display: { xs: "block", sm: "none", lg: "block" },
+      left: { xs: "50%", lg: "100%" }, top: { xs: "100%", lg: "50%" },
+      width: { xs: 2, lg: 48 }, height: { xs: 48, lg: 2 }, translate: { xs: "-50% 0", lg: "0 -50%" },
+      background: { xs: `linear-gradient(180deg, transparent, ${palette.blue[300]}, transparent)`, lg: `linear-gradient(90deg, transparent, ${palette.blue[300]}, transparent)` },
       boxShadow: `0 0 10px ${withAlpha(palette.blue[350], 0.7)}`,
       "&::after": { content: '""', position: "absolute", width: 8, height: 8, borderRadius: "50%", background: palette.cyan[25],
         boxShadow: `0 0 10px 3px ${palette.sky[150]}, 0 0 22px 6px ${withAlpha(palette.blue[350], 0.8)}`,
-        top: { xs: 0, md: "50%" }, left: { xs: "50%", md: 0 }, translate: "-50% -50%",
-        animation: { xs: `neural-current-down 2.4s ${neural.ease} infinite`, md: `neural-current 2.4s ${neural.ease} infinite` },
+        top: { xs: 0, lg: "50%" }, left: { xs: "50%", lg: 0 }, translate: "-50% -50%",
+        animation: { xs: `neural-current-down 2.4s ${neural.ease} infinite`, lg: `neural-current 2.4s ${neural.ease} infinite` },
         animationDelay: `${delay}s`,
         "@media (prefers-reduced-motion: reduce)": { animation: "none", display: "none" } },
     }}>
       <Box sx={{ position: "absolute", top: "50%", left: "50%", translate: "-50% -50%", display: "grid", placeItems: "center",
-        width: 38, height: 38, borderRadius: "50%", color: palette.slate[75], background: `radial-gradient(circle, ${palette.navy[600]}, ${palette.navy[775]} 75%)`,
+        width: 34, height: 34, borderRadius: "50%", color: palette.slate[75], background: `radial-gradient(circle, ${palette.navy[600]}, ${palette.navy[775]} 75%)`,
         border: `1px solid ${palette.sky[150]}`, animation: "neural-breathe 3.2s ease-in-out infinite",
-        "& svg": { fontSize: 20, rotate: { xs: "90deg", md: "0deg" } },
+        "& svg": { fontSize: 18, rotate: { xs: "90deg", lg: "0deg" } },
         "@media (prefers-reduced-motion: reduce)": { animation: "none" } }}>
         <ArrowForwardRounded />
       </Box>
@@ -45,15 +49,16 @@ function Connector({ delay }: { delay: number }) {
 export default function ProcessChapter() {
   return <>
     <ChapterIntro id="production-heading" label="Our process" title="How we" accent="work"
-      subtitle="Three steps from the first conversation to software your team uses every day."
+      subtitle="Four steps from the first conversation to AI your team uses every day, each with something you can check."
       action={{ href: "/process", label: "See our delivery process" }} />
     <Box component="ol" sx={{ listStyle: "none", m: 0, p: 0, display: "grid", alignItems: "stretch",
-      gridTemplateColumns: { xs: "1fr", md: "repeat(3, minmax(0, 1fr))" }, columnGap: "64px", rowGap: "48px" }}>
+      gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))", lg: "repeat(4, minmax(0, 1fr))" },
+      columnGap: { sm: "24px", lg: "48px" }, rowGap: { xs: "48px", sm: "24px" } }}>
       {steps.map(({ title, text, Icon }, index) => (
         <Box component="li" key={title} data-panel sx={{ position: "relative", display: "flex" }}>
           {index < steps.length - 1 && <Connector delay={index * 0.6} />}
           <Box sx={{ ...neural.glassCard, flex: 1, display: "flex", flexDirection: "column", alignItems: "center",
-            textAlign: "center", p: { xs: 3, md: 3.5 }, minHeight: { md: 260 },
+            textAlign: "center", p: { xs: 3, md: 3 }, minHeight: { md: 250 },
             "&:hover": { ...neural.glassCard["&:hover, &:focus-visible, &:focus-within"], transform: "translateY(-6px)" },
             "&:hover .step-orb": { transform: "scale(1.1)", color: palette.slate[50],
               boxShadow: `0 0 0 1px ${withAlpha(palette.sky[100], 0.5)}, 0 0 30px ${withAlpha(palette.blue[300], 0.7)}, inset 0 0 14px ${withAlpha(palette.sky[175], 0.4)}` } }}>

@@ -13,11 +13,11 @@ export const metadata: Metadata = {
 export default function CheckoutCancelPage() {
   return (
     <>
-      <PageHero eyebrow="Discovery Sprint" title="Checkout cancelled" subtitle="No payment was taken." />
+      <PageHero eyebrow="AI Implementation Blueprint" title="Checkout cancelled" subtitle="No payment was taken." />
       <Container sx={{ py: { xs: 4, md: 7 } }}>
         <Stack spacing={3} sx={{ maxWidth: 560 }}>
           <Typography variant="body1" color="text.secondary">
-            Changed your mind about the details, or just want to talk it through first? A free discovery call
+            Changed your mind about the details, or just want to talk it through first? A free AI Opportunity Call
             is a good next step either way.
           </Typography>
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>

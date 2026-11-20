@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import type { SvgIconComponent } from "@mui/icons-material";
 import AccountBalanceRounded from "@mui/icons-material/AccountBalanceRounded";
 import AssignmentRounded from "@mui/icons-material/AssignmentRounded";
 import CheckCircleRounded from "@mui/icons-material/CheckCircleRounded";
@@ -7,6 +8,9 @@ import ChevronLeftRounded from "@mui/icons-material/ChevronLeftRounded";
 import ChevronRightRounded from "@mui/icons-material/ChevronRightRounded";
 import ClosedCaptionRounded from "@mui/icons-material/ClosedCaptionRounded";
 import CloudOffRounded from "@mui/icons-material/CloudOffRounded";
+import EmailRounded from "@mui/icons-material/EmailRounded";
+import LanguageRounded from "@mui/icons-material/LanguageRounded";
+import ShoppingCartRounded from "@mui/icons-material/ShoppingCartRounded";
 import ContactsRounded from "@mui/icons-material/ContactsRounded";
 import FactCheckRounded from "@mui/icons-material/FactCheckRounded";
 import GroupsRounded from "@mui/icons-material/GroupsRounded";
@@ -28,13 +32,17 @@ import StorageRounded from "@mui/icons-material/StorageRounded";
 import SupportAgentRounded from "@mui/icons-material/SupportAgentRounded";
 import SyncRounded from "@mui/icons-material/SyncRounded";
 import TaskAltRounded from "@mui/icons-material/TaskAltRounded";
-import WarningAmberRounded from "@mui/icons-material/WarningAmberRounded";import { palette } from "@/theme/palette";
+import WarningAmberRounded from "@mui/icons-material/WarningAmberRounded";
+import { palette } from "@/theme/palette";
 
 
 /*
  * Each service is shown as the thing a client would actually receive: a believable screen
  * with plausible data, drawn in HTML so it stays sharp at any size. Every measure is in em
  * on a 72 × 45 em canvas, and the canvas font size scales with the stage (see the styles).
+ *
+ * The businesses, people and figures in these screens are made up. They are examples, and
+ * the stage that shows them says so (see TiltFigure).
  */
 
 type Tone = "green" | "blue" | "amber" | "grey";
@@ -263,43 +271,149 @@ function Field() {
   </>;
 }
 
-/* IT setup & integration: systems connected through one sync service. */
+/* Systems connected through one service in the middle: integrations, and marketing journeys. */
 
-function Integration() {
+type HubNode = { hue: "blue" | "violet" | "green" | "amber"; Icon: SvgIconComponent; name: string; note: string };
+type HubProps = {
+  title: string;
+  /** Left top, left bottom, right top, right bottom. */
+  nodes: [HubNode, HubNode, HubNode, HubNode];
+  core: { name: string; note: string };
+  check: { label: string; result: string; note: string };
+  logTitle: string;
+  log: { time: string; text: string; detail: string; held?: boolean }[];
+};
+
+const hubPlaces = ["crm", "support", "finance", "reporting"];
+
+function Hub({ title, nodes, core, check, logTitle, log }: HubProps) {
   return <>
-    <Window className="Mock__hub" title="Integration hub">
+    <Window className="Mock__hub" title={title}>
       <svg className="Mock__wires" viewBox="0 0 660 246" preserveAspectRatio="none" aria-hidden="true">
         {["M180,56 C230,56 230,110 270,110", "M180,171 C230,171 230,132 270,132",
           "M390,110 C430,110 430,56 480,56", "M390,132 C430,132 430,171 480,171"].map(d => <g key={d}>
           <path d={d} className="Mock__wire" /><path d={d} className="Mock__flow" />
         </g>)}
       </svg>
-      <div className="Mock__node" data-at="crm"><i data-hue="blue"><ContactsRounded fontSize="inherit" /></i><span><b>Sales CRM</b><small>18,240 customers</small></span></div>
-      <div className="Mock__node" data-at="support"><i data-hue="violet"><SupportAgentRounded fontSize="inherit" /></i><span><b>Support desk</b><small>2,310 open tickets</small></span></div>
+      {nodes.slice(0, 2).map((node, index) => <div key={node.name} className="Mock__node" data-at={hubPlaces[index]}>
+        <i data-hue={node.hue}><node.Icon fontSize="inherit" /></i><span><b>{node.name}</b><small>{node.note}</small></span>
+      </div>)}
       <div className="Mock__core">
         <SyncRounded fontSize="inherit" />
-        <b>Sync service</b>
+        <b>{core.name}</b>
         <Pill tone="green" dot>Running</Pill>
-        <small>Last run 12:04, every 2 minutes</small>
+        <small>{core.note}</small>
       </div>
-      <div className="Mock__node" data-at="finance"><i data-hue="green"><AccountBalanceRounded fontSize="inherit" /></i><span><b>Finance</b><small>Invoices and payments</small></span></div>
-      <div className="Mock__node" data-at="reporting"><i data-hue="amber"><StorageRounded fontSize="inherit" /></i><span><b>Reporting</b><small>Nightly export at 02:00</small></span></div>
+      {nodes.slice(2).map((node, index) => <div key={node.name} className="Mock__node" data-at={hubPlaces[index + 2]}>
+        <i data-hue={node.hue}><node.Icon fontSize="inherit" /></i><span><b>{node.name}</b><small>{node.note}</small></span>
+      </div>)}
     </Window>
     <div className="Mock__card Mock__check">
-      <small>Data migration check</small>
-      <b>18,240 of 18,240 records match</b>
+      <small>{check.label}</small>
+      <b>{check.result}</b>
       <span className="Mock__meter"><i style={{ width: "100%" }} /></span>
-      <Pill tone="green"><CheckRounded fontSize="inherit" />0 mismatches</Pill>
+      <Pill tone="green"><CheckRounded fontSize="inherit" />{check.note}</Pill>
     </div>
-    <Window className="Mock__log" title="Sync log" dark>
+    <Window className="Mock__log" title={logTitle} dark>
       <div className="Mock__logLines">
-        <span><time>12:04:31</time><i data-ok>✓</i>Customer created in Finance<em>Northwind Ltd</em></span>
-        <span><time>12:04:32</time><i data-ok>✓</i>Invoice matched to order<em>INV-2041</em></span>
-        <span><time>12:04:35</time><i data-warn>!</i>Duplicate contact held for review<em>j.hale@ardenfoods.co.uk</em></span>
-        <span><time>12:04:38</time><i data-ok>✓</i>Ticket linked to customer<em>#55102</em></span>
-        <span><time>12:04:40</time><i data-ok>✓</i>Records reconciled<em>18,240 of 18,240</em></span>
+        {log.map(line => <span key={line.time}><time>{line.time}</time>{line.held ? <i data-warn>!</i> : <i data-ok>✓</i>}{line.text}<em>{line.detail}</em></span>)}
       </div>
     </Window>
+  </>;
+}
+
+function Integration() {
+  return <Hub title="Integration hub"
+    nodes={[
+      { hue: "blue", Icon: ContactsRounded, name: "Sales CRM", note: "18,240 customers" },
+      { hue: "violet", Icon: SupportAgentRounded, name: "Support desk", note: "2,310 open tickets" },
+      { hue: "green", Icon: AccountBalanceRounded, name: "Finance", note: "Invoices and payments" },
+      { hue: "amber", Icon: StorageRounded, name: "Reporting", note: "Nightly export at 02:00" },
+    ]}
+    core={{ name: "Sync service", note: "Last run 12:04, every 2 minutes" }}
+    check={{ label: "Data migration check", result: "18,240 of 18,240 records match", note: "0 mismatches" }}
+    logTitle="Sync log"
+    log={[
+      { time: "12:04:31", text: "Customer created in Finance", detail: "Northwind Ltd" },
+      { time: "12:04:32", text: "Invoice matched to order", detail: "INV-2041" },
+      { time: "12:04:35", text: "Duplicate contact held for review", detail: "j.hale@ardenfoods.co.uk", held: true },
+      { time: "12:04:38", text: "Ticket linked to customer", detail: "#55102" },
+      { time: "12:04:40", text: "Records reconciled", detail: "18,240 of 18,240" },
+    ]} />;
+}
+
+/* Sales & marketing automation: lead capture and the shop feed one follow-up engine. */
+
+function Journey() {
+  return <Hub title="Customer journeys"
+    nodes={[
+      { hue: "blue", Icon: LanguageRounded, name: "Website forms", note: "42 new leads this week" },
+      { hue: "violet", Icon: ShoppingCartRounded, name: "Online shop", note: "17 baskets left today" },
+      { hue: "green", Icon: EmailRounded, name: "Email", note: "Welcome, reminders, win-back" },
+      { hue: "amber", Icon: ContactsRounded, name: "CRM", note: "Lead scores updated hourly" },
+    ]}
+    core={{ name: "Follow-up engine", note: "Consent checked on every send" }}
+    check={{ label: "Consent check", result: "1,204 of 1,204 sends had consent", note: "0 sent without it" }}
+    logTitle="Send log"
+    log={[
+      { time: "19:00:02", text: "Welcome email sent", detail: "New subscriber" },
+      { time: "19:00:04", text: "Basket reminder sent", detail: "2 items, £86.00" },
+      { time: "19:00:07", text: "Held: no marketing consent", detail: "j.hale@ardenfoods.co.uk", held: true },
+      { time: "19:00:09", text: "Lead score raised", detail: "Opened 3 emails" },
+      { time: "19:00:12", text: "Unsubscribe honoured", detail: "1 contact" },
+    ]} />;
+}
+
+/* Predictive AI: a demand forecast drawn as a range, with an order waiting for approval. */
+
+const sold = [61, 64, 60, 67, 70, 68, 73, 76];
+const ahead = [76, 79, 81, 84, 86, 89];
+
+function Forecast() {
+  const all = sold.length + ahead.length - 1;
+  const at = (index: number, value: number) => `${((index / (all - 1)) * 400).toFixed(1)},${(100 - ((value - 50) / 60) * 100).toFixed(1)}`;
+  const past = sold.map((value, index) => at(index, value));
+  const future = ahead.map((value, index) => at(sold.length - 1 + index, value));
+  // The likely range opens out the further ahead the forecast looks.
+  const upper = ahead.map((value, index) => at(sold.length - 1 + index, value * (1 + index * 0.035)));
+  const lower = ahead.map((value, index) => at(sold.length - 1 + index, value * (1 - index * 0.035))).reverse();
+  return <>
+    <Window className="Mock__ops" url="app.oakandrye.co.uk/forecast">
+      <div className="Mock__main" style={{ height: "100%" }}>
+        <div className="Mock__mainHead">
+          <b>Demand forecast</b>
+          <span className="Mock__search"><SearchRounded fontSize="inherit" />Search products</span>
+          <span className="Mock__select">Next 6 weeks</span>
+        </div>
+        <div className="Mock__kpis">
+          <div><small>Expected orders</small><strong>4,870</strong><Pill tone="blue">Likely 4,310 to 5,430</Pill></div>
+          <div><small>Forecast error, last 8 weeks</small><strong>6.4%</strong><Pill tone="green">Within target</Pill></div>
+          <div><small>Products likely to run out</small><strong>3</strong><Pill tone="amber">Order by Friday</Pill></div>
+        </div>
+        <div className="Mock__panel Mock__chart">
+          <div className="Mock__panelHead"><b>Orders per week</b>
+            <span className="Mock__legend"><i />Actual<i data-muted />Forecast and likely range</span></div>
+          <svg viewBox="0 0 400 100" preserveAspectRatio="none">
+            {[25, 50, 75].map(y => <line key={y} x1="0" x2="400" y1={y} y2={y} className="Mock__grid" />)}
+            <path d={`M${upper.join(" L")} L${lower.join(" L")} Z`} className="Mock__band" />
+            <polyline points={future.join(" ")} className="Mock__ahead" />
+            <polyline points={past.join(" ")} className="Mock__line" pathLength={1} />
+          </svg>
+          <div className="Mock__axis">{["8 weeks ago", "4 weeks ago", "Today", "In 3 weeks", "In 6 weeks"].map(week => <span key={week}>{week}</span>)}</div>
+        </div>
+        <div className="Mock__panel Mock__table">
+          <div data-head><span>Code</span><span>Product</span><span>Stock cover</span><span>Status</span><span>Buyer</span></div>
+          <div><span>SKU-1042</span><span>Oat bars, 12-pack</span><span>9 days</span><span><Pill tone="amber" dot>Needs approval</Pill></span><span><i className="Mock__avatar">SB</i></span></div>
+          <div><span>SKU-0871</span><span>Rye crackers</span><span>16 days</span><span><Pill tone="blue" dot>Order drafted</Pill></span><span><i className="Mock__avatar" data-alt>AK</i></span></div>
+          <div><span>SKU-0310</span><span>Sourdough mix</span><span>41 days</span><span><Pill tone="green" dot>Covered</Pill></span><span><i className="Mock__avatar">SB</i></span></div>
+        </div>
+      </div>
+    </Window>
+    <div className="Mock__toast Mock__opsToast">
+      <CheckCircleRounded fontSize="inherit" />
+      <span><b>Order drafted</b><small>600 oat bars, waiting for Sam to approve</small></span>
+      <time>Just now</time>
+    </div>
   </>;
 }
 
@@ -469,7 +583,7 @@ function VideoEdit() {
           {/* eslint-disable-next-line @next/next/no-img-element -- a decorative still inside a drawn mock-up */}
           <img src="/brand/blue-ribbon-studio.webp" alt="" loading="lazy" decoding="async" />
           <span className="Mock__safe" />
-          <span className="Mock__caption">Filmed in our London studio</span>
+          <span className="Mock__caption">The new blue, in motion</span>
         </div>
         <div className="Mock__transport">
           <span><SkipPreviousRounded fontSize="inherit" /><PlayArrowRounded fontSize="inherit" /><SkipNextRounded fontSize="inherit" /></span>
@@ -507,17 +621,21 @@ function VideoEdit() {
   </Window>;
 }
 
-const scenes: Record<string, { label: string; Scene: () => ReactNode }> = {
-  "ai-native-web-apps": { label: "Example operations workspace: shipment figures, a weekly chart and an approvals table, with a confirmation that an approval was recorded.", Scene: Operations },
-  "websites-and-ecommerce": { label: "Example clinic website with a treatment list and booking calendar, a phone showing the booking confirmation, and a weekly bookings figure.", Scene: Booking },
-  "mobile-cross-platform": { label: "Example field inspection app on two phones: a map with an offline checklist, a list of reports, and a notice that reports synced.", Scene: Field },
-  "it-implementation-and-integration": { label: "Example integration hub connecting a CRM, support desk, finance and reporting through a sync service, with a sync log and a migration check.", Scene: Integration },
-  "complex-mission-critical-systems": { label: "Example production monitoring console: 99.99% uptime over 90 days, latency well under its limit, healthy services and a passed failover drill.", Scene: Monitoring },
-  "legacy-modernization": { label: "Example migration plan moving modules to a new platform one at a time, with a terminal showing parity checks and a rollback ready.", Scene: Migration },
-  "ai-automation-applied-ml": { label: "Example invoice review: fields extracted from a supplier invoice with confidence scores, and a handwritten date flagged for a person to confirm.", Scene: Extraction },
-  "marketing-video-production": { label: "Example video edit: a studio shot in the preview, export formats for each channel, and a timeline with titles, footage, voice and music.", Scene: VideoEdit },
+export type MockScene = "operations" | "booking" | "field" | "integration" | "monitoring" | "migration" | "extraction" | "video" | "forecast" | "journey";
+
+const scenes: Record<MockScene, { label: string; Scene: () => ReactNode }> = {
+  operations: { label: "Example operations workspace: shipment figures, a weekly chart and an approvals table, with a confirmation that an approval was recorded.", Scene: Operations },
+  booking: { label: "Example clinic website with a treatment list and booking calendar, a phone showing the booking confirmation, and a weekly bookings figure.", Scene: Booking },
+  field: { label: "Example field inspection app on two phones: a map with an offline checklist, a list of reports, and a notice that reports synced.", Scene: Field },
+  integration: { label: "Example integration hub connecting a CRM, support desk, finance and reporting through a sync service, with a sync log and a migration check.", Scene: Integration },
+  monitoring: { label: "Example production monitoring console: uptime over 90 days, latency well under its limit, healthy services and a passed failover drill.", Scene: Monitoring },
+  migration: { label: "Example rollout plan moving modules to a new platform one at a time, with a terminal showing parity checks and a rollback ready.", Scene: Migration },
+  extraction: { label: "Example invoice review: an agent extracts fields from a supplier invoice with confidence scores, and flags a handwritten date for a person to confirm.", Scene: Extraction },
+  video: { label: "Example video edit: a product shot in the preview, export formats for each channel, and a timeline with titles, footage, voice and music.", Scene: VideoEdit },
+  forecast: { label: "Example demand forecast: expected orders with their likely range, recent forecast error, and a reorder waiting for a buyer to approve.", Scene: Forecast },
+  journey: { label: "Example customer journeys: website forms and an online shop feed a follow-up engine that sends email and updates the CRM, with a consent check and a send log.", Scene: Journey },
 };
 
-export function mockupFor(slug: string) {
-  return scenes[slug] ?? scenes["ai-native-web-apps"];
+export function mockupFor(scene: MockScene) {
+  return scenes[scene];
 }

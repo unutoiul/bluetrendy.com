@@ -12,7 +12,14 @@ export type AnalyticsEvent =
   | "lead_form_error"
   | "checkout_start"
   | "checkout_success"
-  | "checkout_error";
+  | "checkout_error"
+  | "service_cta_click"
+  | "demo_scenario_view"
+  | "scanner_result"
+  | "scanner_cta_click"
+  | "calculator_use"
+  | "forecast_use"
+  | "showcase_view";
 
 export function trackEvent(event: AnalyticsEvent, props?: Record<string, string | number | boolean>) {
   try {

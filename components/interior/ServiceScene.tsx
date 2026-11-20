@@ -1,7 +1,7 @@
 import TiltFigure from "./TiltFigure";
-import { mockupFor } from "./ServiceMockups";
+import { mockupFor, type MockScene } from "./ServiceMockups";
 
-export default function ServiceScene({ slug }: { slug: string }) {
-  const { label, Scene } = mockupFor(slug);
-  return <TiltFigure label={label}><Scene /></TiltFigure>;
+export default function ServiceScene({ scene, tone }: { scene: MockScene; tone?: "light" | "dark" }) {
+  const { label, Scene } = mockupFor(scene);
+  return <TiltFigure label={label} tone={tone}><Scene /></TiltFigure>;
 }

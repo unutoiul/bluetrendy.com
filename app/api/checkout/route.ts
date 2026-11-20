@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "A valid email address is required." }, { status: 400 });
   }
   if (!sprint) {
-    return NextResponse.json({ error: "Choose a discovery sprint package first." }, { status: 400 });
+    return NextResponse.json({ error: "Choose a blueprint package first." }, { status: 400 });
   }
 
   const stripe = getStripeClient();
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
           currency: "gbp",
           unit_amount: sprint.price * 100,
           product_data: {
-            name: `Discovery sprint — ${sprint.name}`,
+            name: `AI Implementation Blueprint (discovery sprint) — ${sprint.name}`,
             description: `${sprint.employees}. ${sprint.duration}, led by our senior team.`,
           },
         },

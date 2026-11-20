@@ -3,8 +3,9 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { palette } from "@/theme/palette";
+import { promise, tagline } from "@/lib/seo";
 
-export const alt = "BlueTrendy Intelligence. Custom software, delivered 10x faster.";
+export const alt = `BlueTrendy Intelligence. ${tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -24,12 +25,12 @@ export default async function OpengraphImage() {
       <img alt="" src={`data:image/svg+xml;base64,${network}`} width={800} height={480}
         style={{ position: "absolute", right: -185, bottom: -44, opacity: 0.55, objectFit: "contain" }} />
       <img alt="BlueTrendy Intelligence" src={`data:image/svg+xml;base64,${logo}`} width={320} height={78} />
-      <div style={{ display: "flex", flexDirection: "column", fontSize: 78, fontWeight: 700, letterSpacing: -4, lineHeight: 1.12 }}>
-        <span>Custom software,</span>
-        <span style={{ color: palette.sky[100] }}>delivered 10x faster.</span>
+      <div style={{ display: "flex", flexDirection: "column", fontSize: 66, fontWeight: 700, letterSpacing: -3, lineHeight: 1.12 }}>
+        <span>We don’t just build AI.</span>
+        <span style={{ color: palette.sky[100] }}>We make AI work for your business.</span>
       </div>
       <div style={{ display: "flex", fontSize: 26, color: palette.slate[125], maxWidth: 780 }}>
-        Services, systems integration and digital production.
+        {promise}
       </div>
     </div>,
     size,

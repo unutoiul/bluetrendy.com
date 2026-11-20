@@ -25,10 +25,11 @@ function samples(customerEmail: string) {
     name: "Alex Morgan",
     email: customerEmail,
     company: "Northwind Clinics",
-    projectType: "Custom software",
+    projectType: "AI-powered websites & apps",
     budget: "£25k–£50k",
     timeline: "Next 3 months",
     message: `We run four clinics and book patients across two systems.\nWe'd like one booking portal that syncs with our calendar. (test ${run})`,
+    source: "Form: Contact · First page: /ai-websites-apps · Came from: google.com",
   };
   const start = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
   start.setUTCHours(14, 30, 0, 0);

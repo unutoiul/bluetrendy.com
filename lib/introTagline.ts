@@ -1,8 +1,8 @@
-// "Your Business, powered by AI" writes itself in under POWER ME as the 8 second film
-// finishes, the way the home page headlines arrive: the words flip up out of a blur, then a
-// beam of light writes "AI". The animation itself lives in the tagline styles in
-// WebsiteEntrance; this only decides when the line waits and when it plays.
-const revealStart = 6.9;
+// The intro's message plays in under the film once the logo has settled, the way the home page
+// headline accents arrive: a beam of light writes the claim, then the three outcomes switch on
+// one by one. The animation itself lives in the message
+// styles in WebsiteEntrance; this only decides when the message waits and when it plays.
+const revealStart = 6;
 
 export function bindIntroTagline(video: HTMLVideoElement, line: HTMLElement) {
   const dialog = line.closest("dialog");

@@ -5,6 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
+import FlagOutlined from "@mui/icons-material/FlagOutlined";
+import FactCheckOutlined from "@mui/icons-material/FactCheckOutlined";
+import AdminPanelSettingsOutlined from "@mui/icons-material/AdminPanelSettingsOutlined";
+import StraightenOutlined from "@mui/icons-material/StraightenOutlined";
 import { clientLogos, industries, type ClientLogo, type Industry } from "@/data/clients";
 import Dropdown, { type DropdownOption } from "./Dropdown";
 import HeadingMotion from "./motion/HeadingMotion";
@@ -16,6 +20,14 @@ const filterOptions: DropdownOption[] = [
   ...industryOptions.map(([value, label]) => ({
     value, label, hint: clientLogos.filter(client => client.industry === value).length,
   })),
+];
+
+// Why work with us, in four commitments. They sit under the logos, where the client list backs them up.
+const principles = [
+  { title: "Business value first", Icon: FlagOutlined, text: "Every project starts with a problem worth solving." },
+  { title: "Build quickly, validate carefully", Icon: FactCheckOutlined, text: "AI speeds up delivery. Experienced engineers review the results." },
+  { title: "Your systems, your control", Icon: AdminPanelSettingsOutlined, text: "We connect the tools you approve, with permissions, logging and human approvals." },
+  { title: "Measure results", Icon: StraightenOutlined, text: "We track delivery time, operating cost, conversion, forecast error or the KPI that matters to you." },
 ];
 
 function ClientMark({ client }: { client: ClientLogo }) {
@@ -55,6 +67,17 @@ function ClientDirectory({ industry = "", onChange }: {
         <ul key={industry} className={styles.wall} aria-label={industry ? `Clients in ${industries[industry]}` : "Client logos"}>
           {clients.map(client => <li key={client.name}><ClientMark client={client} /></li>)}
         </ul>
+        <div className={styles.why}>
+          <h3>Senior engineering. Practical AI. <span>Real accountability.</span></h3>
+          <ul className={styles.principles}>
+            {principles.map(({ title, text, Icon }) => (
+              <li key={title} data-panel="reveal">
+                <Icon aria-hidden="true" />
+                <div><h4>{title}</h4><p>{text}</p></div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

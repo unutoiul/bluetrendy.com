@@ -10,6 +10,8 @@ import { splitHeadline } from "@/lib/headline";
 type PageHeroProps = {
   eyebrow?: string;
   title: string;
+  /** The headline's closing words, drawn in blue. Left out, the title is split at a natural pause. */
+  accent?: string;
   subtitle?: string;
   aside?: ReactNode;
   children?: ReactNode;
@@ -20,8 +22,8 @@ type PageHeroProps = {
  * headline does (the split-text and accent-beam rules in globalStyles): the words flip up out
  * of a blur, a beam of light writes the closing line, and the subtitle drifts in after them.
  */
-export default function PageHero({ eyebrow, title, subtitle, aside, children }: PageHeroProps) {
-  const { lead, accent } = splitHeadline(title);
+export default function PageHero({ eyebrow, title, accent: closing, subtitle, aside, children }: PageHeroProps) {
+  const { lead, accent } = closing ? { lead: title, accent: closing } : splitHeadline(title);
   return <Box component="section" className={styles.hero} sx={{ overflow: "clip", isolation: "isolate" }}>
     <PageBackdrop />
     <Box className={styles.heroGrid + " " + styles.heroSplit} sx={{ position: "relative" }}>

@@ -8,30 +8,31 @@ import { useInView } from "motion/react";
 import SplitWords, { countWords } from "../motion/SplitWords";
 import styles from "../Hero.styles";
 
+// The first headline is the promise; the rest are the four outcomes and the studio, one each.
 const messages = [
   {
-    topic: "Custom software", lead: "Custom software,", accent: "delivered 10x faster.",
-    body: "We’re an IT company that builds software around your business. AI speeds up coding and testing. Our senior team takes your project from brief to launch.",
+    topic: "AI for your business", lead: "Build faster. Sell smarter.", accent: "Run your business with AI.",
+    body: "We turn artificial intelligence into real business advantages. We don’t just recommend AI tools: we design, build, integrate and operate them around your business.",
   },
   {
-    topic: "Websites", lead: "Your next website,", accent: "ready for business.",
-    body: "Give customers a place to book, enquire or buy. We design the pages, connect checkout and give your team the tools to publish its own updates.",
+    topic: "Grow revenue", lead: "Turn more leads", accent: "into paying customers.",
+    body: "Capture every enquiry, follow up on time and personalise your marketing. AI agents and automated sequences keep the pipeline moving while your team sells.",
   },
   {
-    topic: "Mobile apps", lead: "One mobile app,", accent: "iOS and Android.",
-    body: "Let customers book on the go or give field teams a way to work offline. We build the app, connect it to your systems and take it through store submission.",
+    topic: "Reduce costs", lead: "Let AI handle the routine.", accent: "You keep the decisions.",
+    body: "Automate repetitive admin, document handling, support and reporting. Your team keeps the final say on every decision that needs judgment.",
   },
   {
-    topic: "IT implementation", lead: "Your systems,", accent: "working together.",
-    body: "Connect sales, operations and finance. We configure the tools, migrate your records and rehearse the rollout with the people who will use them.",
+    topic: "Launch faster", lead: "Your next website or app,", accent: "built at AI speed.",
+    body: "Websites, apps and digital products delivered sooner with AI-assisted engineering. A senior engineer reviews every release before it ships.",
   },
   {
-    topic: "AI automation", lead: "Let AI handle", accent: "the routine work.",
-    body: "Turn incoming documents into usable records, route approvals and flag exceptions. Your team keeps the final say on decisions that need judgment.",
+    topic: "Better decisions", lead: "Don’t just analyse yesterday.", accent: "Prepare for tomorrow.",
+    body: "Forecast demand, analyse trends and spot risks early. Every forecast shows its range, because no model knows the future for certain.",
   },
   {
-    topic: "Marketing video", lead: "Show your product", accent: "in motion.",
-    body: "Give buyers a clear look at what your product does. We script and edit demos, launch films and captioned social cuts for the channels you use.",
+    topic: "Creative studio", lead: "Turn your ideas into videos", accent: "people want to watch.",
+    body: "Campaign concepts, product films and social cuts, made in several variations, so you can test which idea brings in customers.",
   },
 ] as const;
 
@@ -71,9 +72,9 @@ export default function HeroMessages() {
   }, [active, paused, reduced, visible]);
 
   return (
-    <div ref={region} role="region" aria-label="BlueTrendy service highlights">
+    <div ref={region} role="region" aria-label="What BlueTrendy does for your business">
       <div className={styles.messageBar}>
-        <span className={styles.discipline}>IT &amp; digital production</span>
+        <span className={styles.discipline}>AI implementation · Software engineering · Business automation</span>
         <div className={styles.messageControls} role="group" aria-label="Choose a headline"
           data-playing={playing} style={{ "--reading-time": `${readingTime}ms` } as CSSProperties}>
           {messages.map((message, index) => (

@@ -9,8 +9,8 @@ import { breadcrumbs, pageMetadata } from "@/lib/seo";
 import { palette } from "@/theme/palette";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Book a Free 30-Minute Call",
-  description: "Book a free 30-minute video call with our senior team to talk through your website, app, software or AI project. Pick a time that suits you.",
+  title: "Book a Free 30-Minute AI Opportunity Call",
+  description: "Book a free 30-minute video call with our senior team. Bring a business problem; leave with the AI opportunities worth pursuing and a first step.",
   path: "/book-a-call",
 });
 

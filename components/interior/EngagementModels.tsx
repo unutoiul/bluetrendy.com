@@ -1,8 +1,11 @@
 import Link from "next/link";
 import Box from "@mui/material/Box";
 import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
-import TravelExploreOutlined from "@mui/icons-material/TravelExploreOutlined";
+import VideoCallOutlined from "@mui/icons-material/VideoCallOutlined";
+import MapOutlined from "@mui/icons-material/MapOutlined";
 import FlagOutlined from "@mui/icons-material/FlagOutlined";
+import MonitorHeartOutlined from "@mui/icons-material/MonitorHeartOutlined";
+import CampaignOutlined from "@mui/icons-material/CampaignOutlined";
 import GroupAddOutlined from "@mui/icons-material/GroupAddOutlined";
 import LivingBackground from "@/components/backgrounds/LivingBackground";
 import { neural } from "@/components/experience/neuralStyle";
@@ -10,26 +13,26 @@ import HeadingMotion from "@/components/motion/HeadingMotion";
 import { engagementModels } from "@/data/process";
 import { palette, withAlpha } from "@/theme/palette";
 
-const icons = { discovery: TravelExploreOutlined, fixed: FlagOutlined, embedded: GroupAddOutlined };
+const icons = { call: VideoCallOutlined, blueprint: MapOutlined, quickwin: FlagOutlined, managed: MonitorHeartOutlined, growth: CampaignOutlined, embedded: GroupAddOutlined };
 
-/** The three ways to work together, as glass cards on the brand's blue. Discovery leads. */
+/** How an engagement grows, one step at a time, as glass cards on the brand's blue. The free call leads. */
 export default function EngagementModels({ id }: { id: string }) {
   return (
     <Box component="section" id={id} aria-labelledby={`${id}-heading`} sx={{ ...neural.sectionTone("header", "services"), scrollMarginTop: 80 }}>
       <LivingBackground effect="streaks" quiet="top" seed={73} />
       <Box sx={{ position: "relative", zIndex: 1, width: "var(--page-width)", mx: "auto", py: { xs: 7, md: 11 } }}>
-        <Box component="p" sx={neural.label}>Engagement models</Box>
-        <HeadingMotion id={`${id}-heading`} text="Three ways to" accent="work together"
+        <Box component="p" sx={neural.label}>Ways to work together</Box>
+        <HeadingMotion id={`${id}-heading`} text="From a first call" accent="to AI in daily use"
           sx={{ m: 0, fontSize: "clamp(2.1rem, 4.4vw, 3.9rem)", fontWeight: 630, letterSpacing: "-0.047em", lineHeight: 1.06 }} />
         <Box component="p" sx={{ m: "18px 0 0", maxWidth: "56ch", color: palette.slate[125], fontSize: "clamp(1rem, 1.25vw, 1.12rem)", lineHeight: 1.6 }}>
-          Every engagement starts with discovery. From there, the model depends on how well defined your scope is and how long you need us.
+          Every engagement starts with a free call. From there you take one step at a time: no step commits you to the next, and each ends with something you can use.
         </Box>
 
         <Box component="ul" data-panel-group sx={{ listStyle: "none", m: 0, p: 0, mt: { xs: 5, md: 7 }, display: "grid", gap: { xs: 2.5, md: 3 },
           gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "repeat(3, minmax(0, 1fr))" } }}>
           {engagementModels.map(model => {
             const Icon = icons[model.id];
-            const lead = model.id === "discovery";
+            const lead = model.id === "call";
             return (
               <Box component="li" key={model.id} data-panel sx={{
                 ...neural.glassCard, display: "flex", flexDirection: "column", p: { xs: 3, md: 3.5 }, borderRadius: "20px",
@@ -37,7 +40,7 @@ export default function EngagementModels({ id }: { id: string }) {
                 "&:hover .model-orb": { transform: "scale(1.08) rotate(-4deg)", color: palette.slate[50],
                   boxShadow: `0 0 0 1px ${withAlpha(palette.sky[100], 0.5)}, 0 0 28px ${withAlpha(palette.blue[300], 0.65)}, inset 0 0 14px ${withAlpha(palette.sky[175], 0.4)}` },
                 "&:hover .model-action svg": { transform: "translateX(4px)" },
-                // Discovery is where everyone starts, so its card is lit from the outset.
+                // The free call is where everyone starts, so its card is lit from the outset.
                 ...(lead && {
                   borderColor: withAlpha(palette.sky[150], 0.7),
                   boxShadow: `inset 0 1px 0 ${withAlpha(palette.slate[75], 0.4)}, inset 0 0 30px ${withAlpha(palette.blue[350], 0.2)}, 0 0 30px -6px ${withAlpha(palette.blue[350], 0.45)}, 0 26px 52px -30px ${withAlpha(palette.black, 0.9)}`,

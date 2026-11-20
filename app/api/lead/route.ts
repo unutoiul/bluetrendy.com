@@ -3,6 +3,7 @@ import { getResendClient, isEmailConfigured } from "@/lib/email";
 import { parseLeadSubmission } from "@/lib/lead";
 import { deliverLead, EmailDeliveryError } from "@/lib/leadDelivery";
 import { checkLeadRateLimit } from "@/lib/leadRateLimit";
+import { forwardLead } from "@/lib/leadWebhook";
 
 export const runtime = "nodejs";
 
@@ -82,6 +83,9 @@ export async function POST(request: NextRequest) {
       from: process.env.EMAIL_FROM as string,
       notificationEmail: process.env.LEAD_NOTIFICATION_EMAIL as string,
     });
+    // Optional: a copy for the CRM. It runs after the team's email, and its outcome never changes the reply.
+    const forwarded = await forwardLead(lead, process.env.LEAD_WEBHOOK_URL);
+    if (forwarded === "failed" || forwarded === "invalid") console.error("Lead webhook:", forwarded);
     return NextResponse.json({ ok: true, ...result });
   } catch (error) {
     console.error("Contact notification failed:", error instanceof EmailDeliveryError ? error.code : "unknown_error");

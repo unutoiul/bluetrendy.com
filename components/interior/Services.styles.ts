@@ -20,7 +20,9 @@ const styles = {
   mobileIndex: "Services__mobileIndex",
   stack: "Services__stack",
   stackHero: "Services__stackHero",
+  sample: "Services__sample",
   stage: "Services__stage",
+  value: "Services__value",
   summary: "Services__summary",
 } as const;
 
@@ -113,13 +115,12 @@ export const servicesSheet: CSSObject[] = [
       ].join(","),
     } },
   { ".Services__chapter + .Services__chapter": { marginTop: "112px" } },
-  { ".Services__chapter[data-service=\"websites-and-ecommerce\"]": { "--tint": palette.cyan[225], "--ink": palette.navy[625] } },
-  { ".Services__chapter[data-service=\"mobile-cross-platform\"]": { "--tint": palette.violet[300], "--ink": palette.violet[625] } },
-  { ".Services__chapter[data-service=\"it-implementation-and-integration\"]": { "--tint": palette.sky[150], "--ink": palette.navy[625] } },
-  { ".Services__chapter[data-service=\"complex-mission-critical-systems\"]": { "--tint": palette.green[175], "--ink": palette.navy[700] } },
-  { ".Services__chapter[data-service=\"legacy-modernization\"]": { "--tint": palette.amber[175], "--ink": palette.amber[600] } },
-  { ".Services__chapter[data-service=\"ai-automation-applied-ml\"]": { "--tint": palette.violet[300], "--ink": palette.violet[625] } },
-  { ".Services__chapter[data-service=\"marketing-video-production\"]": { "--tint": palette.red[225], "--ink": palette.amber[600] } },
+  { ".Services__chapter[data-service=\"ai-websites-apps\"]": { "--tint": palette.cyan[225], "--ink": palette.navy[625] } },
+  { ".Services__chapter[data-service=\"ai-video-production\"]": { "--tint": palette.red[225], "--ink": palette.amber[600] } },
+  { ".Services__chapter[data-service=\"ai-agents\"]": { "--tint": palette.violet[300], "--ink": palette.violet[625] } },
+  { ".Services__chapter[data-service=\"agentic-automation\"]": { "--tint": palette.sky[150], "--ink": palette.navy[625] } },
+  { ".Services__chapter[data-service=\"ai-marketing-automation\"]": { "--tint": palette.green[175], "--ink": palette.navy[700] } },
+  { ".Services__chapter[data-service=\"ai-implementation\"]": { "--tint": palette.amber[175], "--ink": palette.amber[600] } },
   { ".Services__cover": {
       display: "grid",
       gridTemplateColumns: "minmax(0,1fr) minmax(0,19rem)",
@@ -154,6 +155,19 @@ export const servicesSheet: CSSObject[] = [
       transform: "perspective(620px) rotateX(62deg)",
       transformOrigin: "50% 0",
       maskImage: `linear-gradient(transparent, ${palette.black} 35%, ${palette.black} 55%, transparent)`,
+    } },
+  // Under each stage: the reminder that the screen is an example.
+  { ".Services__sample": { display: "flex", justifyContent: "flex-end", margin: "10px 0 0" } },
+  // What the client's business gets, set apart ahead of the details.
+  { ".Services__summary > p.Services__value": {
+      margin: "0 0 22px",
+      padding: "14px 0 14px 18px",
+      borderLeft: "3px solid var(--ink)",
+      fontSize: "clamp(1.08rem,1.5vw,1.25rem)",
+      fontWeight: "600",
+      letterSpacing: "-.02em",
+      lineHeight: "1.4",
+      color: "var(--ink)",
     } },
   { ".Services__body": {
       display: "grid",

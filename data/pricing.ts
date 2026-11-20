@@ -14,7 +14,10 @@ export type DiscoveryPackage = {
   includes: string[];
 };
 
-/** Discovery sprints, priced by company size. The checkout route charges from this list. */
+/**
+ * The AI Implementation Blueprint (our paid discovery sprint), priced by company size. The
+ * checkout route charges from this list, and the payment emails quote what each one includes.
+ */
 export const discoveryPackages: DiscoveryPackage[] = [
   {
     id: "small",
@@ -27,6 +30,7 @@ export const discoveryPackages: DiscoveryPackage[] = [
     includes: [
       "60-minute deep-dive with our senior team",
       "Written plan and technology recommendation",
+      "Delivery roadmap for the first release",
       "Estimate and price for the first release",
     ],
   },
@@ -41,6 +45,7 @@ export const discoveryPackages: DiscoveryPackage[] = [
     includes: [
       "90-minute deep-dive with our senior team",
       "Architecture plan and technology recommendation",
+      "Delivery roadmap for the build",
       "Risk assessment and estimate for the full build",
       "Review of up to two systems you need to connect",
     ],
@@ -56,7 +61,7 @@ export const discoveryPackages: DiscoveryPackage[] = [
     includes: [
       "Two workshops with your team and stakeholders",
       "Architecture plan covering integrations and security",
-      "Risk assessment, full-build estimate and phased roadmap",
+      "Risk assessment, full-build estimate and phased delivery roadmap",
       "Review of the systems and data the project depends on",
     ],
   },
@@ -70,7 +75,7 @@ export function findDiscoveryPackage(id: unknown) {
 
 export const formatPounds = (amount: number) => `£${amount.toLocaleString("en-GB")}`;
 
-/** What every sprint comes with, whatever the company size. */
+/** What every blueprint comes with, whatever the company size. */
 export const discoveryEssentials = [
   "Led by our senior team from start to finish",
   "A written plan that is yours to keep, whether or not you build with us",
@@ -84,19 +89,29 @@ export const pricingFaqs = [
       "Pick the one that matches the number of people in your company. If you sit between two sizes, choose the closer one and say so in your brief; we confirm the fit on the kickoff call before any work starts.",
   },
   {
-    question: "What happens after the discovery sprint?",
+    question: "What is the AI Implementation Blueprint?",
+    answer:
+      "It is our paid discovery sprint: a short, fixed-price piece of work with our senior team that maps your process and systems, and ends with a written plan, an estimate and a fixed price for the build.",
+  },
+  {
+    question: "What happens after the blueprint?",
     answer:
       "You get an architecture plan, a risk assessment, and a fixed delivery estimate for the full build. There's no obligation to continue with us — the deliverable is yours either way.",
   },
   {
-    question: "Is the discovery sprint fee credited toward the full project?",
+    question: "Is the blueprint fee credited toward the full project?",
     answer:
-      "Yes — if you move forward with a fixed-scope project or embedded engagement within 60 days, the discovery sprint fee is credited against it.",
+      "Yes — if you move forward with a fixed-scope project or embedded engagement within 60 days, the blueprint fee is credited against it.",
   },
   {
     question: "What payment methods do you accept?",
     answer:
-      "Card payment via Stripe for the discovery sprint. Fixed-scope projects and embedded engagements are invoiced, typically on a milestone or monthly basis.",
+      "Card payment via Stripe for the blueprint. Fixed-scope projects, managed operations, retainers and embedded engagements are invoiced, typically on a milestone or monthly basis.",
+  },
+  {
+    question: "How are the later steps priced?",
+    answer:
+      "A quick win is quoted as a fixed scope from your blueprint. Managed AI operations and the growth and creative retainer are monthly, sized to the systems and campaigns involved. We scope each one to your requirements rather than publish a single price.",
   },
   {
     question: "Do you require a minimum retainer for embedded engineering?",

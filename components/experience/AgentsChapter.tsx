@@ -29,9 +29,9 @@ const capabilities = [
 
 export default function AgentsChapter() {
   return (
-    <SplitSection id="agents-heading" tone="dark" pinned title="AI agents, explained simply"
-      text="Think of an AI agent as a digital assistant that can use your software. You give it a job and some rules; it does the routine steps and asks a person when it isn't sure."
-      link={{ href: "/contact", label: "Plan your first agent" }}
+    <SplitSection id="agents-heading" tone="dark" pinned title="Watch AI run a business"
+      text="An AI agent is a digital worker that can use your software. You give it a job and some rules; it does the routine steps and asks a person when it isn’t sure."
+      link={{ href: "/ai-agents", label: "Build an agent like this" }}
       effect="packetMesh" seed={57} background={neural.blueFlow("services", "agents")}>
 
       <Box sx={{ display: "grid", gap: 1.5, gridTemplateColumns: { xs: "minmax(0, 1fr)", sm: "repeat(2, minmax(0, 1fr))" }, mb: { xs: 2.5, md: 3 } }}>
@@ -60,7 +60,7 @@ export default function AgentsChapter() {
       <AgentDemo />
 
       <Box component="h3" sx={{ m: { xs: "36px 0 16px", md: "44px 0 18px" }, fontSize: "1.25rem", fontWeight: 650, letterSpacing: "-0.02em", color: palette.grey[25] }}>
-        What an agent can do for your business
+        What every agent we build can do
       </Box>
       <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))" }, gap: 2 }}>
         {capabilities.map(({ title, text, Icon }) => (
