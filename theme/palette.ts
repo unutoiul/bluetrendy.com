@@ -73,6 +73,8 @@ export const palette = {
     175: "#62e0b0",
     275: "#28c840",
     300: "#2fbf8a",
+    // Trustpilot's star green, for the footer's Trustpilot link.
+    325: "#00b67a",
     375: "#1f9d6f",
     500: "#127453",
     575: "#0f5c48",

@@ -8,6 +8,7 @@ import SiteFooter from "@/components/SiteFooter";
 import Panel3D from "@/components/motion/Panel3D";
 import ConsentAnalytics from "@/components/analytics/ConsentAnalytics";
 import Arrival from "@/components/analytics/Arrival";
+import ChatLauncher from "@/components/chat/ChatLauncher";
 import JsonLd from "@/components/JsonLd";
 import { absoluteUrl, company, contact, homeTitle, ids, profiles, siteDescription, siteName, siteUrl, tagline } from "@/lib/seo";
 
@@ -149,6 +150,7 @@ export default function RootLayout({
           <Panel3D />
           <ConsentAnalytics />
           <Arrival />
+          <ChatLauncher />
         </ThemeRegistry>
         <Analytics />
       </body>

@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import FavoriteRounded from "@mui/icons-material/FavoriteRounded";
 import MailOutlineRounded from "@mui/icons-material/MailOutlineRounded";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import StarRounded from "@mui/icons-material/StarRounded";
 import Logo from "./Logo";
 import PaymentMarks from "./PaymentMarks";
 import LinkTypography from "./LinkTypography";
@@ -11,7 +12,7 @@ import { footerLinks } from "@/data/nav";
 import CookieSettingsButton from "./analytics/CookieSettingsButton";
 import { consentRequired } from "@/lib/analyticsConfig";
 import { brand } from "@/theme/theme";
-import { company, companyStatement, linkedIn } from "@/lib/seo";
+import { company, companyStatement, linkedIn, trustpilot } from "@/lib/seo";
 import { palette } from "@/theme/palette";
 
 const email = "contact@bluetrendy.com";
@@ -68,6 +69,11 @@ export default function Footer() {
               <Box component="a" href={linkedIn} target="_blank" rel="noopener noreferrer" className="link-draw" sx={contactLink}
                 aria-label="BlueTrendy on LinkedIn (opens in a new tab)">
                 <LinkedInIcon aria-hidden="true" sx={{ fontSize: 20 }} />LinkedIn
+              </Box>
+              <Box component="a" href={trustpilot} target="_blank" rel="noopener noreferrer" className="link-draw" sx={contactLink}
+                aria-label="Review BlueTrendy on Trustpilot (opens in a new tab)">
+                {/* Trustpilot's own star green, so the link is recognisable at a glance. */}
+                <StarRounded aria-hidden="true" sx={{ fontSize: 20, color: palette.green[325] }} />Trustpilot
               </Box>
             </Box>
           </div>

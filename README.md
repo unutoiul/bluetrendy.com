@@ -59,6 +59,16 @@ Pipedrive, Zapier, Make and similar). Each enquiry is then also sent there as JS
 (`lib/leadWebhook.ts`). It is off when the variable is empty, and a failing webhook never
 blocks the email or the visitor. Name the CRM in the privacy policy before switching it on.
 
+## Live chat
+
+The chat button in the corner of every page (`components/chat/`) opens a Crisp live chat
+with the team. Set `NEXT_PUBLIC_CRISP_WEBSITE_ID` to the Website ID from Crisp (Settings →
+Website Settings → Setup instructions) and rebuild. Crisp's code and cookie load only when a
+visitor presses the button, so the chat needs no cookie consent and costs nothing on page
+load. Crisp's own launcher stays hidden. Without an ID, or if Crisp can't load within ten
+seconds, the button opens the contact form instead. Answer chats in the Crisp inbox or its
+phone apps.
+
 ## Free meeting booking
 
 The free 30-minute [BlueTrendy discovery call](https://cal.com/bluetrendy/discovery-call)

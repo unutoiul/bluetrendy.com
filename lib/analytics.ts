@@ -19,7 +19,8 @@ export type AnalyticsEvent =
   | "scanner_cta_click"
   | "calculator_use"
   | "forecast_use"
-  | "showcase_view";
+  | "showcase_view"
+  | "chat_open";
 
 export function trackEvent(event: AnalyticsEvent, props?: Record<string, string | number | boolean>) {
   try {

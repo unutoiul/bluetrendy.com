@@ -49,6 +49,11 @@ export default function PrivacyPolicyPage() {
                 for the length of your visit, without cookies, and is sent only if you submit the form.
               </Typography>
               <Typography variant="body1" color="text.secondary">
+                Our live chat is provided by Crisp. Nothing from Crisp loads until you press the chat button. When
+                you do, Crisp sets a cookie so your conversation continues if you change page or come back later,
+                and it stores the messages you send, and your email address if you give it, so we can reply.
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
                 We use privacy-conscious, cookie-free analytics (Vercel Analytics) to understand aggregate site
                 usage — page views and which calls-to-action are used — without tracking you individually across
                 other websites.

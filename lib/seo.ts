@@ -38,6 +38,8 @@ export const companyStatement = `${siteName} is a trading name of ${company.lega
 /** The business's profiles elsewhere, so search engines know they are the same company. */
 export const linkedIn = "https://www.linkedin.com/company/bluetrendy";
 export const profiles = [linkedIn];
+/** The public Trustpilot page where clients read and leave reviews (business.trustpilot.com is only the owner's dashboard). */
+export const trustpilot = "https://www.trustpilot.com/review/bluetrendy.com";
 
 /** Stable ids, so every page's structured data points at the same organisation and website. */
 export const ids = {
