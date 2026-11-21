@@ -17,12 +17,16 @@ import RecordVoiceOverOutlined from "@mui/icons-material/RecordVoiceOverOutlined
 import RocketLaunchOutlined from "@mui/icons-material/RocketLaunchOutlined";
 import StorageOutlined from "@mui/icons-material/StorageOutlined";
 import ChatOutlined from "@mui/icons-material/ChatOutlined";
-import CalculateOutlined from "@mui/icons-material/CalculateOutlined";
-import AccountBalanceOutlined from "@mui/icons-material/AccountBalanceOutlined";
-import QueryStatsOutlined from "@mui/icons-material/QueryStatsOutlined";
-import SavingsOutlined from "@mui/icons-material/SavingsOutlined";
-import FactCheckOutlined from "@mui/icons-material/FactCheckOutlined";
-import InsightsOutlined from "@mui/icons-material/InsightsOutlined";
+// Christian Kohler's icons, for when his entry below is switched back on.
+// import CalculateOutlined from "@mui/icons-material/CalculateOutlined";
+// import AccountBalanceOutlined from "@mui/icons-material/AccountBalanceOutlined";
+// import QueryStatsOutlined from "@mui/icons-material/QueryStatsOutlined";
+// import SavingsOutlined from "@mui/icons-material/SavingsOutlined";
+// import FactCheckOutlined from "@mui/icons-material/FactCheckOutlined";
+// import InsightsOutlined from "@mui/icons-material/InsightsOutlined";
+import PublicOutlined from "@mui/icons-material/PublicOutlined";
+import TranslateOutlined from "@mui/icons-material/TranslateOutlined";
+import WorkHistoryOutlined from "@mui/icons-material/WorkHistoryOutlined";
 import PageHero from "@/components/PageHero";
 import SplitSection from "@/components/SplitSection";
 import CTASection from "@/components/CTASection";
@@ -34,6 +38,7 @@ import { caseStudies } from "@/data/caseStudies";
 import { timeline, values } from "@/data/timeline";
 import { proofStats } from "@/data/stats";
 import founderPhoto from "@/public/brand/founder.png";
+import alexandruPhoto from "@/public/brand/alexandru.png";
 import JsonLd from "@/components/JsonLd";
 import { absoluteUrl, breadcrumbs, ids, organizationRef, pageMetadata } from "@/lib/seo";
 import { palette, withAlpha } from "@/theme/palette";
@@ -50,10 +55,13 @@ type Member = {
   role: string;
   /** Their personal LinkedIn profile; the link shows only when it is set. */
   linkedIn?: string;
-  photo?: typeof founderPhoto;
+  /** Their portrait, and its public path so search engines get a stable image URL. */
+  photo?: { image: typeof founderPhoto; path: string };
   initials: string;
   /** Where they are based, for search engines. Defaults to London. */
   location?: string;
+  /** A short paragraph about them, read beside their portrait. */
+  bio: string;
   credentials: { Icon: typeof SchoolOutlined; title: string; detail: string }[];
 };
 
@@ -62,9 +70,13 @@ const team: Member[] = [
     id: ids.founder,
     name: "Lucas Franco",
     role: "Software engineer, AI engineer & founder",
-    linkedIn: undefined,
-    photo: founderPhoto,
+    linkedIn: "https://www.linkedin.com/in/lucas-franco-b27a194/",
+    photo: { image: founderPhoto, path: "/brand/founder.png" },
     initials: "LF",
+    bio: "Lucas has spent over 15 years as a lead engineer on regulated and security-sensitive work: NATO strategy maps and "
+      + "classified-document systems, a DICOM medical imaging platform for Bayer with Boston Consulting Group, AI-driven financial "
+      + "analysis with Alvarez & Marsal, and a structured-products trading platform running on live Bloomberg data. Clients also "
+      + "include HSBC, Credit Suisse and Atlassian.",
     credentials: [
       { Icon: WorkspacePremiumOutlined, title: "Lead software engineer, 15+ years", detail: "Banking, defence, healthcare and enterprise SaaS" },
       { Icon: ShieldOutlined, title: "Lead engineer on NATO programmes", detail: "Classified document systems and geospatial strategy platforms" },
@@ -81,6 +93,10 @@ const team: Member[] = [
     role: "Senior full-stack and AI engineer",
     linkedIn: "https://www.linkedin.com/in/oisin-o-aba110248",
     initials: "OO",
+    bio: "Oisin leads our agentic AI work. He has built multi-client AI agent platforms with governed tool use, memory, "
+      + "approvals and audit trails, real-time AI voice systems, and a generative AI media platform that grew to more than "
+      + "10,000 users. Before that he built cloud and data platforms at DPD, Telus and Pictet Group, and he automates client "
+      + "infrastructure end to end with Terraform.",
     credentials: [
       { Icon: WorkspacePremiumOutlined, title: "Senior full-stack engineer, 10+ years", detail: "Production SaaS, AI products and real-time systems" },
       { Icon: HubOutlined, title: "Lead developer of agentic AI platforms", detail: "Orchestration, tool use, memory, approvals and audit trails" },
@@ -91,6 +107,7 @@ const team: Member[] = [
       { Icon: ChatOutlined, title: "Meta Verified Tech Provider", detail: "WhatsApp, Instagram and Facebook integrations" },
     ],
   },
+  /* Hidden for now. To show Christian again, remove this comment and the one around his icon imports above.
   {
     id: absoluteUrl("/about#christian-kohler"),
     name: "Christian Kohler",
@@ -98,6 +115,10 @@ const team: Member[] = [
     linkedIn: "https://www.linkedin.com/in/christian-kohler-298b6a170/",
     initials: "CK",
     location: "Gold Coast, Australia",
+    bio: "Christian is a Chartered Accountant with more than 15 years in commercial finance, treasury accounting and financial "
+      + "services audit: treasury P&L reporting at the European Bank for Reconstruction and Development in London, budgeting, "
+      + "forecasting and executive reporting at Commonwealth Bank of Australia, and bank audits at PwC. He brings a finance view "
+      + "to our work, from the business case for a project to measuring what it saves.",
     credentials: [
       { Icon: CalculateOutlined, title: "Chartered Accountant, 15+ years", detail: "Commercial finance, treasury accounting and audit" },
       { Icon: AccountBalanceOutlined, title: "Treasury accounting at the EBRD, London", detail: "P&L reporting for bonds, swaps and derivatives" },
@@ -106,6 +127,25 @@ const team: Member[] = [
       { Icon: FactCheckOutlined, title: "Financial services audit at PwC", detail: "Bank audits in Sydney, Frankfurt, Singapore and Toronto" },
       { Icon: InsightsOutlined, title: "Business cases and reporting automation", detail: "Excel, Tableau, SAP and Oracle" },
       { Icon: SchoolOutlined, title: "Bachelor of Commerce and Bachelor of Laws", detail: "Bond University" },
+    ],
+  },
+  */
+  {
+    id: absoluteUrl("/about#alexandru-i"),
+    name: "Alexandru I.",
+    role: "NATO and defence adviser",
+    linkedIn: "https://www.linkedin.com/in/alexandru-i-6446442b/",
+    photo: { image: alexandruPhoto, path: "/brand/alexandru.png" },
+    initials: "AI",
+    location: "La Spezia, Italy",
+    bio: "Alexandru works at the NATO Communications and Information Agency (NCI Agency), NATO’s IT and communications arm, "
+      + "now in La Spezia, Italy, after several earlier roles with the agency in Mons, Belgium. His career has taken him across "
+      + "Italy, Belgium, France, Germany and Afghanistan, and he works professionally in English, French and Italian.",
+    credentials: [
+      { Icon: ShieldOutlined, title: "NATO Communications and Information Agency", detail: "Currently with the NCI Agency in La Spezia, Italy" },
+      { Icon: WorkHistoryOutlined, title: "Several earlier roles at the NCI Agency", detail: "NATO’s IT and communications agency, in Mons, Belgium" },
+      { Icon: PublicOutlined, title: "International experience in five countries", detail: "Italy, Belgium, France, Germany and Afghanistan (Kabul)" },
+      { Icon: TranslateOutlined, title: "Works in English, French and Italian", detail: "Plus some Spanish" },
     ],
   },
 ];
@@ -117,7 +157,7 @@ const people = team.map(member => ({
   "@id": member.id,
   name: member.name,
   jobTitle: member.role,
-  ...(member.photo && { image: absoluteUrl("/brand/founder.png") }),
+  ...(member.photo && { image: absoluteUrl(member.photo.path) }),
   url: absoluteUrl("/about"),
   ...(member.linkedIn && { sameAs: [member.linkedIn] }),
   worksFor: organizationRef,
@@ -132,52 +172,71 @@ const engagements = timeline.map(item => {
 });
 const firstYear = timeline.at(-1)?.period.match(/\d{4}/)?.[0];
 
-// The team on the blade: each member's portrait ringed in the brand's light, with their role,
-// credentials and LinkedIn profile.
+const paragraph = { m: 0, color: palette.navy[625], fontSize: { xs: "1.05rem", md: "1.15rem" }, lineHeight: 1.7, maxWidth: "62ch" } as const;
+
+// The same two columns as the split sections, so the team lines up with the sections around it:
+// each person on the left, what they do on the right.
+const columns = { xs: "minmax(0, 1fr)", md: "minmax(0, 3fr) minmax(0, 7fr)" } as const;
+const columnGap = "clamp(48px, 7vw, 112px)";
+const rule = `1px solid ${withAlpha(palette.blue[500], 0.16)}`;
+
+// Each portrait ringed in the brand's light.
 const ring = {
-  position: "relative", width: 112, aspectRatio: "1", borderRadius: "50%", p: "4px",
+  position: "relative", flex: "none", width: { xs: 92, md: 136 }, aspectRatio: "1", borderRadius: "50%", p: "4px",
   background: `conic-gradient(from 200deg, ${palette.blue[350]}, ${palette.sky[100]}, ${palette.blue[500]}, ${palette.blue[350]})`,
   boxShadow: `0 0 0 6px ${withAlpha(palette.blue[500], 0.12)}, 0 18px 40px -18px ${withAlpha(palette.blue[500], 0.8)}`,
 } as const;
 
-const members = (
-  <Box component="ul" aria-label="Team members" sx={{ listStyle: "none", m: "28px 0 0", p: 0, width: "100%", display: "grid", gap: 4.5 }}>
-    {team.map(member => (
-      <Box component="li" key={member.name} id={member.id.split("#")[1]}>
+function TeamMember({ member }: { member: Member }) {
+  return (
+    <Box component="li" id={member.id.split("#")[1]} sx={{ display: "grid", gridTemplateColumns: columns, columnGap, rowGap: 3,
+      alignItems: "start", py: { xs: 4.5, md: 7 }, borderTop: rule }}>
+      {/* Who they are. On wide screens it stays in view while their details scroll past. */}
+      <Box sx={{ position: { md: "sticky" }, top: { md: 112 }, display: "flex", flexDirection: { xs: "row", md: "column" },
+        alignItems: { xs: "center", md: "flex-start" }, gap: { xs: 2.5, md: 0 } }}>
         <Box sx={ring}>
           {member.photo
-            ? <Image src={member.photo} alt={member.name} width={112} height={112} sizes="112px"
+            ? <Image src={member.photo.image} alt={member.name} width={136} height={136} sizes="(min-width: 900px) 136px, 92px"
                 style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%", display: "block" }} />
             : <Box aria-hidden="true" sx={{ width: "100%", height: "100%", borderRadius: "50%", display: "grid", placeItems: "center",
                 background: `linear-gradient(150deg, ${palette.navy[675]}, ${palette.navy[775]})`,
-                color: palette.sky[100], fontSize: "2rem", fontWeight: 700, letterSpacing: "-0.04em" }}>{member.initials}</Box>}
+                color: palette.sky[100], fontSize: { xs: "1.7rem", md: "2.4rem" }, fontWeight: 700, letterSpacing: "-0.04em" }}>{member.initials}</Box>}
         </Box>
-        <Box component="h3" sx={{ m: "18px 0 0", fontSize: "1.3rem", fontWeight: 700, color: palette.navy[725], letterSpacing: "-0.02em" }}>{member.name}</Box>
-        <Box component="p" sx={{ m: "4px 0 0", color: palette.blue[500], fontWeight: 600, fontSize: ".95rem" }}>{member.role}</Box>
-        <Box component="ul" sx={{ listStyle: "none", m: "18px 0 0", p: 0, display: "grid", gap: 1.5 }}>
+        <Box sx={{ mt: { md: 2.75 } }}>
+          <Box component="h3" sx={{ m: 0, fontSize: { xs: "1.3rem", md: "1.55rem" }, fontWeight: 700, color: palette.navy[725],
+            letterSpacing: "-0.025em", lineHeight: 1.2 }}>{member.name}</Box>
+          <Box component="p" sx={{ m: "6px 0 0", color: palette.blue[500], fontWeight: 600, fontSize: ".98rem", lineHeight: 1.4 }}>{member.role}</Box>
+          {member.linkedIn && (
+            <Box component="a" href={member.linkedIn} target="_blank" rel="noopener noreferrer" className="link-draw"
+              aria-label={`${member.name} on LinkedIn (opens in a new tab)`}
+              sx={{ mt: { xs: 0.5, md: 1.25 }, display: "inline-flex", alignItems: "center", gap: 1, minHeight: 44, color: palette.blue[550],
+                fontWeight: 600, fontSize: ".95rem", "& svg": { fontSize: 20, color: palette.blue[500] }, "&:hover": { color: palette.navy[650] } }}>
+              <LinkedInIcon aria-hidden="true" />LinkedIn
+            </Box>
+          )}
+        </Box>
+      </Box>
+
+      {/* What they do: a short paragraph, then the highlights in two columns. */}
+      <Box sx={{ minWidth: 0 }}>
+        <Box component="p" sx={paragraph}>{member.bio}</Box>
+        <Box component="ul" sx={{ listStyle: "none", m: "28px 0 0", p: 0, display: "grid",
+          gridTemplateColumns: { xs: "minmax(0, 1fr)", sm: "repeat(2, minmax(0, 1fr))" }, columnGap: 3.5, rowGap: 2.25 }}>
           {member.credentials.map(({ Icon, title, detail }) => (
             <Box component="li" key={title} sx={{ display: "flex", gap: 1.5, alignItems: "flex-start" }}>
               <Box sx={{ display: "grid", placeItems: "center", flex: "none", width: 34, height: 34, borderRadius: "10px", bgcolor: palette.white,
                 color: palette.blue[500], boxShadow: `0 6px 16px -10px ${withAlpha(palette.blue[500], 0.9)}`, "& svg": { fontSize: 19 } }}><Icon aria-hidden="true" /></Box>
               <Box>
                 <Box component="p" sx={{ m: 0, fontWeight: 650, color: palette.navy[725], lineHeight: 1.35, fontSize: ".95rem" }}>{title}</Box>
-                <Box component="p" sx={{ m: "2px 0 0", color: palette.slate[525], fontSize: ".88rem" }}>{detail}</Box>
+                <Box component="p" sx={{ m: "2px 0 0", color: palette.slate[525], fontSize: ".88rem", lineHeight: 1.45 }}>{detail}</Box>
               </Box>
             </Box>
           ))}
         </Box>
-        {member.linkedIn && (
-          <Box component="a" href={member.linkedIn} target="_blank" rel="noopener noreferrer" className="link-draw"
-            aria-label={`${member.name} on LinkedIn (opens in a new tab)`}
-            sx={{ mt: 2, display: "inline-flex", alignItems: "center", gap: 1, minHeight: 44, color: palette.blue[550], fontWeight: 600, fontSize: ".95rem",
-              "& svg": { fontSize: 20, color: palette.blue[500] }, "&:hover": { color: palette.navy[650] } }}>
-            <LinkedInIcon aria-hidden="true" />LinkedIn
-          </Box>
-        )}
       </Box>
-    ))}
-  </Box>
-);
+    </Box>
+  );
+}
 
 const expertise = [
   { title: "AI agents and LLM products", detail: "Tool calling, memory, retrieval, guardrails, evaluations and audit logs, with OpenAI, Gemini and local models." },
@@ -187,8 +246,6 @@ const expertise = [
   { title: "Full-stack products", detail: "React, Next.js, Angular, TypeScript, Node.js, Java and Python, from MVP to enterprise." },
   { title: "Mobile, messaging and integrations", detail: "React Native and Flutter apps, Stripe, Shopify, Bloomberg, WhatsApp and Google APIs." },
 ];
-
-const paragraph = { m: 0, color: palette.navy[625], fontSize: { xs: "1.05rem", md: "1.15rem" }, lineHeight: 1.7, maxWidth: "62ch" } as const;
 
 export default function AboutPage() {
   return (
@@ -200,39 +257,40 @@ export default function AboutPage() {
         subtitle="BlueTrendy is a London AI and software team, founded in 2014. We build production software for banks, government agencies, healthcare teams and enterprise software companies. The people who plan your project are the people who build it."
       />
 
-      <SplitSection id="team-heading" title="Our team" effect="dotField" seed={131}
-        text="Small and senior by design. Our engineers write the code, from the first call to handover." blade={members}>
-        <Box sx={{ display: "grid", gap: 2.5 }}>
-          <Box component="p" sx={paragraph}>
-            The people you meet on the first call work on your system. Between us we bring more than 25 years of
-            production engineering for banks, defence agencies, healthcare companies, global consultancies and
-            fast-growing startups.
+      <Box component="section" aria-labelledby="team-heading" sx={{ position: "relative", isolation: "isolate", overflow: "clip",
+        bgcolor: palette.grey[25], pb: { xs: 5, md: 8 } }}>
+        {/* The booking page's lattice of dots on springs, which gives way under the mouse. The section is
+            tall, so the canvas covers only the screen and stays put while the team scrolls past. */}
+        <LivingBackground effect="springGrid" light quiet="none" pinned seed={113} />
+        <Box sx={{ position: "relative", zIndex: 1, width: "var(--page-width)", mx: "auto" }}>
+          <Box sx={{ display: "grid", gridTemplateColumns: columns, columnGap, rowGap: 2.5, alignItems: "end",
+            pt: { xs: 5, md: "clamp(56px, 7vw, 96px)" }, pb: { xs: 4, md: 6 } }}>
+            <Box>
+              <HeadingMotion id="team-heading" text="Our team" tone="light" sx={{ m: 0, fontWeight: 650, letterSpacing: "-0.06em",
+                fontSize: "clamp(2.6rem, 4.6vw, 4.5rem)", lineHeight: 1.04 }} />
+              <Box component="p" sx={{ m: "16px 0 0", maxWidth: "31ch", color: palette.slate[525], fontSize: "clamp(1rem, 1.2vw, 1.125rem)", lineHeight: 1.55 }}>
+                Small and senior by design. Our engineers write the code, from the first call to handover.
+              </Box>
+            </Box>
+            <Box component="p" sx={paragraph}>
+              The people you meet on the first call work on your system. Between us we bring more than 25 years of
+              production engineering for banks, defence agencies, healthcare companies, global consultancies and
+              fast-growing startups.
+            </Box>
           </Box>
-          <Box component="p" sx={paragraph}>
-            Our founder, Lucas Franco, has spent over 15 years as a lead engineer on regulated and security-sensitive
-            work: NATO strategy maps and classified-document systems, a DICOM medical imaging platform for Bayer with
-            Boston Consulting Group, AI-driven financial analysis with Alvarez &amp; Marsal, and a structured-products
-            trading platform running on live Bloomberg data. Clients also include HSBC, Credit Suisse and Atlassian.
+          <Box component="ul" aria-label="Team members" sx={{ listStyle: "none", m: 0, p: 0, borderBottom: rule }}>
+            {team.map(member => <TeamMember key={member.name} member={member} />)}
           </Box>
-          <Box component="p" sx={paragraph}>
-            Oisin O’Maolchallan leads our agentic AI work. He has built multi-client AI agent platforms with governed tool
-            use, memory, approvals and audit trails, real-time AI voice systems, and a generative AI media platform that
-            grew to more than 10,000 users. Before that he built cloud and data platforms at DPD, Telus and Pictet Group,
-            and he automates client infrastructure end to end with Terraform.
-          </Box>
-          <Box component="p" sx={paragraph}>
-            Christian Kohler is our CFO adviser. He is a Chartered Accountant with more than 15 years in commercial finance,
-            treasury accounting and financial services audit: treasury P&amp;L reporting at the European Bank for Reconstruction
-            and Development in London, budgeting, forecasting and executive reporting at Commonwealth Bank of Australia, and
-            bank audits at PwC. He brings a finance view to our work, from the business case for a project to measuring what
-            it saves.
-          </Box>
-          <Box component="p" sx={paragraph}>
-            That background shapes how we work: TDD/BDD discipline where correctness matters, cloud-native architecture on
-            AWS and Azure, and a track record of managing teams (up to 25 developers at once at Lloyds Bank) without stepping
-            away from the keyboard. AI is part of the toolkit, used to move faster on scaffolding, testing and automation,
-            but engineering judgment stays human, senior and accountable.
-          </Box>
+        </Box>
+      </Box>
+
+      <SplitSection id="expertise-heading" title="What we bring together" effect="springGrid" seed={127} pinned
+        text="What our engineers cover, so you can match it to your own project.">
+        <Box component="p" sx={paragraph}>
+          Our background shapes how we work: TDD/BDD discipline where correctness matters, cloud-native architecture on
+          AWS and Azure, and a track record of managing teams (up to 25 developers at once at Lloyds Bank) without stepping
+          away from the keyboard. AI is part of the toolkit, used to move faster on scaffolding, testing and automation,
+          but engineering judgment stays human, senior and accountable.
         </Box>
         <Box sx={{ m: "36px 0 0", display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(3, minmax(0, 1fr))" }, gap: 2 }}>
           {proofStats.slice(0, 3).map(stat => (
@@ -245,11 +303,7 @@ export default function AboutPage() {
             </Box>
           ))}
         </Box>
-        {/* What the engineering team covers, so a visitor can match it to their own project. */}
-        <Box component="h3" sx={{ m: "44px 0 0", fontSize: "1.35rem", fontWeight: 700, color: palette.navy[725], letterSpacing: "-0.025em" }}>
-          What we bring together
-        </Box>
-        <Box component="ul" sx={{ listStyle: "none", m: "18px 0 0", p: 0, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))" }, gap: 2 }}>
+        <Box component="ul" sx={{ listStyle: "none", m: "28px 0 0", p: 0, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))" }, gap: 2 }}>
           {expertise.map(({ title, detail }) => (
             <Box component="li" key={title} sx={{ p: 2.25, borderRadius: "14px", bgcolor: palette.white, border: `1px solid ${withAlpha(palette.blue[500], 0.14)}`,
               boxShadow: `0 14px 30px -24px ${withAlpha(palette.blue[500], 0.8)}` }}>
