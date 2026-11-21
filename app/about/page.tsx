@@ -17,6 +17,12 @@ import RecordVoiceOverOutlined from "@mui/icons-material/RecordVoiceOverOutlined
 import RocketLaunchOutlined from "@mui/icons-material/RocketLaunchOutlined";
 import StorageOutlined from "@mui/icons-material/StorageOutlined";
 import ChatOutlined from "@mui/icons-material/ChatOutlined";
+import CalculateOutlined from "@mui/icons-material/CalculateOutlined";
+import AccountBalanceOutlined from "@mui/icons-material/AccountBalanceOutlined";
+import QueryStatsOutlined from "@mui/icons-material/QueryStatsOutlined";
+import SavingsOutlined from "@mui/icons-material/SavingsOutlined";
+import FactCheckOutlined from "@mui/icons-material/FactCheckOutlined";
+import InsightsOutlined from "@mui/icons-material/InsightsOutlined";
 import PageHero from "@/components/PageHero";
 import SplitSection from "@/components/SplitSection";
 import CTASection from "@/components/CTASection";
@@ -46,6 +52,8 @@ type Member = {
   linkedIn?: string;
   photo?: typeof founderPhoto;
   initials: string;
+  /** Where they are based, for search engines. Defaults to London. */
+  location?: string;
   credentials: { Icon: typeof SchoolOutlined; title: string; detail: string }[];
 };
 
@@ -83,6 +91,23 @@ const team: Member[] = [
       { Icon: ChatOutlined, title: "Meta Verified Tech Provider", detail: "WhatsApp, Instagram and Facebook integrations" },
     ],
   },
+  {
+    id: absoluteUrl("/about#christian-kohler"),
+    name: "Christian Kohler",
+    role: "CFO adviser",
+    linkedIn: "https://www.linkedin.com/in/christian-kohler-298b6a170/",
+    initials: "CK",
+    location: "Gold Coast, Australia",
+    credentials: [
+      { Icon: CalculateOutlined, title: "Chartered Accountant, 15+ years", detail: "Commercial finance, treasury accounting and audit" },
+      { Icon: AccountBalanceOutlined, title: "Treasury accounting at the EBRD, London", detail: "P&L reporting for bonds, swaps and derivatives" },
+      { Icon: QueryStatsOutlined, title: "Finance business partner at Commonwealth Bank", detail: "Budgets, forecasts and executive reporting packs" },
+      { Icon: SavingsOutlined, title: "A$50m+ a year in recurring cost savings", detail: "Contributed to a customer migration at Commonwealth Bank" },
+      { Icon: FactCheckOutlined, title: "Financial services audit at PwC", detail: "Bank audits in Sydney, Frankfurt, Singapore and Toronto" },
+      { Icon: InsightsOutlined, title: "Business cases and reporting automation", detail: "Excel, Tableau, SAP and Oracle" },
+      { Icon: SchoolOutlined, title: "Bachelor of Commerce and Bachelor of Laws", detail: "Bond University" },
+    ],
+  },
 ];
 
 // Each team member, for search engines, with their LinkedIn profile where we have it.
@@ -96,7 +121,7 @@ const people = team.map(member => ({
   url: absoluteUrl("/about"),
   ...(member.linkedIn && { sameAs: [member.linkedIn] }),
   worksFor: organizationRef,
-  homeLocation: { "@type": "Place", name: "London, UK" },
+  homeLocation: { "@type": "Place", name: member.location ?? "London, UK" },
 }));
 
 const valueIcons = [SpaOutlined, TrendingUpRounded, AutoAwesomeOutlined];
@@ -176,7 +201,7 @@ export default function AboutPage() {
       />
 
       <SplitSection id="team-heading" title="Our team" effect="dotField" seed={131}
-        text="Small and senior by design. Everyone on the team writes code, from the first call to handover." blade={members}>
+        text="Small and senior by design. Our engineers write the code, from the first call to handover." blade={members}>
         <Box sx={{ display: "grid", gap: 2.5 }}>
           <Box component="p" sx={paragraph}>
             The people you meet on the first call work on your system. Between us we bring more than 25 years of
@@ -196,6 +221,13 @@ export default function AboutPage() {
             and he automates client infrastructure end to end with Terraform.
           </Box>
           <Box component="p" sx={paragraph}>
+            Christian Kohler is our CFO adviser. He is a Chartered Accountant with more than 15 years in commercial finance,
+            treasury accounting and financial services audit: treasury P&amp;L reporting at the European Bank for Reconstruction
+            and Development in London, budgeting, forecasting and executive reporting at Commonwealth Bank of Australia, and
+            bank audits at PwC. He brings a finance view to our work, from the business case for a project to measuring what
+            it saves.
+          </Box>
+          <Box component="p" sx={paragraph}>
             That background shapes how we work: TDD/BDD discipline where correctness matters, cloud-native architecture on
             AWS and Azure, and a track record of managing teams (up to 25 developers at once at Lloyds Bank) without stepping
             away from the keyboard. AI is part of the toolkit, used to move faster on scaffolding, testing and automation,
@@ -213,7 +245,7 @@ export default function AboutPage() {
             </Box>
           ))}
         </Box>
-        {/* What the two of us cover together, so a visitor can match it to their own project. */}
+        {/* What the engineering team covers, so a visitor can match it to their own project. */}
         <Box component="h3" sx={{ m: "44px 0 0", fontSize: "1.35rem", fontWeight: 700, color: palette.navy[725], letterSpacing: "-0.025em" }}>
           What we bring together
         </Box>
