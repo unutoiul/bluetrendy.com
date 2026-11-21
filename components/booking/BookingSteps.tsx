@@ -26,7 +26,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import BookingEmbed from "@/components/BookingEmbed";
 import HeadingMotion from "@/components/motion/HeadingMotion";
 import { trackEvent } from "@/lib/analytics";
-import founderPhoto from "@/public/brand/founder.png";
+import founderPhoto from "@/public/brand/founder.webp";
 import { palette, withAlpha } from "@/theme/palette";
 
 

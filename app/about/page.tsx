@@ -42,9 +42,10 @@ import { neural } from "@/components/experience/neuralStyle";
 import { caseStudies } from "@/data/caseStudies";
 import { timeline, values } from "@/data/timeline";
 import { proofStats } from "@/data/stats";
-import founderPhoto from "@/public/brand/founder.png";
-import alexandruPhoto from "@/public/brand/alexandru.png";
-import mohammedPhoto from "@/public/brand/mohammed-ali.jpg";
+import founderPhoto from "@/public/brand/founder.webp";
+import alexandruPhoto from "@/public/brand/alexandru.webp";
+import mohammedPhoto from "@/public/brand/mohammed-ali.webp";
+import oisinPhoto from "@/public/brand/oisin.webp";
 import JsonLd from "@/components/JsonLd";
 import { absoluteUrl, breadcrumbs, ids, organizationRef, pageMetadata } from "@/lib/seo";
 import { palette, withAlpha } from "@/theme/palette";
@@ -77,7 +78,7 @@ const team: Member[] = [
     name: "Lucas Franco",
     role: "Software engineer, AI engineer & founder",
     linkedIn: "https://www.linkedin.com/in/lucas-franco-b27a194/",
-    photo: { image: founderPhoto, path: "/brand/founder.png" },
+    photo: { image: founderPhoto, path: "/brand/founder.webp" },
     initials: "LF",
     bio: "Lucas has spent over 15 years as a lead engineer on regulated and security-sensitive work: NATO strategy maps and "
       + "classified-document systems, a DICOM medical imaging platform for Bayer with Boston Consulting Group, AI-driven financial "
@@ -94,10 +95,32 @@ const team: Member[] = [
     ],
   },
   {
+    id: absoluteUrl("/about#mohammed-ali"),
+    name: "Mohammed Ali",
+    role: "Strategic partner, media and investment",
+    linkedIn: "https://www.linkedin.com/in/mohammed-ali-92973739/",
+    photo: { image: mohammedPhoto, path: "/brand/mohammed-ali.webp" },
+    initials: "MA",
+    location: "Dubai, United Arab Emirates",
+    bio: "Mohammed is the founder of Creative International Consultants in Dubai, which raises funding for film and television "
+      + "and runs fashion events. He has also been an executive producer at Evolutionary Films in London since 2015, where the "
+      + "studio is making Minibots, an animated feature with Kling AI as its exclusive technology partner. He founded and ran "
+      + "Argan Oil SL in Spain and Morocco from 2013 to 2024, and he brings financial and business analysis to every project.",
+    credentials: [
+      { Icon: BusinessCenterOutlined, title: "Founder of Creative International Consultants", detail: "Film and TV fundraising and fashion events, Dubai, since 2019" },
+      { Icon: MovieCreationOutlined, title: "Executive producer at Evolutionary Films", detail: "London film studio, since 2015" },
+      { Icon: AutoAwesomeOutlined, title: "AI animation with Kling AI", detail: "Minibots, an animated feature from Evolutionary Films" },
+      { Icon: StorefrontOutlined, title: "Founder and CEO of Argan Oil SL", detail: "Spain and Morocco, 2013 to 2024" },
+      { Icon: AnalyticsOutlined, title: "Financial and business analysis", detail: "Funding, accounting and the business side of projects" },
+      { Icon: TranslateOutlined, title: "Works in English and Arabic", detail: "Based in Dubai, United Arab Emirates" },
+    ],
+  },
+  {
     id: absoluteUrl("/about#oisin-omaolchallan"),
     name: "Oisin O’Maolchallan",
     role: "Senior full-stack and AI engineer",
     linkedIn: "https://www.linkedin.com/in/oisin-o-aba110248",
+    photo: { image: oisinPhoto, path: "/brand/oisin.webp" },
     initials: "OO",
     bio: "Oisin leads our agentic AI work. He has built multi-client AI agent platforms with governed tool use, memory, "
       + "approvals and audit trails, real-time AI voice systems, and a generative AI media platform that grew to more than "
@@ -141,7 +164,7 @@ const team: Member[] = [
     name: "Alexandru Ivan",
     role: "Secure infrastructure partner",
     linkedIn: "https://www.linkedin.com/in/alexandru-i-6446442b/",
-    photo: { image: alexandruPhoto, path: "/brand/alexandru.png" },
+    photo: { image: alexandruPhoto, path: "/brand/alexandru.webp" },
     initials: "AI",
     location: "La Spezia, Italy",
     bio: "Alexandru has more than 16 years in IT operations, most of them for NATO. He is a senior technician and system "
@@ -155,27 +178,6 @@ const team: Member[] = [
       { Icon: DnsOutlined, title: "System administration and IT operations for NATO", detail: "In Mons, Belgium, and in Germany, 2015 to 2024" },
       { Icon: PublicOutlined, title: "IT and telecoms sites in Kabul, Afghanistan", detail: "For Thales and KBR, 2009 to 2014" },
       { Icon: TranslateOutlined, title: "Works in English, French and Italian", detail: "Plus some Spanish" },
-    ],
-  },
-  {
-    id: absoluteUrl("/about#mohammed-ali"),
-    name: "Mohammed Ali",
-    role: "Strategic partner, media and investment",
-    linkedIn: "https://www.linkedin.com/in/mohammed-ali-92973739/",
-    photo: { image: mohammedPhoto, path: "/brand/mohammed-ali.jpg" },
-    initials: "MA",
-    location: "Dubai, United Arab Emirates",
-    bio: "Mohammed is the founder of Creative International Consultants in Dubai, which raises funding for film and television "
-      + "and runs fashion events. He has also been an executive producer at Evolutionary Films in London since 2015, where the "
-      + "studio is making Minibots, an animated feature with Kling AI as its exclusive technology partner. He founded and ran "
-      + "Argan Oil SL in Spain and Morocco from 2013 to 2024, and he brings financial and business analysis to every project.",
-    credentials: [
-      { Icon: BusinessCenterOutlined, title: "Founder of Creative International Consultants", detail: "Film and TV fundraising and fashion events, Dubai, since 2019" },
-      { Icon: MovieCreationOutlined, title: "Executive producer at Evolutionary Films", detail: "London film studio, since 2015" },
-      { Icon: AutoAwesomeOutlined, title: "AI animation with Kling AI", detail: "Minibots, an animated feature from Evolutionary Films" },
-      { Icon: StorefrontOutlined, title: "Founder and CEO of Argan Oil SL", detail: "Spain and Morocco, 2013 to 2024" },
-      { Icon: AnalyticsOutlined, title: "Financial and business analysis", detail: "Funding, accounting and the business side of projects" },
-      { Icon: TranslateOutlined, title: "Works in English and Arabic", detail: "Based in Dubai, United Arab Emirates" },
     ],
   },
 ];
@@ -224,7 +226,15 @@ function TeamMember({ member }: { member: Member }) {
       {/* Who they are. On wide screens it stays in view while their details scroll past. */}
       <Box sx={{ position: { md: "sticky" }, top: { md: 112 }, display: "flex", flexDirection: { xs: "row", md: "column" },
         alignItems: { xs: "center", md: "flex-start" }, gap: { xs: 2.5, md: 0 } }}>
-        <Box sx={ring}>
+        {/* The portrait opens their LinkedIn profile too. The LinkedIn link below is the one keyboards and
+            screen readers use, so this one stays out of the tab order instead of announcing the same link twice. */}
+        <Box {...(member.linkedIn && { component: "a", href: member.linkedIn, target: "_blank", rel: "noopener noreferrer",
+          tabIndex: -1, "aria-hidden": true, title: `${member.name} on LinkedIn` })}
+          sx={{ ...ring, display: "block", ...(member.linkedIn && {
+            transition: "transform .3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow .3s",
+            "&:hover": { transform: "scale(1.04)", boxShadow: `0 0 0 6px ${withAlpha(palette.blue[500], 0.22)}, 0 22px 44px -18px ${withAlpha(palette.blue[500], 0.9)}` },
+            "@media (prefers-reduced-motion: reduce)": { transition: "none", "&:hover": { transform: "none" } },
+          }) }}>
           {member.photo
             ? <Image src={member.photo.image} alt={member.name} width={136} height={136} sizes="(min-width: 900px) 136px, 92px"
                 style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%", display: "block" }} />

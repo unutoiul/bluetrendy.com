@@ -12,7 +12,7 @@ const pages: { path: string; priority: number; changeFrequency: "weekly" | "mont
   { path: "/pricing", priority: 0.8, changeFrequency: "monthly" },
   { path: "/book-a-call", priority: 0.8, changeFrequency: "monthly" },
   { path: "/process", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/about", priority: 0.7, changeFrequency: "monthly", images: ["/brand/founder.png"] },
+  { path: "/about", priority: 0.7, changeFrequency: "monthly", images: ["/brand/founder.webp", "/brand/mohammed-ali.webp", "/brand/oisin.webp", "/brand/alexandru.webp"] },
   { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
 ];
 
