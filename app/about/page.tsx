@@ -27,6 +27,11 @@ import ChatOutlined from "@mui/icons-material/ChatOutlined";
 import PublicOutlined from "@mui/icons-material/PublicOutlined";
 import TranslateOutlined from "@mui/icons-material/TranslateOutlined";
 import WorkHistoryOutlined from "@mui/icons-material/WorkHistoryOutlined";
+import DnsOutlined from "@mui/icons-material/DnsOutlined";
+import BusinessCenterOutlined from "@mui/icons-material/BusinessCenterOutlined";
+import MovieCreationOutlined from "@mui/icons-material/MovieCreationOutlined";
+import StorefrontOutlined from "@mui/icons-material/StorefrontOutlined";
+import AnalyticsOutlined from "@mui/icons-material/AnalyticsOutlined";
 import PageHero from "@/components/PageHero";
 import SplitSection from "@/components/SplitSection";
 import CTASection from "@/components/CTASection";
@@ -39,6 +44,7 @@ import { timeline, values } from "@/data/timeline";
 import { proofStats } from "@/data/stats";
 import founderPhoto from "@/public/brand/founder.png";
 import alexandruPhoto from "@/public/brand/alexandru.png";
+import mohammedPhoto from "@/public/brand/mohammed-ali.jpg";
 import JsonLd from "@/components/JsonLd";
 import { absoluteUrl, breadcrumbs, ids, organizationRef, pageMetadata } from "@/lib/seo";
 import { palette, withAlpha } from "@/theme/palette";
@@ -131,21 +137,45 @@ const team: Member[] = [
   },
   */
   {
-    id: absoluteUrl("/about#alexandru-i"),
-    name: "Alexandru I.",
-    role: "NATO and defence adviser",
+    id: absoluteUrl("/about#alexandru-ivan"),
+    name: "Alexandru Ivan",
+    role: "IT infrastructure specialist",
     linkedIn: "https://www.linkedin.com/in/alexandru-i-6446442b/",
     photo: { image: alexandruPhoto, path: "/brand/alexandru.png" },
     initials: "AI",
     location: "La Spezia, Italy",
-    bio: "Alexandru works at the NATO Communications and Information Agency (NCI Agency), NATO’s IT and communications arm, "
-      + "now in La Spezia, Italy, after several earlier roles with the agency in Mons, Belgium. His career has taken him across "
-      + "Italy, Belgium, France, Germany and Afghanistan, and he works professionally in English, French and Italian.",
+    bio: "Alexandru has more than 16 years in IT operations, most of them for NATO. He is a senior technician and system "
+      + "administrator at the NATO Communications and Information Agency (NCI Agency) in La Spezia, Italy, after system "
+      + "administration and IT operations roles for NATO in Mons, Belgium and in Germany. Before that he ran IT and telecoms "
+      + "sites in Kabul, Afghanistan for Thales and KBR, and worked for the EU agency eu-LISA in Strasbourg. He works "
+      + "professionally in English, French and Italian.",
     credentials: [
-      { Icon: ShieldOutlined, title: "NATO Communications and Information Agency", detail: "Currently with the NCI Agency in La Spezia, Italy" },
-      { Icon: WorkHistoryOutlined, title: "Several earlier roles at the NCI Agency", detail: "NATO’s IT and communications agency, in Mons, Belgium" },
-      { Icon: PublicOutlined, title: "International experience in five countries", detail: "Italy, Belgium, France, Germany and Afghanistan (Kabul)" },
+      { Icon: ShieldOutlined, title: "Senior technician at NATO’s NCI Agency", detail: "System administrator in La Spezia, Italy, since 2024" },
+      { Icon: WorkHistoryOutlined, title: "16+ years of IT for NATO and the EU", detail: "NCI Agency, eu-LISA, Thales, KBR and Leonardo" },
+      { Icon: DnsOutlined, title: "System administration and IT operations for NATO", detail: "In Mons, Belgium, and in Germany, 2015 to 2024" },
+      { Icon: PublicOutlined, title: "IT and telecoms sites in Kabul, Afghanistan", detail: "For Thales and KBR, 2009 to 2014" },
       { Icon: TranslateOutlined, title: "Works in English, French and Italian", detail: "Plus some Spanish" },
+    ],
+  },
+  {
+    id: absoluteUrl("/about#mohammed-ali"),
+    name: "Mohammed Ali",
+    role: "Strategy partner",
+    linkedIn: "https://www.linkedin.com/in/mohammed-ali-92973739/",
+    photo: { image: mohammedPhoto, path: "/brand/mohammed-ali.jpg" },
+    initials: "MA",
+    location: "Dubai, United Arab Emirates",
+    bio: "Mohammed is the founder of Creative International Consultants in Dubai, which raises funding for film and television "
+      + "and runs fashion events. He has also been an executive producer at Evolutionary Films in London since 2015, where the "
+      + "studio is making Minibots, an animated feature with Kling AI as its exclusive technology partner. He founded and ran "
+      + "Argan Oil SL in Spain and Morocco from 2013 to 2024, and he brings financial and business analysis to every project.",
+    credentials: [
+      { Icon: BusinessCenterOutlined, title: "Founder of Creative International Consultants", detail: "Film and TV fundraising and fashion events, Dubai, since 2019" },
+      { Icon: MovieCreationOutlined, title: "Executive producer at Evolutionary Films", detail: "London film studio, since 2015" },
+      { Icon: AutoAwesomeOutlined, title: "AI animation with Kling AI", detail: "Minibots, an animated feature from Evolutionary Films" },
+      { Icon: StorefrontOutlined, title: "Founder and CEO of Argan Oil SL", detail: "Spain and Morocco, 2013 to 2024" },
+      { Icon: AnalyticsOutlined, title: "Financial and business analysis", detail: "Funding, accounting and the business side of projects" },
+      { Icon: TranslateOutlined, title: "Works in English and Arabic", detail: "Based in Dubai, United Arab Emirates" },
     ],
   },
 ];
