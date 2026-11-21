@@ -1,5 +1,5 @@
 export const timeline = [
-  { period: "Dec 2025 – Mar 2026", org: "Blue Bridge Asset Management", role: "Lead Software Engineer — structured products trading platform" },
+  { period: "Dec 2025 – Mar 2026", org: "BlueBridge Asset Management", role: "Lead Software Engineer — structured products trading platform" },
   { period: "Jun 2024 – Sept 2025", org: "Boston Consulting Group × Bayer", role: "Lead Software Engineer — secure DICOM medical imaging platform" },
   { period: "Jun 2024 – May 2025", org: "NATO Communications and Information Agency", role: "Lead Software Engineer — ArcGIS geospatial strategy platform" },
   { period: "Apr 2024 – Jul 2024", org: "Alvarez & Marsal", role: "Lead Software Engineer — AI-driven financial analysis for cruise lines" },

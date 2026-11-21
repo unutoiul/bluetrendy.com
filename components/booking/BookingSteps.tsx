@@ -27,6 +27,7 @@ import BookingEmbed from "@/components/BookingEmbed";
 import HeadingMotion from "@/components/motion/HeadingMotion";
 import { trackEvent } from "@/lib/analytics";
 import founderPhoto from "@/public/brand/founder.webp";
+import mohammedPhoto from "@/public/brand/mohammed-ali.webp";
 import { palette, withAlpha } from "@/theme/palette";
 
 
@@ -362,13 +363,20 @@ function CallPanel() {
         ))}
       </Box>
       <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 3.5, pt: 3, borderTop: `1px solid ${withAlpha(palette.sky[100], 0.16)}` }}>
-        <Box sx={{ position: "relative", width: 56, height: 56, flexShrink: 0, borderRadius: "50%", overflow: "hidden",
-          boxShadow: `0 0 0 2px ${withAlpha(palette.sky[100], 0.55)}, 0 0 22px ${withAlpha(palette.blue[300], 0.45)}` }}>
-          <Image src={founderPhoto} alt="" fill sizes="56px" style={{ objectFit: "cover" }} />
+        {/* The people on the call, overlapping like a small stack with Lucas in front. */}
+        <Box sx={{ display: "flex", flexShrink: 0 }}>
+          {[founderPhoto, mohammedPhoto].map((photo, index) => (
+            <Box key={photo.src} sx={{ position: "relative", zIndex: 2 - index, width: 56, height: 56, ml: index ? "-14px" : 0, borderRadius: "50%", overflow: "hidden",
+              boxShadow: `0 0 0 2px ${withAlpha(palette.sky[100], 0.55)}, 0 0 22px ${withAlpha(palette.blue[300], 0.45)}` }}>
+              <Image src={photo} alt="" fill sizes="56px" style={{ objectFit: "cover" }} />
+            </Box>
+          ))}
         </Box>
         <Box>
           <Typography sx={{ fontWeight: 700, color: palette.white }}>You&apos;ll meet our team</Typography>
-          <Typography variant="body2" sx={{ color: palette.blue[200] }}>Usually Lucas Franco, founder and lead engineer</Typography>
+          <Typography variant="body2" sx={{ color: palette.blue[200] }}>
+            Usually Lucas Franco, founder and lead engineer, and Mohammed Ali, strategic partner
+          </Typography>
         </Box>
       </Box>
     </Box>

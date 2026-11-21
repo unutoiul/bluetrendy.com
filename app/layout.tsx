@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
 import ThemeRegistry from "@/theme/ThemeRegistry";
@@ -20,12 +19,15 @@ const geist = localFont({
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+// Self-hosted like Geist, so the build never has to fetch from Google Fonts. A Google Fonts lookup
+// failed a Vercel production build (21 Nov 2026) even though the code was unchanged.
+const jetbrainsMono = localFont({
+  src: "../public/fonts/jetbrains-mono-latin.woff2",
   variable: "--font-mono",
-  preload: false,
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: "400 600",
+  style: "normal",
   display: "swap",
+  preload: false,
 });
 
 const siteTitle = homeTitle;

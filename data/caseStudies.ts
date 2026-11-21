@@ -18,7 +18,7 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     slug: "blue-bridge-asset-management",
-    client: "Blue Bridge Asset Management",
+    client: "BlueBridge Asset Management",
     sector: "Wealth & Asset Management",
     timeframe: "Dec 2025 – Mar 2026",
     location: "London, UK",
@@ -26,7 +26,7 @@ export const caseStudies: CaseStudy[] = [
     summary:
       "Private clients can now discover, price, and execute complex structured instruments in real time — a workflow that used to depend on manual issuer round-trips.",
     challenge:
-      "Blue Bridge's private clients needed to discover, price, and purchase complex instruments — Autocalls, Phoenix Autocalls, and Options notes issued by major banks — but pricing and issuer coordination were manual and slow, putting the desk at a disadvantage against faster-moving competitors.",
+      "BlueBridge's private clients needed to discover, price, and purchase complex instruments — Autocalls, Phoenix Autocalls, and Options notes issued by major banks — but pricing and issuer coordination were manual and slow, putting the desk at a disadvantage against faster-moving competitors.",
     approach: [
       "Real-time market data pipelines integrating Bloomberg feeds, with low-latency WebSocket streaming for live bid/ask prices, yields, and product analytics",
       "Event-driven architecture using Node.js and Python microservices powering stateful pricing, product normalization, and portfolio valuation via REST APIs and async messaging",
