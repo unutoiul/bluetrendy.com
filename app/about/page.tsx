@@ -139,7 +139,7 @@ const team: Member[] = [
   {
     id: absoluteUrl("/about#alexandru-ivan"),
     name: "Alexandru Ivan",
-    role: "IT infrastructure specialist",
+    role: "Secure infrastructure partner",
     linkedIn: "https://www.linkedin.com/in/alexandru-i-6446442b/",
     photo: { image: alexandruPhoto, path: "/brand/alexandru.png" },
     initials: "AI",
@@ -160,7 +160,7 @@ const team: Member[] = [
   {
     id: absoluteUrl("/about#mohammed-ali"),
     name: "Mohammed Ali",
-    role: "Strategy partner",
+    role: "Strategic partner, media and investment",
     linkedIn: "https://www.linkedin.com/in/mohammed-ali-92973739/",
     photo: { image: mohammedPhoto, path: "/brand/mohammed-ali.jpg" },
     initials: "MA",
